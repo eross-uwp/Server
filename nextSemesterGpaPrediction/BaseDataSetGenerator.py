@@ -1,3 +1,7 @@
+"""
+___authors___: Zhiwei Yang and Austin FitzGerald
+"""
+
 import random
 import pandas as pd
 from nextSemesterGpaPrediction.ZeroRModel import predict
