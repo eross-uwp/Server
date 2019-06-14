@@ -1,10 +1,10 @@
 import random
 import pandas as pd
-import zeroRModel as zrm
+from nextSemesterGpaPrediction.ZeroRModel import predict
 
 # CONSTANTS
-RAW_DATA_FILE = 'termGPA.csv'
-FINAL_DATA_FILE = 'finalDataSet.csv'
+RAW_DATA_FILE = 'data\\termGPA.csv'
+FINAL_DATA_FILE = 'data\\finalDataSet.csv'
 FIRST_COLUMN = 'id'
 SECOND_COLUMN = 'prev term number'
 THIRD_COLUMN = 'current term number'
@@ -50,7 +50,7 @@ def generate_final_dataset(term_pairs_data_frame, raw_data_frame):
 
 if __name__ == "__main__":
     rawData = pd.read_csv(RAW_DATA_FILE, index_col="index")  # our raw dataset
-    termPairsDataFrame = get_term_pairs(rawData)
-    finalDataFrame = generate_final_dataset(termPairsDataFrame, rawData)
+    termPairsDataFrame = get_term_pairs(rawData) # Get a random pair of terms for each applicable student id
+    finalDataFrame = generate_final_dataset(termPairsDataFrame, rawData) # Get the corresponding gpa for each term pair
     finalDataFrame.to_csv(FINAL_DATA_FILE, encoding='utf-8', index=False)
-    print(zrm.predict(finalDataFrame[FOURTH_COLUMN]))
+    print(predict(finalDataFrame[FOURTH_COLUMN])) # Run the ZeroRModel predict function
