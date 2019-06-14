@@ -1,6 +1,7 @@
 import random
 import pandas as pd
-from nextSemesterGpaPrediction.ZeroRModel import predict
+from ZeroRModel import predict
+from LinearRegressionModel import lr_predict
 
 # CONSTANTS
 RAW_DATA_FILE = 'data\\termGPA.csv'
@@ -53,4 +54,5 @@ if __name__ == "__main__":
     termPairsDataFrame = get_term_pairs(rawData) # Get a random pair of terms for each applicable student id
     finalDataFrame = generate_final_dataset(termPairsDataFrame, rawData) # Get the corresponding gpa for each term pair
     finalDataFrame.to_csv(FINAL_DATA_FILE, encoding='utf-8', index=False)
-    print(predict(finalDataFrame[FOURTH_COLUMN])) # Run the ZeroRModel predict function
+    # print(predict(finalDataFrame[FOURTH_COLUMN])) # Run the ZeroRModel predict function
+    print(lr_predict(finalDataFrame[FOURTH_COLUMN], finalDataFrame[FIFTH_COLUMN]))
