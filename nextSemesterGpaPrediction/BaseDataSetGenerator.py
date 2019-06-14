@@ -11,9 +11,11 @@ THIRD_COLUMN = 'current term number'
 FOURTH_COLUMN = 'prev GPA'
 FIFTH_COLUMN = 'current GPA'
 FINAL_DATA_FRAME_HEADERS = [FIRST_COLUMN, SECOND_COLUMN, THIRD_COLUMN, FOURTH_COLUMN, FIFTH_COLUMN]
+RANDOM_SEED = 'gargamel'
 
 
 def get_term_pairs(raw_data):
+    random.seed(RANDOM_SEED)  # Make sure we get the same dataset every time
     headers = list(raw_data)
 
     data_frame_for_pairs = pd.DataFrame()
@@ -27,7 +29,8 @@ def get_term_pairs(raw_data):
             random_term_index = random.randrange(1, len(terms))
             second_term = terms[random_term_index]
             first_term = terms[random_term_index - 1]
-            data_frame_for_pairs[student_id] = [first_term, second_term]  # random term and the term previous to it for each id
+            data_frame_for_pairs[student_id] = [first_term,
+                                                second_term]  # random term and the term previous to it for each id
     return data_frame_for_pairs
 
 
@@ -50,7 +53,7 @@ def generate_final_dataset(term_pairs_data_frame, raw_data_frame):
 
 if __name__ == "__main__":
     rawData = pd.read_csv(RAW_DATA_FILE, index_col="index")  # our raw dataset
-    termPairsDataFrame = get_term_pairs(rawData) # Get a random pair of terms for each applicable student id
-    finalDataFrame = generate_final_dataset(termPairsDataFrame, rawData) # Get the corresponding gpa for each term pair
+    termPairsDataFrame = get_term_pairs(rawData)  # Get a random pair of terms for each applicable student id
+    finalDataFrame = generate_final_dataset(termPairsDataFrame, rawData)  # Get the corresponding gpa for each term pair
     finalDataFrame.to_csv(FINAL_DATA_FILE, encoding='utf-8', index=False)
-    print(predict(finalDataFrame[FOURTH_COLUMN])) # Run the ZeroRModel predict function
+    print(predict(finalDataFrame[FOURTH_COLUMN]))  # Run the ZeroRModel predict function
