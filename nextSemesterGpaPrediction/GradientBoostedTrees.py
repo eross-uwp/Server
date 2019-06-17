@@ -96,4 +96,3 @@ if __name__ == "__main__":
 
     print("Confusion Matrix")
     print(confusion_matrix(y_train_sub, x_train_sub))
-
