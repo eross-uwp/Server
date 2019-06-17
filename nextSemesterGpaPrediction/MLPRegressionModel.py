@@ -44,7 +44,7 @@ y_test = np.array([pd.read_csv('data\\test_train\\test_1.csv')['current GPA'].va
 
 def mlp():
     np.random.seed(bd.RANDOM_SEED)
-    model = MLPRegressor(hidden_layer_sizes=(100, 100), max_iter=1000)
+    model = MLPRegressor(hidden_layer_sizes=(MLP_HIDDEN_LAYERS, MLP_HIDDEN_LAYERS), max_iter=MLP_MAX_ITERATIONS)
 
     # hold all tests and predictions in order to calculate R^2 AND RMSE.
     y_tests = []
