@@ -4,7 +4,7 @@ ___authors___: Zhiwei Yang and Austin FitzGerald
 
 import random
 import pandas as pd
-from nextSemesterGpaPrediction.ZeroRModel import predict
+from ZeroRModel import predict
 from sklearn.model_selection import StratifiedKFold
 
 # CONSTANTS
@@ -19,7 +19,7 @@ THIRD_COLUMN = 'current term number'
 FOURTH_COLUMN = 'prev GPA'
 FIFTH_COLUMN = 'current GPA'
 FINAL_DATA_FRAME_HEADERS = [FIRST_COLUMN, SECOND_COLUMN, THIRD_COLUMN, FOURTH_COLUMN, FIFTH_COLUMN]
-RANDOM_SEED = 'gargamel'
+RANDOM_SEED = 313131
 NUMBER_OF_FOLDS = 5
 
 
@@ -67,7 +67,7 @@ def stratify_and_five_fold(final_data_frame):
     prev_gpa = final_data_frame[FOURTH_COLUMN].values  # get numpy array of prev and current gpas
     curr_gpa = final_data_frame[FIFTH_COLUMN].values
 
-    skf = StratifiedKFold(n_splits=NUMBER_OF_FOLDS, shuffle=True)  # setup stratified k fold
+    skf = StratifiedKFold(n_splits=NUMBER_OF_FOLDS, shuffle=True, random_state=RANDOM_SEED)  # setup stratified k fold
 
     loop_count = 0
     # create different testing and training sets
@@ -79,12 +79,12 @@ def stratify_and_five_fold(final_data_frame):
         y_train_term, y_test_term = y[train_index], y[test_index]
 
         # write the new testing and training sets to csv files
-        (pd.concat([pd.DataFrame(x_train_term, columns=['prev term']), pd.DataFrame(x_train_gpa, columns=['prev gpa']),
-                    pd.DataFrame(y_train_term, columns=['curr term']), pd.DataFrame(y_train_gpa, columns=['curr gpa'])],
+        (pd.concat([pd.DataFrame(x_train_term, columns=[SECOND_COLUMN]), pd.DataFrame(x_train_gpa, columns=[FOURTH_COLUMN]),
+                    pd.DataFrame(y_train_term, columns=[THIRD_COLUMN]), pd.DataFrame(y_train_gpa, columns=[FIFTH_COLUMN])],
                    axis=1)).to_csv(TESTING_TRAINING_DATA_FOLDER +
                                    TRAIN_PREFIX + str(loop_count + 1) + '.csv', encoding='utf-8', index=False)
-        (pd.concat([pd.DataFrame(x_test_term, columns=['prev term']), pd.DataFrame(x_test_gpa, columns=['prev gpa']),
-                    pd.DataFrame(y_test_term, columns=['curr term']), pd.DataFrame(y_test_gpa, columns=['curr gpa'])],
+        (pd.concat([pd.DataFrame(x_test_term, columns=[SECOND_COLUMN]), pd.DataFrame(x_test_gpa, columns=[FOURTH_COLUMN]),
+                    pd.DataFrame(y_test_term, columns=[THIRD_COLUMN]), pd.DataFrame(y_test_gpa, columns=[FIFTH_COLUMN])],
                    axis=1)).to_csv(TESTING_TRAINING_DATA_FOLDER +
                                    TEST_PREFIX + str(loop_count + 1) + '.csv', encoding='utf-8', index=False)
         loop_count += 1
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     finalDataFrame = generate_final_dataset(termPairsDataFrame, rawData)  # Get the corresponding gpa for each term pair
     finalDataFrame.to_csv(FINAL_DATA_FILE, encoding='utf-8', index=False)
 
-    finalDataFrame = pd.read_csv(FINAL_DATA_FILE, index_col="id") # yes this is a bit hacky. TODO
+    finalDataFrame = pd.read_csv(FINAL_DATA_FILE, index_col=FIRST_COLUMN)  # yes this is a bit hacky. TODO
 
     stratify_and_five_fold(finalDataFrame)
 
