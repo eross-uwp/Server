@@ -11,8 +11,8 @@ import numpy as np
 import BaseDataSetGenerator as bd
 
 RESULTS_FOLDER = 'LinearRegressionResults\\'
-GRAPH_FILE_PREFIX = 'test'
-RESULTS_TEXTFILE = 'Results.txt'
+GRAPH_FILE_PREFIX = 'LinearRegression_graph_'
+RESULTS_TEXTFILE = 'LinearRegression_Results.txt'
 
 # Creating arrays that contain arrays holding the testing and training data. Reshaped to form a 1 row multi column array
 X_train = np.array([pd.read_csv('data\\test_train\\train_1.csv')['prev GPA'].values.reshape(-1, 1),

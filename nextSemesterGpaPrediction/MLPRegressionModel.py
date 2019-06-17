@@ -11,8 +11,8 @@ from sklearn.neural_network import MLPRegressor
 import BaseDataSetGenerator as bd
 
 RESULTS_FOLDER = 'MLPRegressionResults\\'
-GRAPH_FILE_PREFIX = 'test'
-RESULTS_TEXTFILE = 'Results.txt'
+GRAPH_FILE_PREFIX = 'MLPRegression_graph_'
+RESULTS_TEXTFILE = 'MLPRegression_Results.txt'
 MLP_HIDDEN_LAYERS = 100
 MLP_MAX_ITERATIONS = 1000
 
