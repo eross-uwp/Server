@@ -1,18 +1,20 @@
-# Using Linear Regression to predict next term GPA
+# Using a Multilayer Perceptron Regressor to predict next term GPA
 
 """
-___authors___: Evan Majerus & Austin FitzGerald
+___authors___: Austin FitzGerald
 """
 from sklearn import metrics
-from sklearn.linear_model import LinearRegression
 from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
+from sklearn.neural_network import MLPRegressor
 import BaseDataSetGenerator as bd
 
-RESULTS_FOLDER = 'LinearRegressionResults\\'
+RESULTS_FOLDER = 'MLPRegressionResults\\'
 GRAPH_FILE_PREFIX = 'test'
 RESULTS_TEXTFILE = 'Results.txt'
+MLP_HIDDEN_LAYERS = 100
+MLP_MAX_ITERATIONS = 1000
 
 # Creating arrays that contain arrays holding the testing and training data. Reshaped to form a 1 row multi column array
 X_train = np.array([pd.read_csv('data\\test_train\\train_1.csv')['prev GPA'].values.reshape(-1, 1),
@@ -40,16 +42,15 @@ y_test = np.array([pd.read_csv('data\\test_train\\test_1.csv')['current GPA'].va
                    pd.read_csv('data\\test_train\\test_5.csv')['current GPA'].values.reshape(-1, 1)])
 
 
-def lr_predict():
+def mlp():
     np.random.seed(bd.RANDOM_SEED)
-    model = LinearRegression()
+    model = MLPRegressor(hidden_layer_sizes=(100, 100), max_iter=1000)
 
     # hold all tests and predictions in order to calculate R^2 AND RMSE.
     y_tests = []
     y_preds = []
 
     for i in range(0, 5):
-        # fitting the model and storing the predicted value from the test set
         model.fit(X_train[i], y_train[i])
         y_pred = model.predict(X_test[i])
 
@@ -76,4 +77,4 @@ def lr_predict():
 
 
 if __name__ == "__main__":
-    lr_predict()
+    mlp()
