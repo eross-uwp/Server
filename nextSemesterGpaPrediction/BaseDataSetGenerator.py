@@ -20,7 +20,7 @@ THIRD_COLUMN = 'current term number'
 FOURTH_COLUMN = 'prev GPA'
 FIFTH_COLUMN = 'current GPA'
 FINAL_DATA_FRAME_HEADERS = [FIRST_COLUMN, SECOND_COLUMN, THIRD_COLUMN, FOURTH_COLUMN, FIFTH_COLUMN]
-RANDOM_SEED = 'gargamel'
+RANDOM_SEED = 313131
 NUMBER_OF_FOLDS = 5
 
 
@@ -68,7 +68,7 @@ def stratify_and_five_fold(final_data_frame):
     prev_gpa = final_data_frame[FOURTH_COLUMN].values  # get numpy array of prev and current gpas
     curr_gpa = final_data_frame[FIFTH_COLUMN].values
 
-    skf = StratifiedKFold(n_splits=NUMBER_OF_FOLDS, shuffle=True)  # setup stratified k fold
+    skf = StratifiedKFold(n_splits=NUMBER_OF_FOLDS, shuffle=True, random_state=RANDOM_SEED)  # setup stratified k fold
 
     loop_count = 0
     # create different testing and training sets
