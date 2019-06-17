@@ -1,3 +1,5 @@
+# Generates a dataset with matching term/gpa
+
 """
 ___authors___: Zhiwei Yang and Austin FitzGerald
 """
@@ -6,7 +8,6 @@ import random
 import pandas as pd
 from ZeroRModel import predict
 from sklearn.model_selection import StratifiedKFold
-from LinearRegressionModel import lr_predict
 
 # CONSTANTS
 RAW_DATA_FILE = 'data\\termGPA.csv'

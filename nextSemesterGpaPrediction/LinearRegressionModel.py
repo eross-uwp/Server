@@ -3,12 +3,12 @@
 """
 ___authors___: Evan Majerus & Austin FitzGerald
 """
-
+from sklearn import metrics
 from sklearn.linear_model import LinearRegression
+from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
-
-RANDOM_SEED = 313131
+import BaseDataSetGenerator as bd
 
 X_train = np.array([pd.read_csv('data\\test_train\\train_1.csv')['prev GPA'].values.reshape(-1, 1),
                     pd.read_csv('data\\test_train\\train_2.csv')['prev GPA'].values.reshape(-1, 1),
@@ -36,15 +36,30 @@ y_test = np.array([pd.read_csv('data\\test_train\\test_1.csv')['current GPA'].va
 
 
 def lr_predict():
+    np.random.seed(bd.RANDOM_SEED)
     model = LinearRegression()
-    scores = []
+
+    ytests = []
+    ypreds = []
 
     for i in range(0, 5):
+        # fitting the model and storing the predicted value from the test set
         model.fit(X_train[i], y_train[i])
-        score = model.score(X_test[i], y_test[i])
-        scores.append(score)
+        y_pred = model.predict(X_test[i])
 
-    print(scores)
+        ytests += list(y_test[i])  # the real value
+        ypreds += list(y_pred)  # the predicted value
+
+        # graphing. x-axis is real prev term GPAs, y-axis is real current term GPAs, line is the linear regression
+        plt.scatter(X_test[i], y_test[i], color='g', )
+        plt.plot(X_test[i], model.predict(X_test[i]), color='k')
+        plt.title('test #' + str(i+1))
+        plt.show()
+
+    # Calculating the R^2 and RMSE from the actual curr-term GPAs and predicted curr-term GPAs
+    rr = metrics.r2_score(ytests, ypreds)
+    rmse_error = np.math.sqrt(metrics.mean_squared_error(ytests, ypreds))
+    print("R^2: {:.5f}%, RMSE: {:.5f}".format(rr * 100, rmse_error))
 
 
 if __name__ == "__main__":
