@@ -13,34 +13,27 @@ import BaseDataSetGenerator as bd
 RESULTS_FOLDER = 'LinearRegressionResults\\'
 GRAPH_FILE_PREFIX = 'LinearRegression_graph_'
 RESULTS_TEXTFILE = 'LinearRegression_Results.txt'
-
-# Creating arrays that contain arrays holding the testing and training data. Reshaped to form a 1 row multi column array
-X_train = np.array([pd.read_csv('data\\test_train\\train_1.csv')['prev GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_2.csv')['prev GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_3.csv')['prev GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_4.csv')['prev GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_5.csv')['prev GPA'].values.reshape(-1, 1)])
-
-y_train = np.array([pd.read_csv('data\\test_train\\train_1.csv')['current GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_2.csv')['current GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_3.csv')['current GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_4.csv')['current GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_5.csv')['current GPA'].values.reshape(-1, 1)])
-
-X_test = np.array([pd.read_csv('data\\test_train\\test_1.csv')['prev GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_2.csv')['prev GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_3.csv')['prev GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_4.csv')['prev GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_5.csv')['prev GPA'].values.reshape(-1, 1)])
-
-y_test = np.array([pd.read_csv('data\\test_train\\test_1.csv')['current GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_2.csv')['current GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_3.csv')['current GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_4.csv')['current GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_5.csv')['current GPA'].values.reshape(-1, 1)])
+NUMBER_FOLDS = 5
 
 
-def lr_predict():
+def get_training_testing():
+    # Creating arrays that contain arrays holding the testing and training data. Reshaped to form a 1 row multi
+    # column array
+    X_train = []
+    y_train = []
+    X_test = []
+    y_test = []
+
+    for i in range(0, NUMBER_FOLDS):
+        X_train.append(pd.read_csv('data\\test_train\\train_' + str(i+1) + '.csv')['prev GPA'].values.reshape(-1, 1))
+        y_train.append(pd.read_csv('data\\test_train\\train_' + str(i+1) + '.csv')['current GPA'].values.reshape(-1, 1))
+        X_test.append(pd.read_csv('data\\test_train\\test_' + str(i+1) + '.csv')['prev GPA'].values.reshape(-1, 1))
+        y_test.append(pd.read_csv('data\\test_train\\test_' + str(i+1) + '.csv')['current GPA'].values.reshape(-1, 1))
+
+    return X_train, y_train, X_test, y_test
+
+
+def lr_predict(X_train, y_train, X_test, y_test):
     np.random.seed(bd.RANDOM_SEED)
     model = LinearRegression()
 
@@ -48,7 +41,7 @@ def lr_predict():
     y_tests = []
     y_preds = []
 
-    for i in range(0, 5):
+    for i in range(0, NUMBER_FOLDS):
         # fitting the model and storing the predicted value from the test set
         model.fit(X_train[i], y_train[i])
         y_pred = model.predict(X_test[i])
@@ -76,4 +69,5 @@ def lr_predict():
 
 
 if __name__ == "__main__":
-    lr_predict()
+    X_train, y_train, X_test, y_test = get_training_testing()
+    lr_predict(X_train, y_train, X_test, y_test)
