@@ -1,5 +1,5 @@
 """
-___authors___: Nate Braukhoff
+___authors___: Nate Braukhoff and Zhiwei Yang
 """
 
 from sklearn.ensemble import GradientBoostingRegressor
@@ -19,19 +19,17 @@ if __name__ == "__main__":
         file = urllib.request.urlopen(url)
         train = pd.read_csv(file)  # Getting training dataset from Github
 
+        url1 = (TEST_DATA_PATH + str(x) + '.csv')
+        file1 = urllib.request.urlopen(url1)
+        testData = pd.read_csv(file1)
+        # Getting testing dataset from Github
+
         x = train.drop('current GPA', 1)
         y = np.array(train['current GPA'])
 
         model = GradientBoostingRegressor(n_estimators=500, learning_rate=0.01, max_features=1, max_depth=4, loss='ls')
-        print(model.fit(x, y))
-        print(model.score(x, y))
-        print(model.predict(x))
+        model.fit(x, y)
 
-        url1 = (TEST_DATA_PATH + str(x) + '.csv')
-        file1 = urllib.request.urlopen(url1)
-        testData = pd.read_csv(file1)
-        # Getting training dataset from Github
+        rmse_val = math.sqrt(mean_squared_error(testData['current GPA'].values, model.predict(testData.drop('current GPA', 1)))) / 4
 
-        rmse_val = math.sqrt(mean_squared_error(testData['current GPA'].values, model.predict(x))) / 4
-
-        print(rmse_val)
+        print('RMSE = ' + str(rmse_val))
