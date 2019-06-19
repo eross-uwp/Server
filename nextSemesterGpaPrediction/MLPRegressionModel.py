@@ -17,29 +17,29 @@ MLP_HIDDEN_LAYERS = 100
 MLP_MAX_ITERATIONS = 1000
 
 # Creating arrays that contain arrays holding the testing and training data. Reshaped to form a 1 row multi column array
-X_train = np.array([pd.read_csv('data\\test_train\\train_1.csv')['prev GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_2.csv')['prev GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_3.csv')['prev GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_4.csv')['prev GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_5.csv')['prev GPA'].values.reshape(-1, 1)])
+X_train = np.array([pd.read_csv('..\\data\\test_train\\train_1.csv')['prev GPA'].values.reshape(-1, 1),
+                    pd.read_csv('..\\data\\test_train\\train_2.csv')['prev GPA'].values.reshape(-1, 1),
+                    pd.read_csv('..\\data\\test_train\\train_3.csv')['prev GPA'].values.reshape(-1, 1),
+                    pd.read_csv('..\\data\\test_train\\train_4.csv')['prev GPA'].values.reshape(-1, 1),
+                    pd.read_csv('..\\data\\test_train\\train_5.csv')['prev GPA'].values.reshape(-1, 1)])
 
-y_train = np.array([pd.read_csv('data\\test_train\\train_1.csv')['current GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_2.csv')['current GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_3.csv')['current GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_4.csv')['current GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_5.csv')['current GPA'].values.reshape(-1, 1)])
+y_train = np.array([pd.read_csv('..\\data\\test_train\\train_1.csv')['current GPA'].values.reshape(-1, 1),
+                    pd.read_csv('..\\data\\test_train\\train_2.csv')['current GPA'].values.reshape(-1, 1),
+                    pd.read_csv('..\\data\\test_train\\train_3.csv')['current GPA'].values.reshape(-1, 1),
+                    pd.read_csv('..\\data\\test_train\\train_4.csv')['current GPA'].values.reshape(-1, 1),
+                    pd.read_csv('..\\data\\test_train\\train_5.csv')['current GPA'].values.reshape(-1, 1)])
 
-X_test = np.array([pd.read_csv('data\\test_train\\test_1.csv')['prev GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_2.csv')['prev GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_3.csv')['prev GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_4.csv')['prev GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_5.csv')['prev GPA'].values.reshape(-1, 1)])
+X_test = np.array([pd.read_csv('..\\data\\test_train\\test_1.csv')['prev GPA'].values.reshape(-1, 1),
+                   pd.read_csv('..\\data\\test_train\\test_2.csv')['prev GPA'].values.reshape(-1, 1),
+                   pd.read_csv('..\\data\\test_train\\test_3.csv')['prev GPA'].values.reshape(-1, 1),
+                   pd.read_csv('..\\data\\test_train\\test_4.csv')['prev GPA'].values.reshape(-1, 1),
+                   pd.read_csv('..\\data\\test_train\\test_5.csv')['prev GPA'].values.reshape(-1, 1)])
 
-y_test = np.array([pd.read_csv('data\\test_train\\test_1.csv')['current GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_2.csv')['current GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_3.csv')['current GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_4.csv')['current GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_5.csv')['current GPA'].values.reshape(-1, 1)])
+y_test = np.array([pd.read_csv('..\\data\\test_train\\test_1.csv')['current GPA'].values.reshape(-1, 1),
+                   pd.read_csv('..\\data\\test_train\\test_2.csv')['current GPA'].values.reshape(-1, 1),
+                   pd.read_csv('..\\data\\test_train\\test_3.csv')['current GPA'].values.reshape(-1, 1),
+                   pd.read_csv('..\\data\\test_train\\test_4.csv')['current GPA'].values.reshape(-1, 1),
+                   pd.read_csv('..\\data\\test_train\\test_5.csv')['current GPA'].values.reshape(-1, 1)])
 
 
 def mlp():
