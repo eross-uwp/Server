@@ -25,10 +25,10 @@ def get_training_testing():
     y_test = []
 
     for i in range(0, NUMBER_FOLDS):
-        X_train.append(pd.read_csv('..\\data\\test_train\\train_' + str(i+1) + '.csv')['prev GPA'].values.reshape(-1, 1))
-        y_train.append(pd.read_csv('..\\data\\test_train\\train_' + str(i+1) + '.csv')['current GPA'].values.reshape(-1, 1))
-        X_test.append(pd.read_csv('..\\data\\test_train\\test_' + str(i+1) + '.csv')['prev GPA'].values.reshape(-1, 1))
-        y_test.append(pd.read_csv('..\\data\\test_train\\test_' + str(i+1) + '.csv')['current GPA'].values.reshape(-1, 1))
+        X_train.append(pd.read_csv('data\\test_train\\train_' + str(i+1) + '.csv')['prev GPA'].values.reshape(-1, 1))
+        y_train.append(pd.read_csv('data\\test_train\\train_' + str(i+1) + '.csv')['current GPA'].values.reshape(-1, 1))
+        X_test.append(pd.read_csv('data\\test_train\\test_' + str(i+1) + '.csv')['prev GPA'].values.reshape(-1, 1))
+        y_test.append(pd.read_csv('data\\test_train\\test_' + str(i+1) + '.csv')['current GPA'].values.reshape(-1, 1))
 
     return X_train, y_train, X_test, y_test
 
