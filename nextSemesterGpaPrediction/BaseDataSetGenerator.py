@@ -10,9 +10,9 @@ from ZeroRModel import predict
 from sklearn.model_selection import StratifiedKFold
 
 # CONSTANTS
-RAW_DATA_FILE = 'data\\termGPA.csv'
-FINAL_DATA_FILE = 'data\\finalDataSet.csv'
-TESTING_TRAINING_DATA_FOLDER = 'data\\test_train\\'
+RAW_DATA_FILE = '..\\data\\termGPA.csv'
+FINAL_DATA_FILE = '..\\data\\finalDataSet.csv'
+TESTING_TRAINING_DATA_FOLDER = '..\\data\\test_train\\'
 TRAIN_PREFIX = 'train_'
 TEST_PREFIX = 'test_'
 FIRST_COLUMN = 'id'
