@@ -1,8 +1,14 @@
+# Generating the stratified and k-fold training/testing data for each term type
+"""
+___authors___: Austin FitzGerald and Zhiwei Yang
+"""
+
 import pandas as pd
 from sklearn.model_selection import StratifiedKFold
 
 RANDOM_SEED = 313131
 NUMBER_FOLDS = 5
+NUM_TERMS = 3
 TESTING_TRAINING_DATA_FOLDER = 'data\\test_train\\'
 RAW_DATA_FIRST = 'data\\first_term.csv'
 RAW_DATA_SECOND = 'data\\second_term.csv'
@@ -10,7 +16,8 @@ RAW_DATA_THIRD = 'data\\third_term.csv'
 RAW_DATA_ARRAY = [RAW_DATA_FIRST, RAW_DATA_SECOND, RAW_DATA_THIRD]
 FIRST_HEADERS = ['first term gpa', 'first term standing']
 SECOND_HEADERS = ['first term gpa', 'first term standing', 'second term gpa', 'second term standing']
-THIRD_HEADERS = ['first term gpa', 'first term standing', 'second term gpa', 'second term standing', 'third term gpa', 'third term standing']
+THIRD_HEADERS = ['first term gpa', 'first term standing', 'second term gpa', 'second term standing', 'third term gpa',
+                 'third term standing']
 HEADERS_ARRAY = [FIRST_HEADERS, SECOND_HEADERS, THIRD_HEADERS]
 FILENAME_ARRAY = ['first_term_', 'second_term_', 'third_term_']
 GRADUATED_HEADER = 'graduated'
@@ -19,24 +26,24 @@ TEST_PREFIX = 'test_'
 
 
 def stratify_fold():
-    for i in range(0, 3):
-        first_term = pd.read_csv(RAW_DATA_ARRAY[i])
-        X = first_term[(HEADERS_ARRAY[i])].copy()
-        y = first_term[[GRADUATED_HEADER]].copy()
+    for i in range(0, NUM_TERMS):
+        X_trains = []
+        y_trains = []
+
+        term = pd.read_csv(RAW_DATA_ARRAY[i])
+        X = term[HEADERS_ARRAY[i]].copy().values
+        y = term[GRADUATED_HEADER].copy().values.reshape(-1, 1)
 
         skf = StratifiedKFold(n_splits=NUMBER_FOLDS, shuffle=True, random_state=RANDOM_SEED)
 
         loop_count = 0
-        X_train = pd.DataFrame(columns=X.columns)
-        X_test = pd.DataFrame(columns=X.columns)
-        y_train = pd.DataFrame(columns=y.columns)
-        y_test = pd.DataFrame(columns=y.columns)
-        for train_index, test_index in skf.split(X.values, y.values):
-            X_train = X_train.append(X.loc[train_index, :], ignore_index=True)
-            X_test = X_test.append(X.loc[test_index, :], ignore_index=True)
 
-            y_train = y_train.append(y.loc[train_index, :], ignore_index=True)
-            y_test = y_test.append(y.loc[test_index, :], ignore_index=True)
+        for train_index, test_index in skf.split(X, y):
+            X_train, X_test = X[train_index], X[test_index]
+            X_trains.append(X_train)
+
+            y_train, y_test = y[train_index], y[test_index]
+            y_trains.append(y_train)
 
             (pd.concat(
                 [pd.DataFrame(X_train, columns=HEADERS_ARRAY[i]),
