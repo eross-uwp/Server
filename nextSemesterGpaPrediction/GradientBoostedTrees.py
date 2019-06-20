@@ -17,6 +17,8 @@ TRAIN_DATA_PATH = 'https://raw.githubusercontent.com/earos-uwp/Server/master/nex
 TEST_DATA_PATH = 'https://raw.githubusercontent.com/earos-uwp/Server/master/nextSemesterGpaPrediction/data' \
                  '/test_train/test_'
 
+RANDOM_SEED = 313131
+
 
 # Getting training dataset from Github
 def get_train_data():
@@ -44,7 +46,8 @@ if __name__ == "__main__":
         y = np.array(train['current GPA'])
 
         # create the model
-        model = GradientBoostingRegressor(n_estimators=500, learning_rate=0.01, max_features=1, max_depth=4, loss='ls')
+        model = GradientBoostingRegressor(n_estimators=500, learning_rate=0.01, max_features=1, max_depth=4, loss='ls',
+                                          random_state=RANDOM_SEED)
         model.fit(x, y)
 
         # Calculate the Root mean squared
