@@ -1,4 +1,5 @@
-def convert_term_number(self, semester, panda, index):
+
+def convert_term_number(semester, panda, index):
     if semester == 'fall':
         return convert_fall(panda, index)
     if semester == 'summer':
@@ -8,7 +9,8 @@ def convert_term_number(self, semester, panda, index):
     if semester == 'spring':
         convert_spring(panda, index)
 
-def convert_fall(self, panda, index):
+
+def convert_fall(panda, index):
     if panda.at[index, 'year'] == 2007:
         return 740
     if panda.at[index, 'year'] == 2008:
@@ -34,7 +36,8 @@ def convert_fall(self, panda, index):
     if panda.at[index, 'year'] == 2018:
         return 1070
 
-def convert_summer(self, panda, index):
+
+def convert_summer(panda, index):
     if panda.at[index, 'year'] == 2008:
         return 760
     if panda.at[index, 'year'] == 2009:
@@ -58,7 +61,8 @@ def convert_summer(self, panda, index):
     if panda.at[index, 'year'] == 2018:
         return 1060
 
-def convert_winter(self, panda, index):
+
+def convert_winter(panda, index):
     if panda.at[index, 'year'] == 2008:
         return 745
     if panda.at[index, 'year'] == 2009:
@@ -84,7 +88,8 @@ def convert_winter(self, panda, index):
     if panda.at[index, 'year'] == 2019:
         return 1075
 
-def convert_spring(self, panda, index):
+
+def convert_spring(panda, index):
     if panda.at[index, 'year'] == 2008:
         return 750
     if panda.at[index, 'year'] == 2009:
