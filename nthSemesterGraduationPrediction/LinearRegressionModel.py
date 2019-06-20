@@ -21,6 +21,7 @@ y_train_array = [[], [], []]
 y_test_array = [[], [], []]
 
 
+#  Iterate through all possible training/testing files and store them in appropriate arrays.
 def get_training_testing():
     for j in range(0, sd.NUM_TERMS):
         for i in range(0, sd.NUMBER_FOLDS):
@@ -40,15 +41,17 @@ def get_training_testing():
 
 def lr_predict():
     np.random.seed(sd.RANDOM_SEED)
-    model = LinearRegression()
 
-    rr = []
-    rmse = []
+    rr = []  # hold the R^2 and RMSE results for each term
+    rmse = []  # |
 
-    y_tests = [[], [], []]
+    y_tests = [[], [], []]  # hold the tests and predictions so we can graph them
     y_preds = [[], [], []]
 
+    #  for each term, make a new model and fit it to all data in the folds. save the results and create graphs. for
+    #  each term, calculate the R^2 and RMSE as well.
     for j in range(0, sd.NUM_TERMS):
+        model = LinearRegression()
         for i in range(0, sd.NUMBER_FOLDS):
             model.fit(x_train_array[j][i], y_train_array[j][i])
             y_pred = model.predict(x_test_array[j][i])
@@ -73,9 +76,10 @@ def lr_predict():
         rr.append(metrics.r2_score(y_tests[j], y_preds[j]))
         rmse.append(np.math.sqrt(metrics.mean_squared_error(y_tests[j], y_preds[j])))
 
+    #  save all R^2 and RMSE results in one file with appropriate prefixes
     with open(RESULTS_FOLDER + RESULTS_TEXTFILE, "w") as text_file:
         for i in range(0, sd.NUM_TERMS):
-            text_file.write('term_' + str(i+1) + ': R^2 = ' + str(rr[i]) + ', RMSE = ' + str(rmse[i]) + '\n')
+            text_file.write('term_' + str(i + 1) + ': R^2 = ' + str(rr[i]) + ', RMSE = ' + str(rmse[i]) + '\n')
 
 
 if __name__ == "__main__":

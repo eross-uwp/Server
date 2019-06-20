@@ -27,24 +27,20 @@ TEST_PREFIX = 'test_'
 
 def stratify_fold():
     for i in range(0, NUM_TERMS):
-        X_trains = []
-        y_trains = []
 
-        term = pd.read_csv(RAW_DATA_ARRAY[i])
-        X = term[HEADERS_ARRAY[i]].copy().values
-        y = term[GRADUATED_HEADER].copy().values.reshape(-1, 1)
+        term = pd.read_csv(RAW_DATA_ARRAY[i])  # reading each term file
+        X = term[HEADERS_ARRAY[i]].copy().values  # each term file has a different headers array
+        y = term[GRADUATED_HEADER].copy().values.reshape(-1, 1)  # reshape to one column
 
         skf = StratifiedKFold(n_splits=NUMBER_FOLDS, shuffle=True, random_state=RANDOM_SEED)
 
         loop_count = 0
 
-        for train_index, test_index in skf.split(X, y):
+        for train_index, test_index in skf.split(X, y):  # actually stratify and fold
             X_train, X_test = X[train_index], X[test_index]
-            X_trains.append(X_train)
-
             y_train, y_test = y[train_index], y[test_index]
-            y_trains.append(y_train)
 
+            # create a new training and testing csv for each fold of each term
             (pd.concat(
                 [pd.DataFrame(X_train, columns=HEADERS_ARRAY[i]),
                  pd.DataFrame(y_train, columns=[GRADUATED_HEADER])],
