@@ -9,6 +9,8 @@ from sklearn.ensemble import GradientBoostingRegressor
 from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
+from sklearn.metrics import roc_curve
+
 import StratifyAndGenerateDatasets as sd
 
 RESULTS_FOLDER = 'GradientBoostedTreesResults\\'
@@ -44,6 +46,7 @@ def gbt_predict():
 
     rr = []  # hold the R^2 and RMSE results for each term
     rmse = []  # |
+    auc = []  # |
 
     y_tests = [[], [], []]  # hold the tests and predictions so we can graph them
     y_preds = [[], [], []]
@@ -58,6 +61,8 @@ def gbt_predict():
         for i in range(0, sd.NUMBER_FOLDS):
             model.fit(x_train_array[j][i], y_train_array[j][i])
             y_pred = model.predict(x_test_array[j][i])
+            for idx, a in enumerate(y_pred):
+                y_pred[idx] = sd.round_school(a)
             y_tests[j] += list(y_test_array[j][i])
             y_preds[j] += list(y_pred)
             plt.scatter((x_test_array[j][i])[:, 0], y_test_array[j][i], color='g', label='1st term')
@@ -68,7 +73,7 @@ def gbt_predict():
             if j > 1:
                 plt.scatter((x_test_array[j][i])[:, 4], y_test_array[j][i], color='b', label='3rd term')
 
-            plt.plot((x_test_array[j][i])[:, 0], model.predict(x_test_array[j][i]), color='k', label='predicted')
+            plt.plot((x_test_array[j][i])[:, 0], y_pred, color='k', label='predicted')
             # plt.scatter((x_test_array[j][i])[:, 0], model.predict(x_test_array[j][i]), color='r', label='predicted')
             plt.title('term #' + str(j + 1) + ', test #' + str(i + 1))
             plt.xlabel('GPA')
@@ -78,12 +83,15 @@ def gbt_predict():
             plt.close()
 
         rr.append(metrics.r2_score(y_tests[j], y_preds[j]))
+        auc.append(metrics.roc_auc_score(y_tests[j], y_preds[j]))
         rmse.append(np.math.sqrt(metrics.mean_squared_error(y_tests[j], y_preds[j])))
 
     #  save all R^2 and RMSE results in one file with appropriate prefixes
     with open(RESULTS_FOLDER + RESULTS_TEXTFILE, "w") as text_file:
         for i in range(0, sd.NUM_TERMS):
-            text_file.write('term_' + str(i + 1) + ': R^2 = ' + str(rr[i]) + ', RMSE = ' + str(rmse[i]) + '\n')
+            text_file.write(
+                'term_' + str(i + 1) + ': R^2 = ' + str(rr[i]) + ', RMSE = ' + str(rmse[i]) + ', AUC = ' + str(
+                    auc[i]) + '\n')
 
 
 if __name__ == "__main__":

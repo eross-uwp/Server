@@ -56,5 +56,14 @@ def stratify_fold():
             loop_count += 1
 
 
+# https://stackoverflow.com/a/43886290
+def round_school(x):
+    if x < 0:
+        return 0
+    else:
+        i, f = divmod(x, 1)
+        return int(i + ((f >= 0.5) if (x > 0) else (f > 0.5)))
+
+
 if __name__ == "__main__":
     stratify_fold()
