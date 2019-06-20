@@ -9,8 +9,6 @@ from sklearn.ensemble import GradientBoostingRegressor
 from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
-from sklearn.metrics import roc_curve
-
 import StratifyAndGenerateDatasets as sd
 
 RESULTS_FOLDER = 'GradientBoostedTreesResults\\'
