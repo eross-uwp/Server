@@ -6,7 +6,6 @@ ___authors___: Austin FitzGerald
 
 from sklearn import metrics
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.linear_model import LinearRegression
 from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
