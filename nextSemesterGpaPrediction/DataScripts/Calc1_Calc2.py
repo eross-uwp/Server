@@ -8,26 +8,28 @@ def convert_term_number():
             assign proper number
     """
 if __name__ == "__main__":
-    data = pd.read_csv('data\\Grades.csv')
+
+    data = pd.read_csv('..\\data\\Grades.csv')
 
     # var = data[data.course_name.isin(['Calculus and Analytic Geometry I', 'Calculus and Analytic Geometry II'])][['student_id', 'course_name', 'grade']]
     # var.to_csv('J:\\Research Tools\\Research\\Server\\Data\\Generated_Pandas\\Calc1_Calc2.csv')
 
     var = data[data.course_name == 'Calculus and Analytic Geometry I'][['student_id', 'semester', 'year', 'grade']]
-    var.to_csv('data\\Generated_Pandas\\Calc1.csv')
+    var.to_csv('..\\data\\Generated_Pandas\\Calc1.csv')
 
     var = data[data.course_name == 'Calculus and Analytic Geometry II'][['student_id', 'semester', 'year', 'grade']]
-    var.to_csv('data\\Generated_Pandas\\Calc2.csv')
+    var.to_csv('..\\data\\Generated_Pandas\\Calc2.csv')
 
-    calc1 = pd.read_csv('data\\Generated_Pandas\\Calc1.csv')
+    calc1 = pd.read_csv('..\\data\\Generated_Pandas\\Calc1.csv')
 
     calc1['term_number'] = 0
-    calc1.to_csv('data\\Generated_Pandas\\Calc1.csv')
+    calc1.to_csv('..\\data\\Generated_Pandas\\Calc1.csv')
 
-    calc2 = pd.read_csv('data\\Generated_Pandas\\Calc2.csv')
+    calc2 = pd.read_csv('..\\data\\Generated_Pandas\\Calc2.csv')
     calc1['term_number'] = 0
 
-    for i, row in calc2.iterrows():
+    # for i, row in calc2.iterrows():
+    for i in range(0, 938):
         if calc1.at[i, 'semester'] == 'fall':
             if calc1.at[i, 'year'] == 2007:
                 calc1.at[i, 'term_number'] = 740
@@ -130,5 +132,5 @@ if __name__ == "__main__":
             if calc1.at[i, 'year'] == 2019:
                 calc1.at[i, 'term_number'] = 1075
 
-    calc1.to_csv('data\\Generated_Pandas\\Calc1.csv')
-    calc1.to_csv('data\\Generated_Pandas\\Calc2.csv')
+    calc1.to_csv('..\\data\\Generated_Pandas\\Calc1.csv')
+    calc1.to_csv('..\\data\\Generated_Pandas\\Calc2.csv')
