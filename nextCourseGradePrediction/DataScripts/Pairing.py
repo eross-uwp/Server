@@ -1,8 +1,8 @@
 import pandas as pd
 
 if __name__ == "__main__":
-    calc1 = pd.read_csv('..\\data\\Generated_Pandas\\Calc1.csv')
-    calc2 = pd.read_csv('..\\data\\Generated_Pandas\\Calc2.csv')
+    calc1 = pd.read_csv('..\\data\\Generated_Pandas\\class1.csv')
+    calc2 = pd.read_csv('..\\data\\Generated_Pandas\\class2.csv')
     pair = pd.DataFrame(columns=['student_id', 'class1', 'class2'])
 
     for i, row in calc1.iterrows():
@@ -13,4 +13,4 @@ if __name__ == "__main__":
                 pair.at[i, 'class1'] = calc1.at[i, 'grade']
                 pair.at[i, 'class2'] = calc2.at[j, 'grade']
 
-    pair.to_csv('..\\data\\Generated_Pandas\\calcPairs.csv')
+    pair.to_csv('..\\data\\Generated_Pandas\\classPairs.csv')
