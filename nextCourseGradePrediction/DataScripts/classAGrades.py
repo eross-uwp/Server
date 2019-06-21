@@ -1,14 +1,14 @@
 import pandas as pd
 from addTermNumber import convert_term_number
 
-if __name__ == "__main__":
 
-    data = pd.read_csv('..\\..\\data\\Grades.csv')
+def get_class_a(class_name, data):
+    # data = pd.read_csv('..\\..\\data\\Grades.csv')
 
-    class1 = data[data.course_name == 'Calculus and Analytic Geometry I'][['student_id', 'semester', 'year', 'grade']]
-    class1['term_number'] = 0
+    a = data[data.course_name == class_name][['student_id', 'semester', 'year', 'grade']]
+    a['term_number'] = 0
 
-    for i, row in class1.iterrows():
-        class1.at[i, 'term_number'] = convert_term_number(class1.at[i, 'semester'], class1.at[i, 'year'])
+    for i, row in a.iterrows():
+        a.at[i, 'term_number'] = convert_term_number(a.at[i, 'semester'], a.at[i, 'year'])
 
-    class1.to_csv('..\\data\\Generated_Pandas\\classA.csv')
+    return a
