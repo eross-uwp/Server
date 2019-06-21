@@ -10,4 +10,4 @@ if __name__ == '__main__':
     for i, row in class2.iterrows():
         class2.at[i, 'term_number'] = convert_term_number(class2.at[i, 'semester'], class2.at[i, 'year'])
 
-    class2.to_csv('..\\data\\Generated_Pandas\\class2.csv')
+    class2.to_csv('..\\data\\Generated_Pandas\\classB.csv')

@@ -11,4 +11,4 @@ if __name__ == "__main__":
     for i, row in class1.iterrows():
         class1.at[i, 'term_number'] = convert_term_number(class1.at[i, 'semester'], class1.at[i, 'year'])
 
-    class1.to_csv('..\\data\\Generated_Pandas\\class1.csv')
+    class1.to_csv('..\\data\\Generated_Pandas\\classA.csv')
