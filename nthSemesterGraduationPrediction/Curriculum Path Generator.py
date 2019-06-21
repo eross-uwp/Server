@@ -18,25 +18,21 @@ postReqCourse = curriculumStructure[POSTREQ].values
 prereq = curriculumStructure[PREREQ].values
 relation = curriculumStructure[RELATION].values
 
-allCourseWithPrereq = pd.DataFrame()
-
-
-def findPrereqs(courseArray):
-    courseIndexes = np.where(postReqCourse == courseArray[-1])
-    for courseIndex in courseIndexes:
-        if relation[courseIndex.any] == 'single':
-            courseArray = courseArray.append(prereq[courseIndex])
-            findPrereqs(courseArray)
-        if relation[courseIndex.any()] == 'or':
-
-        if relation[courseIndex.any()] == 'and':
-
-     yield courseArray
-
-
 
 if __name__ == "__main__":
-    for course in np.unique(postReqCourse):
-        allCourseWithPrereq = allCourseWithPrereq.insert(0, str(course), [], 1)
-    tempArray = np.array()
-    for course in np.unique(postReqCourse):
+    unique, counts = np.unique(relation, return_counts=True)
+    total = dict(zip(unique, counts))
+    print(total['or'])
+    allCourseWithPrereq = pd.DataFrame(columns=range(np.unique(postReqCourse).size))#np.unique(postReqCourse), c
+
+    print('dsf')
+    print('dsf')
+    while True:
+        for eachPostreq in allCourseWithPrereq:
+            courseIndexes = np.where(postReqCourse == eachPostreq.values[-1])
+            for courseIndex in courseIndexes:
+                if relation[courseIndex].any == 'single':
+                    eachPostreq.values = eachPostreq.values.append(prereq[courseIndex])
+                #if relation[courseIndex.any()] == 'or':
+                #if relation[courseIndex.any()] == 'and':
+        break
