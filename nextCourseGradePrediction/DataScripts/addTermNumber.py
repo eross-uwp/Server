@@ -1,5 +1,16 @@
+"""
+__Author__: Nate Braukhoff
+"""
+
 
 def convert_term_number(semester, year):
+    """
+    Each term of the school year has a unique number attached to it. This method will assign tha number to the right
+    term
+    :param semester:
+    :param year:
+    :return: The term number
+    """
     if semester == 'fall':
         return convert_fall(year)
     if semester == 'summer':
@@ -11,6 +22,12 @@ def convert_term_number(semester, year):
 
 
 def convert_fall(year):
+    """
+    All term number for fall semesters for years 07 - 18
+    param year:
+    :return: Term number for the fall semester
+    """
+
     if year == 2007:
         return 740
     if year == 2008:
@@ -38,6 +55,12 @@ def convert_fall(year):
 
 
 def convert_summer(year):
+    """
+    All term number for summer classes for years 07 - 18
+    param year:
+    :return: Term number for the fall semester
+    """
+
     if year == 2008:
         return 760
     if year == 2009:
@@ -63,6 +86,12 @@ def convert_summer(year):
 
 
 def convert_winter(year):
+    """
+    All term number for winter classes for years 07 - 18
+    param year:
+    :return: Term number for the fall semester
+    """
+
     if year == 2008:
         return 745
     if year == 2009:
@@ -90,6 +119,11 @@ def convert_winter(year):
 
 
 def convert_spring(year):
+    """
+    All term number for spring semesters for years 08 - 19
+    param year:
+    :return: Term number for the fall semester
+    """
     if year == 2008:
         return 750
     if year == 2009:
