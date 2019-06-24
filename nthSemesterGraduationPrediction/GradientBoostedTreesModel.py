@@ -5,7 +5,7 @@ ___authors___: Austin FitzGerald
 """
 
 from sklearn import metrics
-from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.ensemble import GradientBoostingClassifier
 from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
@@ -13,7 +13,7 @@ import StratifyAndGenerateDatasets as sd
 
 RESULTS_FOLDER = 'GradientBoostedTreesResults\\'
 GRAPH_FILE_PREFIX = 'graph_term_'
-RESULTS_TEXTFILE = 'GradientBoostedTrees_Results.txt'
+RESULTS_TEXTFILE = 'GradientBoostedTrees_Results_Term_'
 
 x_train_array = [[], [], []]
 x_test_array = [[], [], []]
@@ -39,59 +39,60 @@ def get_training_testing():
                     sd.GRADUATED_HEADER].values)
 
 
-def gbt_predict():
+def gbt_predict(term_number, estimators, rate, depth, split, leaf, features):
     np.random.seed(sd.RANDOM_SEED)
 
-    rr = []  # hold the R^2 and RMSE results for each term
-    rmse = []  # |
-    auc = []  # |
+    y_tests = []  # hold combined tests and predictions for all folds
+    y_preds = []
 
-    y_tests = [[], [], []]  # hold the tests and predictions so we can graph them
-    y_preds = [[], [], []]
+    model = GradientBoostingClassifier(n_estimators=estimators, learning_rate=rate, max_depth=depth,
+                                       min_samples_split=split, min_samples_leaf=leaf, loss='deviance',
+                                       random_state=sd.RANDOM_SEED,
+                                       max_features=features)  # tested, avg best parameters
+    for fold_num in range(0, sd.NUMBER_FOLDS):
+        model.fit(x_train_array[term_number][fold_num], y_train_array[term_number][fold_num])
+        y_pred = model.predict(x_test_array[term_number][fold_num])
 
-    #  for each term, make a new model and fit it to all data in the folds. save the results and create graphs. for
-    #  each term, calculate the R^2 and RMSE as well.
-    for j in range(0, sd.NUM_TERMS):
-        model = GradientBoostingRegressor(n_estimators=500, learning_rate=0.01, max_depth=3, loss='ls',
-                                          random_state=sd.RANDOM_SEED, max_features=0.5)  # tested, avg best parameters
-        #  best for rmse: term1[300, 0.01, 3, 'auto'], term2[500, 0.01, 3, 0.5], term3[500, 0.01, 3, 0.5]
-        #  best for rr: term1[300, 0.01, 3, 'auto'], term2[500, 0.01, 3, 0.5], term3[500, 0.01, 3, 0.5]
-        for i in range(0, sd.NUMBER_FOLDS):
-            model.fit(x_train_array[j][i], y_train_array[j][i])
-            y_pred = model.predict(x_test_array[j][i])
-            for idx, a in enumerate(y_pred):
-                y_pred[idx] = sd.round_school(a)
-            y_tests[j] += list(y_test_array[j][i])
-            y_preds[j] += list(y_pred)
-            plt.scatter((x_test_array[j][i])[:, 0], y_test_array[j][i], color='g', label='1st term')
+        # round the graduation predictions, either 1 or 0
+        for idx, a in enumerate(y_pred):
+            y_pred[idx] = sd.round_school(a)
 
-            # TODO, not very extensible
-            if j > 0:
-                plt.scatter((x_test_array[j][i])[:, 2], y_test_array[j][i], color='r', label='2nd term')
-            if j > 1:
-                plt.scatter((x_test_array[j][i])[:, 4], y_test_array[j][i], color='b', label='3rd term')
+        y_tests += list(y_test_array[term_number][fold_num])
 
-            plt.plot((x_test_array[j][i])[:, 0], y_pred, color='k', label='predicted')
-            # plt.scatter((x_test_array[j][i])[:, 0], model.predict(x_test_array[j][i]), color='r', label='predicted')
-            plt.title('term #' + str(j + 1) + ', test #' + str(i + 1))
-            plt.xlabel('GPA')
-            plt.ylabel('graduation probability')
-            plt.legend(loc='upper left')
-            plt.savefig(RESULTS_FOLDER + GRAPH_FILE_PREFIX + str(j + 1) + '_' + str(i + 1))
-            plt.close()
+        y_preds += list(y_pred)
+        plt.scatter((x_test_array[term_number][fold_num])[:, 0], y_test_array[term_number][fold_num], color='g',
+                    label='1st term')
 
-        rr.append(metrics.r2_score(y_tests[j], y_preds[j]))
-        auc.append(metrics.roc_auc_score(y_tests[j], y_preds[j]))
-        rmse.append(np.math.sqrt(metrics.mean_squared_error(y_tests[j], y_preds[j])))
+        # TODO, not very extensible
+        if term_number > sd.FIRST_TERM:
+            plt.scatter((x_test_array[term_number][fold_num])[:, 2], y_test_array[term_number][fold_num], color='r',
+                        label='2nd term')
+        if term_number > sd.SECOND_TERM:
+            plt.scatter((x_test_array[term_number][fold_num])[:, 4], y_test_array[term_number][fold_num], color='b',
+                        label='3rd term')
 
-    #  save all R^2 and RMSE results in one file with appropriate prefixes
-    with open(RESULTS_FOLDER + RESULTS_TEXTFILE, "w") as text_file:
-        for i in range(0, sd.NUM_TERMS):
-            text_file.write(
-                'term_' + str(i + 1) + ': R^2 = ' + str(rr[i]) + ', RMSE = ' + str(rmse[i]) + ', AUC = ' + str(
-                    auc[i]) + '\n')
+        plt.scatter((x_test_array[term_number][fold_num])[:, 0], y_pred, color='k', label='predicted')
+        # plt.scatter((x_test_array[term_number][fold_num])[:, 0], model.predict(x_test_array[term_number][
+        # fold_num]), color='r', label='predicted')
+        plt.title('term #' + str(term_number + 1) + ', test #' + str(fold_num + 1))
+        plt.xlabel('GPA')
+        plt.ylabel('graduation')
+        plt.legend(loc='upper left')
+        plt.savefig(RESULTS_FOLDER + GRAPH_FILE_PREFIX + str(term_number + 1) + '_' + str(fold_num + 1))
+        plt.close()
+
+    rr = metrics.r2_score(y_tests, y_preds)
+    auc = metrics.roc_auc_score(y_tests, y_preds)
+    rmse = np.math.sqrt(metrics.mean_squared_error(y_tests, y_preds))
+
+    # save all R^2 and RMSE results in one file with appropriate prefixes
+    with open(RESULTS_FOLDER + RESULTS_TEXTFILE + str(term_number + 1) + '.txt', "w") as text_file:
+        text_file.write('R^2 = ' + str(rr) + ', RMSE = ' + str(rmse) + ', AUC = ' + str(auc))
 
 
 if __name__ == "__main__":
     get_training_testing()
-    gbt_predict()
+
+    gbt_predict(sd.FIRST_TERM, 100, 1, 1, 0.1, 0.3, 0.1)
+    gbt_predict(sd.SECOND_TERM, 100, 0.01, 1, 0.1, 0.1, 0.5)
+    gbt_predict(sd.THIRD_TERM, 100, 0.01, 1, 0.1, 0.1, 0.5)

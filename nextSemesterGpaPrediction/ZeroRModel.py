@@ -10,10 +10,8 @@ import math
 
 PREV_GPA = 'prev GPA'
 CURR_GPA = 'current GPA'
-TRAIN_DATA_PATH = 'https://raw.githubusercontent.com/earos-uwp/Server/master/nextSemesterGpaPrediction/data/' \
-                  'test_train/train_'  # Raw file address
-TEST_DATA_PATH = 'https://raw.githubusercontent.com/earos-uwp/Server/master/nextSemesterGpaPrediction/data/' \
-                 'test_train/test_'  # Raw file address
+TRAIN_DATA_PATH = 'data\\test_train\\train_'  # Raw file address
+TEST_DATA_PATH = 'data\\test_train\\test_'  # Raw file address
 NUM_TRAIN_TEST = 5  # 5 datasets
 RESULTS_FOLDER = 'ZeroRModelResults\\'
 RESULTS_TEXTFILE = 'ZeroR_Results.txt'
@@ -30,9 +28,7 @@ def predict(original_data):
 
 if __name__ == "__main__":
     for x in range(1, NUM_TRAIN_TEST + 1):
-        url = (TRAIN_DATA_PATH + str(x) + '.csv')
-        file = urllib.request.urlopen(url)
-        trainData = pd.read_csv(file)  # Getting training dataset from Github
+        trainData = pd.read_csv(TRAIN_DATA_PATH + str(x) + '.csv')  # Getting training dataset from Github
 
         predictGPA = predict(trainData[PREV_GPA])
         # Run the ZeroRModel predict function

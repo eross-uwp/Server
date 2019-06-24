@@ -23,6 +23,9 @@ FILENAME_ARRAY = ['first_term_', 'second_term_', 'third_term_']
 GRADUATED_HEADER = 'graduated'
 TRAIN_PREFIX = 'train_'
 TEST_PREFIX = 'test_'
+FIRST_TERM = 0
+SECOND_TERM = 1
+THIRD_TERM = 2
 
 
 def stratify_fold():

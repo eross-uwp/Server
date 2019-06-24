@@ -11,29 +11,21 @@ import urllib.request
 
 NUM_TRAIN_TEST = 5  # 5 data sets
 # Raw file address
-TRAIN_DATA_PATH = 'https://raw.githubusercontent.com/earos-uwp/Server/master/nextSemesterGpaPrediction/data' \
-                  '/test_train/train_'
+TRAIN_DATA_PATH = 'data\\/test_train\\train_'
 # Raw file address
-TEST_DATA_PATH = 'https://raw.githubusercontent.com/earos-uwp/Server/master/nextSemesterGpaPrediction/data' \
-                 '/test_train/test_'
+TEST_DATA_PATH = 'data\\test_train\\test_'
 
 RANDOM_SEED = 313131
 
 
 # Getting training dataset from Github
 def get_train_data():
-    url = (TRAIN_DATA_PATH + str(x) + '.csv')
-    file = urllib.request.urlopen(url)
-
-    return pd.read_csv(file)
+    return pd.read_csv(TRAIN_DATA_PATH + str(x) + '.csv')
 
 
 # Getting testing dataset from Github
 def get_test_data():
-    url1 = (TEST_DATA_PATH + str(x) + '.csv')
-    file1 = urllib.request.urlopen(url1)
-
-    return pd.read_csv(file1)
+    return pd.read_csv(TEST_DATA_PATH + str(x) + '.csv')
 
 
 if __name__ == "__main__":
