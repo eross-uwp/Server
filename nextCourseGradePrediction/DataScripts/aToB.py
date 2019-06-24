@@ -29,7 +29,7 @@ def fill_class_a(sl, a):
 def fill_class_b(sl, b):
     """
     Fills in the student's column for ClassB. We are only considering the students grade for the first attempt for
-    CalssB. The grade for the second attempt will not be stored in this DataFrame.
+    ClassB. The grade for the second attempt will not be stored in this DataFrame.
     :param sl: List of the student's information for the class.
     :param b: DataFrame of all the grades for ClassB.
     :return: The DataFrame that has the columns for ClassB filled in for each student.
