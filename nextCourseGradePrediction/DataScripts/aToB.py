@@ -106,7 +106,7 @@ def create_table(list_of_ids):
 
 
 if __name__ == "__main__":
-    # In the future a function will be added were search for any class name. 
+    # In the future a function will be added were search for any class name.
     class_a_name = 'Calculus and Analytic Geometry I'
     class_b_name = 'Calculus and Analytic Geometry II'
 
