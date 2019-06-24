@@ -12,8 +12,9 @@ import numpy as np
 import StratifyAndGenerateDatasets as sd
 
 RESULTS_FOLDER = 'GradientBoostedTreesResults\\'
-GRAPH_FILE_PREFIX = 'graph_term_'
-RESULTS_TEXTFILE = 'GradientBoostedTrees_Results_Term_'
+GRAPH_FILE_PREFIX = 'graphs\\term_'
+RESULTS_TEXTFILE_PREFIX = 'stats\\term_'
+PREDICTION_OUTPUT_PREFIX = 'prediction output\\term_'
 
 x_train_array = [[], [], []]
 x_test_array = [[], [], []]
@@ -72,8 +73,6 @@ def gbt_predict(term_number, estimators, rate, depth, split, leaf, features):
                         label='3rd term')
 
         plt.scatter((x_test_array[term_number][fold_num])[:, 0], y_pred, color='k', label='predicted')
-        # plt.scatter((x_test_array[term_number][fold_num])[:, 0], model.predict(x_test_array[term_number][
-        # fold_num]), color='r', label='predicted')
         plt.title('term #' + str(term_number + 1) + ', test #' + str(fold_num + 1))
         plt.xlabel('GPA')
         plt.ylabel('graduation')
@@ -83,16 +82,23 @@ def gbt_predict(term_number, estimators, rate, depth, split, leaf, features):
 
     rr = metrics.r2_score(y_tests, y_preds)
     auc = metrics.roc_auc_score(y_tests, y_preds)
+    acc = metrics.accuracy_score(y_tests, y_preds)
     rmse = np.math.sqrt(metrics.mean_squared_error(y_tests, y_preds))
 
-    # save all R^2 and RMSE results in one file with appropriate prefixes
-    with open(RESULTS_FOLDER + RESULTS_TEXTFILE + str(term_number + 1) + '.txt', "w") as text_file:
-        text_file.write('R^2 = ' + str(rr) + ', RMSE = ' + str(rmse) + ', AUC = ' + str(auc))
+    # save all statistical results with appropriate prefixes
+    with open(RESULTS_FOLDER + RESULTS_TEXTFILE_PREFIX + str(term_number + 1) + '.txt', "w") as text_file:
+        text_file.write(
+            'R^2 = ' + str(rr) + ', RMSE = ' + str(rmse) + ', AUC = ' + str(auc) + ', Accuracy = ' + str(acc))
+
+    # save predictions (matching with tests) to files
+    predictions = pd.DataFrame({'graduation prediction': y_preds})
+    predictions.to_csv(RESULTS_FOLDER + PREDICTION_OUTPUT_PREFIX + str(term_number) + '.csv', index=False)
 
 
 if __name__ == "__main__":
     get_training_testing()
 
+    # TODO: tune parameters
     gbt_predict(sd.FIRST_TERM, 100, 1, 1, 0.1, 0.3, 0.1)
     gbt_predict(sd.SECOND_TERM, 100, 0.01, 1, 0.1, 0.1, 0.5)
     gbt_predict(sd.THIRD_TERM, 100, 0.01, 1, 0.1, 0.1, 0.5)

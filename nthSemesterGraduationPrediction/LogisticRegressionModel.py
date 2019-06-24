@@ -5,15 +5,20 @@ ___authors___: Austin FitzGerald
 """
 
 from sklearn import metrics
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import GridSearchCV
+from sklearn.pipeline import Pipeline
+
 import StratifyAndGenerateDatasets as sd
 
 RESULTS_FOLDER = 'LogisticRegressionResults\\'
-GRAPH_FILE_PREFIX = 'graph_term_'
-RESULTS_TEXTFILE = 'LogisticRegression_Results.txt'
+GRAPH_FILE_PREFIX = 'graphs\\term_'
+RESULTS_TEXTFILE_PREFIX = 'stats\\term_'
+PREDICTION_OUTPUT_PREFIX = 'prediction output\\term_'
 
 x_train_array = [[], [], []]
 x_test_array = [[], [], []]
@@ -39,13 +44,15 @@ def get_training_testing():
                     sd.GRADUATED_HEADER].values)
 
 
-def lr_predict(term_number):
+def lr_predict(term_number, C, penalty, solver):
     np.random.seed(sd.RANDOM_SEED)
 
     y_tests = []  # hold combined tests and predictions for all folds
     y_preds = []
+    x_tests = []
 
-    model = LogisticRegression(random_state=sd.RANDOM_SEED, solver='lbfgs')
+    model = LogisticRegression(random_state=sd.RANDOM_SEED, C=C, penalty=penalty, solver=solver)
+
     for fold_num in range(0, sd.NUMBER_FOLDS):
         model.fit(x_train_array[term_number][fold_num], y_train_array[term_number][fold_num])
         y_pred = model.predict(x_test_array[term_number][fold_num])
@@ -54,10 +61,10 @@ def lr_predict(term_number):
             y_pred[idx] = sd.round_school(a)
 
         y_tests += list(y_test_array[term_number][fold_num])
-
+        x_tests += list(x_test_array[term_number][fold_num])
         y_preds += list(y_pred)
-        plt.scatter((x_test_array[term_number][fold_num])[:, 0], y_test_array[term_number][fold_num], color='g',
-                    label='1st term')
+
+        plt.scatter((x_test_array[term_number][fold_num])[:, 0], y_test_array[term_number][fold_num], color='g',label='1st term')
 
         # TODO, not very extensible
         if term_number > sd.FIRST_TERM:
@@ -77,15 +84,21 @@ def lr_predict(term_number):
 
     rr = metrics.r2_score(y_tests, y_preds)
     auc = metrics.roc_auc_score(y_tests, y_preds)
+    acc = metrics.accuracy_score(y_tests, y_preds)
     rmse = np.math.sqrt(metrics.mean_squared_error(y_tests, y_preds))
 
-    # save all R^2 and RMSE results in one file with appropriate prefixes
-    with open(RESULTS_FOLDER + RESULTS_TEXTFILE + str(term_number + 1) + '.txt', "w") as text_file:
-        text_file.write('R^2 = ' + str(rr) + ', RMSE = ' + str(rmse) + ', AUC = ' + str(auc))
+    # save all statistical results with appropriate prefixes
+    with open(RESULTS_FOLDER + RESULTS_TEXTFILE_PREFIX + str(term_number + 1) + '.txt', "w") as text_file:
+        text_file.write(
+            'R^2 = ' + str(rr) + ', RMSE = ' + str(rmse) + ', AUC = ' + str(auc) + ', Accuracy = ' + str(acc))
+
+    # save predictions (matching with tests) to files
+    predictions = pd.DataFrame({'graduation prediction': y_preds})
+    predictions.to_csv(RESULTS_FOLDER + PREDICTION_OUTPUT_PREFIX + str(term_number) + '.csv', index=False)
 
 
 if __name__ == "__main__":
     get_training_testing()
-    lr_predict(sd.FIRST_TERM)
-    lr_predict(sd.SECOND_TERM)
-    lr_predict(sd.THIRD_TERM)
+    lr_predict(sd.FIRST_TERM, C=11.288378916846883, penalty='l1', solver='liblinear')
+    lr_predict(sd.SECOND_TERM, C=0.615848211066026, penalty='l2', solver='liblinear')
+    lr_predict(sd.THIRD_TERM, C=1.0, penalty='l1', solver='liblinear')
