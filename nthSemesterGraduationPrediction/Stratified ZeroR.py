@@ -9,6 +9,7 @@ import numpy as np
 import StratifyAndGenerateDatasets as sd
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score
+from sklearn.metrics import roc_auc_score
 
 
 RESULTS_FOLDER = 'ZeroR2Results\\'
@@ -44,6 +45,7 @@ def zr_predict():
         print('true negative: ', tn, '\nfalse positive: ', fp, '\nfalse negative: ', fn, '\ntrue positive: ', tp)
         print('Precision: ', precision_score(target, prediction_array))
         print('Recall: ', recall_score(target, prediction_array))
+        print('ROC_AUC score:' + roc_auc_score(target, prediction_array))
 
 
 if __name__ == "__main__":
