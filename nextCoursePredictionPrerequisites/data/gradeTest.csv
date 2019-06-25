@@ -1,0 +1,17 @@
+student_id,semester,year,college,catalog #,course_name,grade,academic standing,academic level,course credits,grade casted,grade points,picked_from,major
+10132,fall,2007,BILSA,2010,Financial Accounting,B,Good,Sophomore,3,3,9,ge_grades,Software Engineering
+9535,fall,2007,BILSA,2330,"World Population, Food and Resources",B,Good,Sophomore,3,3,9,ge_grades,Software Engineering
+4990,fall,2007,BILSA,1350,General Botany,B,Good,Sophomore,5,3,15,ge_grades,Software Engineering
+2425,fall,2007,BILSA,1300,Global Business,A,Good,Sophomore,3,4,12,ge_grades,Computer Science
+2197,fall,2007,BILSA,1300,Global Business,A,Probation,Sophomore,3,4,12,ge_grades,Computer Science
+1884,fall,2007,BILSA,1300,Global Business,B,Good,Freshman,3,3,9,ge_grades,Software Engineering
+5633,fall,2007,BILSA,1300,Global Business,C,Good,Freshman,3,2,6,ge_grades,Computer Science
+4930,fall,2007,BILSA,2330,Leadership and Management,A,Good,Sophomore,3,4,12,ge_grades,Software Engineering
+5447,fall,2007,BILSA,2330,Leadership and Management,C,Good,Sophomore,3,2,6,ge_grades,Software Engineering
+5851,fall,2007,BILSA,2330,Leadership and Management,C,Good,Junior,3,2,6,ge_grades,Software Engineering
+2754,fall,2007,BILSA,2330,Leadership and Management,F,Dismissed,Sophomore,3,0,0,ge_grades,Software Engineering
+7638,fall,2007,BILSA,2330,Leadership and Management,A,Good,Freshman,3,4,12,ge_grades,Computer Science
+9878,fall,2007,BILSA,2330,Leadership and Management,A,Good,Freshman,3,4,12,ge_grades,Software Engineering
+2450,fall,2007,BILSA,2330,Leadership and Management,B,Good,Freshman,3,3,9,ge_grades,Software Engineering
+5365,fall,2007,BILSA,2330,Leadership and Management,C,Good,Freshman,3,2,6,ge_grades,Software Engineering
+2754,fall,2011,BILSA,2330,Leadership and Management,B,Probation,Junior,3,3,9,ge_grades,Software Engineering
