@@ -19,6 +19,8 @@ def grade_finder():
     for i, row in courses.iterrows():
         print(count)
         count = count + 1
+        if count == 100:
+            students.to_csv('data\\studentGradesPerCourse.csv')
         for j, tier in grades.iterrows():
             if grades.at[j, COURSE] == courses.at[i, UNIQUE_COURSE]:
                 add_grade(grades.at[j, STUDENT_ID], grades.at[j, GRADE], i)
