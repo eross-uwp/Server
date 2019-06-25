@@ -40,16 +40,17 @@ def get_training_testing():
                     sd.GRADUATED_HEADER].values)
 
 
-def gbt_predict(term_number, estimators, rate, depth, split, leaf, features):
+def gbt_predict(term_number, criterion, learning_rate, loss, max_depth, max_features,
+                min_samples_leaf, min_samples_split, n_estimators, subsample):
     np.random.seed(sd.RANDOM_SEED)
 
     y_tests = []  # hold combined tests and predictions for all folds
     y_preds = []
 
-    model = GradientBoostingClassifier(n_estimators=estimators, learning_rate=rate, max_depth=depth,
-                                       min_samples_split=split, min_samples_leaf=leaf, loss='deviance',
-                                       random_state=sd.RANDOM_SEED,
-                                       max_features=features)  # tested, avg best parameters
+    model = GradientBoostingClassifier(criterion=criterion, learning_rate=learning_rate, loss=loss, max_depth=max_depth,
+                                       max_features=max_features,
+                                       min_samples_leaf=min_samples_leaf, min_samples_split=min_samples_split,
+                                       n_estimators=n_estimators, subsample=subsample, random_state=sd.RANDOM_SEED)
     for fold_num in range(0, sd.NUMBER_FOLDS):
         model.fit(x_train_array[term_number][fold_num], y_train_array[term_number][fold_num])
         y_pred = model.predict(x_test_array[term_number][fold_num])
@@ -98,7 +99,8 @@ def gbt_predict(term_number, estimators, rate, depth, split, leaf, features):
 if __name__ == "__main__":
     get_training_testing()
 
+    gbt_predict(sd.FIRST_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=1, max_features='log2',
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=0.5)  # tuned
     # TODO: tune parameters
-    gbt_predict(sd.FIRST_TERM, 100, 1, 1, 0.1, 0.3, 0.1)
     gbt_predict(sd.SECOND_TERM, 100, 0.01, 1, 0.1, 0.1, 0.5)
     gbt_predict(sd.THIRD_TERM, 100, 0.01, 1, 0.1, 0.1, 0.5)
