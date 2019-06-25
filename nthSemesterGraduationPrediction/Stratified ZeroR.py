@@ -12,10 +12,16 @@ from sklearn.metrics import precision_score, recall_score
 from sklearn.metrics import roc_auc_score
 
 
+from random import choices
+import random
+
+
 RESULTS_FOLDER = 'ZeroR2Results\\'
 GRAPH_FILE_PREFIX = 'graph_term_'
 RESULTS_TEXTFILE = 'ZeroR2_Results.txt'
 STRATIFIED_DATA_PATH = 'data\\test_train\\'
+random.seed = 313131
+population = [0, 1]
 
 
 #  Iterate through all possible training/testing files and store them in appropriate arrays.
@@ -32,13 +38,10 @@ def zr_predict():
             train, test = get_training_testing(term, set)
             nonz = np.count_nonzero(train['graduated'].values)
             train_size = train['graduated'].values.size
+            weights = [1-(nonz/train_size), nonz/train_size]
 
-            if nonz/train_size < 0.5:
-                prediction_array = np.concatenate((prediction_array, np.zeros(test['graduated'].size)), axis=0)
-                target = np.concatenate((target, test['graduated']), axis=0)
-            else:
-                prediction_array = np.concatenate((prediction_array, np.ones(test['graduated'].size)), axis=0)
-                target = np.concatenate((target, test['graduated']), axis=0)
+            for eachStudent in range(0, test['graduated'].size + 1):
+                prediction_array = np.concatenate((prediction_array, np.array([choices(population, weights)])), axis=0)
 
         tn, fp, fn, tp =confusion_matrix(target, prediction_array).ravel()
         print(str(term) + ' term result:')
