@@ -1,0 +1,26 @@
+first term result:
+true negative:  395 
+false positive:  397 
+false negative:  401 
+true positive:  439
+Precision:  0.5251196172248804
+Recall:  0.5226190476190476
+ROC_AUC score:0.5106782106782106
+
+second term result:
+true negative:  44 
+false positive:  184 
+false negative:  186 
+true positive:  654
+Precision:  0.7804295942720764
+Recall:  0.7785714285714286
+ROC_AUC score:0.48577694235588975
+
+third term result:
+true negative:  0 
+false positive:  32 
+false negative:  31 
+true positive:  809
+Precision:  0.9619500594530321
+Recall:  0.9630952380952381
+ROC_AUC score:0.48154761904761906
