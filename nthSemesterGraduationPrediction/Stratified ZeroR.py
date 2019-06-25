@@ -40,15 +40,17 @@ def zr_predict():
             train_size = train['graduated'].values.size
             weights = [1-(nonz/train_size), nonz/train_size]
 
-            for eachStudent in range(0, test['graduated'].size + 1):
-                prediction_array = np.concatenate((prediction_array, np.array([choices(population, weights)])), axis=0)
+            for eachStudent in range(0, test['graduated'].size):
+                prediction_array = np.concatenate((prediction_array, choices(population, weights)), axis=0)
+            target = np.concatenate((target, test['graduated']), axis=0)
 
         tn, fp, fn, tp =confusion_matrix(target, prediction_array).ravel()
+        print()
         print(str(term) + ' term result:')
         print('true negative: ', tn, '\nfalse positive: ', fp, '\nfalse negative: ', fn, '\ntrue positive: ', tp)
         print('Precision: ', precision_score(target, prediction_array))
         print('Recall: ', recall_score(target, prediction_array))
-        print('ROC_AUC score:' + roc_auc_score(target, prediction_array))
+        print('ROC_AUC score:' + str(roc_auc_score(target, prediction_array)))
 
 
 if __name__ == "__main__":
