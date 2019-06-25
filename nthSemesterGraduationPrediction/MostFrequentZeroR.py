@@ -12,16 +12,15 @@ from sklearn.metrics import precision_score, recall_score
 from sklearn.metrics import roc_auc_score
 
 
-RESULTS_FOLDER = 'ZeroR2Results\\'
 GRAPH_FILE_PREFIX = 'graph_term_'
-RESULTS_TEXTFILE = 'ZeroR2_Results.txt'
 STRATIFIED_DATA_PATH = 'data\\test_train\\'
 
 
 #  Iterate through all possible training/testing files and store them in appropriate arrays.
 def get_training_testing(term, number):
     return pd.read_csv(STRATIFIED_DATA_PATH + term + '_term_train_' + str(number) + '.csv'),\
-           pd.read_csv(STRATIFIED_DATA_PATH + term + '_term_train_' + str(number) + '.csv')
+           pd.read_csv(STRATIFIED_DATA_PATH + term + '_term_train_' + str(number) + '.csv') # looping through each fold
+
 
 def zr_predict():
     np.random.seed(sd.RANDOM_SEED)
@@ -30,17 +29,17 @@ def zr_predict():
         target = np.ones(0)
         for set in range(1, 6):
             train, test = get_training_testing(term, set)
-            nonz = np.count_nonzero(train['graduated'].values)
+            nonz = np.count_nonzero(train['graduated'].values)          # Graduated Count
             train_size = train['graduated'].values.size
 
             if nonz/train_size < 0.5:
                 prediction_array = np.concatenate((prediction_array, np.zeros(test['graduated'].size)), axis=0)
-                target = np.concatenate((target, test['graduated']), axis=0)
+                target = np.concatenate((target, test['graduated']), axis=0)    # Add prediction
             else:
                 prediction_array = np.concatenate((prediction_array, np.ones(test['graduated'].size)), axis=0)
-                target = np.concatenate((target, test['graduated']), axis=0)
+                target = np.concatenate((target, test['graduated']), axis=0)    # Add prediction
 
-        tn, fp, fn, tp =confusion_matrix(target, prediction_array).ravel()
+        tn, fp, fn, tp =confusion_matrix(target, prediction_array).ravel()      # Decompose confusion matrix
         print()
         print(str(term) + ' term result:')
         print('true negative: ', tn, '\nfalse positive: ', fp, '\nfalse negative: ', fn, '\ntrue positive: ', tp)

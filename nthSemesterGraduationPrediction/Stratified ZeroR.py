@@ -16,35 +16,36 @@ from random import choices
 import random
 
 
-RESULTS_FOLDER = 'ZeroR2Results\\'
 GRAPH_FILE_PREFIX = 'graph_term_'
-RESULTS_TEXTFILE = 'ZeroR2_Results.txt'
 STRATIFIED_DATA_PATH = 'data\\test_train\\'
 random.seed = 313131
 population = [0, 1]
 
 
-#  Iterate through all possible training/testing files and store them in appropriate arrays.
+#  Iterate through all possible training/testing files and store them in appropriate dataframe.
 def get_training_testing(term, number):
     return pd.read_csv(STRATIFIED_DATA_PATH + term + '_term_train_' + str(number) + '.csv'),\
            pd.read_csv(STRATIFIED_DATA_PATH + term + '_term_train_' + str(number) + '.csv')
 
+
 def zr_predict():
     np.random.seed(sd.RANDOM_SEED)
+
     for term in ['first', 'second', 'third']:
         prediction_array = np.zeros(0)
         target = np.ones(0)
-        for set in range(1, 6):
+        for set in range(1, 6):         # looping through each fold
             train, test = get_training_testing(term, set)
-            nonz = np.count_nonzero(train['graduated'].values)
+            nonz = np.count_nonzero(train['graduated'].values)      # Graduated Count
             train_size = train['graduated'].values.size
-            weights = [1-(nonz/train_size), nonz/train_size]
+            weights = [1-(nonz/train_size), nonz/train_size]        # Weights for predicting
 
             for eachStudent in range(0, test['graduated'].size):
                 prediction_array = np.concatenate((prediction_array, choices(population, weights)), axis=0)
+                                                                    # Add prediction
             target = np.concatenate((target, test['graduated']), axis=0)
 
-        tn, fp, fn, tp =confusion_matrix(target, prediction_array).ravel()
+        tn, fp, fn, tp =confusion_matrix(target, prediction_array).ravel()      # Decompose confusion matrix
         print()
         print(str(term) + ' term result:')
         print('true negative: ', tn, '\nfalse positive: ', fp, '\nfalse negative: ', fn, '\ntrue positive: ', tp)
