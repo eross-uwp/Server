@@ -1,14 +1,17 @@
 from treelib import Node, Tree
-import numpy as np
-import pandas as pd
+from anytree.importer import DictImporter
+from anytree import RenderTree
 
-DATA_FOLDER = '..\\data\\Curriculum Structure.csv'
-
-curriculum_structure = pd.read_csv(DATA_FOLDER)
-forest = np.zeros(0)
-for postreq in curriculum_structure.iterrows():
-    curriculum_structure.at[postreq]['postreq']
-    for course in postreq.values:
-
-
+if __name__ == '__main__':
+    importer = DictImporter()
+    data = {
+        'a': 'root',
+        'children': [{'a': 'x',
+                      'children': [{'x': 'a'}]},
+                     {'a': 'y',
+                      'children': [{'y': 'x'}, {'y': 'z'}]},
+                     {'a': 'z'}]
+    }
+    root = importer.import_(data)
+    print(RenderTree(root))
 
