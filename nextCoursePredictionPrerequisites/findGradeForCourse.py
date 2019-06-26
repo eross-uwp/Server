@@ -19,8 +19,9 @@ def grade_finder():
     for i, row in courses.iterrows():
         print(count)
         count = count + 1
-        if count == 100:
+        if (count % 25) == 0:
             students.to_csv('data\\studentGradesPerCourse.csv')
+        reset_count()
         for j, tier in grades.iterrows():
             if grades.at[j, COURSE] == courses.at[i, UNIQUE_COURSE]:
                 add_grade(grades.at[j, STUDENT_ID], grades.at[j, GRADE], i)
@@ -30,7 +31,7 @@ def add_grade(id, grade, course_index):
     index = students.loc[students[STUDENT_ID] == id].index[0]
     grade_index = course_index * INDEX_MULTIPLIER
     grade_index = grade_index + INDEX_OFFSET + students.at[index, RETAKE_COUNT]
-    students[students.columns[grade_index]][index] = grade
+    students.loc[index, students.columns[grade_index]] = grade
     students.at[index, RETAKE_COUNT] = students.at[index, RETAKE_COUNT] + 1
 
 
