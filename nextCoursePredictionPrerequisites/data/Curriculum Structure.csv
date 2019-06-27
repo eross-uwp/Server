@@ -1,4 +1,4 @@
-﻿postreq,prereq,relationship,constrain
+postreq,prereq,relationship,constrain
 interAlgebra,math10,or,c-
 interAlgebra,problemSolving,or,c-
 collegeAlgebra,interAlgebra,single,c-
@@ -12,7 +12,7 @@ calc1,trig,or,c-
 calc1,precalc,or,c-
 discrete,calc1,or,c-
 circuitModeling,calc1,or,c-
-calc2,calc2,or,c-
+calc2,calc1,or,c-
 physics1,calc1,or,c-
 compGraphics,calc1,and,c-
 calc3,calc2,single,c-
