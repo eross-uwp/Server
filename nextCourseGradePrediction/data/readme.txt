@@ -1,1 +1,0 @@
-Base dataset for next course grade prediction: contains an id, term number, current course name/grade(on scale of 1), and next course name/grade(on scale of 1). Trying to use a MLP regression model to predict the next course grade.

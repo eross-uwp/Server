@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 import StratifyAndGenerateDatasets as sd
 
-RESULTS_FOLDER = 'GradientBoostedTreesResults\\'
+RESULTS_FOLDER = 'GBTClassifierResults\\'
 GRAPH_FILE_PREFIX = 'graphs\\term_'
 RESULTS_TEXTFILE_PREFIX = 'stats\\term_'
 PREDICTION_OUTPUT_PREFIX = 'prediction output\\term_'

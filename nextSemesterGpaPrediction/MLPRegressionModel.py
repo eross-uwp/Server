@@ -11,38 +11,30 @@ from sklearn.neural_network import MLPRegressor
 import BaseDataSetGenerator as bd
 
 RESULTS_FOLDER = 'MLPRegressionResults\\'
-GRAPH_FILE_PREFIX = 'MLPRegression_graph_'
 RESULTS_TEXTFILE = 'MLPRegression_Results.txt'
+GRAPH_FILE_PREFIX = 'graphs\\graph_'
+PREDICTION_OUTPUT_PREFIX = 'predictions'
 MLP_HIDDEN_LAYERS = 100
 MLP_MAX_ITERATIONS = 1000
 
-# Creating arrays that contain arrays holding the testing and training data. Reshaped to form a 1 row multi column array
-X_train = np.array([pd.read_csv('data\\test_train\\train_1.csv')['prev GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_2.csv')['prev GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_3.csv')['prev GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_4.csv')['prev GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_5.csv')['prev GPA'].values.reshape(-1, 1)])
+def get_training_testing():
+    # Creating arrays that contain arrays holding the testing and training data. Reshaped to form a 1 row multi
+    # column array
+    X_train = []
+    y_train = []
+    X_test = []
+    y_test = []
 
-y_train = np.array([pd.read_csv('data\\test_train\\train_1.csv')['current GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_2.csv')['current GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_3.csv')['current GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_4.csv')['current GPA'].values.reshape(-1, 1),
-                    pd.read_csv('data\\test_train\\train_5.csv')['current GPA'].values.reshape(-1, 1)])
+    for i in range(0, bd.NUMBER_OF_FOLDS):
+        X_train.append(pd.read_csv('data\\test_train\\train_' + str(i+1) + '.csv')['prev GPA'].values.reshape(-1, 1))
+        y_train.append(pd.read_csv('data\\test_train\\train_' + str(i+1) + '.csv')['current GPA'].values.reshape(-1, 1))
+        X_test.append(pd.read_csv('data\\test_train\\test_' + str(i+1) + '.csv')['prev GPA'].values.reshape(-1, 1))
+        y_test.append(pd.read_csv('data\\test_train\\test_' + str(i+1) + '.csv')['current GPA'].values.reshape(-1, 1))
 
-X_test = np.array([pd.read_csv('data\\test_train\\test_1.csv')['prev GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_2.csv')['prev GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_3.csv')['prev GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_4.csv')['prev GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_5.csv')['prev GPA'].values.reshape(-1, 1)])
-
-y_test = np.array([pd.read_csv('data\\test_train\\test_1.csv')['current GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_2.csv')['current GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_3.csv')['current GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_4.csv')['current GPA'].values.reshape(-1, 1),
-                   pd.read_csv('data\\test_train\\test_5.csv')['current GPA'].values.reshape(-1, 1)])
+    return X_train, y_train, X_test, y_test
 
 
-def mlp():
+def mlp(X_train, y_train, X_test, y_test):
     np.random.seed(bd.RANDOM_SEED)
     model = MLPRegressor(hidden_layer_sizes=(MLP_HIDDEN_LAYERS, MLP_MAX_ITERATIONS), max_iter=MLP_MAX_ITERATIONS)
 
@@ -50,7 +42,7 @@ def mlp():
     y_tests = []
     y_preds = []
 
-    for i in range(0, 5):
+    for i in range(0, bd.NUMBER_OF_FOLDS):
         model.fit(X_train[i], y_train[i])
         y_pred = model.predict(X_test[i])
 
@@ -67,14 +59,19 @@ def mlp():
         plt.savefig(RESULTS_FOLDER + GRAPH_FILE_PREFIX + str(i + 1))  # saving graphs
         plt.close()
 
-    # Calculating the R^2 and RMSE from the actual curr-term GPAs and predicted curr-term GPAs
+    # Calculating the stats from the actual curr-term GPAs and predicted curr-term GPAs
     rr = metrics.r2_score(y_tests, y_preds)
     rmse = np.math.sqrt(metrics.mean_squared_error(y_tests, y_preds)) / 4
 
-    # Saving the R^2 and RMSE to a text file.
+    # Saving the stats to a text file.
     with open(RESULTS_FOLDER + RESULTS_TEXTFILE, "w") as text_file:
         text_file.write('R^2 = ' + str(rr) + ', RMSE = ' + str(rmse))
 
+    # save predictions (matching with tests) to files
+    predictions = pd.DataFrame({'next term gpa prediction': y_preds})
+    predictions.to_csv(RESULTS_FOLDER + PREDICTION_OUTPUT_PREFIX + '.csv', index=False)
+
 
 if __name__ == "__main__":
-    mlp()
+    X_train, y_train, X_test, y_test = get_training_testing()
+    mlp(X_train, y_train, X_test, y_test)
