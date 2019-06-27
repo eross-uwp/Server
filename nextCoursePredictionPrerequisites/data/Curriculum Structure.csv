@@ -1,30 +1,30 @@
 postreq,prereq,relationship,constrain
-interAlgebra,math10,or,c-
-interAlgebra,problemSolving,or,c-
-collegeAlgebra,interAlgebra,single,c-
-fundEng,interAlgebra,or,c-
-precalc,interAlgebra,or,b-
-database,C,or,
-trig,collegeAlgebra,single,c-
-fundEng,collegeAlgebra,or,c-
-precalc,collegeAlgebra,or,c-
-calc1,trig,or,c-
-calc1,precalc,or,c-
-discrete,calc1,or,c-
-circuitModeling,calc1,or,c-
-calc2,calc1,or,c-
-physics1,calc1,or,c-
-compGraphics,calc1,and,c-
-calc3,calc2,single,c-
-physics2,calc2,and,c-
-statistics,calc2,single,c-
-humanFactors,calc2,and,c-
-softProject1,discrete,and,c-
-ai,discrete,and,c-
-operations,statistics,single,
-qualityEng,statistics,or,c-
-physics1,fundEng,or,c-
-physics2,physics1,and,c-
+Intermediate Algebra,math10,or,c-
+Intermediate Algebra,Mathematical Problem Solving,or,c-
+College Algebra,Intermediate Algebra,single,c-
+Fundamentals of Engineering Analysis Tools,Intermediate Algebra,or,c-
+Precalculus,Intermediate Algebra,or,b-
+Database Design and Implementation,C,or,
+Trigonometry and Analytic Geometry,College Algebra,single,c-
+Fundamentals of Engineering Analysis Tools,College Algebra,or,c-
+Precalculus,College Algebra,or,c-
+Calculus and Analytic Geometry I,Trigonometry and Analytic Geometry,or,c-
+Calculus and Analytic Geometry I,Precalculus,or,c-
+Discrete Mathematics,Calculus and Analytic Geometry I,or,c-
+Circuit Modeling I,Calculus and Analytic Geometry I,or,c-
+Calculus and Analytic Geometry II,Calculus and Analytic Geometry I,or,c-
+Introductory Physics I,Calculus and Analytic Geometry I,or,c-
+Computer Graphics,Calculus and Analytic Geometry I,and,c-
+Calculus and Analytic Geometry III,Calculus and Analytic Geometry II,single,c-
+General Physics II,Calculus and Analytic Geometry II,and,c-
+Statistics and Probability,Calculus and Analytic Geometry II,single,c-
+Human Factors Engineering,Calculus and Analytic Geometry II,and,c-
+Software Engineering Project I,Discrete Mathematics,and,c-
+Artificial Intelligence,Discrete Mathematics,and,c-
+Operations Research I,Statistics and Probability,single,
+qualityEng,Statistics and Probability,or,c-
+Introductory Physics I,Fundamentals of Engineering Analysis Tools,or,c-
+General Physics II,Introductory Physics I,and,c-
 progCPP,introProg,single,
 oops1,progCPP,single,c-
 introMicro,progCPP,and,c-
@@ -33,32 +33,32 @@ introCompSec,oops1,single,c-
 dataComm,oops1,single,c-
 caos,oops1,single,c-
 introSoftEng,oops1,single,c-
-database,oops1,and,c-
+Database Design and Implementation,oops1,and,c-
 ooad,oops1,and,c-
 softQuality,oops2,single,c-
 interSoftEng,oops2,and,c-
 progLangStructs,oops2,single,c-
 realTimeEmbedSys,oops2,or,c-
 softMaint,oops2,and,c-
-ai,oops2,and,c-
-compGraphics,oops2,and,c-
+Artificial Intelligence,oops2,and,c-
+Computer Graphics,oops2,and,c-
 realTimeEmbedSys,B,and,
 A,caos,or,c-
 softProject2,softQuality,and,c-
 softMaint,introSoftEng,and,c-
 interSoftEng,introSoftEng,and,c-
 ooad,introSoftEng,and,c-
-softProject1,interSoftEng,and,c-
-softProject2,softProject1,and,c-
+Software Engineering Project I,interSoftEng,and,c-
+softProject2,Software Engineering Project I,and,c-
 softMaint,ooad,and,c-
-softProject1,ooad,and,c-
-logic,circuitModeling,or,c-
+Software Engineering Project I,ooad,and,c-
+logic,Circuit Modeling I,or,c-
 introMicro,logic,and,c-
 A,electricalProjects,or,c-
 logic,A,or,
 productManagement,engManagement,single,
-humanFactors,anatomy,and,
+Human Factors Engineering,anatomy,and,
 B,caos,or,
 B,introMicro,or,
 C,oops1,or,
-C,discrete,or,
+C,Discrete Mathematics,or,

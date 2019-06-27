@@ -1,4 +1,3 @@
-from treelib import Node, Tree
 from anytree.importer import DictImporter
 from anytree import RenderTree
 import numpy as np
@@ -12,7 +11,7 @@ children_list_test = ['x', 'y', 'z']
 SELF_KEY = 'key'
 CORE = ''
 
-
+forester = {}
 def get_children_list(prereq_class):
     temp_list=[]
     for each_element in prereq_class:
@@ -29,8 +28,10 @@ if __name__ == '__main__':
         tree_root['children'] = get_children_list(post_reqs.values.tolist())
         importer = DictImporter()
         root = importer.import_(tree_root)
-        print(RenderTree(root))
-        print('\n\n\n')
+        #print(RenderTree(root))
+        forester[CORE] = root
+        #print('\n\n\n')
+    print(forester)
 
 
 
