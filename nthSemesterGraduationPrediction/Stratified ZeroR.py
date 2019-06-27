@@ -7,14 +7,9 @@ ___authors___: Zhiwei Yang
 import pandas as pd
 import numpy as np
 import StratifyAndGenerateDatasets as sd
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import precision_score, recall_score
-from sklearn.metrics import roc_auc_score
-
-
 from random import choices
 import random
-
+from sklearn.metrics import confusion_matrix, precision_score, recall_score, roc_auc_score, accuracy_score
 
 GRAPH_FILE_PREFIX = 'graph_term_'
 STRATIFIED_DATA_PATH = 'data\\test_train\\'
@@ -49,9 +44,10 @@ def zr_predict():
         print()
         print(str(term) + ' term result:')
         print('true negative: ', tn, '\nfalse positive: ', fp, '\nfalse negative: ', fn, '\ntrue positive: ', tp)
-        print('Precision: ', precision_score(target, prediction_array))
-        print('Recall: ', recall_score(target, prediction_array))
+        print('Precision score: ', precision_score(target, prediction_array))
+        print('Recall score: ', recall_score(target, prediction_array))
         print('ROC_AUC score:' + str(roc_auc_score(target, prediction_array)))
+        print('Accuracy score:' + str(accuracy_score(target, prediction_array)))
 
 
 if __name__ == "__main__":
