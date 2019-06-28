@@ -32,7 +32,3 @@ if __name__ == '__main__':
         forester[CORE] = root
         #print('\n\n\n')
     print(forester)
-
-
-
-
