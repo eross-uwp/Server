@@ -16,10 +16,10 @@ GRAPH_FILE_PREFIX = 'graphs\\term_'
 RESULTS_TEXTFILE_PREFIX = 'stats\\term_'
 PREDICTION_OUTPUT_PREFIX = 'prediction output\\term_'
 
-x_train_array = [[], [], []]
-x_test_array = [[], [], []]
-y_train_array = [[], [], []]
-y_test_array = [[], [], []]
+x_train_array = [[], [], [], [], [], [], [], [], [], []]
+x_test_array = [[], [], [], [], [], [], [], [], [], []]
+y_train_array = [[], [], [], [], [], [], [], [], [], []]
+y_test_array = [[], [], [], [], [], [], [], [], [], []]
 
 
 #  Iterate through all possible training/testing files and store them in appropriate arrays.
@@ -67,11 +67,32 @@ def gbt_predict(term_number, criterion, learning_rate, loss, max_depth, max_feat
 
         # TODO, not very extensible
         if term_number > sd.FIRST_TERM:
-            plt.scatter((x_test_array[term_number][fold_num])[:, 2], y_test_array[term_number][fold_num], color='r',
+            plt.scatter((x_test_array[term_number][fold_num])[:, 2], y_test_array[term_number][fold_num], color='#e6194B',
                         label='2nd term')
         if term_number > sd.SECOND_TERM:
-            plt.scatter((x_test_array[term_number][fold_num])[:, 4], y_test_array[term_number][fold_num], color='b',
+            plt.scatter((x_test_array[term_number][fold_num])[:, 4], y_test_array[term_number][fold_num], color='#f58231',
                         label='3rd term')
+        if term_number > sd.THIRD_TERM:
+            plt.scatter((x_test_array[term_number][fold_num])[:, 6], y_test_array[term_number][fold_num], color='#ffe119',
+                        label='4th term')
+        if term_number > sd.FOURTH_TERM:
+            plt.scatter((x_test_array[term_number][fold_num])[:, 8], y_test_array[term_number][fold_num], color='#bfef45',
+                        label='5th term')
+        if term_number > sd.FIFTH_TERM:
+            plt.scatter((x_test_array[term_number][fold_num])[:, 10], y_test_array[term_number][fold_num], color='#3cb44b',
+                        label='6th term')
+        if term_number > sd.SIXTH_TERM:
+            plt.scatter((x_test_array[term_number][fold_num])[:, 12], y_test_array[term_number][fold_num], color='#42d4f4',
+                        label='7th term')
+        if term_number > sd.SEVENTH_TERM:
+            plt.scatter((x_test_array[term_number][fold_num])[:, 14], y_test_array[term_number][fold_num], color='#4363d8',
+                        label='8th term')
+        if term_number > sd.EIGHTH_TERM:
+            plt.scatter((x_test_array[term_number][fold_num])[:, 16], y_test_array[term_number][fold_num], color='#911eb4',
+                        label='9th term')
+        if term_number > sd.NINTH_TERM:
+            plt.scatter((x_test_array[term_number][fold_num])[:, 18], y_test_array[term_number][fold_num], color='#f032e6',
+                        label='10th term')
 
         plt.scatter((x_test_array[term_number][fold_num])[:, 0], y_pred, color='k', label='predicted')
         plt.title('term #' + str(term_number + 1) + ', test #' + str(fold_num + 1))
@@ -93,15 +114,29 @@ def gbt_predict(term_number, criterion, learning_rate, loss, max_depth, max_feat
 
     # save predictions (matching with tests) to files
     predictions = pd.DataFrame({'graduation prediction': y_preds})
-    predictions.to_csv(RESULTS_FOLDER + PREDICTION_OUTPUT_PREFIX + str(term_number) + '.csv', index=False)
+    predictions.to_csv(RESULTS_FOLDER + PREDICTION_OUTPUT_PREFIX + str(term_number + 1) + '.csv', index=False)
 
 
 if __name__ == "__main__":
     get_training_testing()
-
+    # TODO, TUNING
     gbt_predict(sd.FIRST_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=1, max_features='log2',
-                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=0.5)  # tuned
-    # TODO: tune parameters
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=0.5)
     gbt_predict(sd.SECOND_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=1, max_features='log2',
                 min_samples_leaf=0.2, min_samples_split=0.1, n_estimators=500, subsample=0.5)
-    gbt_predict(sd.THIRD_TERM, 100, 0.01, 1, 0.1, 0.1, 0.5)
+    gbt_predict(sd.THIRD_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
+    gbt_predict(sd.FOURTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
+    gbt_predict(sd.FIFTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
+    gbt_predict(sd.SIXTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
+    gbt_predict(sd.SEVENTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
+    gbt_predict(sd.EIGHTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
+    gbt_predict(sd.NINTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
+    gbt_predict(sd.TENTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)

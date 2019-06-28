@@ -26,7 +26,7 @@ def get_training_testing(term, number):
 def zr_predict():
     np.random.seed(sd.RANDOM_SEED)
 
-    for term in ['first', 'second', 'third']:
+    for term in ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']:
         prediction_array = np.zeros(0)
         target = np.ones(0)
         for set in range(1, 6):         # looping through each fold
