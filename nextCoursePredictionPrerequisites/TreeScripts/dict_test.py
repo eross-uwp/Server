@@ -20,8 +20,11 @@ def get_children_list():
     return temp_list
 
 if __name__ == '__main__':
-    for each_lay
+
     tree_root['children'] = get_children_list()
     importer = DictImporter()
     root = importer.import_(tree_root)
+    root1 = importer.import_(tree_root)
+    root1.parent = root
     print(RenderTree(root))
+    print(RenderTree(root1))
