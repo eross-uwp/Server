@@ -52,6 +52,6 @@ def fill():
 
 
 if __name__ == "__main__":
-    #get_class_pairs()
+    get_class_pairs()
     #get_table_base()
-    fill()
+    #fill()
