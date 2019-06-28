@@ -1,4 +1,4 @@
-﻿postreq,prereq,relationship,constrain
+postreq,prereq,relationship,constrain
 Intermediate Algebra,Elementary Algebra,or,c-
 Intermediate Algebra,Mathematical Problem Solving,or,c-
 College Algebra,Intermediate Algebra,single,c-
@@ -10,7 +10,7 @@ Fundamentals of Engineering Analysis Tools,College Algebra,or,c-
 Precalculus,College Algebra,or,c-
 Calculus and Analytic Geometry I,Trigonometry and Analytic Geometry,or,c-
 Calculus and Analytic Geometry I,Precalculus,or,c-
-Discrete Mathematics,Calculus and Analytic Geometry I,or,c-
+Discrete Mathematics,Calculus and Analytic Geometry I,single,c-
 Circuit Modeling I,Calculus and Analytic Geometry I,or,c-
 Calculus and Analytic Geometry II,Calculus and Analytic Geometry II,or,c-
 General Physics I,Calculus and Analytic Geometry I,or,c-
@@ -62,3 +62,4 @@ B,Computer Architecture/Operating Systems,or,
 B,Introduction to Microprocessors,or,
 C,Object-Oriented Programming and Data Structures I,or,
 C,Discrete Mathematics,or,
+Elementary Algebra,Basic Algebra,single,c-
