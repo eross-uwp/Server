@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 import StratifyAndGenerateDatasets as sd
 
-RESULTS_FOLDER = 'GradientBoostedTreesResults\\'
+RESULTS_FOLDER = 'GBTClassifierResults\\'
 GRAPH_FILE_PREFIX = 'graphs\\term_'
 RESULTS_TEXTFILE_PREFIX = 'stats\\term_'
 PREDICTION_OUTPUT_PREFIX = 'prediction output\\term_'
@@ -102,5 +102,6 @@ if __name__ == "__main__":
     gbt_predict(sd.FIRST_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=1, max_features='log2',
                 min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=0.5)  # tuned
     # TODO: tune parameters
-    gbt_predict(sd.SECOND_TERM, 100, 0.01, 1, 0.1, 0.1, 0.5)
+    gbt_predict(sd.SECOND_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=1, max_features='log2',
+                min_samples_leaf=0.2, min_samples_split=0.1, n_estimators=500, subsample=0.5)
     gbt_predict(sd.THIRD_TERM, 100, 0.01, 1, 0.1, 0.1, 0.5)
