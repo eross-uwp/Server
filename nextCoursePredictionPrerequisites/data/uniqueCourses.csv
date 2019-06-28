@@ -1,1122 +1,816 @@
 starting_column,unique_courses
-1,19th C. Art History: The Emergence of Modernity
-2,20th c. Art History: Modern to Contemporary
-3,3D Industrial Production Drafting
-5,Abnormal Psychology
-7,AC/DC Fundamentals
-8,Accompanying
-9,Accounting Information Systems
-11,Accounting Issues for Managers
-14,Adapted Aquatics
-15,Adolescent Psychology
-17,Advanced Accounting I
-18,Advanced Analog Electronic Circuits
-19,Advanced Athletic Training
-20,Advanced Biochemistry Laboratory
-21,Advanced Ceramics
-23,Advanced Conducting - Choral
-24,Advanced Conducting Instrumental
-25,Advanced Cost Accounting
-26,Advanced Digital Design
-27,Advanced Fitness Training
-28,Advanced French Conversation
-29,Advanced French Grammar and Composition
-30,Advanced Geographic Information Systems
-31,Advanced Manufacturing Processes
-32,Advanced Manuscript Workshop
-33,Advanced Materials
-34,Advanced Physiology
-35,Advanced Scene Study
-36,Advanced Selling
-37,Advanced Taxation
-38,Advanced Techniques of Counseling and Psychotherapy
-39,Advanced Topics in Film Studies
-40,Advanced Topics in Inorganic Chemistry
-41,Advanced Topics in Writing Studies
-45,Advanced Writing
-46,Adventure Education
-47,Adventure Education Practicum
-48,Advertising
-49,"Advising, Interaction and Communication"
-50,Aerobic Weight Training
-53,Aerobics/Hydroaerobics
-54,African-American History 1619 to Present
-55,African-American Literature
-56,Agribusiness Management
-57,Agribusiness Marketing Management
-58,Agribusiness Professional Development I
-59,Agribusiness Professional Development II
-60,Agricultural Business Internship
-61,Agricultural Commodity Marketing
-62,Agricultural Consulting and Sales
-63,Agricultural Finance
-64,Agricultural Marketing
-65,Agricultural Policy Seminar
-66,Agricultural Prices and Risk Management
-67,Agriculture Internship Seminar
-68,Air and Waste Management
-69,Alcohol and Other Drugs as Related to Safety
-70,American Colonial History
-71,American Humor
-72,American Literature of Ethnicity and Immigration
-73,American Literature Since the Civil War
-74,American Literature Through the Civil War
-75,American Military History
-76,American Music
-77,American Political Parties and Interest Groups
-78,American Women's History
-79,Analog Electronics
-83,Analog IC Design
-84,Ancient Civilizations
-85,Animal Tissue Culture
-86,Applications in Information Systems
-88,Applications of Electrical Engineering
-90,Applied Communication
-94,Applied Mechanics
-97,Applied Optics
-99,Applied Regression Analysis
-100,Applied Thermodynamics
-101,Art and Children's Literature for Teachers
-102,Art and Social Studies for Teachers
-103,Art History I: Ancient and Medieval
-105,Art History II: Renaissance to Modern
-107,Art History IV: Ethnic Art in the United States
-109,Art Survey
-111,Artificial Intelligence
-112,Assessment and Screening in Physical Education
-113,Atract Algebra
-115,Audio and Video Systems
-116,Auditing I
-118,Aural Skills I
-120,Aural Skills II
-121,Aural Skills III
-122,Aural Skills IV
-123,Automatic Controls
-126,Badminton
-130,Bank Management
-131,Basic Design I: 2-D
-133,Basic Design II: 3-D
-134,Basic Newswriting and Reporting
-136,Basic Photography
-137,Basic Thermoscience for Engineers
-139,Basketball
-144,Basketball Band
-147,Beginning Acting
-148,Beginning Conducting
-149,Behavioral Research I
-150,Behavioral Research II
-151,Biochemistry Topics
-152,Biofuels
-153,Biogeography
-154,Biomechanical Kinesiology
-156,Biomedical Engineering
-157,BioQuest: Foundations for College Success
-158,Biorenewable Resources
-159,Biotechnology
-160,Biotechnology Seminar
-161,Black Experience in the U. S.
-163,Black Women and Feminism in the U.S.
-164,Bodywork for Musicians
-165,Bowling
-167,Brass Ensemble
-171,British Isles since 1714
-172,British Isles to 1714
-173,British Literature I: Beginnings through the Age of Swift
-174,British Literature II: Romanticism through the Present
-175,Budgets and Budgetary Control
-176,Building Construction Drafting
-177,Building Construction Materials
-178,Building Energy Management
-179,Building Systems Analysis
-180,Business Analytics
-182,Business Calculus
-185,Business Communication
-187,Business Ethics
-189,Calculus and Analytic Geometry I
-194,Calculus and Analytic Geometry II
-198,Calculus and Analytic Geometry III
-202,Capstone Course: From Atoms to Ecosystems - The Study of Life
-203,Careers in Counseling and Human Services
-204,Cartography
-205,Cell Biology
-206,Ceramics I
-207,Ceramics II
-208,Cervantes
-209,Chamber Ensemble
-214,Characteristics of Transescents
-215,Chemical Synthesis and Characterization
-216,Chemistry for Engineers
-219,Chemistry Seminar
-220,Child Psychology
-222,Choir
-239,Choral Literature
-240,Choral Music Methods I
-241,Choral Music Methods II
-242,CICS Application Programming
-244,Circuit Modeling I
-248,Circuit Modeling II
-252,Civil and Environmental Engineering Computer Applications
-254,Civil and Environmental Engineering Design Project
-255,Civil Engineering Computer Applications
-257,Civil Liberties
-258,Classical Mythology
-259,Clay Figure Sculpture
-260,Coaching Basketball
-261,Cognitive Psychology
-262,College Algebra
-266,College Geometry
-269,College Writing I
-273,College Writing II
-278,Colonial Latin American History
-279,Commercial Building Planning and Construction Techniques
-280,Communication & Leadership in Small Groups
-281,Communication Internship
-282,Communication Law
-284,Communication Research
-285,Communication Systems
-286,Community-Based Corrections
-287,Comparative Anatomy of the Vertebrates
-288,Comparative Criminal Justice Systems
-289,Comparative Politics
-290,Compensation Management
-291,Compiler Construction
-292,Complex Variables
-293,Computational Fluid Dynamics
-294,Computational Methods in Engineering
-295,Computer Analysis of Structures
-296,Computer Architecture/Operating Systems
-299,Computer Graphics
-300,Computer Science Special Topics
-301,Computer Security
-303,Computer-Aided Engineering
-304,Concepts of Biology
-306,Congressional Politics
-307,Constitutional Law
-308,Construction Administration
-309,Construction and Professional Management
-310,Construction Engineering
-312,Construction Equipment
-313,Construction Estimates and Costs
-314,Construction Hazard Control Solutions
-315,Construction Heavy Equipment Safety
-316,Construction Laboratory
-317,Construction Materials
-318,Construction Procedures
-319,Construction Safety Capstone
-320,Construction Safety Management
-321,Construction Technical Certifications
-322,Consumer Behavior
-323,Consumer Health
-324,Contemporary France and the Francophone World
-325,Contemporary Global Literature and Empire
-326,Contemporary Issues in Psychology
-327,Contemporary Social Problems
-328,Contemporary World-Views
-329,Continental Philosophy
-330,Controls Laboratory
-331,Conversational American English for International Students
-333,Cooperative Field Experience
-335,Corporate Finance
-338,Cost Accounting
-339,Courtroom Testimony and Evidence
-340,Crafts I: Fibers and Fabrics
-341,Creative Nonfiction Writing
-342,Crime and Delinquency
-343,Crime Prevention
-344,Crime Scene Processing Techniques
-345,Criminal Investigation
-346,Criminal Justice Fitness
-347,Criminal Justice Seminar
-348,Criminal Law
-349,Criminal Procedure and Evidence
-351,Criminology
-353,Crop Science
-354,Cultural Anthropology
-355,Current Issues and Democracy
-356,Current Issues in Health and Physical Education
-358,Current Topics In Criminal Justice
-361,Current Topics in Engineering
-363,Current Topics in Forensic Investigation
-364,Current Topics in Sustainability and Renewable Energy Systems
-367,Current Trends in Health Fitness and Health Promotion
-368,Curriculum and Facilities Planning in Career and Technical Education
-369,Cytotechnololgy Course
-373,Dance for Musical Theatre
-374,"Dance Tech/Practice (Ballroom, Latin, Country)"
-376,Data Analysis and Verification Tools
-377,Data Communications and Computer Networks
-380,Database Design and Implementation
-383,Design of Machine Elements
-386,"Design, Fabrication, and Simulation of MEMS"
-388,Diction I
-389,Diction II
-390,Differential Equations I
-394,Differential Equations II
-395,DIGITAL AUDIO PRODUCTION
-396,Digital Electronics
-398,Digital Media Technologies
-399,Digital Signal Processing
-401,Directed Individual Studies
-402,Directed Studies in Forensics
-404,Directing
-405,Disaster Preparedness
-406,Discrete Mathematics
-409,Discrete Time Control Systems
-411,Documentary
-412,Double Reed Woodwind Techniques
-413,Downhill Skiing
-415,Drafting for the Theatre
-416,Dramatic Literature II
-417,Drawing Concepts
-418,Drawing I: Basic Drawing
-419,Drawing II: Styles
-420,Drawing III: Figure Drawing
-421,Dynamical Systems
-423,Early Modern Europe
-424,East Asian Art
-425,Ecological Methods and Research
-426,Ecology and Evolution
-429,E-Commerce and E-Marketing in Today's World
-430,edTPA Final Portfolio
-431,Educational Media Application
-433,Educational Media Theory
-434,Eighth Semester Lessons
-438,Electric and Magnetic Fields
-441,Electric Motor Drives
-442,Electrical Applications in Agriculture
-443,Electrical Energy Systems and Energy Storage
-444,Electrical Engineering Cooperative Education
-445,Electrical Engineering Projects and Tools
-447,Electrical Power
-448,Electronic Communications
-449,Elementary Algebra
-452,Elementary Chinese
-454,Elementary French
-456,Elementary German
-460,Elementary Music Methods for Music Majors
-461,Elementary Music Methods for Non-Music Majors
-462,Elementary Physical Education Teaching Methods
-463,Elementary Spanish
-467,Elementary Statistics
-470,Elements of Surveying
-472,e-Marketing Applications
-473,Emotional Health
-474,Employee Recruitment and Selection
-476,Employee Training and Development
-477,Employment Law
-478,EMS Short-Term International Experience
-479,Energy Systems Design
-480,"Energy, Environment, and Society"
-482,Engineering Communications
-483,Engineering Computation
-486,Engineering Computer Graphics
-488,Engineering Continuous Improvement
-489,Engineering Economy
-491,Engineering Management
-492,Engineering Materials
-493,Engineering Mechanics-Dynamics
-496,Engineering Mechanics-Statics
-499,Engineering Modeling and Design
-502,Engineering Physics Lab
-504,Engineering Physics Senior Design
-505,Engineering Quantum Mechanics
-507,Engineering Success Skills
-511,Engines and Tractor Systems
-512,English Drama
-513,English Literature: Restoration Through the Romantic Age
-514,Entrepreneurship Field Experience
-518,Environmental Chemistry
-519,Environmental Chemistry Lab
-520,Environmental Conservation
-522,Environmental Control Design
-523,Environmental Engineering
-524,Environmental History
-525,Environmental Law
-526,Environmental Safety Management
-527,"Equipment, Structure and Power Systems"
-528,Ergonomics in the Workplace
-529,Essentials of Anatomy and Physiology
-531,Ethics
-533,Ethnic and Gender Equity in Education
-535,Ethnic Rights and Politics
-536,"Ethnicity, Race and Crime"
-537,Evidence Collection and Preservation
-538,Exercise Prescription for Special Population
-539,Exercise Science Research
-540,Existentialism
-541,Extrusion Technology
-542,Facilities Design
-543,Faculty-Led Short-Term International Experience in Art
-544,Failure of Materials
-545,Farm Business Management
-546,Federal Income Tax
-548,Fiction Writing
-549,Field Geography of the Western United States
-552,Fifth Semester Lessons
-554,Film and Literature
-555,Financial Accounting
-559,Financial Decision Making
-560,Financial Statement Analysis & Business Valuation
-561,Financial Systems Analysis
-562,Fingerprint Analysis and Other Biometrics
-564,Finite Element Method
-565,Finite Mathematics with Applications
-567,Fire Protection
-568,Fire Protection and Environmental Safety
-569,First Aid/Accident Prevention/Community CPR
-571,First Semester Lessons
-576,Fitness Assessment and Awareness/Activity
-577,Fitness Assessment and Management
-580,Fitness Evaluation
-581,Fitness Programming and Prescription
-582,Fleet Safety Management
-583,Fluid Dynamics
-585,Fluid Mechanics
-586,Fluid Power and Servo Systems
-588,Football Coaching
-589,Foreign Languages Travel Abroad Seminar
-591,Forensic Criminology
-592,Foundation Design
-593,Foundations of Corrections
-595,Foundations of Interviewing
-597,Foundations of Policing
-599,Fourth Semester Lessons
-605,French Revolution and Napoleon 1789-1815
-606,Freshwater Biology
-607,Fundamentals of Biological Investigations
-608,Fundamentals of Energy Sources
-610,Fundamentals of Engineering Analysis Tools
-611,Fundamentals of English
-615,Fundamentals of Industrial and Systems Engineering
-616,"Fungi, Algae and Bryophytes"
-617,Gay and Lesbian Drama
-618,Gay and Lesbian Literature
-619,Gay and Lesbian Literature for Young Adults
-620,Gender and Popular Culture
-621,Gender and Society
-622,Gender in Film
-623,General Biochemistry
-625,General Biochemistry Lab
-626,General Botany
-628,General Chemistry I
-630,General Chemistry II
-632,General Construction Estimating
-633,General Industry OSHA 30 Hour
-634,General Physics I
-637,General Physics I Lab
-639,General Physics II
-642,General Physics II Laboratory
-643,General Psychology
-645,Genetics
-646,Genetics of Livestock Improvement
-647,Geographic Information Systems
-648,Geography Field Sudy
-649,Geography of Asia
-650,Geography of Europe
-651,Geography of Latin America
-652,Geography of the National Parks
-653,Geography of Wisconsin
-654,Geography Seminar
-655,Geology for Engineers
-657,Geotechnical Engineering I
-658,Geotechnical Engineering II
-659,German Civilization
-660,German Conversation and Composition I
-661,German Conversation and Composition II
-662,German Literature of the 19th Century
-663,German Literature of the 20th Century
-664,Gilded Age and Progressive Era
-666,Global Business
-668,Global Landforms
-669,Golf
-671,Governmental and Not-for-Profit Accounting
-672,Grammar in Context
-673,Graphic Design I: Lettering and Typographic Design
-674,Graphic Design II: Introduction to Design Studio
-675,Graphic Design III: Advanced Typography
-676,Graphic Design IV: Advanced Graphic Design Studio
-677,Green Building Design
-678,Groundwater Hydrology
-679,Guided Research
-681,Hazard Control Solutions
-682,Health Education
-684,Health Promotion at the Worksite
-685,Heat Transfer
-688,Heat Transfer Applications
-689,High Brass Techniques
-690,High Woodwind Techniques
-691,Highway Engineering
-692,Historical Geography of the United States
-693,Historical Geology
-694,Historiography and Research Methods
-695,History & Principles of Career and Technical Education
-696,History and Development of Mathematical Concepts
-697,History and Literature of Western Music I
-698,History and Literature of Western Music II
-699,History and Literature of Western Music III
-700,History and Literature of Western Music IV
-701,History and Systems of Psychology
-702,History and Theory of Rhetoric
-703,History of American Musical Theatre
-704,History of Graphic Design
-705,History of Imaging
-706,History of Jazz
-707,History of Rock and Roll
-709,History of Science and Technology in Europe: Faculty-Led Short-Term Intl Exp
-710,History of the English Language
-712,History of the United States since 1877
-716,History of the United States to 1877
-718,History of U S Foreign Relations
-719,History of Western Science
-720,History of Wisconsin
-721,Human Anatomy and Physiology I
-722,Human Anatomy and Physiology II
-723,Human Behavior in the Social Environment
-724,Human Factors Engineering
-725,Human Gross Anatomy
-726,Human Growth and Development
-727,Human Performance and System Design
-728,Human Physiology
-729,Human Resource Management
-731,Hydrology
-732,Illustration I
-733,Illustration II
-734,Immunology
-735,Imperialism and Resistance
-736,Independent Research in Biology
-738,Independent Study
-742,Independent Study and Research in Political Science
-743,Independent Study in Art History
-744,Independent Study in Computer Science
-746,Independent Study in Engineering
-747,Independent Study in Engineering Physics
-751,Independent Study in Geography
-752,Independent Study in Mathematics
-755,Independent Study in Microsystems & Nanomaterials
-758,Independent Study in Physics
-759,Independent Study in the Department of Industrial Studies
-760,Independent Work in Ceramics
-762,Independent Work in Crafts
-763,Independent Work in Design
-764,Independent Work in Drawing
-765,Independent Work in Printmaking
-766,Individual Research in History
-768,Individual Research in Philosophy
-771,Individual Sports
-773,Individual Study in Psychology
-774,Industrial Control Systems
-775,Industrial Design for Production
-776,Industrial Engineering Computer Applications
-777,Industrial Hygiene and PPE
-778,Industrial Laser Application
-779,Industrial Psychology
-780,Industrial Robotics
-781,Industrial Studies Internship
-784,Industrial Systems Design
-786,Injury Prevention and Treatment
-787,Inorganic Chemistry
-789,Instrumental Analysis
-790,Instrumental Music Methods I
-791,Instrumental Music Methods II
-792,Integrated Design Software
-793,Interdisciplinary Special Topics
-794,Intermediate Accounting I
-796,Intermediate Accounting II
-798,Intermediate Algebra
-802,Intermediate Conducting
-803,Intermediate Dance
-804,Intermediate French
-806,Intermediate German
-808,Intermediate Microeconomic Analysis
-809,Intermediate Software Engineering
-811,Intermediate Spanish
-814,Intermediate Structural Engineering
-815,Internal Combustion Engine Design
-816,International Cinema
-817,International Finance
-818,International Human Rights
-819,International Management
-820,International Marketing
-821,International Relations
-823,International Security
-824,International Short Study
-825,Internship
-828,Internship in Political Science
-829,Interpersonal Communication
-831,Interpersonal Skills for Virtual and Co-Located Project Teams
-832,Interpretation of Business and Economic Data
-835,Intro to Multi-Ethnic American Literature
-836,Introduction to Agribusiness
-837,Introduction to American Government
-839,Introduction to Animal Science
-840,Introduction to Anthropology
-841,Introduction to Applied Regression Analysis
-842,Introduction to Chemistry Research
-843,Introduction to College Life
-845,Introduction to College Life for Chemistry Majors
-846,Introduction to Computational Methods
-848,Introduction to Computer Science
-849,Introduction to Computer Security
-851,Introduction to Contemporary Literary Theory and Criticism
-852,Introduction to Creative Writing
-853,Introduction to Crime Scene Investigation
-854,Introduction to Criminal Justice
-856,Introduction to Design
-857,Introduction to Digital Media
-858,Introduction to Education
-859,Introduction to Electrical Machines and Power Systems
-861,Introduction to Engineering Projects
-863,Introduction to Environmental Horticulture
-864,Introduction to ERP
-866,Introduction to Ethnic Studies
-868,Introduction to Experimental Psychology
-870,Introduction to Film
-871,Introduction to Food Science
-872,Introduction to Gay Studies
-874,Introduction to Geographic Information Systems
-875,Introduction to Human Geography
-877,Introduction to Inclusion
-878,Introduction to Infrastructure
-880,Introduction to Japanese I
-881,Introduction to Japanese II
-882,Introduction to Japanese III
-883,Introduction to Japanese IV
-884,Introduction to Linguistics
-885,Introduction to Literature
-886,Introduction to Manufacturing
-888,Introduction to Marketing
-890,Introduction to Mass Media
-891,Introduction to Media Studies
-892,Introduction to Metals Processes
-893,Introduction to Microprocessors
-895,Introduction to Microsystems and Nanotechnology
-896,Introduction to Music Technology
-897,Introduction to Philosophy
-900,Introduction to Physical Education and Health Promotion
-902,Introduction to Plastics Processing
-904,Introduction to Politics
-906,Introduction to Programming
-908,Introduction to Public Policy
-909,Introduction to Reclamation & Restoration
-910,Introduction to Social and Environmental Justice
-911,Introduction to Sociology
-914,Introduction to Software Engineering
-917,Introduction to Spanish Literature
-918,Introduction to Structural Engineering
-920,Introduction to the Arts
-921,Introduction to the Hebrew Scriptures
-922,Introduction to the New Testament
-923,Introduction to the Theatre
-925,Introduction to Video Field Production
-926,Introduction to Women & Gender Studies
-928,Introduction to World Architecture
-929,Introductory Astronomy Lab
-930,Introductory Astronomy: The Solar System
-931,Introductory Astronomy:Stars and Galaxies
-932,Introductory Chemistry
-934,Introductory Physics I
-936,Introductory Physics I Laboratory
-937,Introductory Physics II
-938,Introductory Physics II Laboratory
-939,Invertebrate Zoology
-940,Investigative Photography
-941,Investments
-942,Issues in History
-943,Jazz Combo
-946,Jazz Ensemble
-952,Jazz Improvisation and Theory
-953,Jogging/Walking
-955,Juvenile Justice
-956,Key Concepts and Characteristics in Middle Level Education
-957,Key Concepts of Middle Level Education
-958,Labor-Management Relations
-960,Language and Culture
-961,Latin America: An Interdisciplinary Introduction
-962,Law of Corrections
-963,Leadership and Management
-966,Learning and Behavior
-967,Legal Environment of Business
-968,Level I Wellness-Fitness Internship
-969,Liberal Arts & Education Short Term International Experience
-970,Life and Culture in the United States
-971,Lifeguard Training
-972,Lifetime Activities
-973,Lighting Design
-974,Linear Algebra
-977,Literature for Young Adults
-978,Logic
-979,Logic and Digital Design
-981,Lois Cooper Scholars Seminar
-989,Loss Control Safety Management
-990,Low Brass Techniques
-991,Machinery Engineering and Management
-992,Machining and CNC Programming
-993,Major American Writers
-994,Major English Writers
-995,Major Traditions in Eastern Religions
-996,Mammalian Endocrinology
-997,Mammalogy
-998,Management Accounting
-1001,Management Science
-1002,"Management, Gender & Race"
-1004,Managerial Law
-1005,Manufacturing Materials
-1006,Manufacturing Processes
-1007,Manufacturing Systems Design
-1008,Marching Pioneers
-1014,Mark Twain and American Humor
-1015,Marketing & Management for Entreprenuers
-1016,Marketing Management
-1017,Marketing Research
-1018,Marriage and Family
-1019,Material Handling and Warehousing
-1020,Materials and Techniques of Building Construction
-1021,Materials Handling and Energy Seminar
-1022,Materials Testing and Evaluation
-1023,Mathematical Explorations
-1024,Mathematical Problem Solving
-1027,Mathematics for Educators I
-1028,Mathematics for Educators II
-1029,Mathematics for Educators III
-1030,Mathematics of Finance
-1033,Mathematics Seminar for Middle School Teachers
-1034,Measurements and Instrumentation
-1035,Meat and Animal Evaluation
-1036,Mechanical Design of Internal Combustion Engines
-1037,Mechanical Engineering Internship
-1038,Mechanical Systems Design
-1039,Mechanical Systems Laboratory
-1041,Mechanics of Materials
-1044,Mechanisms and Machines
-1047,Mechatronics
-1048,Media Technologies I (Image Manipulation)
-1051,Media Technologies II (Video)
-1052,Media Technologies III (Web)
-1054,Medieval Europe
-1055,Medieval Lyric Poetry
-1056,Meetings and Events
-1057,Metal Manufacturing Senior Design
-1058,Metalcasting Technology I
-1059,Metallurgy
-1060,"Methods in Health, Nutrition, and Physical Education"
-1061,Methods in Middle/Secondary Physical Education
-1062,Methods in Teaching Health Education
-1063,Microbiology
-1064,Microcomputer Applications
-1066,Microcomputer Architecture and Interfacing
-1067,Microsoft Excel for Business
-1069,Microsystems and Nanotechnology
-1070,Middle Level Professional Semester
-1071,Minority Women Writers of the United States
-1073,Modern Africa
-1074,Modern American Drama
-1075,Modern China
-1076,Modern Control Systems
-1077,Modern European Thought and Culture
-1078,Modern Japan
-1079,Modern Latin American History
-1080,Modern Middle East
-1081,Modern Physics
-1084,Modern Poetry
-1085,Modern Russia
-1086,Molecular Biology
-1087,Morphology and Evolution of Vascular Plants
-1088,Movement Education
-1089,Movement for Theatre
-1090,Multimedia Projects
-1091,Municipal Hydraulics
-1092,Music Appreciation
-1094,"Music Media, Midi and Recording Technology"
-1095,Music Theater
-1096,Music Theory I: Music Theory Fundamentals with MIDI
-1098,Music Theory II: Tonal Music Theory with MIDI
-1099,"Music Theory III: Advanced Tonal Theory, Counterpoint, and Composition"
-1100,Music Theory IV: 20th Century Music Theory
-1101,Music Theory V: Form and Analysis
-1102,Nanoscale Characterization and Fabrication
-1103,Native America and Colonial Borderlands to 1887
-1104,Native American Art
-1105,"Native American History, What you thought you knew"
-1106,Native American Music
-1107,Nazi Germany and the Holocaust
-1108,New Nation
-1109,New Venture Operations
-1110,"New Venture Planning: Social, Commercial, Scientific and Artistic Ventures"
-1111,Noise Control
-1112,Numerical Analysis
-1113,Nutrition
-1115,Object Oriented Analysis and Design
-1118,Object-Oriented Programming and Data Structures I
-1121,Object-Oriented Programming and Data Structures II
-1124,Ontology and Ethics
-1125,Operations Management
-1126,Operations Research I
-1128,Optical Systems
-1129,Optimization with Engineering Applications
-1130,Oral Communication for Professionals
-1132,Orchestration and Arranging
-1133,Organic Chemistry Laboratory
-1135,Organic Chemistry Lecture
-1138,"Organization, Administration, and Curriculum of Physical Education and Health"
-1139,Organizational Behavior
-1140,Origins of Western Philosophy
-1141,Ornithology
-1142,Outdoor Activities
-1143,Painting I: Beginning Painting
-1144,Painting II: Intermediate Painting
-1145,Pavement Design and Analysis
-1146,Pavement Maintenance and Rehab
-1147,"Peace Studies: Issues, Ideas and Morality of Nuclear War"
-1148,Perceptual Motor Learning and Motor Development
-1149,Percussion Ensemble
-1151,Percussion Techniques
-1152,Performance for Electronic Media
-1153,Personal Conditioning
-1158,Personal Financial Planning
-1159,Personal Fitness
-1163,Personalized Learning Experience
-1164,Philosophy in the Modern World
-1166,Philosophy of Gender and Sexuality
-1167,Philosophy of History
-1168,Philosophy of Law
-1169,Philosophy of Religion
-1170,Phonetics
-1171,Photography II
-1172,Photography III
-1173,Physical Chemistry
-1176,Physical Chemistry Lab I
-1177,Physical Chemistry Lab II
-1178,Physical Geology
-1180,Physical Science
-1181,Physics of Sound
-1182,Physiological Psychology
-1183,Physiology of Exercise
-1184,Piano Techniques - First Semester
-1185,Piano Techniques - Fourth Semester
-1186,Piano Techniques - Second Semester
-1188,Piano Techniques - Third Semester
-1189,Pioneer Steel Band
-1193,Planet Earth
-1195,Plant Communities of Wisconsin
-1196,Plant Pathology
-1197,Plastics Processing I
-1198,Plastics Processing II
-1199,Plastics Technology
-1200,Play Analysis
-1201,Poetry Writing
-1202,Police Administration
-1203,Police Ethics
-1204,Police-Community Relations
-1205,Political Science Field Trip
-1206,Political Theory
-1207,Politics of the Global Economy
-1208,Post Student Teaching Seminar
-1209,Power Electronics
-1211,Power Plant Design
-1212,Power Systems Analysis and Design
-1214,Power Systems Technology
-1215,Practicum I
-1216,Practicum II
-1218,Practicum in Adapted Physical Education
-1219,Precalculus
-1224,Predictive Analytics
-1225,Presentation and Marketing
-1226,Pre-Student Teaching at Middle/Secondary Level
-1227,Principles and Applications of Nanotechnology
-1228,Principles and Applications of Project Management
-1229,Principles of Macroeconomics
-1232,Principles of Microeconomics
-1234,Principles of Physics
-1236,Principles of Project Management and Sustainable Development
-1238,Principles of Real Estate
-1239,Principles of Safety and Risk Management
-1240,Printmaking I
-1241,Printmaking II
-1242,Private Security Operations
-1243,Private/Corporate Wellness Administration
-1244,Process Geomorphology
-1245,Producer and Consumer Cooperatives
-1246,Production and Operations Analysis
-1247,Production Capstone
-1248,Production Foundations
-1249,Production Planning and Control
-1250,Professional Practice
-1251,Professional Selling
-1252,Programming in C++
-1255,Programming in COBOL
-1258,Programming in VB.NET
-1260,Programming Language Structures
-1263,Project Management in Reclamation and Restoration
-1264,Project Management Techniques I
-1265,Project Management Techniques II
-1266,Project Scope Management
-1267,Promotional Techniques
-1268,Psychology and Religion
-1269,Psychology and the Law
-1270,Psychology of Adulthood and Aging
-1271,Psychology of Coaching
-1272,Psychology of Personal Adjustment
-1273,Psychology of Women
-1275,Public Relations Principles
-1276,Purchasing Management
-1277,Python for GIS
-1278,Quality Assurance
-1280,Quality Engineering
-1281,Quality Management
-1282,Quantitative Analysis
-1283,Quantitative Methods in Farm and Agribusiness
-1284,Race and Ethnicity in Film
-1285,Race and Gender in American Film
-1286,"Race, Gender, and Class"
-1288,"Race, Gender, and United States Labor History"
-1289,Racquet Sports
-1294,Racquetball
-1295,Racquetball/Badminton
-1296,Reading in the Content Area for Middle Secondary Students
-1297,Real Analysis
-1299,Real-Time Embedded Systems Programming
-1301,Recital Semester
-1303,Reclamation & Restoration Field Trip
-1304,Reclamation Internship
-1305,Reclamation Revegetation
-1306,Regulatory Compliance Management
-1307,Reinforced Concrete Design
-1309,Reinforced Concrete Structures
-1310,Relaxation
-1312,Remote Sensing of the Environment
-1313,Renaissance Literature
-1314,Research Experience
-1315,Research Methods in Criminal Justice
-1316,Research Methods in Forensic Investigation
-1317,Residential Planning and Design
-1318,Retailing
-1319,Risk Management
-1320,Rural Sociology
-1321,Russia to 1856
-1322,Safety and Worker Compensation Laws
-1323,Safety Management Components
-1324,Sales Management
-1325,Scenic Design
-1326,Scenic Painting
-1327,Science Fiction
-1328,"Science, Technology, and Ethics"
-1331,Scuba Diving
-1333,Seasonal Activities
-1335,Second Language Acquisition
-1336,Second Semester Lessons
-1339,Secondary General Music Methods
-1340,Self Defense
-1341,Semiconductors
-1343,Seminar
-1345,Seminar in Community and Environmental Health Education
-1346,Seminar in Creative Writing
-1347,Seminar in Selected Topics in Political Science
-1348,Seminar in Theatre
-1350,Senior Art Show
-1351,Senior Capstone
-1352,Senior Design Project
-1354,Senior Seminar
-1355,Senior Thesis
-1356,Sensor Lab
-1357,Seventh Semester Lessons
-1359,Shakespeare
-1360,Short Term Faculty-Led International Experience in Energy
-1361,Signals and Systems
-1364,Site Design and Stormwater Management
-1365,Sixth Semester Lessons
-1367,Small Business Management
-1368,Soccer
-1370,Social Change
-1371,"Social Context of Creativity, Innovation and Entrepreneurship"
-1372,Social Inequalities
-1374,Social Media and Society
-1375,Social Psychology
-1376,Social Research
-1377,Social Welfare Policy
-1378,"Social Work Practice with Communities, Organizations and Social Institutions"
-1379,Sociolinguistics
-1380,Software Engineering Cooperative Education
-1382,Software Engineering Project I
-1384,Software Engineering Project II
-1385,Software Engineering Seminar
-1386,Software Maintenance and Reengineering
-1388,Software Project I
-1389,Software Project II
-1390,Software Quality
-1392,Software: Flash Basic
-1394,Software: Illustrator Basic
-1395,Software: Illustrator Intermediate
-1396,Software: InDesign Basic
-1398,Software: InDesign Intermediate
-1399,Software: PhotoShop Intermediate
-1400,Soil and Water Conservation
-1401,Soil and Water Conservation Engineering
-1402,Soils
-1403,Solid State Electronic Devices
-1405,"Space, Place, and Gender"
-1406,Spanish American Literature and Culture I
-1407,Spanish American Literature and Culture II
-1408,Spanish Civilization
-1409,Spanish Conversation and Composition I
-1410,Spanish Conversation and Composition II
-1411,Spanish Literature of the 20th Century
-1412,Special Issues in Business
-1413,Special Problems
-1416,Special Problems in Soil Science
-1417,Special Topics
-1420,Special Topics in Computer Science
-1423,Special Topics in Engineering Physics
-1425,Special Topics in Philosophy
-1427,Specialized Drafting Practices
-1428,Speech Communication for Teachers
-1429,Stage Makeup
-1430,Stagecraft
-1431,Startup Launchpad
-1432,State and Local Government
-1433,Statistical Methods with Applications
-1436,Statistics and Probability
-1437,Steel Design
-1438,"Stormwater, Wetlands, and Watershed Management"
-1439,Strategic Management
-1441,Strategic Promotions Management
-1442,Stress Management at the Worksite
-1443,String Techniques
-1444,Structural Mechanics
-1446,Structures and Environmental Control
-1447,Student Teaching 10-14
-1448,Student Teaching 10-21 Secondary
-1449,Student Teaching B-21
-1451,Studies in Fiction
-1452,Studio College Writing I
-1454,Studio Production
-1455,Supervised Independent Study
-1456,Supply Chain Management
-1458,Survey of Cultural Geography
-1460,Survey of French Literature and Culture II
-1461,Survey of General Chemistry
-1462,Survey of Studio Art Practices
-1463,Survey of Women Writers
-1464,Sustainability Policy and Practice
-1465,"Sustainability: Ecology, Resources and Practice"
-1466,Sutance Abuse I: Theory and Assessment
-1467,Sutance Abuse II: Intervention and Special Populations
-1468,Swimming
-1470,System Safety Engineering
-1471,System Simulation and Analysis
-1472,Systems Analysis and Design
-1474,Systems Development and Implementation
-1476,Teaching Children with Exceptional Abilities in Health and Physical Education
-1477,Teaching History and Social Studies at the Middle and Secondary Schools
-1478,"Teaching Issues Relating to Alcohol, Drugs, and Sexuality"
-1479,Teaching Methods in Career and Technical Education
-1480,Teaching of Composition
-1481,Teaching of Mathematics in the Middle and Secondary School
-1482,Teaching Science at the Middle and Secondary Schools
-1483,Teaching Transescents
-1484,Teaching World Languages: Theory and Practice
-1485,Team Sports
-1487,Technical Certifications
-1488,Technical Drafting
-1490,Technical Writing
-1492,Techniques of Counseling
-1493,Technology in Health and Physical Education
-1494,Tennis
-1495,The Civil War and Reconstruction
-1496,The Diversity of Life
-1498,The English Novel and Short Story
-1499,The English Novel Through the Romantic Movement
-1500,The History and Politics of Hip Hop
-1501,The Judicial Process
-1502,The Legal Environment of Business
-1504,The Modern Short Story
-1505,The Native American Experience
-1507,The Physics of Einstein and Beyond
-1508,The Plant-Soil Environment
-1509,"The Political Economy of Race, Gender and Ethnicity"
-1510,The Psychology of Human Sexuality
-1512,The Renaissance and Reformation
-1513,The United States since 1945
-1514,"The United States, 1898-1945"
-1515,The Unity of Life
-1517,The Vietnam War
-1518,The West in American History
-1519,The World Novel
-1520,Theatre History I
-1521,Theatre History II
-1522,Thematic Studies in Literature
-1525,Theories of Media and Culture
-1526,Theory of Art
-1527,Theory of Numbers
-1528,Thermal Systems Laboratory
-1529,Thermodynamics
-1532,Thermo-Fluid Systems Design
-1534,Thesis Research
-1536,Third Semester Lessons
-1538,Topical Seminar
-1540,Topics in Art
-1541,Topics in Biology
-1542,Topics in French Literature and Culture
-1543,Topics in Hispanic Literature and Culture
-1545,Topics in Industrial Studies
-1547,Topics in Media Studies
-1551,Topics in Modern Mathematics
-1552,Topics in Music
-1553,Topics in Regional Geography
-1554,Topics in Sociology
-1555,Topics in Theatre
-1558,Topics in Women & Gender Studies
-1559,Traffic Engineering
-1560,Training and Supervision
-1561,Transportation Engineering
-1562,Trigonometry and Analytic Geometry
-1567,Twentieth and Twenty-First Century British Literature
-1568,Twentieth Century America
-1569,Twentieth Century Europe
-1570,U S Courts and the Criminal Justice System
-1571,Undergraduate Research
-1574,Undergraduate Research in Engineering
-1576,University Bands
-1588,University/Community Orchestra
-1598,Vibration Systems Design
-1599,Visual Communication
-1601,Vocal Pedagogy
-1602,Voice and Diction
-1603,Volleyball
-1608,"Volunteers, Fundraising, and Grants"
-1609,Wallyball/Volleyball
-1610,Wastewater Treatment and Management
-1611,Weather and Climate
-1612,Web Development: Basics
-1613,Web Development: Intermediate
-1614,"Web Protocols, Technologies and Applications"
-1617,Weight Training
-1620,Wind and Solar Systems Design
-1621,Windows Programming
-1624,Wisconsin Indian Literature
-1625,Women and Gender in Latin American History
-1626,Women and Health
-1627,"Women and Mythology: Goddess, Witch, Sibyl"
-1628,Women and the Arts
-1629,Women in European Civilization
-1630,Women in Science and Engineering
-1632,"Women, Gender, and Justice"
-1633,Wood Structures
-1634,Wood Technology
-1635,Woodwind Ensemble
-1639,Woody Landscape Plants
-1640,Work Measurement and Design
-1641,Work Measurement and Human Factors
-1643,Workshop in Biology
-1645,Worksite Wellness
-1646,World Civilization I
-1649,World Civilization II
-1652,World Literature I
-1653,World Literature II
-1654,World Music Survey
-1655,"World Population, Food and Resources"
-1656,World Regional Geography
-1658,World Rhythm Rudiments
-1659,Writing for Electronic Media
-1660,"Writing, Editing, and Publishing in Multiple Media"
-1661,Writing/Editing Internship
-1662,Yoga / Pilates
+1,20th c. Art History: Modern to Contemporary
+2,3D Industrial Production Drafting
+3,Abnormal Psychology
+4,Abstract Algebra
+6,AC/DC Fundamentals
+7,Accounting Information Systems
+8,Accounting Issues for Managers
+11,Adolescent Psychology
+12,Advanced Accounting I
+13,Advanced Ceramics
+14,Advanced Conducting Instrumental
+15,Advanced Cost Accounting
+16,Advanced Digital Design
+17,Advanced Geographic Information Systems
+18,Advanced Manufacturing Processes
+19,Advanced Manuscript Workshop
+20,Advanced Physiology
+21,Advanced Scene Study
+22,Advanced Selling
+23,Advanced Taxation
+24,Advanced Topics in Film Studies
+25,Advanced Topics in Inorganic Chemistry
+26,Advanced Topics in Writing Studies
+30,Advanced Writing
+31,Advertising
+32,"Advising, Interaction and Communication"
+33,Aerobic Weight Training
+36,African-American History 1619 to Present
+37,African-American Literature
+38,Agribusiness Management
+39,Agribusiness Marketing Management
+40,Agribusiness Professional Development I
+41,Agribusiness Professional Development II
+42,Agricultural Business Internship
+43,Agricultural Consulting and Sales
+44,Agricultural Finance
+45,Agricultural Marketing
+46,Agricultural Policy Seminar
+47,Agricultural Prices and Risk Management
+48,Agriculture Internship Seminar
+49,American Colonial History
+50,American Humor
+51,American Literature of Ethnicity and Immigration
+52,American Literature Since the Civil War
+53,American Literature Through the Civil War
+54,American Military History
+55,American Music
+56,Analog Electronics
+58,Animal Tissue Culture
+59,Applications in Information Systems
+61,Applications of Electrical Engineering
+62,Applied Communication
+64,Art and Children's Literature for Teachers
+65,Art and Social Studies for Teachers
+66,Art History I: Ancient and Medieval
+68,Art History II: Renaissance to Modern
+69,Art History IV: Ethnic Art in the United States
+70,Art Survey
+72,Artificial Intelligence
+73,Audio and Video Systems
+74,Auditing I
+75,Aural Skills I
+76,Aural Skills II
+77,Aural Skills III
+78,Aural Skills IV
+79,Automatic Controls
+80,Badminton
+84,Bank Management
+85,Basic Design I: 2-D
+86,Basic Design II: 3-D
+87,Basic Newswriting and Reporting
+89,Basic Photography
+90,Basic Thermoscience for Engineers
+91,Basketball
+93,Basketball Band
+94,Beginning Acting
+95,Beginning Conducting
+96,Biogeography
+97,BioQuest: Foundations for College Success
+98,Biorenewable Resources
+99,Biotechnology
+100,Black Experience in the U. S.
+102,Black Women and Feminism in the U.S.
+103,Bodywork for Musicians
+104,Bowling
+106,Brass Ensemble
+110,British Isles since 1714
+111,British Isles to 1714
+112,British Literature I: Beginnings through the Age of Swift
+113,British Literature II: Romanticism through the Present
+114,Building Construction Drafting
+115,Building Construction Materials
+116,Building Energy Management
+117,Building Systems Analysis
+118,Business Analytics
+119,Business Calculus
+121,Business Communication
+123,Business Ethics
+125,Calculus and Analytic Geometry I
+130,Calculus and Analytic Geometry II
+133,Calculus and Analytic Geometry III
+137,Capstone Course: From Atoms to Ecosystems - The Study of Life
+138,Cell Biology
+139,Ceramics I
+140,Ceramics II
+141,Chamber Ensemble
+143,Characteristics of Transescents
+144,Chemical Synthesis and Characterization
+145,Chemistry for Engineers
+147,Chemistry Seminar
+148,Child Psychology
+150,Choir
+162,CICS Application Programming
+163,Circuit Modeling I
+166,Circuit Modeling II
+167,Civil and Environmental Engineering Computer Applications
+168,Civil and Environmental Engineering Design Project
+169,Civil Engineering Computer Applications
+170,Civil Liberties
+171,Classical Mythology
+172,Clay Figure Sculpture
+173,Cognitive Psychology
+174,College Algebra
+178,College Geometry
+179,College Writing I
+181,College Writing II
+184,Colonial Latin American History
+185,Commercial Building Planning and Construction Techniques
+186,Communication & Leadership in Small Groups
+187,Communication Law
+188,Communication Research
+189,Community-Based Corrections
+190,Comparative Anatomy of the Vertebrates
+191,Comparative Criminal Justice Systems
+192,Comparative Politics
+193,Compensation Management
+194,Complex Variables
+195,Computer Architecture/Operating Systems
+198,Computer Graphics
+199,Computer Science Special Topics
+200,Computer-Aided Engineering
+201,Concepts of Biology
+203,Constitutional Law
+204,Construction Administration
+205,Construction and Professional Management
+206,Construction Engineering
+207,Construction Equipment
+208,Construction Estimates and Costs
+209,Construction Heavy Equipment Safety
+210,Construction Laboratory
+211,Construction Materials
+212,Construction Procedures
+213,Construction Safety Management
+214,Consumer Behavior
+215,Contemporary Issues in Psychology
+216,Contemporary Social Problems
+217,Continental Philosophy
+218,Conversational American English for International Students
+220,Cooperative Field Experience
+221,Corporate Finance
+224,Cost Accounting
+225,Courtroom Testimony and Evidence
+226,Crafts I: Fibers and Fabrics
+227,Creative Nonfiction Writing
+228,Crime and Delinquency
+229,Criminal Investigation
+230,Criminal Justice Fitness
+231,Criminal Justice Seminar
+232,Criminal Law
+233,Criminal Procedure and Evidence
+234,Criminology
+235,Crop Science
+236,Cultural Anthropology
+237,Current Issues and Democracy
+238,Current Topics In Criminal Justice
+241,Current Topics in Engineering
+243,Current Topics in Forensic Investigation
+244,Dance for Musical Theatre
+245,"Dance Tech/Practice (Ballroom, Latin, Country)"
+246,Data Analysis and Verification Tools
+247,Data Communications and Computer Networks
+250,Database Design and Implementation
+253,Design of Machine Elements
+254,"Design, Fabrication, and Simulation of MEMS"
+255,Diction I
+256,Diction II
+257,Differential Equations I
+260,Differential Equations II
+261,DIGITAL AUDIO PRODUCTION
+262,Digital Electronics
+263,Digital Media Technologies
+264,Directing
+265,Discrete Mathematics
+268,Discrete Time Control Systems
+269,Documentary
+270,Double Reed Woodwind Techniques
+271,Downhill Skiing
+272,Drawing Concepts
+273,Drawing I: Basic Drawing
+274,Drawing II: Styles
+275,Dynamical Systems
+276,Early Modern Europe
+277,East Asian Art
+278,Ecology and Evolution
+281,E-Commerce and E-Marketing in Today's World
+282,Educational Media Application
+283,Educational Media Theory
+284,Eighth Semester Lessons
+288,Electric and Magnetic Fields
+289,Electric Motor Drives
+290,Electrical Applications in Agriculture
+291,Electrical Energy Systems and Energy Storage
+292,Electrical Engineering Projects and Tools
+294,Electrical Power
+295,Elementary Algebra
+297,Elementary Chinese
+299,Elementary French
+301,Elementary German
+304,Elementary Music Methods for Music Majors
+305,Elementary Music Methods for Non-Music Majors
+306,Elementary Spanish
+309,Elementary Statistics
+311,Elements of Surveying
+312,e-Marketing Applications
+313,Employee Recruitment and Selection
+314,Employee Training and Development
+315,Employment Law
+316,Energy Systems Design
+317,"Energy, Environment, and Society"
+318,Engineering Computer Graphics
+319,Engineering Continuous Improvement
+320,Engineering Economy
+321,Engineering Management
+322,Engineering Materials
+323,Engineering Mechanics-Dynamics
+325,Engineering Mechanics-Statics
+328,Engineering Modeling and Design
+329,Engineering Success Skills
+331,Engines and Tractor Systems
+332,English Drama
+333,Entrepreneurship Field Experience
+336,Environmental Conservation
+337,Environmental Control Design
+338,Environmental Engineering
+339,Environmental Law
+340,"Equipment, Structure and Power Systems"
+341,Essentials of Anatomy and Physiology
+342,Ethics
+343,Ethnic and Gender Equity in Education
+344,Ethnic Rights and Politics
+345,"Ethnicity, Race and Crime"
+346,Extrusion Technology
+347,Facilities Design
+348,Farm Business Management
+349,Federal Income Tax
+350,Fiction Writing
+351,Field Geography of the Western United States
+354,Fifth Semester Lessons
+356,Financial Accounting
+359,Financial Decision Making
+360,Financial Statement Analysis & Business Valuation
+361,Financial Systems Analysis
+362,Fingerprint Analysis and Other Biometrics
+363,Finite Mathematics with Applications
+365,First Aid/Accident Prevention/Community CPR
+366,First Semester Lessons
+369,Fitness Assessment and Management
+371,Fluid Dynamics
+372,Fluid Mechanics
+373,Fluid Power and Servo Systems
+374,Football Coaching
+375,Foundations of Corrections
+377,Foundations of Interviewing
+378,Foundations of Policing
+379,Fourth Semester Lessons
+382,French Revolution and Napoleon 1789-1815
+383,Fundamentals of Biological Investigations
+384,Fundamentals of Energy Sources
+385,Fundamentals of English
+386,Fundamentals of Industrial and Systems Engineering
+387,Gay and Lesbian Literature
+388,Gender and Popular Culture
+389,Gender and Society
+390,Gender in Film
+391,General Biochemistry
+393,General Biochemistry Lab
+394,General Botany
+396,General Chemistry I
+397,General Chemistry II
+399,General Construction Estimating
+400,General Physics I
+402,General Physics I Lab
+404,General Physics II
+407,General Physics II Laboratory
+408,General Psychology
+410,Genetics
+411,Genetics of Livestock Improvement
+412,Geography Field Sudy
+413,Geography of Asia
+414,Geography of Latin America
+415,Geography of the National Parks
+416,Geography of Wisconsin
+417,Geography Seminar
+418,Geology for Engineers
+419,Geotechnical Engineering I
+420,German Civilization
+421,German Conversation and Composition I
+422,German Literature of the 19th Century
+423,German Literature of the 20th Century
+424,Gilded Age and Progressive Era
+426,Global Business
+428,Golf
+429,Grammar in Context
+430,Graphic Design I: Lettering and Typographic Design
+431,Graphic Design II: Introduction to Design Studio
+432,Graphic Design III: Advanced Typography
+433,Graphic Design IV: Advanced Graphic Design Studio
+434,Green Building Design
+435,Guided Research
+436,Health Education
+437,Heat Transfer
+438,Heat Transfer Applications
+439,High Brass Techniques
+440,High Woodwind Techniques
+441,Highway Engineering
+442,History and Development of Mathematical Concepts
+443,History and Literature of Western Music I
+444,History and Literature of Western Music II
+445,History and Literature of Western Music III
+446,History and Literature of Western Music IV
+447,History of Graphic Design
+448,History of Imaging
+449,History of Jazz
+450,History of Rock and Roll
+451,History of the English Language
+452,History of the United States since 1877
+454,History of the United States to 1877
+456,History of U S Foreign Relations
+457,History of Western Science
+458,History of Wisconsin
+459,Human Anatomy and Physiology I
+460,Human Anatomy and Physiology II
+461,Human Behavior in the Social Environment
+462,Human Factors Engineering
+463,Human Growth and Development
+464,Human Performance and System Design
+465,Human Resource Management
+467,Illustration I
+468,Illustration II
+469,Imperialism and Resistance
+470,Independent Research in Biology
+472,Independent Study
+474,Independent Study and Research in Political Science
+475,Independent Study in Computer Science
+476,Independent Study in Mathematics
+479,Independent Work in Crafts
+480,Independent Work in Design
+481,Independent Work in Drawing
+482,Independent Work in Printmaking
+483,Individual Sports
+484,Industrial Control Systems
+485,Industrial Design for Production
+486,Industrial Engineering Computer Applications
+487,Industrial Hygiene and PPE
+488,Industrial Laser Application
+489,Industrial Robotics
+490,Industrial Studies Internship
+492,Industrial Systems Design
+493,Inorganic Chemistry
+494,Instrumental Analysis
+495,Instrumental Music Methods I
+496,Instrumental Music Methods II
+497,Integrated Design Software
+498,Intermediate Accounting I
+500,Intermediate Accounting II
+501,Intermediate Algebra
+504,Intermediate Conducting
+505,Intermediate Dance
+506,Intermediate German
+508,Intermediate Microeconomic Analysis
+509,Intermediate Software Engineering
+511,Intermediate Spanish
+514,International Cinema
+515,International Finance
+516,International Management
+517,International Marketing
+518,International Relations
+520,International Security
+521,International Short Study
+522,Internship
+524,Internship in Political Science
+525,Interpersonal Communication
+527,Interpretation of Business and Economic Data
+529,Intro to Multi-Ethnic American Literature
+530,Introduction to Agribusiness
+531,Introduction to American Government
+533,Introduction to Animal Science
+534,Introduction to Anthropology
+535,Introduction to Applied Regression Analysis
+536,Introduction to Chemistry Research
+537,Introduction to College Life
+539,Introduction to Computational Methods
+540,Introduction to Computer Science
+541,Introduction to Computer Security
+543,Introduction to Creative Writing
+544,Introduction to Crime Scene Investigation
+545,Introduction to Criminal Justice
+547,Introduction to Digital Media
+548,Introduction to Education
+549,Introduction to Electrical Machines and Power Systems
+550,Introduction to Engineering Projects
+552,Introduction to Environmental Horticulture
+553,Introduction to ERP
+554,Introduction to Ethnic Studies
+556,Introduction to Experimental Psychology
+557,Introduction to Film
+558,Introduction to Gay Studies
+559,Introduction to Geographic Information Systems
+560,Introduction to Human Geography
+562,Introduction to Inclusion
+563,Introduction to Infrastructure
+564,Introduction to Japanese I
+565,Introduction to Japanese II
+566,Introduction to Linguistics
+567,Introduction to Literature
+568,Introduction to Manufacturing
+569,Introduction to Marketing
+571,Introduction to Mass Media
+572,Introduction to Media Studies
+573,Introduction to Metals Processes
+574,Introduction to Microprocessors
+576,Introduction to Microsystems and Nanotechnology
+577,Introduction to Music Technology
+578,Introduction to Philosophy
+580,Introduction to Physical Education and Health Promotion
+581,Introduction to Plastics Processing
+582,Introduction to Politics
+584,Introduction to Programming
+586,Introduction to Public Policy
+587,Introduction to Social and Environmental Justice
+588,Introduction to Sociology
+591,Introduction to Software Engineering
+594,Introduction to Spanish Literature
+595,Introduction to Structural Engineering
+597,Introduction to the Hebrew Scriptures
+598,Introduction to the New Testament
+599,Introduction to the Theatre
+601,Introduction to Video Field Production
+602,Introduction to Women & Gender Studies
+603,Introduction to World Architecture
+604,Introductory Astronomy Lab
+605,Introductory Astronomy:Stars and Galaxies
+606,Introductory Chemistry
+608,Introductory Physics I
+610,Introductory Physics I Laboratory
+611,Introductory Physics II
+612,Invertebrate Zoology
+613,Investments
+614,Issues in History
+615,Jazz Combo
+616,Jazz Ensemble
+621,Jogging/Walking
+622,Juvenile Justice
+623,Key Concepts and Characteristics in Middle Level Education
+624,Key Concepts of Middle Level Education
+625,Labor-Management Relations
+626,Language and Culture
+627,Law of Corrections
+628,Leadership and Management
+631,Learning and Behavior
+632,Liberal Arts & Education Short Term International Experience
+633,Life and Culture in the United States
+634,Lighting Design
+635,Linear Algebra
+638,Logic
+639,Logic and Digital Design
+641,Low Brass Techniques
+642,Machinery Engineering and Management
+643,Machining and CNC Programming
+644,Major Traditions in Eastern Religions
+645,Mammalian Endocrinology
+646,Mammalogy
+647,Management Accounting
+650,"Management, Gender & Race"
+652,Managerial Law
+653,Manufacturing Materials
+654,Manufacturing Processes
+655,Marching Pioneers
+661,Marketing Management
+662,Marketing Research
+663,Marriage and Family
+664,Material Handling and Warehousing
+665,Materials and Techniques of Building Construction
+666,Materials Handling and Energy Seminar
+667,Materials Testing and Evaluation
+668,Mathematical Explorations
+669,Mathematical Problem Solving
+670,Mathematics of Finance
+671,Meat and Animal Evaluation
+672,Mechanical Design of Internal Combustion Engines
+673,Mechanical Systems Design
+674,Mechanical Systems Laboratory
+675,Mechanics of Materials
+678,Mechanisms and Machines
+679,Media Technologies I (Image Manipulation)
+682,Media Technologies II (Video)
+683,Media Technologies III (Web)
+684,Medieval Europe
+685,Meetings and Events
+686,Metal Manufacturing Senior Design
+687,Metallurgy
+688,Microbiology
+689,Microcomputer Applications
+691,Microcomputer Architecture and Interfacing
+692,Microsoft Excel for Business
+693,Minority Women Writers of the United States
+695,Modern American Drama
+696,Modern China
+697,Modern European Thought and Culture
+698,Modern Japan
+699,Modern Latin American History
+700,Modern Physics
+701,Modern Russia
+702,Molecular Biology
+703,Movement for Theatre
+704,Multimedia Projects
+705,Music Appreciation
+707,Music Theater
+708,Music Theory I: Music Theory Fundamentals with MIDI
+709,Music Theory II: Tonal Music Theory with MIDI
+710,"Music Theory III: Advanced Tonal Theory, Counterpoint, and Composition"
+711,Music Theory IV: 20th Century Music Theory
+712,Music Theory V: Form and Analysis
+713,Native American Art
+714,"Native American History, What you thought you knew"
+715,Nazi Germany and the Holocaust
+716,New Venture Operations
+717,"New Venture Planning: Social, Commercial, Scientific and Artistic Ventures"
+718,Numerical Analysis
+719,Nutrition
+720,Object Oriented Analysis and Design
+723,Object-Oriented Programming and Data Structures I
+726,Object-Oriented Programming and Data Structures II
+729,Operations Management
+730,Operations Research I
+731,Oral Communication for Professionals
+733,Orchestration and Arranging
+734,Organic Chemistry Laboratory
+736,Organic Chemistry Lecture
+738,Organizational Behavior
+739,Origins of Western Philosophy
+740,Ornithology
+741,Painting I: Beginning Painting
+742,Painting II: Intermediate Painting
+743,Pavement Design and Analysis
+744,Percussion Techniques
+745,Performance for Electronic Media
+746,Personal Conditioning
+751,Personal Financial Planning
+752,Personal Fitness
+756,Philosophy in the Modern World
+757,Philosophy of History
+758,Philosophy of Religion
+759,Phonetics
+760,Photography II
+761,Photography III
+762,Physical Chemistry
+764,Physical Chemistry Lab I
+765,Physical Chemistry Lab II
+766,Physical Geology
+768,Physical Science
+769,Physiological Psychology
+770,Physiology of Exercise
+771,Piano Techniques - First Semester
+772,Piano Techniques - Fourth Semester
+773,Piano Techniques - Second Semester
+774,Piano Techniques - Third Semester
+775,Planet Earth
+777,Plant Pathology
+778,Plastics Processing I
+779,Plastics Technology
+780,Play Analysis
+781,Poetry Writing
+782,Police Administration
+783,Police-Community Relations
+784,Political Science Field Trip
+785,Political Theory
+786,Politics of the Global Economy
+787,Power Systems Analysis and Design
+788,Power Systems Technology
+789,Practicum I
+790,Practicum II
+792,Precalculus
+797,Presentation and Marketing
+798,Pre-Student Teaching at Middle/Secondary Level
+799,Principles and Applications of Project Management
+800,Principles of Macroeconomics
+802,Principles of Microeconomics
+804,Principles of Physics
+805,Principles of Project Management and Sustainable Development
+806,Principles of Real Estate
+807,Principles of Safety and Risk Management
+808,Printmaking I
+809,Printmaking II
+810,Private Security Operations
+811,Process Geomorphology
+812,Producer and Consumer Cooperatives
+813,Production and Operations Analysis
+814,Production Capstone
+815,Production Foundations
+816,Production Planning and Control
+817,Professional Practice
+818,Professional Selling
+819,Programming in C++
+822,Programming in COBOL
+825,Programming in VB.NET
+827,Programming Language Structures
+830,Psychology and the Law
+831,Psychology of Adulthood and Aging
+832,Psychology of Personal Adjustment
+833,Psychology of Women
+834,Public Relations Principles
+835,Purchasing Management
+836,Quality Assurance
+837,Quality Engineering
+838,Quality Management
+839,Quantitative Analysis
+840,Quantitative Methods in Farm and Agribusiness
+841,Race and Ethnicity in Film
+842,Race and Gender in American Film
+843,"Race, Gender, and Class"
+844,"Race, Gender, and United States Labor History"
+845,Racquet Sports
+846,Racquetball
+847,Racquetball/Badminton
+848,Reading in the Content Area for Middle Secondary Students
+849,Real Analysis
+850,Real-Time Embedded Systems Programming
+852,Recital Semester
+854,Regulatory Compliance Management
+855,Reinforced Concrete Design
+856,Relaxation
+857,Remote Sensing of the Environment
+858,Renaissance Literature
+859,Research Methods in Criminal Justice
+860,Residential Planning and Design
+861,Retailing
+862,Risk Management
+863,Rural Sociology
+864,Russia to 1856
+865,Sales Management
+866,Science Fiction
+867,"Science, Technology, and Ethics"
+868,Scuba Diving
+869,Seasonal Activities
+871,Second Semester Lessons
+873,Secondary General Music Methods
+874,Self Defense
+875,Semiconductors
+876,Seminar
+878,Seminar in Creative Writing
+879,Seminar in Selected Topics in Political Science
+880,Senior Art Show
+881,Senior Capstone
+882,Senior Design Project
+883,Senior Seminar
+884,Senior Thesis
+885,Seventh Semester Lessons
+887,Shakespeare
+888,Signals and Systems
+890,Sixth Semester Lessons
+891,Small Business Management
+892,Soccer
+894,Social Change
+895,"Social Context of Creativity, Innovation and Entrepreneurship"
+896,Social Inequalities
+897,Social Media and Society
+898,Social Psychology
+899,Social Research
+900,"Social Work Practice with Communities, Organizations and Social Institutions"
+901,Sociolinguistics
+902,Software Engineering Cooperative Education
+904,Software Engineering Project I
+905,Software Engineering Project II
+906,Software Engineering Seminar
+907,Software Maintenance and Reengineering
+909,Software Quality
+911,Software: Flash Basic
+913,Software: Illustrator Basic
+914,Software: InDesign Basic
+916,Software: PhotoShop Intermediate
+917,Soil and Water Conservation Engineering
+918,Solid State Electronic Devices
+920,"Space, Place, and Gender"
+921,Spanish American Literature and Culture II
+922,Spanish Civilization
+923,Spanish Conversation and Composition I
+924,Spanish Conversation and Composition II
+925,Special Issues in Business
+926,Special Problems
+927,Special Topics
+929,Special Topics in Computer Science
+930,Special Topics in Philosophy
+931,Specialized Drafting Practices
+932,Speech Communication for Teachers
+933,Stagecraft
+934,Startup Launchpad
+935,State and Local Government
+936,Statistical Methods with Applications
+939,Statistics and Probability
+940,Strategic Management
+941,Strategic Promotions Management
+942,Stress Management at the Worksite
+943,String Techniques
+944,Structural Mechanics
+945,Structures and Environmental Control
+946,Student Teaching 10-14
+947,Student Teaching 10-21 Secondary
+948,Student Teaching B-21
+950,Studies in Fiction
+951,Studio College Writing I
+952,Studio Production
+953,Supervised Independent Study
+954,Supply Chain Management
+955,Survey of Cultural Geography
+957,Survey of General Chemistry
+958,Survey of Women Writers
+959,Sustainability Policy and Practice
+960,Swimming
+961,System Safety Engineering
+962,Systems Analysis and Design
+964,Systems Development and Implementation
+966,Teaching of Mathematics in the Middle and Secondary School
+967,Teaching Science at the Middle and Secondary Schools
+968,Teaching Transescents
+969,Teaching World Languages: Theory and Practice
+970,Technical Drafting
+971,Technical Writing
+973,Techniques of Counseling
+974,Tennis
+975,The Civil War and Reconstruction
+976,The Diversity of Life
+978,The English Novel and Short Story
+979,The History and Politics of Hip Hop
+980,The Judicial Process
+981,The Legal Environment of Business
+982,The Native American Experience
+983,The Physics of Einstein and Beyond
+984,The Plant-Soil Environment
+985,"The Political Economy of Race, Gender and Ethnicity"
+986,The Psychology of Human Sexuality
+988,The Renaissance and Reformation
+989,The United States since 1945
+990,The Unity of Life
+992,The Vietnam War
+993,The West in American History
+994,Theatre History II
+995,Thematic Studies in Literature
+996,Theories of Media and Culture
+997,Theory of Art
+998,Theory of Numbers
+999,Thermal Systems Laboratory
+1000,Thermodynamics
+1001,Thermo-Fluid Systems Design
+1002,Third Semester Lessons
+1004,Topical Seminar
+1005,Topics in Hispanic Literature and Culture
+1007,Topics in Media Studies
+1009,Topics in Modern Mathematics
+1010,Topics in Music
+1011,Topics in Women & Gender Studies
+1012,Traffic Engineering
+1013,Training and Supervision
+1014,Transportation Engineering
+1015,Trigonometry and Analytic Geometry
+1020,Twentieth and Twenty-First Century British Literature
+1021,Twentieth Century America
+1022,Twentieth Century Europe
+1023,U S Courts and the Criminal Justice System
+1024,Undergraduate Research
+1027,University Bands
+1039,University/Community Orchestra
+1047,Vibration Systems Design
+1048,Visual Communication
+1049,Voice and Diction
+1050,Volleyball
+1054,"Volunteers, Fundraising, and Grants"
+1055,Weather and Climate
+1056,Web Development: Basics
+1057,Web Development: Intermediate
+1058,"Web Protocols, Technologies and Applications"
+1061,Weight Training
+1063,Windows Programming
+1065,Wisconsin Indian Literature
+1066,Women and Health
+1067,Women and the Arts
+1068,Women in European Civilization
+1069,Women in Science and Engineering
+1071,"Women, Gender, and Justice"
+1072,Wood Technology
+1073,Woodwind Ensemble
+1077,Work Measurement and Design
+1078,Work Measurement and Human Factors
+1079,Workshop in Biology
+1080,World Civilization I
+1082,World Civilization II
+1084,World Literature I
+1085,World Literature II
+1086,World Music Survey
+1087,"World Population, Food and Resources"
+1088,World Regional Geography
+1089,World Rhythm Rudiments
+1090,Writing for Electronic Media
+1091,"Writing, Editing, and Publishing in Multiple Media"
+1092,Yoga / Pilates
