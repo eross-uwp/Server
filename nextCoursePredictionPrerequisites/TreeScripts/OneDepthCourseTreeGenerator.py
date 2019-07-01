@@ -11,7 +11,7 @@ children_list_test = ['x', 'y', 'z']
 SELF_KEY = 'key'
 CORE = ''
 
-forester = {}
+forest = {}
 
 
 def get_children_list(prereq_class):
@@ -33,9 +33,9 @@ def one_depth_tree(post_req, pre_reqs):
 if __name__ == '__main__':
     class_list = list(raw_data.postreq.unique())  # all classes in postreq
 
-    for postClass in class_list:
-        pre_classes = raw_data[raw_data.postreq == postClass][['prereq']]  # list of prereq for class
-        forester[postClass] = one_depth_tree(postClass, pre_classes.values.tolist())
+    for post_class in class_list:
+        pre_classes = raw_data[raw_data.postreq == post_class][['prereq']]  # list of prereq for class
+        forest[post_class] = one_depth_tree(post_class, pre_classes.values.tolist())
 
-        print(RenderTree(forester[postClass]))
+        print(RenderTree(forest[post_class]))
 

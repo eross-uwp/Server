@@ -11,12 +11,12 @@ children_list_test = ['x', 'y', 'z']
 SELF_KEY = 'key'
 CORE = ''
 
-forester = {}
+forest = {}
+new_forest = {}
 
-
-def get_children_list(prereq_class):
+def get_children_list(prereq_classes):
     temp_list=[]
-    for each_element in prereq_class:
+    for each_element in prereq_classes:
         temp_list.append({SELF_KEY:each_element})
     return temp_list
 
@@ -33,11 +33,22 @@ def one_depth_tree(post_req, pre_reqs):
 if __name__ == '__main__':
     class_list = list(raw_data.postreq.unique())  # all classes in postreq
 
+    new_forest = forest
     for post_class in class_list:
         pre_classes = raw_data[raw_data.postreq == post_class][['prereq']]  # list of prereq for class
-        forester[post_class] = one_depth_tree(post_class, pre_classes.values.tolist())
+        forest[post_class] = one_depth_tree(post_class, pre_classes.values.tolist())
 
-        print(RenderTree(forester[post_class]))
+        #print(RenderTree(forester[post_class]))
 
     for post_class in class_list:
-        forester[post_class]
+        for each_kid in new_forest[post_class].children:
+            if forest.get(each_kid.key[0]) == None:
+                continue
+            else:
+                if new_forest[each_kid.key[0]] != new_forest[post_class]:
+                    forest[post_class].children
+                    new_forest[each_kid.key[0]].parent = forest[post_class]
+                    each_kid.parent = None
+
+        print(RenderTree(forest[post_class]))
+        print('\n\n\n')
