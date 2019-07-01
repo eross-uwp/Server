@@ -5,8 +5,9 @@
       <sourceFolder url="file://$MODULE_DIR$/nextSemesterGpaPrediction" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/nextCoursePredictionPrerequisites" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/nextCourseGradePrediction" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/courseGradeCorrelations" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/nthSemesterGraduationPrediction" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/courseGradeCorrelations" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/correlations_between_course_grades" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
