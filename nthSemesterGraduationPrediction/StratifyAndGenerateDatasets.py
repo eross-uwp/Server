@@ -58,8 +58,10 @@ TENTH_HEADERS = ['first term gpa', 'first term standing', 'second term gpa', 'se
                  'eighth term gpa',
                  'eighth term standing', 'ninth term gpa', 'ninth term standing', 'tenth term gpa',
                  'tenth term standing']
-HEADERS_ARRAY = [FIRST_HEADERS, SECOND_HEADERS, THIRD_HEADERS, FOURTH_HEADERS, FIFTH_HEADERS, SIXTH_HEADERS, SEVENTH_HEADERS, EIGHTH_HEADERS, NINTH_HEADERS, TENTH_HEADERS]
-FILENAME_ARRAY = ['first_term_', 'second_term_', 'third_term_', 'fourth_term_', 'fifth_term_', 'sixth_term_', 'seventh_term_', 'eighth_term_', 'ninth_term_', 'tenth_term_']
+HEADERS_ARRAY = [FIRST_HEADERS, SECOND_HEADERS, THIRD_HEADERS, FOURTH_HEADERS, FIFTH_HEADERS, SIXTH_HEADERS,
+                 SEVENTH_HEADERS, EIGHTH_HEADERS, NINTH_HEADERS, TENTH_HEADERS]
+FILENAME_ARRAY = ['first_term_', 'second_term_', 'third_term_', 'fourth_term_', 'fifth_term_', 'sixth_term_',
+                  'seventh_term_', 'eighth_term_', 'ninth_term_', 'tenth_term_']
 GRADUATED_HEADER = 'graduated'
 TRAIN_PREFIX = 'train_'
 TEST_PREFIX = 'test_'

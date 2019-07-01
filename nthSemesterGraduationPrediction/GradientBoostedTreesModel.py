@@ -67,31 +67,40 @@ def gbt_predict(term_number, criterion, learning_rate, loss, max_depth, max_feat
 
         # TODO, not very extensible
         if term_number > sd.FIRST_TERM:
-            plt.scatter((x_test_array[term_number][fold_num])[:, 2], y_test_array[term_number][fold_num], color='#e6194B',
+            plt.scatter((x_test_array[term_number][fold_num])[:, 2], y_test_array[term_number][fold_num],
+                        color='#e6194B',
                         label='2nd term')
         if term_number > sd.SECOND_TERM:
-            plt.scatter((x_test_array[term_number][fold_num])[:, 4], y_test_array[term_number][fold_num], color='#f58231',
+            plt.scatter((x_test_array[term_number][fold_num])[:, 4], y_test_array[term_number][fold_num],
+                        color='#f58231',
                         label='3rd term')
         if term_number > sd.THIRD_TERM:
-            plt.scatter((x_test_array[term_number][fold_num])[:, 6], y_test_array[term_number][fold_num], color='#ffe119',
+            plt.scatter((x_test_array[term_number][fold_num])[:, 6], y_test_array[term_number][fold_num],
+                        color='#ffe119',
                         label='4th term')
         if term_number > sd.FOURTH_TERM:
-            plt.scatter((x_test_array[term_number][fold_num])[:, 8], y_test_array[term_number][fold_num], color='#bfef45',
+            plt.scatter((x_test_array[term_number][fold_num])[:, 8], y_test_array[term_number][fold_num],
+                        color='#bfef45',
                         label='5th term')
         if term_number > sd.FIFTH_TERM:
-            plt.scatter((x_test_array[term_number][fold_num])[:, 10], y_test_array[term_number][fold_num], color='#3cb44b',
+            plt.scatter((x_test_array[term_number][fold_num])[:, 10], y_test_array[term_number][fold_num],
+                        color='#3cb44b',
                         label='6th term')
         if term_number > sd.SIXTH_TERM:
-            plt.scatter((x_test_array[term_number][fold_num])[:, 12], y_test_array[term_number][fold_num], color='#42d4f4',
+            plt.scatter((x_test_array[term_number][fold_num])[:, 12], y_test_array[term_number][fold_num],
+                        color='#42d4f4',
                         label='7th term')
         if term_number > sd.SEVENTH_TERM:
-            plt.scatter((x_test_array[term_number][fold_num])[:, 14], y_test_array[term_number][fold_num], color='#4363d8',
+            plt.scatter((x_test_array[term_number][fold_num])[:, 14], y_test_array[term_number][fold_num],
+                        color='#4363d8',
                         label='8th term')
         if term_number > sd.EIGHTH_TERM:
-            plt.scatter((x_test_array[term_number][fold_num])[:, 16], y_test_array[term_number][fold_num], color='#911eb4',
+            plt.scatter((x_test_array[term_number][fold_num])[:, 16], y_test_array[term_number][fold_num],
+                        color='#911eb4',
                         label='9th term')
         if term_number > sd.NINTH_TERM:
-            plt.scatter((x_test_array[term_number][fold_num])[:, 18], y_test_array[term_number][fold_num], color='#f032e6',
+            plt.scatter((x_test_array[term_number][fold_num])[:, 18], y_test_array[term_number][fold_num],
+                        color='#f032e6',
                         label='10th term')
 
         plt.scatter((x_test_array[term_number][fold_num])[:, 0], y_pred, color='k', label='predicted')
@@ -119,24 +128,28 @@ def gbt_predict(term_number, criterion, learning_rate, loss, max_depth, max_feat
 
 if __name__ == "__main__":
     get_training_testing()
-    # TODO, TUNING
-    gbt_predict(sd.FIRST_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=1, max_features='log2',
-                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=0.5)
-    gbt_predict(sd.SECOND_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=1, max_features='log2',
-                min_samples_leaf=0.2, min_samples_split=0.1, n_estimators=500, subsample=0.5)
-    gbt_predict(sd.THIRD_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
-                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
-    gbt_predict(sd.FOURTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
-                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
-    gbt_predict(sd.FIFTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
-                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
-    gbt_predict(sd.SIXTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
-                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
-    gbt_predict(sd.SEVENTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
-                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
-    gbt_predict(sd.EIGHTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
-                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
-    gbt_predict(sd.NINTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
-                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
-    gbt_predict(sd.TENTH_TERM, criterion='mae', learning_rate=0.01, loss='deviance', max_depth=4, max_features='log2',
-                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=1.0)
+    # TUNED
+    gbt_predict(sd.FIRST_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=3, max_features='log2',
+                min_samples_leaf=0.2, min_samples_split=0.1, n_estimators=500, subsample=0.8)
+    gbt_predict(sd.SECOND_TERM, criterion='friedman_mse', learning_rate=0.01, loss='deviance', max_depth=1,
+                max_features=0.5,
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=1.0)
+    gbt_predict(sd.THIRD_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=3, max_features=0.5,
+                min_samples_leaf=0.1, min_samples_split=0.5, n_estimators=500, subsample=1.0)
+    gbt_predict(sd.FOURTH_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=1, max_features='log2',
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=0.8)
+    gbt_predict(sd.FIFTH_TERM, criterion='mae', learning_rate=0.5, loss='deviance', max_depth=3, max_features='log2',
+                min_samples_leaf=0.1, min_samples_split=0.5, n_estimators=500, subsample=0.8)
+    gbt_predict(sd.SIXTH_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=3, max_features='log2',
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=1.0)
+    gbt_predict(sd.SEVENTH_TERM, criterion='friedman_mse', learning_rate=0.01, loss='deviance', max_depth=1,
+                max_features=0.5,
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=1.0)
+    gbt_predict(sd.EIGHTH_TERM, criterion='friedman_mse', learning_rate=0.1, loss='deviance', max_depth=1,
+                max_features=0.1,
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=1.0)
+    gbt_predict(sd.NINTH_TERM, criterion='friedman_mse', learning_rate=0.1, loss='deviance', max_depth=1,
+                max_features='log2',
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=1.0)
+    gbt_predict(sd.TENTH_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=1, max_features=0.1,
+                min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=0.8)
