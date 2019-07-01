@@ -16,8 +16,9 @@ the Spearman rank-order correlation coefficient.
 '''
 def fill():
     counter = 0
-    final = pd.DataFrame(columns=['class_1', 'class_2', 'rho', 'pval'])
+    final = pd.DataFrame(columns=['class_1', 'class_2', 'rho', 'pval', 'n'])
     for (class_1, class1_row_series) in COURSE_COMBINATIONS.iterrows():
+        took_both_count = 0
         class_2 = COURSE_COMBINATIONS['class 2'].values[class_1]
         class_1 = COURSE_COMBINATIONS['class 1'].values[class_1]
         df = pd.DataFrame(columns=[class_1, class_2])  # temp dataframe with class1 and class2 as column headers
@@ -25,11 +26,12 @@ def fill():
             grade_class_1 = STUDENT_GRADE_LIST[class_1].values[student_id]
             grade_class_2 = STUDENT_GRADE_LIST[class_2].values[student_id]
             if isinstance(grade_class_1, str) and isinstance(grade_class_2, str):
+                took_both_count += 1
                 tempDf = pd.DataFrame(
                     data={class_1: [grade_class_1.split(',')[1]], class_2: [grade_class_2.split(',')[1]]})
                 df = df.append(tempDf, ignore_index=True)
         rho, pval = spearmanr(df[class_1].values, df[class_2].values)
-        tempDf = pd.DataFrame(data={'class_1': [class_1], 'class_2': [class_2], 'rho': [rho], 'pval': [pval]})
+        tempDf = pd.DataFrame(data={'class_1': [class_1], 'class_2': [class_2], 'rho': [rho], 'pval': [pval], 'n' : [took_both_count]})
         final = final.append(tempDf, ignore_index=True)
 
         print(counter)
