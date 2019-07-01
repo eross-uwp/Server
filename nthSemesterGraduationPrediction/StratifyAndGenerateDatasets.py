@@ -88,26 +88,26 @@ def stratify_fold():
                 term[col_name] = term[col_name].astype('category')
                 term[col_name] = term[col_name].cat.codes
 
-        X = term[HEADERS_ARRAY[i]].copy().values  # each term file has a different headers array
+        x = term[HEADERS_ARRAY[i]].copy().values  # each term file has a different headers array
         y = term[GRADUATED_HEADER].copy().values.reshape(-1, 1)  # reshape to one column
 
         skf = StratifiedKFold(n_splits=NUMBER_FOLDS, shuffle=True, random_state=RANDOM_SEED)
 
         loop_count = 0
 
-        for train_index, test_index in skf.split(X, y):  # actually stratify and fold
-            X_train, X_test = X[train_index], X[test_index]
+        for train_index, test_index in skf.split(x, y):  # actually stratify and fold
+            x_train, x_test = x[train_index], x[test_index]
             y_train, y_test = y[train_index], y[test_index]
 
             # create a new training and testing csv for each fold of each term
             (pd.concat(
-                [pd.DataFrame(X_train, columns=HEADERS_ARRAY[i]),
+                [pd.DataFrame(x_train, columns=HEADERS_ARRAY[i]),
                  pd.DataFrame(y_train, columns=[GRADUATED_HEADER])],
                 axis=1)).to_csv(TESTING_TRAINING_DATA_FOLDER + FILENAME_ARRAY[i] +
                                 TRAIN_PREFIX + str(loop_count + 1) + '.csv', encoding='utf-8', index=False)
 
             (pd.concat(
-                [pd.DataFrame(X_test, columns=HEADERS_ARRAY[i]),
+                [pd.DataFrame(x_test, columns=HEADERS_ARRAY[i]),
                  pd.DataFrame(y_test, columns=[GRADUATED_HEADER])],
                 axis=1)).to_csv(TESTING_TRAINING_DATA_FOLDER + FILENAME_ARRAY[i] +
                                 TEST_PREFIX + str(loop_count + 1) + '.csv', encoding='utf-8', index=False)

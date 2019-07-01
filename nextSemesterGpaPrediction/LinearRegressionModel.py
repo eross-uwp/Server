@@ -8,7 +8,7 @@ from sklearn.linear_model import LinearRegression
 from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
-import BaseDataSetGenerator as bd
+import BaseDataSetGenerator as bD
 
 RESULTS_FOLDER = 'LinearRegressionResults\\'
 RESULTS_TEXTFILE = 'LinearRegression_Results.txt'
@@ -19,40 +19,40 @@ PREDICTION_OUTPUT_PREFIX = 'predictions'
 def get_training_testing():
     # Creating arrays that contain arrays holding the testing and training data. Reshaped to form a 1 row multi
     # column array
-    X_train = []
+    x_train = []
     y_train = []
-    X_test = []
+    x_test = []
     y_test = []
 
-    for i in range(0, bd.NUMBER_OF_FOLDS):
-        X_train.append(pd.read_csv('data\\test_train\\train_' + str(i + 1) + '.csv')['prev GPA'].values.reshape(-1, 1))
+    for i in range(0, bD.NUMBER_OF_FOLDS):
+        x_train.append(pd.read_csv('data\\test_train\\train_' + str(i + 1) + '.csv')['prev GPA'].values.reshape(-1, 1))
         y_train.append(
             pd.read_csv('data\\test_train\\train_' + str(i + 1) + '.csv')['current GPA'].values.reshape(-1, 1))
-        X_test.append(pd.read_csv('data\\test_train\\test_' + str(i + 1) + '.csv')['prev GPA'].values.reshape(-1, 1))
+        x_test.append(pd.read_csv('data\\test_train\\test_' + str(i + 1) + '.csv')['prev GPA'].values.reshape(-1, 1))
         y_test.append(pd.read_csv('data\\test_train\\test_' + str(i + 1) + '.csv')['current GPA'].values.reshape(-1, 1))
 
-    return X_train, y_train, X_test, y_test
+    return x_train, y_train, x_test, y_test
 
 
-def lr_predict(X_train, y_train, X_test, y_test):
-    np.random.seed(bd.RANDOM_SEED)
+def lr_predict(x_train, y_train, x_test, y_test):
+    np.random.seed(bD.RANDOM_SEED)
     model = LinearRegression()
 
     # hold all tests and predictions in order to calculate R^2 AND RMSE.
     y_tests = []
     y_preds = []
 
-    for i in range(0, bd.NUMBER_OF_FOLDS):
+    for i in range(0, bD.NUMBER_OF_FOLDS):
         # fitting the model and storing the predicted value from the test set
-        model.fit(X_train[i], y_train[i])
-        y_pred = model.predict(X_test[i])
+        model.fit(x_train[i], y_train[i])
+        y_pred = model.predict(x_test[i])
 
         y_tests += list(y_test[i])  # the real value
         y_preds += list(y_pred)  # the predicted value
 
-        plt.scatter(X_test[i], y_test[i], color='g', label='real')  # the real data from the tests, in green
+        plt.scatter(x_test[i], y_test[i], color='g', label='real')  # the real data from the tests, in green
         # plt.scatter(X_test[i], y_pred, color='r', label='predicted')  # the predicted data from the tests, in red
-        plt.plot(X_test[i], model.predict(X_test[i]), color='k', label='predicted')  # the linear regression line
+        plt.plot(x_test[i], model.predict(x_test[i]), color='k', label='predicted')  # the linear regression line
         plt.title('test #' + str(i + 1))
         plt.xlabel('Prev term GPA')
         plt.ylabel('Curr term GPA')

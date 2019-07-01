@@ -9,7 +9,7 @@ from sklearn.ensemble import GradientBoostingClassifier
 from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
-import StratifyAndGenerateDatasets as sd
+import StratifyAndGenerateDatasets as sD
 
 RESULTS_FOLDER = 'GBTClassifierResults\\'
 GRAPH_FILE_PREFIX = 'graphs\\term_'
@@ -24,25 +24,25 @@ y_test_array = [[], [], [], [], [], [], [], [], [], []]
 
 #  Iterate through all possible training/testing files and store them in appropriate arrays.
 def get_training_testing():
-    for j in range(0, sd.NUM_TERMS):
-        for i in range(0, sd.NUMBER_FOLDS):
+    for j in range(0, sD.NUM_TERMS):
+        for i in range(0, sD.NUMBER_FOLDS):
             x_train_array[j].append(
-                pd.read_csv('data\\test_train\\' + sd.FILENAME_ARRAY[j] + sd.TRAIN_PREFIX + str(i + 1) + '.csv')[
-                    sd.HEADERS_ARRAY[j]].values)
+                pd.read_csv('data\\test_train\\' + sD.FILENAME_ARRAY[j] + sD.TRAIN_PREFIX + str(i + 1) + '.csv')[
+                    sD.HEADERS_ARRAY[j]].values)
             y_train_array[j].append(
-                pd.read_csv('data\\test_train\\' + sd.FILENAME_ARRAY[j] + sd.TRAIN_PREFIX + str(i + 1) + '.csv')[
-                    sd.GRADUATED_HEADER].values)
+                pd.read_csv('data\\test_train\\' + sD.FILENAME_ARRAY[j] + sD.TRAIN_PREFIX + str(i + 1) + '.csv')[
+                    sD.GRADUATED_HEADER].values)
             x_test_array[j].append(
-                pd.read_csv('data\\test_train\\' + sd.FILENAME_ARRAY[j] + sd.TEST_PREFIX + str(i + 1) + '.csv')[
-                    sd.HEADERS_ARRAY[j]].values)
+                pd.read_csv('data\\test_train\\' + sD.FILENAME_ARRAY[j] + sD.TEST_PREFIX + str(i + 1) + '.csv')[
+                    sD.HEADERS_ARRAY[j]].values)
             y_test_array[j].append(
-                pd.read_csv('data\\test_train\\' + sd.FILENAME_ARRAY[j] + sd.TEST_PREFIX + str(i + 1) + '.csv')[
-                    sd.GRADUATED_HEADER].values)
+                pd.read_csv('data\\test_train\\' + sD.FILENAME_ARRAY[j] + sD.TEST_PREFIX + str(i + 1) + '.csv')[
+                    sD.GRADUATED_HEADER].values)
 
 
 def gbt_predict(term_number, criterion, learning_rate, loss, max_depth, max_features,
                 min_samples_leaf, min_samples_split, n_estimators, subsample):
-    np.random.seed(sd.RANDOM_SEED)
+    np.random.seed(sD.RANDOM_SEED)
 
     y_tests = []  # hold combined tests and predictions for all folds
     y_preds = []
@@ -50,14 +50,14 @@ def gbt_predict(term_number, criterion, learning_rate, loss, max_depth, max_feat
     model = GradientBoostingClassifier(criterion=criterion, learning_rate=learning_rate, loss=loss, max_depth=max_depth,
                                        max_features=max_features,
                                        min_samples_leaf=min_samples_leaf, min_samples_split=min_samples_split,
-                                       n_estimators=n_estimators, subsample=subsample, random_state=sd.RANDOM_SEED)
-    for fold_num in range(0, sd.NUMBER_FOLDS):
+                                       n_estimators=n_estimators, subsample=subsample, random_state=sD.RANDOM_SEED)
+    for fold_num in range(0, sD.NUMBER_FOLDS):
         model.fit(x_train_array[term_number][fold_num], y_train_array[term_number][fold_num])
         y_pred = model.predict(x_test_array[term_number][fold_num])
 
         # round the graduation predictions, either 1 or 0
         for idx, a in enumerate(y_pred):
-            y_pred[idx] = sd.round_school(a)
+            y_pred[idx] = sD.round_school(a)
 
         y_tests += list(y_test_array[term_number][fold_num])
 
@@ -66,39 +66,39 @@ def gbt_predict(term_number, criterion, learning_rate, loss, max_depth, max_feat
                     label='1st term')
 
         # TODO, not very extensible
-        if term_number > sd.FIRST_TERM:
+        if term_number > sD.FIRST_TERM:
             plt.scatter((x_test_array[term_number][fold_num])[:, 2], y_test_array[term_number][fold_num],
                         color='#e6194B',
                         label='2nd term')
-        if term_number > sd.SECOND_TERM:
+        if term_number > sD.SECOND_TERM:
             plt.scatter((x_test_array[term_number][fold_num])[:, 4], y_test_array[term_number][fold_num],
                         color='#f58231',
                         label='3rd term')
-        if term_number > sd.THIRD_TERM:
+        if term_number > sD.THIRD_TERM:
             plt.scatter((x_test_array[term_number][fold_num])[:, 6], y_test_array[term_number][fold_num],
                         color='#ffe119',
                         label='4th term')
-        if term_number > sd.FOURTH_TERM:
+        if term_number > sD.FOURTH_TERM:
             plt.scatter((x_test_array[term_number][fold_num])[:, 8], y_test_array[term_number][fold_num],
                         color='#bfef45',
                         label='5th term')
-        if term_number > sd.FIFTH_TERM:
+        if term_number > sD.FIFTH_TERM:
             plt.scatter((x_test_array[term_number][fold_num])[:, 10], y_test_array[term_number][fold_num],
                         color='#3cb44b',
                         label='6th term')
-        if term_number > sd.SIXTH_TERM:
+        if term_number > sD.SIXTH_TERM:
             plt.scatter((x_test_array[term_number][fold_num])[:, 12], y_test_array[term_number][fold_num],
                         color='#42d4f4',
                         label='7th term')
-        if term_number > sd.SEVENTH_TERM:
+        if term_number > sD.SEVENTH_TERM:
             plt.scatter((x_test_array[term_number][fold_num])[:, 14], y_test_array[term_number][fold_num],
                         color='#4363d8',
                         label='8th term')
-        if term_number > sd.EIGHTH_TERM:
+        if term_number > sD.EIGHTH_TERM:
             plt.scatter((x_test_array[term_number][fold_num])[:, 16], y_test_array[term_number][fold_num],
                         color='#911eb4',
                         label='9th term')
-        if term_number > sd.NINTH_TERM:
+        if term_number > sD.NINTH_TERM:
             plt.scatter((x_test_array[term_number][fold_num])[:, 18], y_test_array[term_number][fold_num],
                         color='#f032e6',
                         label='10th term')
@@ -129,27 +129,27 @@ def gbt_predict(term_number, criterion, learning_rate, loss, max_depth, max_feat
 if __name__ == "__main__":
     get_training_testing()
     # TUNED
-    gbt_predict(sd.FIRST_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=3, max_features='log2',
+    gbt_predict(sD.FIRST_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=3, max_features='log2',
                 min_samples_leaf=0.2, min_samples_split=0.1, n_estimators=500, subsample=0.8)
-    gbt_predict(sd.SECOND_TERM, criterion='friedman_mse', learning_rate=0.01, loss='deviance', max_depth=1,
+    gbt_predict(sD.SECOND_TERM, criterion='friedman_mse', learning_rate=0.01, loss='deviance', max_depth=1,
                 max_features=0.5,
                 min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=1.0)
-    gbt_predict(sd.THIRD_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=3, max_features=0.5,
+    gbt_predict(sD.THIRD_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=3, max_features=0.5,
                 min_samples_leaf=0.1, min_samples_split=0.5, n_estimators=500, subsample=1.0)
-    gbt_predict(sd.FOURTH_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=1, max_features='log2',
+    gbt_predict(sD.FOURTH_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=1, max_features='log2',
                 min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=0.8)
-    gbt_predict(sd.FIFTH_TERM, criterion='mae', learning_rate=0.5, loss='deviance', max_depth=3, max_features='log2',
+    gbt_predict(sD.FIFTH_TERM, criterion='mae', learning_rate=0.5, loss='deviance', max_depth=3, max_features='log2',
                 min_samples_leaf=0.1, min_samples_split=0.5, n_estimators=500, subsample=0.8)
-    gbt_predict(sd.SIXTH_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=3, max_features='log2',
+    gbt_predict(sD.SIXTH_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=3, max_features='log2',
                 min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=1.0)
-    gbt_predict(sd.SEVENTH_TERM, criterion='friedman_mse', learning_rate=0.01, loss='deviance', max_depth=1,
+    gbt_predict(sD.SEVENTH_TERM, criterion='friedman_mse', learning_rate=0.01, loss='deviance', max_depth=1,
                 max_features=0.5,
                 min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=1.0)
-    gbt_predict(sd.EIGHTH_TERM, criterion='friedman_mse', learning_rate=0.1, loss='deviance', max_depth=1,
+    gbt_predict(sD.EIGHTH_TERM, criterion='friedman_mse', learning_rate=0.1, loss='deviance', max_depth=1,
                 max_features=0.1,
                 min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=1.0)
-    gbt_predict(sd.NINTH_TERM, criterion='friedman_mse', learning_rate=0.1, loss='deviance', max_depth=1,
+    gbt_predict(sD.NINTH_TERM, criterion='friedman_mse', learning_rate=0.1, loss='deviance', max_depth=1,
                 max_features='log2',
                 min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=1.0)
-    gbt_predict(sd.TENTH_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=1, max_features=0.1,
+    gbt_predict(sD.TENTH_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=1, max_features=0.1,
                 min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=0.8)

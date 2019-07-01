@@ -8,20 +8,20 @@ ___authors___: Austin FitzGerald
 from sklearn.ensemble import GradientBoostingClassifier
 import pandas as pd
 import numpy as np
-import StratifyAndGenerateDatasets as sd
+import StratifyAndGenerateDatasets as sD
 from sklearn.model_selection import GridSearchCV, train_test_split
 
 GRADUATED_HEADER = 'graduated'
-FIRST_TERM = [sd.RAW_DATA_FIRST, sd.FIRST_HEADERS]
-SECOND_TERM = [sd.RAW_DATA_SECOND, sd.SECOND_HEADERS]
-THIRD_TERM = [sd.RAW_DATA_THIRD, sd.THIRD_HEADERS]
-FOURTH_TERM = [sd.RAW_DATA_FOURTH, sd.FOURTH_HEADERS]
-FIFTH_TERM = [sd.RAW_DATA_FIFTH, sd.FIFTH_HEADERS]
-SIXTH_TERM = [sd.RAW_DATA_SIXTH, sd.SIXTH_HEADERS]
-SEVENTH_TERM = [sd.RAW_DATA_SEVENTH, sd.SEVENTH_HEADERS]
-EIGHTH_TERM = [sd.RAW_DATA_EIGHTH, sd.EIGHTH_HEADERS]
-NINTH_TERM = [sd.RAW_DATA_NINTH, sd.NINTH_HEADERS]
-TENTH_TERM = [sd.RAW_DATA_TENTH, sd.TENTH_HEADERS]
+FIRST_TERM = [sD.RAW_DATA_FIRST, sD.FIRST_HEADERS]
+SECOND_TERM = [sD.RAW_DATA_SECOND, sD.SECOND_HEADERS]
+THIRD_TERM = [sD.RAW_DATA_THIRD, sD.THIRD_HEADERS]
+FOURTH_TERM = [sD.RAW_DATA_FOURTH, sD.FOURTH_HEADERS]
+FIFTH_TERM = [sD.RAW_DATA_FIFTH, sD.FIFTH_HEADERS]
+SIXTH_TERM = [sD.RAW_DATA_SIXTH, sD.SIXTH_HEADERS]
+SEVENTH_TERM = [sD.RAW_DATA_SEVENTH, sD.SEVENTH_HEADERS]
+EIGHTH_TERM = [sD.RAW_DATA_EIGHTH, sD.EIGHTH_HEADERS]
+NINTH_TERM = [sD.RAW_DATA_NINTH, sD.NINTH_HEADERS]
+TENTH_TERM = [sD.RAW_DATA_TENTH, sD.TENTH_HEADERS]
 TERMS_ARRAY = [FIRST_TERM, SEVENTH_TERM, THIRD_TERM, FOURTH_TERM, FIFTH_TERM, SIXTH_TERM, SEVENTH_TERM, EIGHTH_TERM,
                NINTH_TERM, TENTH_TERM]
 TUNING_RESULTS_FILE_PREFIX = 'GBTTuningResults\\term_'
@@ -29,7 +29,7 @@ TUNING_RESULTS_FILE_PREFIX = 'GBTTuningResults\\term_'
 if __name__ == "__main__":
     counter = 1
     for TERM_INDEX in TERMS_ARRAY:
-        gradient = GradientBoostingClassifier(random_state=sd.RANDOM_SEED)
+        gradient = GradientBoostingClassifier(random_state=sD.RANDOM_SEED)
 
         parameters = {
             "loss": ["deviance"],
@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
         y = term[GRADUATED_HEADER].copy().values.reshape(-1, 1).ravel()
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=sd.RANDOM_SEED)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=sD.RANDOM_SEED)
         best_clf = clf.fit(X_train, y_train)
 
         with open(TUNING_RESULTS_FILE_PREFIX + str(counter) + '.txt', 'w') as f:

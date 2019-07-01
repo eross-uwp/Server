@@ -1,8 +1,5 @@
-from anytree.importer import DictImporter
-from anytree import RenderTree
-import numpy as np
 import pandas as pd
-
+from anytree.importer import DictImporter
 
 raw_data = pd.read_csv('data\\Curriculum Structure.csv')
 Children = 'children'

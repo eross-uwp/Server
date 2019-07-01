@@ -1,5 +1,4 @@
 from collections import Counter
-
 from scipy.stats import spearmanr
 import pandas as pd
 from matplotlib import pyplot as plt
@@ -14,13 +13,14 @@ FINAL_FILE = 'results\\final.csv'
 GRAPHS_FOLDER = 'results\\graphs\\'
 GRADE_SCALE = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F']
 
-'''
-For each row in the course combinations table, get class 1 and class 2. Create a temporary dataframe with the 2 classes
-as column names. For each student, search through the student grade list for the class names. If a student has grade
-entries for both classes, add them to the temporary dataframe. Once all students have been iterated through, calculate
-the Spearman rank-order correlation coefficient.
-'''
+
 def fill():
+    """
+    For each row in the course combinations table, get class 1 and class 2. Create a temporary dataframe with the 2 classes
+    as column names. For each student, search through the student grade list for the class names. If a student has grade
+    entries for both classes, add them to the temporary dataframe. Once all students have been iterated through, calculate
+    the Spearman rank-order correlation coefficient.
+    """
     counter = 0
     final = pd.DataFrame(columns=['class_1', 'class_2', 'rho', 'pval', 'n'])
     for (class_1, class1_row_series) in COURSE_COMBINATIONS.iterrows():
@@ -33,13 +33,13 @@ def fill():
             grade_class_2 = STUDENT_GRADE_LIST[class_2].values[student_id]
             if isinstance(grade_class_1, str) and isinstance(grade_class_2, str):
                 took_both_count += 1
-                tempDf = pd.DataFrame(
+                temp_df = pd.DataFrame(
                     data={class_1: [grade_class_1.split(',')[1]], class_2: [grade_class_2.split(',')[1]]})
-                df = df.append(tempDf, ignore_index=True)
+                df = df.append(temp_df, ignore_index=True)
         rho, pval = spearmanr(df[class_1].values, df[class_2].values)
-        tempDf = pd.DataFrame(
+        temp_df = pd.DataFrame(
             data={'class_1': [class_1], 'class_2': [class_2], 'rho': [rho], 'pval': [pval], 'n': [took_both_count]})
-        final = final.append(tempDf, ignore_index=True)
+        final = final.append(temp_df, ignore_index=True)
 
         print(counter)
         if counter % 1000 == 0:
@@ -64,8 +64,8 @@ def generate_graphs(min_n_value):
                 # get numerical value (for graphing) of grade
                 grade_class_1 = convert_grade(grade_class_1.split(',')[1])
                 grade_class_2 = convert_grade(grade_class_2.split(',')[1])
-                tempDf = pd.DataFrame(data={class_1: [grade_class_1], class_2: [grade_class_2]})
-                df = df.append(tempDf, ignore_index=True)
+                temp_df = pd.DataFrame(data={class_1: [grade_class_1], class_2: [grade_class_2]})
+                df = df.append(temp_df, ignore_index=True)
         if len(df) >= min_n_value:
             # getting the bubble size based on frequency in set
             c = Counter(zip(df[class_1].values, df[class_2].values))
@@ -88,6 +88,7 @@ def generate_graphs(min_n_value):
                                c.isalpha() or c.isdigit() or c == ' ']).rstrip())  # https://stackoverflow.com/a/7406369
 
 
+# convert the letter grade to an arbitrary value between 0-10 inclusive in order to plot evenly.
 def convert_grade(string_grade):
     if string_grade == 'A':
         return 10

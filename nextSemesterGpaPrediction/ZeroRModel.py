@@ -2,11 +2,10 @@
 ___authors___: Zhiwei Yang
 """
 
-import pandas as pd
-import numpy as np
-import urllib.request
-from sklearn.metrics import mean_squared_error
 import math
+import numpy as np
+import pandas as pd
+from sklearn.metrics import mean_squared_error
 
 PREV_GPA = 'prev GPA'
 CURR_GPA = 'current GPA'
