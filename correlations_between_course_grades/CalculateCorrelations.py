@@ -12,7 +12,9 @@ COURSE_COMBINATIONS = pd.read_csv('data\\course_combinations.csv')
 FINAL_FILE = 'results\\final.csv'
 GRAPHS_FOLDER = 'results\\graphs\\'
 GRADE_SCALE = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F']
-
+ALPHA_VALUE = 0.05
+NUM_FINAL_COMBINATIONS = 15953
+MIN_SAMPLES = 20
 
 def fill():
     """
@@ -48,44 +50,47 @@ def fill():
     final.to_csv(FINAL_FILE, index=False)
 
 
-def generate_graphs(min_n_value):
+def generate_graphs(max_p_value, min_n_value):
     final_read = pd.read_csv(FINAL_FILE)
     # for each course combination that is in your final results
     for (class_1, class1_row_series) in final_read.iterrows():
+        p_value = final_read['pval'].values[class_1]
         class_2 = final_read['class_2'].values[class_1]
         class_1 = final_read['class_1'].values[class_1]
-        df = pd.DataFrame(columns=[class_1, class_2])
-        # for each student id in our grades list
-        for (student_id, student_row_series) in STUDENT_GRADE_LIST.iterrows():
-            grade_class_1 = STUDENT_GRADE_LIST[class_1].values[student_id]
-            grade_class_2 = STUDENT_GRADE_LIST[class_2].values[student_id]
-            # if a student's grade in class_1 and class_2 exists
-            if isinstance(grade_class_1, str) and isinstance(grade_class_2, str):
-                # get numerical value (for graphing) of grade
-                grade_class_1 = convert_grade(grade_class_1.split(',')[1])
-                grade_class_2 = convert_grade(grade_class_2.split(',')[1])
-                temp_df = pd.DataFrame(data={class_1: [grade_class_1], class_2: [grade_class_2]})
-                df = df.append(temp_df, ignore_index=True)
-        if len(df) >= min_n_value:
-            # getting the bubble size based on frequency in set
-            c = Counter(zip(df[class_1].values, df[class_2].values))
-            s = [10 * c[(xx, yy)] for xx, yy in
-                 zip(df[class_1].values, df[class_2].values)]  # https://stackoverflow.com/a/46700817
-            plt.close()
-            # force plot to have A-F axis labels
-            plt.xlim(left=-0.5, right=10.5)
-            plt.ylim(bottom=-0.5, top=10.5)
-            plt.xticks([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                       ['F', 'D', 'D+', 'C-', 'C', 'C+', 'B-', 'B', 'B+', 'A-', 'A'])
-            plt.yticks([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                       ['F', 'D', 'D+', 'C-', 'C', 'C+', 'B-', 'B', 'B+', 'A-', 'A'])
-            plt.scatter(df[class_1].values, df[class_2].values, s=s)
-            plt.xlabel(class_1)
-            plt.ylabel(class_2)
-            plt.savefig(
-                GRAPHS_FOLDER + "".join([c for c in class_1 if c.isalpha() or c.isdigit() or c == ' ']).rstrip() +
-                '_' + "".join([c for c in class_2 if
-                               c.isalpha() or c.isdigit() or c == ' ']).rstrip())  # https://stackoverflow.com/a/7406369
+        # p value for each course combination must be less than or equal than Bonferonni adjusted p value
+        if p_value <= max_p_value:
+            df = pd.DataFrame(columns=[class_1, class_2])
+            # for each student id in our grades list
+            for (student_id, student_row_series) in STUDENT_GRADE_LIST.iterrows():
+                grade_class_1 = STUDENT_GRADE_LIST[class_1].values[student_id]
+                grade_class_2 = STUDENT_GRADE_LIST[class_2].values[student_id]
+                # if a student's grade in class_1 and class_2 exists
+                if isinstance(grade_class_1, str) and isinstance(grade_class_2, str):
+                    # get numerical value (for graphing) of grade
+                    grade_class_1 = convert_grade(grade_class_1.split(',')[1])
+                    grade_class_2 = convert_grade(grade_class_2.split(',')[1])
+                    temp_df = pd.DataFrame(data={class_1: [grade_class_1], class_2: [grade_class_2]})
+                    df = df.append(temp_df, ignore_index=True)
+            if len(df) >= min_n_value:
+                # getting the bubble size based on frequency in set
+                c = Counter(zip(df[class_1].values, df[class_2].values))
+                s = [10 * c[(xx, yy)] for xx, yy in
+                     zip(df[class_1].values, df[class_2].values)]  # https://stackoverflow.com/a/46700817
+                plt.close()
+                # force plot to have A-F axis labels
+                plt.xlim(left=-0.5, right=10.5)
+                plt.ylim(bottom=-0.5, top=10.5)
+                plt.xticks([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                           ['F', 'D', 'D+', 'C-', 'C', 'C+', 'B-', 'B', 'B+', 'A-', 'A'])
+                plt.yticks([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                           ['F', 'D', 'D+', 'C-', 'C', 'C+', 'B-', 'B', 'B+', 'A-', 'A'])
+                plt.scatter(df[class_1].values, df[class_2].values, s=s)
+                plt.xlabel(class_1)
+                plt.ylabel(class_2)
+                plt.savefig(
+                    GRAPHS_FOLDER + "".join([c for c in class_1 if c.isalpha() or c.isdigit() or c == ' ']).rstrip() +
+                    '_' + "".join([c for c in class_2 if
+                                   c.isalpha() or c.isdigit() or c == ' ']).rstrip())  # https://stackoverflow.com/a/7406369
 
 
 # convert the letter grade to an arbitrary value between 0-10 inclusive in order to plot evenly.
@@ -115,4 +120,4 @@ def convert_grade(string_grade):
 
 
 if __name__ == "__main__":
-    generate_graphs(50)
+    generate_graphs(ALPHA_VALUE / NUM_FINAL_COMBINATIONS, MIN_SAMPLES)
