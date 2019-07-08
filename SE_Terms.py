@@ -1,7 +1,5 @@
-import pandas as pd
 import numpy as np
-import Lists
-import csv
+import pandas as pd
 
 if __name__ == "__main__":
     data = pd.read_csv("GradeTest.csv")

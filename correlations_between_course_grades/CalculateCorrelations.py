@@ -17,6 +17,7 @@ NUM_FINAL_COMBINATIONS = 15953
 MIN_SAMPLES = 20
 
 
+
 def fill():
     """
     For each row in the course combinations table, get class 1 and class 2. Create a temporary dataframe with the 2 classes
@@ -112,6 +113,8 @@ def convert_grade(string_grade):
     :param string_grade: the grade to encode
     :return: the encoded value for each grade
     """
+# convert the letter grade to an arbitrary value between 0-10 inclusive in order to plot evenly.
+def convert_grade(string_grade):
     if string_grade == 'A':
         return 10
     elif string_grade == 'A-':

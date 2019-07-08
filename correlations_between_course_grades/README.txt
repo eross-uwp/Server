@@ -11,4 +11,5 @@ experiment can be viewed here: https://gallery.cortanaintelligence.com/Experimen
 CalculateCorrelations also contains a function to generate bubble scatter plots for all course combinations with a
 n value (number of students who took both courses) that is greater or equal than the given parameter. The graphing function
 also will only grazph course combinations with a p-value less than or equal to the given parameter. The axis are the
+n value (number of students who took both courses) that is greater or equal than a given parameter. The axis are the
 grades for course one (x) and course two (y), the bubble size is determined by the frequency of the grade combination.

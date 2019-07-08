@@ -1,0 +1,1 @@
+{'criterion': 'mae', 'learning_rate': 0.1, 'loss': 'deviance', 'max_depth': 3, 'max_features': 'log2', 'min_samples_leaf': 0.2, 'min_samples_split': 0.1, 'n_estimators': 500, 'subsample': 0.8}

@@ -1,0 +1,1 @@
+These predictive models are used to predict if a student will graduate or not based on their 1st thru nth term gpa.

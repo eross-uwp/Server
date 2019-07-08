@@ -4,14 +4,12 @@
 ___authors___: Austin FitzGerald
 """
 
-import random
-import pandas as pd
 import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
 from sklearn import metrics
-
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPRegressor
-from matplotlib import pyplot as plt
 
 # CONSTANTS
 RAW_DATA_FILE = 'data\\raw_data.csv'
