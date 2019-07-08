@@ -39,21 +39,15 @@ if __name__ == '__main__':
         pre_classes = raw_data[raw_data.postreq == post_class][['prereq']]  # list of prereq for class
         forester[post_class] = one_depth_tree(post_class, pre_classes.values.tolist())
 
-
-        #print(RenderTree(forester[post_class]))
-    new_forest = forest
     for post_class in class_list:
-        new_forest[post_class] = all_prereq(post_class)
+        for each_kid in new_forest[post_class].children:
+            if forest.get(each_kid.key[0]) == None:
+                continue
+            else:
+                if new_forest[each_kid.key[0]] != new_forest[post_class]:
+                    forest[post_class].children
+                    new_forest[each_kid.key[0]].parent = forest[post_class]
+                    each_kid.parent = None
 
         print(RenderTree(forest[post_class]))
         print('\n\n\n')
-
-        print(RenderTree(forester[post_class]))
-
-    for post_class in class_list:
-        forester[post_class]
-
-        print(RenderTree(forester[post_class]))
-
-    for post_class in class_list:
-        forester[post_class]
