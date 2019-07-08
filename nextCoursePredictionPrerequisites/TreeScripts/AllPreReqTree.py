@@ -1,5 +1,5 @@
 from anytree.importer import DictImporter
-from anytree import RenderTree
+from anytree import AnyNode, RenderTree
 import numpy as np
 import pandas as pd
 
@@ -29,6 +29,8 @@ def one_depth_tree(post_req, pre_reqs):
     root = importer.import_(tree_root)
     return root
 
+def all_prereq(post_course):
+
 
 if __name__ == '__main__':
     class_list = list(raw_data.postreq.unique())  # all classes in postreq
@@ -39,16 +41,9 @@ if __name__ == '__main__':
         forest[post_class] = one_depth_tree(post_class, pre_classes.values.tolist())
 
         #print(RenderTree(forester[post_class]))
-
+    new_forest = forest
     for post_class in class_list:
-        for each_kid in new_forest[post_class].children:
-            if forest.get(each_kid.key[0]) == None:
-                continue
-            else:
-                if new_forest[each_kid.key[0]] != new_forest[post_class]:
-                    forest[post_class].children
-                    new_forest[each_kid.key[0]].parent = forest[post_class]
-                    each_kid.parent = None
+        new_forest[post_class] = all_prereq(post_class)
 
         print(RenderTree(forest[post_class]))
         print('\n\n\n')
