@@ -9,7 +9,7 @@ Children = 'children'
 
 children_list_test = ['x', 'y', 'z']
 SELF_KEY = 'key'
-CORE = ''
+core = ''
 
 forester = {}
 
@@ -22,8 +22,8 @@ def get_children_list(prereq_class):
 
 
 def one_depth_tree(post_req, pre_reqs):
-    CORE = str(post_req)
-    tree_root = {SELF_KEY:CORE}
+    core = str(post_req)
+    tree_root = {SELF_KEY:core}
     tree_root['children'] = get_children_list(pre_reqs)
     importer = DictImporter()
     root = importer.import_(tree_root)
