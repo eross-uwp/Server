@@ -16,6 +16,8 @@ ALPHA_VALUE = 0.05
 NUM_FINAL_COMBINATIONS = 15953
 MIN_SAMPLES = 20
 
+
+
 def fill():
     """
     For each row in the course combinations table, get class 1 and class 2. Create a temporary dataframe with the 2 classes
@@ -51,6 +53,15 @@ def fill():
 
 
 def generate_graphs(max_p_value, min_n_value):
+    """
+    Generate a bubble scatter plot of student grades for each course that meets the given criteria. Must already have
+    generated the final dataset with Pearson's Correlation Coefficients, p-values, and n-values. Scatter plot bubbles
+    are sized based on the frequency of the grade combination for the two courses graphed.
+    :param max_p_value: Each course combination must have a p-value less than or equal to the given max p-value, given
+    in the calling statement is the Bonferroni adjusted p-value.
+    :param min_n_value: Each course combination must have a sample size no less than the given number
+    :return:
+    """
     final_read = pd.read_csv(FINAL_FILE)
     # for each course combination that is in your final results
     for (class_1, class1_row_series) in final_read.iterrows():
@@ -87,12 +98,21 @@ def generate_graphs(max_p_value, min_n_value):
                 plt.scatter(df[class_1].values, df[class_2].values, s=s)
                 plt.xlabel(class_1)
                 plt.ylabel(class_2)
+                # save graph with a proper filename
                 plt.savefig(
                     GRAPHS_FOLDER + "".join([c for c in class_1 if c.isalpha() or c.isdigit() or c == ' ']).rstrip() +
                     '_' + "".join([c for c in class_2 if
                                    c.isalpha() or c.isdigit() or c == ' ']).rstrip())  # https://stackoverflow.com/a/7406369
 
 
+def convert_grade(string_grade):
+    """
+    Convert the letter grade to an arbitrary value between 0-10 inclusive in order to plot evenly. Encoded values are
+    evenly spaced for graphing purposes only, these values should not be directly correlated to each grade in any other
+    way.
+    :param string_grade: the grade to encode
+    :return: the encoded value for each grade
+    """
 # convert the letter grade to an arbitrary value between 0-10 inclusive in order to plot evenly.
 def convert_grade(string_grade):
     if string_grade == 'A':
