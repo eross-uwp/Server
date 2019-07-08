@@ -9,8 +9,11 @@
       <sourceFolder url="file://$MODULE_DIR$/courseGradeCorrelations" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/correlations_between_course_grades" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="PyDocumentationSettings">
+    <option name="renderExternalDocumentation" value="true" />
   </component>
   <component name="TestRunnerService">
     <option name="projectConfiguration" value="pytest" />

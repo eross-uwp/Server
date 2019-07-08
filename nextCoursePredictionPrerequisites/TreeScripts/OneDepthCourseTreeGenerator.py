@@ -15,7 +15,7 @@ forester = {}
 
 
 def get_children_list(prereq_class):
-    temp_list=[]
+    temp_list = []
     for each_element in prereq_class:
         temp_list.append({SELF_KEY:each_element})
     return temp_list
