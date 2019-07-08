@@ -11,12 +11,12 @@ children_list_test = ['x', 'y', 'z']
 SELF_KEY = 'key'
 CORE = ''
 
-forest = {}
-new_forest = {}
+forester = {}
 
-def get_children_list(prereq_classes):
+
+def get_children_list(prereq_class):
     temp_list=[]
-    for each_element in prereq_classes:
+    for each_element in prereq_class:
         temp_list.append({SELF_KEY:each_element})
     return temp_list
 
@@ -35,11 +35,11 @@ def all_prereq(post_course):
 if __name__ == '__main__':
     class_list = list(raw_data.postreq.unique())  # all classes in postreq
 
-    new_forest = forest
     for post_class in class_list:
         pre_classes = raw_data[raw_data.postreq == post_class][['prereq']]  # list of prereq for class
-        forest[post_class] = one_depth_tree(post_class, pre_classes.values.tolist())
+        forester[post_class] = one_depth_tree(post_class, pre_classes.values.tolist())
 
+<<<<<<< HEAD
         #print(RenderTree(forester[post_class]))
     new_forest = forest
     for post_class in class_list:
@@ -47,3 +47,9 @@ if __name__ == '__main__':
 
         print(RenderTree(forest[post_class]))
         print('\n\n\n')
+=======
+        print(RenderTree(forester[post_class]))
+
+    for post_class in class_list:
+        forester[post_class]
+>>>>>>> parent of 3329fca... AllPreReqTree completed with duplicates. Add method of getting rid of duplicates but does not work yet. Needs debugging.
