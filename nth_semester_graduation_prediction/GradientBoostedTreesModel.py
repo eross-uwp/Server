@@ -10,6 +10,7 @@ from matplotlib import pyplot as plt
 import pandas as pd
 import numpy as np
 import StratifyAndGenerateDatasets as sD
+from joblib import dump, load
 
 RESULTS_FOLDER = 'GBTClassifierResults\\'
 GRAPH_FILE_PREFIX = 'graphs\\term_'
@@ -102,6 +103,8 @@ def gbt_predict(term_number, criterion, learning_rate, loss, max_depth, max_feat
             plt.scatter((x_test_array[term_number][fold_num])[:, 18], y_test_array[term_number][fold_num],
                         color='#f032e6',
                         label='10th term')
+
+        dump(model, 'data\\' + str(term_number)+ '.joblib')
 
         plt.scatter((x_test_array[term_number][fold_num])[:, 0], y_pred, color='k', label='predicted')
         plt.title('term #' + str(term_number + 1) + ', test #' + str(fold_num + 1))
