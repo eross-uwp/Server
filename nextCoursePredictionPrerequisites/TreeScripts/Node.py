@@ -38,4 +38,8 @@ class Node:
             return 1
 
     def __copy__(self):
-        return self
+        copy = Node(self.name, self.relationship)
+        copy.set_prereq(self._prereq)
+        copy.set_coreq(self._coreq)
+        copy.set_postreq(self._postreq)
+        return copy
