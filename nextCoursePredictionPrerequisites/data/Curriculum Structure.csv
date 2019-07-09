@@ -3,15 +3,16 @@ Intermediate Algebra,Elementary Algebra,or,c-
 Intermediate Algebra,Mathematical Problem Solving,or,c-
 College Algebra,Intermediate Algebra,single,c-
 Fundamentals of Engineering Analysis Tools,Intermediate Algebra,or,c-
-Precalculus,Intermediate Algebra,single,b-
-Database Design and Implementation,C,and,
+Precalculusulus,Intermediate Algebra,or,b-
+Database Design and Implementation Design and Implementation,C,or,
 Trigonometry and Analytic Geometry,College Algebra,single,c-
 Fundamentals of Engineering Analysis Tools,College Algebra,or,c-
+Precalculus,College Algebra,or,c-
 Calculus and Analytic Geometry I,Trigonometry and Analytic Geometry,or,c-
 Calculus and Analytic Geometry I,Precalculus,or,c-
 Discrete Mathematics,Calculus and Analytic Geometry I,single,c-
-Circuit Modeling I,Calculus and Analytic Geometry I,single,c-
-Calculus and Analytic Geometry II,Calculus and Analytic Geometry I,or,c-
+Circuit Modeling I,Calculus and Analytic Geometry I,or,c-
+Calculus and Analytic Geometry II,Calculus and Analytic Geometry II,or,c-
 General Physics I,Calculus and Analytic Geometry I,or,c-
 Computer Graphics,Calculus and Analytic Geometry I,and,c-
 Calculus and Analytic Geometry III,Calculus and Analytic Geometry II,single,c-
@@ -32,7 +33,7 @@ Introduction to Computer Security,Object-Oriented Programming and Data Structure
 Data Communications and Computer Networks,Object-Oriented Programming and Data Structures I,single,c-
 Computer Architecture/Operating Systems,Object-Oriented Programming and Data Structures I,single,c-
 Introduction to Software Engineering,Object-Oriented Programming and Data Structures I,single,c-
-Database Design and Implementation,Object-Oriented Programming and Data Structures I,and,c-
+Database Design and Implementation Design and Implementation,Object-Oriented Programming and Data Structures I,and,c-
 Object Oriented Analysis and Design,Object-Oriented Programming and Data Structures I,and,c-
 Software Quality,Object-Oriented Programming and Data Structures II,single,c-
 Intermediate Software Engineering,Object-Oriented Programming and Data Structures II,and,c-
@@ -59,6 +60,6 @@ Principles and Applications of Project Management,Engineering Management,single,
 Human Factors Engineering,anatomy,and,
 B,Computer Architecture/Operating Systems,or,
 B,Introduction to Microprocessors,or,
-C,Finite Mathematics with Applications,or,
+C,Object-Oriented Programming and Data Structures I,or,
 C,Discrete Mathematics,or,
 Elementary Algebra,Basic Algebra,single,c-
