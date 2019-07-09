@@ -1,7 +1,4 @@
 class Node:
-    __SINGLE_RELATIONSHIP = 'SINGLE'
-    __AND_RELATIONSHIP = 'AND'
-    __OR_RELATIONSHIP = 'OR'
 
     def __init__(self, name, relationship):
         if self.__check_relationship(relationship) == 1:
@@ -10,9 +7,11 @@ class Node:
         self._prereq = []
         self._coreq = []
         self._postreq = []
+        self.grade = ''
 
     def add_prereq(self, prereq):
         self._prereq.append(prereq)
+
 
     def add_coreq(self, coreq):
         self._coreq.append(coreq)
@@ -22,6 +21,12 @@ class Node:
 
     def set_name(self, name):
         self._name = name
+
+    def set_grade(self, grade):
+        self.grade = grade
+
+    def get_grade(self):
+        return self.grade
 
     def get_name(self):
         return self._name

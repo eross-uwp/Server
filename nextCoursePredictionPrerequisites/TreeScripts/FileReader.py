@@ -33,13 +33,13 @@ class FileReader:
                     return postreq
         if items.split('(')[0] == self.__SINGLE_RELATIONSHIP:
             a = Node('', self.__SINGLE_RELATIONSHIP)
-            removed_operator = a.get_name()[(len(self.__SINGLE_RELATIONSHIP) + 1):]
-            a.set_name(removed_operator[removed_operator.find('{') + 1: removed_operator.find('}')])
+            removed_operator = items.split('}')[0][(len(self.__SINGLE_RELATIONSHIP) + 2):]
+            a.set_name(removed_operator)
             postreq.add_prereq(a)
             return self.create_trees(a, self.find_items(a.get_name()))
 
     def find_items(self, class_name):
-        for i, rows in self.__RELATIONSHIP.iterrows():
+        for i, row in self.__RELATIONSHIP.iterrows():
             if self.__RELATIONSHIP.at[i, self.__POSTREQ] == class_name:
                 return self.__RELATIONSHIP.at[i, self.__PREREQ]
         return ''
