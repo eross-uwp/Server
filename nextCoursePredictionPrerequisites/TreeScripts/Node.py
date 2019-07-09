@@ -3,25 +3,22 @@ class Node:
     __AND_RELATIONSHIP = 'and'
     __OR_RELATIONSHIP = 'or'
 
-    _prereq = []
-    _coreq = []
-    _postreq = []
-    _name = ''
-    _relationship = ''
-
     def __init__(self, name, relationship):
         if self.__check_relationship(relationship) == 1:
             self._relationship = relationship
-        self.name = name
+        self._name = name
+        self._prereq = []
+        self._coreq = []
+        self._postreq = []
 
-    def set_prereq(self, prereq):
-        self._prereq = prereq
+    def add_prereq(self, prereq):
+        self._prereq.append(prereq)
 
-    def set_coreq(self, coreq):
-        self._coreq = coreq
+    def add_coreq(self, coreq):
+        self._coreq.append(coreq)
 
-    def set_postreq(self, postreq):
-        self._postreq = postreq
+    def add_postreq(self, postreq):
+        self._postreq.append(postreq)
 
     def set_name(self, name):
         self._name = name
@@ -38,8 +35,8 @@ class Node:
             return 1
 
     def __copy__(self):
-        copy = Node(self.name, self.relationship)
-        copy.set_prereq(self._prereq)
-        copy.set_coreq(self._coreq)
-        copy.set_postreq(self._postreq)
+        copy = Node(self._name, self._relationship)
+        copy.add_prereq(self._prereq)
+        copy.add_coreq(self._coreq)
+        copy.add_postreq(self._postreq)
         return copy
