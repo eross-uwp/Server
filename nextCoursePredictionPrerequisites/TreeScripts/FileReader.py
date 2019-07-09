@@ -1,5 +1,5 @@
 import random
-
+import sys
 import pandas as pd
 
 from TreeScripts.Node import Node
@@ -8,9 +8,9 @@ class FileReader:
     __SINGLE_RELATIONSHIP = 'SINGLE'
     __AND_RELATIONSHIP = 'AND'
     __OR_RELATIONSHIP = 'OR'
-    __POSTREQ = 'prereqs'
-    __PREREQ = 'postreq'
-    __RELATIONSHIP = pd.read('..\\data\\se.csv')
+    __POSTREQ = 'postreq'
+    __PREREQ = 'prereqs'
+    __RELATIONSHIP = pd.read_csv('..\\data\\se.csv')
 
     def create_trees(self, postreq, items):
         # if and/or
@@ -33,7 +33,7 @@ class FileReader:
                     return postreq
         if items.split('(')[0] == self.__SINGLE_RELATIONSHIP:
             a = Node('', self.__SINGLE_RELATIONSHIP)
-            removed_operator = a[(len(self.__SINGLE_RELATIONSHIP) + 1):]
+            removed_operator = a.get_name()[(len(self.__SINGLE_RELATIONSHIP) + 1):]
             a.set_name(removed_operator[removed_operator.find('{') + 1: removed_operator.find('}')])
             postreq.add_prereq(a)
             return self.create_trees(a, self.find_items(a.get_name()))
@@ -44,8 +44,17 @@ class FileReader:
                 return self.__RELATIONSHIP.at[i, self.__PREREQ]
         return ''
 
-    if __name__ == "__main__":
+    def do_stuff(self):
         head_nodes = []
-        for i, row in __RELATIONSHIP.iterrows():
-            head_nodes[i] = Node(__RELATIONSHIP.at[i, __POSTREQ], find_items(__RELATIONSHIP.at[i, __POSTREQ]))
-            create_trees(head_nodes[i])
+        for i, row in self.__RELATIONSHIP.iterrows():
+            items = self.find_items(self.__RELATIONSHIP.at[i, self.__POSTREQ])
+            test = items.split('(')[0]
+            head_nodes.append(Node(self.__RELATIONSHIP.at[i, self.__POSTREQ], test))
+            self.create_trees(head_nodes[i], items)
+
+
+if __name__ == "__main__":
+    sys.setrecursionlimit(1908)
+    aay = FileReader()
+    aay.do_stuff()
+    print("DONE!")
