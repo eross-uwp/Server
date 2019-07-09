@@ -23,6 +23,9 @@ class Node:
     def set_name(self, name):
         self._name = name
 
+    def get_name(self):
+        return self._name
+
     def set_relationship(self, relationship):
         if self.__check_relationship(relationship) == 1:
             self._relationship = relationship
