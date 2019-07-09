@@ -1,7 +1,7 @@
 class Node:
-    __SINGLE_RELATIONSHIP = 'single'
-    __AND_RELATIONSHIP = 'and'
-    __OR_RELATIONSHIP = 'or'
+    __SINGLE_RELATIONSHIP = 'SINGLE'
+    __AND_RELATIONSHIP = 'AND'
+    __OR_RELATIONSHIP = 'OR'
 
     def __init__(self, name, relationship):
         if self.__check_relationship(relationship) == 1:
@@ -30,7 +30,7 @@ class Node:
     def __check_relationship(self, relationship):
         if (relationship != self.__SINGLE_RELATIONSHIP and relationship != self.__AND_RELATIONSHIP and
                 relationship != self.__OR_RELATIONSHIP):
-            raise ValueError('An invalid Node relationship was passed. Must be \'single\', \'and\', or \'or\'')
+            raise ValueError('An invalid Node relationship was passed. Must be \'SINGLE\', \'AND\', or \'OR\'')
         else:
             return 1
 
