@@ -24,8 +24,8 @@ class FileReader:
                 # if item is a class
                 if removed_operator[0] == '{':
                     # get class name
-                    nodes[idx].set_grade(removed_operator.split('#')[1])
-                    nodes[idx].set_name(removed_operator[removed_operator.find('{')+1 : removed_operator.find(nodes[idx].get_grade() + str('#}'))])
+                    nodes[idx].set_grade(removed_operator.split('#')[1][:-1])
+                    nodes[idx].set_name(removed_operator[removed_operator.find('{')+1 : removed_operator.find(str('#') + nodes[idx].get_grade() + str('}'))])
                     return self.create_trees(nodes[idx], self.find_items(nodes[idx].get_name()))
                 if item.split('(')[0] == self.__AND_RELATIONSHIP or item.split('(')[0] == self.__OR_RELATIONSHIP or item.split('(')[0] == self.__SINGLE_RELATIONSHIP:
                     nodes[idx].set_name(random.randint(1,101))
