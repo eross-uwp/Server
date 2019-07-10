@@ -1,5 +1,8 @@
 """
 ___authors___: Austin FitzGerald and Evan Majerus
+
+How to use: Create a TreeMaker object, giving it a file that contains a proper formatted logical prerequisite structure.
+Call the process method on that object, giving it a class name, it will return the root node in the tree.
 """
 
 import random
@@ -7,7 +10,7 @@ import pandas as pd
 from TreeScripts.Node import Node
 
 
-def get_commas_for_split(operator, items):
+def __get_commas_for_split(operator, items):
     open_paren = 0
     commas_needed = 1
     char_iter = iter(items)
@@ -27,16 +30,14 @@ class TreeMaker:
     __OR_RELATIONSHIP = 'OR'
     __POSTREQ = 'postreq'
     __PREREQ = 'prereqs'
-    __RELATIONSHIP = ''
+    __READ_FILE = ''
     __OUTPUT_NAME = ''
 
     def __init__(self, file):
-        self.__RELATIONSHIP = pd.read_csv(file)
+        self.__READ_FILE = pd.read_csv(file)
         self.__OUTPUT_NAME = file.split('\\')[2][:-4]
-        head_nodes = []
-        self.process(head_nodes)
 
-    def create_trees(self, postreq, items):
+    def __create_trees(self, postreq, items):
         operator = items.split('(')[0]
         items = items[(len(operator) + 1):-1]  # remove beginning operator and last parenthesis
 
@@ -86,15 +87,15 @@ class TreeMaker:
             return self.create_trees(a, self.find_items(a.get_name()))
 
     # returns the prereqs column cell that matches the given postreq
-    def find_items(self, class_name):
-        for i, row in self.__RELATIONSHIP.iterrows():
-            if self.__RELATIONSHIP.at[i, self.__POSTREQ] == class_name:
-                return self.__RELATIONSHIP.at[i, self.__PREREQ]
+    def __find_items(self, class_name):
+        for i, row in self.__READ_FILE.iterrows():
+            if self.__READ_FILE.at[i, self.__POSTREQ] == class_name:
+                return self.__READ_FILE.at[i, self.__PREREQ]
         return ''
 
-    # go through each class in the postreq column
-    def process(self, head_nodes):
-        for i, row in self.__RELATIONSHIP.iterrows():
-            items = self.find_items(self.__RELATIONSHIP.at[i, self.__POSTREQ]).split('(')[0]
-            head_nodes.append(Node(self.__RELATIONSHIP.at[i, self.__POSTREQ], items))
-            self.create_trees(head_nodes[i], items)
+    # get prereq tree for a given class
+    def process(self, class_name):
+        class_node = Node(class_name, 'SINGLE')
+        items = self.find_items(class_name)
+        self.create_trees(class_node, items)
+        return class_node
