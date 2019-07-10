@@ -29,7 +29,7 @@ rank,postreq,prereqs
 2,Intermediate Algebra,"OR({Elementary Algebra#c-},{Mathematical Problem Solving#c-})"
 2,Intermediate Software Engineering,"AND({Object-Oriented Programming and Data Structures II#c-},{Introduction to Software Engineering#c-})"
 2,Object Oriented Analysis and Design,"AND({Object-Oriented Programming and Data Structures I#c-},{Introduction to Software Engineering#c-})"
-2,Principles and Applications of Project Management,SINGLE({Engineering Management}#)
+2,Principles and Applications of Project Management,SINGLE({Engineering Management#})
 2,Programming in C++,SINGLE({Introduction to Programming#})
 1,Elementary Algebra,SINGLE({Basic Algebra#c-})
 1,Fundamentals of Engineering Analysis Tools,"OR({Intermediate Algebra#c-},{College Algebra#c-})"
