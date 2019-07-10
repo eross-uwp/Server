@@ -1,13 +1,14 @@
-import random
-import sys
-import pandas as pd
+"""
+___authors___: Austin FitzGerald and Evan Majerus
+"""
 
+import random
+import pandas as pd
 from TreeScripts.Node import Node
 
 
 def get_commas_for_split(operator, items):
     open_paren = 0
-    open_curly = 0
     commas_needed = 1
     char_iter = iter(items)
     for idx, char in enumerate(char_iter):
@@ -16,21 +17,24 @@ def get_commas_for_split(operator, items):
             commas_needed += 1
         if char == ')':
             open_paren -= 1
-        if char == '{':
-            open_curly += 1
-        if char == '}':
-            open_curly -= 1
         if idx > len(operator) and open_paren == 0:
             return commas_needed
 
 
-class FileReader:
+class TreeMaker:
     __SINGLE_RELATIONSHIP = 'SINGLE'
     __AND_RELATIONSHIP = 'AND'
     __OR_RELATIONSHIP = 'OR'
     __POSTREQ = 'postreq'
     __PREREQ = 'prereqs'
-    __RELATIONSHIP = pd.read_csv('..\\data\\se.csv')
+    __RELATIONSHIP = ''
+    __OUTPUT_NAME = ''
+
+    def __init__(self, file):
+        self.__RELATIONSHIP = pd.read_csv(file)
+        self.__OUTPUT_NAME = file.split('\\')[2][:-4]
+        head_nodes = []
+        self.process(head_nodes)
 
     def create_trees(self, postreq, items):
         operator = items.split('(')[0]
@@ -72,6 +76,7 @@ class FileReader:
                 self.create_trees(nodes[1], item_2)
                 return postreq
 
+        # if single relationship
         if operator == self.__SINGLE_RELATIONSHIP:
             a = Node('', self.__SINGLE_RELATIONSHIP)
             removed_operator = items.split('}')[0][1:]
@@ -80,23 +85,16 @@ class FileReader:
             postreq.add_prereq(a)
             return self.create_trees(a, self.find_items(a.get_name()))
 
+    # returns the prereqs column cell that matches the given postreq
     def find_items(self, class_name):
         for i, row in self.__RELATIONSHIP.iterrows():
             if self.__RELATIONSHIP.at[i, self.__POSTREQ] == class_name:
                 return self.__RELATIONSHIP.at[i, self.__PREREQ]
         return ''
 
-    def do_stuff(self, head_nodes):
+    # go through each class in the postreq column
+    def process(self, head_nodes):
         for i, row in self.__RELATIONSHIP.iterrows():
-            items = self.find_items(self.__RELATIONSHIP.at[i, self.__POSTREQ])
-            test = items.split('(')[0]
-            head_nodes.append(Node(self.__RELATIONSHIP.at[i, self.__POSTREQ], test))
+            items = self.find_items(self.__RELATIONSHIP.at[i, self.__POSTREQ]).split('(')[0]
+            head_nodes.append(Node(self.__RELATIONSHIP.at[i, self.__POSTREQ], items))
             self.create_trees(head_nodes[i], items)
-
-
-if __name__ == "__main__":
-    sys.setrecursionlimit(1908)
-    aay = FileReader()
-    head_nodes = []
-    aay.do_stuff(head_nodes)
-    print("DONE!")

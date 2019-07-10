@@ -1,4 +1,6 @@
-from TreeScripts import RelationshipTypes
+"""
+___authors___: Austin FitzGerald and Evan Majerus
+"""
 
 
 class Node:
@@ -17,7 +19,6 @@ class Node:
 
     def add_prereq(self, prereq):
         self._prereq.append(prereq)
-
 
     def add_coreq(self, coreq):
         self._coreq.append(coreq)
