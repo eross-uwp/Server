@@ -1,0 +1,8 @@
+Connections:
+    Serial: kind of like Single
+    Diverging: parent is independent from it's children
+    Converging: a child has 2 parents.
+        not knowing the child makes the parents independent
+http://www.ee.columbia.edu/~vittorio/Lecture12.pdf
+
+https://www.bayesserver.com/docs/introduction/bayesian-networks
