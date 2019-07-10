@@ -5,6 +5,25 @@ import pandas as pd
 from TreeScripts.Node import Node
 
 
+def get_commas_for_split(operator, items):
+    open_paren = 0
+    open_curly = 0
+    commas_needed = 1
+    char_iter = iter(items)
+    for idx, char in enumerate(char_iter):
+        if char == '(':
+            open_paren += 1
+            commas_needed += 1
+        if char == ')':
+            open_paren -= 1
+        if char == '{':
+            open_curly += 1
+        if char == '}':
+            open_curly -= 1
+        if idx > len(operator) and open_paren == 0:
+            return commas_needed
+
+
 class FileReader:
     __SINGLE_RELATIONSHIP = 'SINGLE'
     __AND_RELATIONSHIP = 'AND'
@@ -13,31 +32,13 @@ class FileReader:
     __PREREQ = 'prereqs'
     __RELATIONSHIP = pd.read_csv('..\\data\\se.csv')
 
-    def get_commas_for_split(self, operator, items):
-        open_paren = 0
-        open_curly = 0
-        commas_needed = 1
-        char_iter = iter(items)
-        for idx, char in enumerate(char_iter):
-            if char == '(':
-                open_paren += 1
-                commas_needed += 1
-            if char == ')':
-                open_paren -= 1
-            if char == '{':
-                open_curly += 1
-            if char == '}':
-                open_curly -= 1
-            if idx > len(operator) and open_paren == 0:
-                return commas_needed
-
     def create_trees(self, postreq, items):
         operator = items.split('(')[0]
         items = items[(len(operator) + 1):-1]  # remove beginning operator and last parenthesis
 
         # if and/or
         if operator == self.__AND_RELATIONSHIP or operator == self.__OR_RELATIONSHIP:
-            commas_for_split = self.get_commas_for_split(operator, items)
+            commas_for_split = get_commas_for_split(operator, items)
             item_1 = items.split(',', commas_for_split)
             item_1 = ','.join(item_1[:commas_for_split])
             item_2 = items.split(',', commas_for_split)
@@ -86,7 +87,6 @@ class FileReader:
         return ''
 
     def do_stuff(self, head_nodes):
-
         for i, row in self.__RELATIONSHIP.iterrows():
             items = self.find_items(self.__RELATIONSHIP.at[i, self.__POSTREQ])
             test = items.split('(')[0]
