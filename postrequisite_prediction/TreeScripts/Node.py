@@ -65,6 +65,9 @@ class Node:
         if self.__check_relationship(relationship) == 1:
             self._relationship = relationship
 
+    def get_relationship(self):
+        return self._relationship
+
     def __check_relationship(self, relationship):
         if (relationship != self.__SINGLE_RELATIONSHIP and relationship != self.__AND_RELATIONSHIP and
                 relationship != self.__OR_RELATIONSHIP):

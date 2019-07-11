@@ -1,39 +1,39 @@
-postreq,prereq,pval,rho,n
-Artificial Intelligence,Discrete Mathematics,3.2200000000000004e-08,0.606988459,69
-Artificial Intelligence,Object-Oriented Programming and Data Structures II,5.879999999999999e-11,0.68188892,71
-Calculus and Analytic Geometry I,Precalculus,2.98e-07,0.497158129,95
-Calculus and Analytic Geometry II,Calculus and Analytic Geometry I,7.240000000000001e-10,0.457635725,164
-Calculus and Analytic Geometry III,Calculus and Analytic Geometry II,3.3e-11,0.48698796899999997,165
-College Writing II,College Writing I,2.6100000000000002e-11,0.332458897,382
-Computer Architecture/Operating Systems,Object-Oriented Programming and Data Structures I,1.59e-24,0.537443853,309
-Data Communications and Computer Networks,Object-Oriented Programming and Data Structures I,2.78e-22,0.489233904,347
-Database Design and Implementation,Object-Oriented Programming and Data Structures I,1.05e-14,0.415511632,318
-Database Design and Implementation,Discrete Mathematics,3.9399999999999994e-13,0.43704008,251
-Discrete Mathematics,Calculus and Analytic Geometry I,5.99e-11,0.429036435,213
-Financial Accounting,Management Accounting,9.7e-09,0.49599248799999995,119
-General Physics II,General Physics I,1.1100000000000002e-08,0.4389567,155
-Intermediate Software Engineering,Object-Oriented Programming and Data Structures II,7.16e-17,0.5405131329999999,204
-Intermediate Software Engineering,Introduction to Software Engineering,2.03e-14,0.501985805,204
-Introduction to Microprocessors,Logic and Digital Design,2.64e-06,0.438122571,106
-Introduction to Software Engineering,Object-Oriented Programming and Data Structures I,2.8899999999999997e-33,0.595681908,332
-Logic and Digital Design,Computer Architecture/Operating Systems,9.140000000000001e-08,0.42879476299999997,143
-Logic and Digital Design,Circuit Modeling I,1.55e-07,0.456988616,120
-Object Oriented Analysis and Design,Object-Oriented Programming and Data Structures I,1.73e-13,0.42220890299999997,279
-Object Oriented Analysis and Design,Introduction to Software Engineering,2.27e-21,0.518657246,290
-Object-Oriented Programming and Data Structures I,Programming in C++,6.42e-33,0.549964746,399
-Object-Oriented Programming and Data Structures II,Object-Oriented Programming and Data Structures I,1.75e-29,0.578097902,315
-Programming in C++,Introduction to Programming,2.67e-08,0.428483513,155
-Programming Language Structures,Object-Oriented Programming and Data Structures II,6.32e-29,0.615584841,264
-Real-Time Embedded Systems Programming,Object-Oriented Programming and Data Structures II,9.290000000000001e-11,0.502021296,147
-Real-Time Embedded Systems Programming,Object Oriented Analysis and Design,2.4100000000000003e-11,0.515330979,147
-Real-Time Embedded Systems Programming,Introduction to Microprocessors,1.73e-07,0.49208754,101
-Real-Time Embedded Systems Programming,Computer Architecture/Operating Systems,1.53e-08,0.445753877,147
-Software Engineering Project II,Software Engineering Project I,1.35e-06,0.397852711,138
-Software Engineering Project I,Discrete Mathematics,5.3e-13,0.5632205770000001,139
-Software Engineering Project I,Intermediate Software Engineering,1.06e-08,0.458788555,141
-Software Engineering Project I,Object Oriented Analysis and Design,2.27e-13,0.567135354,141
-Software Maintenance and Reengineering,Object-Oriented Programming and Data Structures II,9.33e-10,0.441800808,175
-Software Maintenance and Reengineering,Object Oriented Analysis and Design,8.959999999999999e-13,0.506158031,175
-Software Quality,Object-Oriented Programming and Data Structures II,7.6e-09,0.403793781,190
-Statistical Methods with Applications,Calculus and Analytic Geometry II,9.04e-09,0.46362952399999996,139
-Trigonometry and Analytic Geometry,College Algebra,1.14e-08,0.595145134,77
+postreq,prereq,relationship,pval,rho,n
+Artificial Intelligence,Discrete Mathematics,AND,3.2200000000000004e-08,0.606988459,69
+Artificial Intelligence,Object-Oriented Programming and Data Structures II,AND,5.879999999999999e-11,0.68188892,71
+Calculus and Analytic Geometry I,Precalculus,OR,2.98e-07,0.497158129,95
+Calculus and Analytic Geometry II,Calculus and Analytic Geometry I,SINGLE,7.240000000000001e-10,0.457635725,164
+Calculus and Analytic Geometry III,Calculus and Analytic Geometry II,SINGLE,3.3e-11,0.48698796899999997,165
+College Writing II,College Writing I,SINGLE,2.6100000000000002e-11,0.332458897,382
+Computer Architecture/Operating Systems,Object-Oriented Programming and Data Structures I,SINGLE,1.59e-24,0.537443853,309
+Data Communications and Computer Networks,Object-Oriented Programming and Data Structures I,SINGLE,2.78e-22,0.489233904,347
+Database Design and Implementation,Object-Oriented Programming and Data Structures I,AND,1.05e-14,0.415511632,318
+Database Design and Implementation,Discrete Mathematics,OR,3.9399999999999994e-13,0.43704008,251
+Discrete Mathematics,Calculus and Analytic Geometry I,SINGLE,5.99e-11,0.429036435,213
+Financial Accounting,Management Accounting,SINGLE,9.7e-09,0.49599248799999995,119
+General Physics II,General Physics I,AND,1.1100000000000002e-08,0.4389567,155
+Intermediate Software Engineering,Object-Oriented Programming and Data Structures II,AND,7.16e-17,0.5405131329999999,204
+Intermediate Software Engineering,Introduction to Software Engineering,AND,2.03e-14,0.501985805,204
+Introduction to Microprocessors,Logic and Digital Design,AND,2.64e-06,0.438122571,106
+Introduction to Software Engineering,Object-Oriented Programming and Data Structures I,SINGLE,2.8899999999999997e-33,0.595681908,332
+Logic and Digital Design,Computer Architecture/Operating Systems,AND,9.140000000000001e-08,0.42879476299999997,143
+Logic and Digital Design,Circuit Modeling I,AND,1.55e-07,0.456988616,120
+Object Oriented Analysis and Design,Object-Oriented Programming and Data Structures I,AND,1.73e-13,0.42220890299999997,279
+Object Oriented Analysis and Design,Introduction to Software Engineering,AND,2.27e-21,0.518657246,290
+Object-Oriented Programming and Data Structures I,Programming in C++,SINGLE,6.42e-33,0.549964746,399
+Object-Oriented Programming and Data Structures II,Object-Oriented Programming and Data Structures I,SINGLE,1.75e-29,0.578097902,315
+Programming in C++,Introduction to Programming,SINGLE,2.67e-08,0.428483513,155
+Programming Language Structures,Object-Oriented Programming and Data Structures II,SINGLE,6.32e-29,0.615584841,264
+Real-Time Embedded Systems Programming,Object-Oriented Programming and Data Structures II,AND,9.290000000000001e-11,0.502021296,147
+Real-Time Embedded Systems Programming,Object Oriented Analysis and Design,AND,2.4100000000000003e-11,0.515330979,147
+Real-Time Embedded Systems Programming,Introduction to Microprocessors,OR,1.73e-07,0.49208754,101
+Real-Time Embedded Systems Programming,Computer Architecture/Operating Systems,OR,1.53e-08,0.445753877,147
+Software Engineering Project II,Software Engineering Project I,AND,1.35e-06,0.397852711,138
+Software Engineering Project I,Discrete Mathematics,AND,5.3e-13,0.5632205770000001,139
+Software Engineering Project I,Intermediate Software Engineering,AND,1.06e-08,0.458788555,141
+Software Engineering Project I,Object Oriented Analysis and Design,AND,2.27e-13,0.567135354,141
+Software Maintenance and Reengineering,Object-Oriented Programming and Data Structures II,AND,9.33e-10,0.441800808,175
+Software Maintenance and Reengineering,Object Oriented Analysis and Design,AND,8.959999999999999e-13,0.506158031,175
+Software Quality,Object-Oriented Programming and Data Structures II,SINGLE,7.6e-09,0.403793781,190
+Statistical Methods with Applications,Calculus and Analytic Geometry II,SINGLE,9.04e-09,0.46362952399999996,139
+Trigonometry and Analytic Geometry,College Algebra,SINGLE,1.14e-08,0.595145134,77
