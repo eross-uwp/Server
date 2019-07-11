@@ -1,9 +1,13 @@
+"""
+___authors___: Austin FitzGerald
+"""
+
 import pandas as pd
 
 from TreeScripts.TreeMaker import TreeMaker
 
-__COURSE_CORRELATIONS_DF = pd.read_csv('data\\course_correlations_bonferroni.csv')
-__COMBINED_STRUCTURE = 'data\\combined_structure.csv'
+__COURSE_CORRELATIONS_DF = pd.read_csv('..\\Data\\course_correlations_bonferroni.csv')
+__COMBINED_STRUCTURE = '..\\Data\\combined_course_structure.csv'
 __COMBINED_STRUCTURE_DF = pd.read_csv(__COMBINED_STRUCTURE)
 __OUTPUT_FILEPATH = 'results\\postreq_prereq_correlations.csv'
 

@@ -11,12 +11,12 @@ class PostreqLinearRegressionModel:
     __STRUGGLE = 'struggle'
     __TERM_DIFFERENCE = 'term_difference'
 
-    def __create_data_frame(self, tree, grades):
+    def create_data_frame(self, tree, grades):
         postrequisite = tree.get_name()
         data_frame = pd.DataFrame(columns=[self.__STUDENT_ID, postrequisite])
-        prerequisite = tree.get_prereq()
+        prerequisite = tree.get_immediate_prereqs()
         for j in prerequisite:
-            data_frame[prerequisite[j].get_name()] = ''
+            data_frame[j.get_name()] = ''
         data_frame[self.__CUMULATIVE_GPA] = ''
         data_frame[self.__PREV_TERM_GPA] = ''
         data_frame[self.__STRUGGLE] = ''
@@ -28,66 +28,95 @@ class PostreqLinearRegressionModel:
         data_frame_row = 1
         for j, tier in grades.iterrows():
             if grades.at[j, postrequisite] != '' and self.__taken_prereq(j, grades, prerequisite):
-                data_frame.at[data_frame_row, self.__STUDENT_ID] = grades.at[j, self.__STUDENT_ID].split(',')[1]
-                postreq_term = grades.at[j, self.__STUDENT_ID].split(',')[0]
+                data_frame.at[data_frame_row, self.__STUDENT_ID] = grades.at[j, self.__STUDENT_ID]
+                temp = grades.at[j, postrequisite]
+                postreq_term = int(grades.at[j, postrequisite].split(',')[0])
                 earliest_term = 2000
                 for k in prerequisite:
-                    if grades.at[j, prerequisite[k]] != '':
-                        data_frame.at[data_frame_row, prerequisite[k]] = grades.at[j, prerequisite[k]].split(',')[1]
-                        if grades.at[j, self.__STUDENT_ID].split(',')[0] < earliest_term:
-                            earliest_term = grades.at[j, self.__STUDENT_ID].split(',')[0]
+                    if grades.at[j, k.get_name()] != '':
+                        data_frame.at[data_frame_row, k.get_name()] = grades.at[j, k.get_name()].split(',')[1]
+                        if int(grades.at[j, k.get_name()].split(',')[0]) < earliest_term:
+                            earliest_term = int(grades.at[j, k.get_name()].split(',')[0])
                 data_frame.at[data_frame_row, self.__TERM_DIFFERENCE] = postreq_term - earliest_term
                 data_frame = self.get_cumulative_gpa(data_frame, j, earliest_term)
                 data_frame = self.get_prev_term_gpa(data_frame, j, earliest_term)
-                data_frame.at[j, self.__STRUGGLE] = self.__have_struggled(j, earliest_term)
+                data_frame = self.__have_struggled(data_frame, j, earliest_term)
                 data_frame_row = data_frame_row + 1
         return data_frame
 
     def __taken_prereq(self, index, grades, prerequisite):
         for k in prerequisite:
-            if grades.at[index, prerequisite[k]] != '':
+            if grades.at[index, k.get_name()] != '':
                 return True
         return False
 
-    def get_cumulative_gpa(self, data_frame, index, term):
+    def get_cumulative_gpa(self, data_frame, id, term):
         cumulative = pd.read_csv('..\\data\\cumulative_gpa.csv').fillna('')
-        term_subtractor = 1
-        while cumulative[index, term - term_subtractor] == '':
-            term_subtractor = term_subtractor + 1
-        data_frame.at[index, self.__CUMULATIVE_GPA] = cumulative[index, term - term_subtractor]
+        columns = list(cumulative)
+
+        index = columns.index(str(term)) - 1  # starting index
+        gpa_found = 0
+        while index != -1 and gpa_found != 1:
+            if cumulative.at[id, columns[index]] != '':
+                gpa = cumulative.at[id, columns[index]]
+                gpa_found = 1
+            else:
+                index -= 1
+        if gpa_found == 0:
+            gpa = '$'
+
+        data_frame.at[id, self.__CUMULATIVE_GPA] = gpa
         return data_frame
 
-    def get_prev_term_gpa(self, data_frame, index, term):
+    def get_prev_term_gpa(self, data_frame, id, term):
         prev_term_gpa = pd.read_csv('..\\data\\term_gpa.csv').fillna('')
-        term_subtractor = 1
-        while prev_term_gpa[index, term - term_subtractor] == '':
-            term_subtractor = term_subtractor + 1
-        data_frame.at[index, self.__PREV_TERM_GPA] = prev_term_gpa[index, term - term_subtractor]
+        columns = list(prev_term_gpa)
+
+        index = columns.index(str(term)) - 1  # starting index
+        gpa_found = 0
+        while index != -1 and gpa_found != 1:
+            if prev_term_gpa.at[id, columns[index]] != '':
+                gpa = prev_term_gpa.at[id, columns[index]]
+                gpa_found = 1
+            else:
+                index -= 1
+        if gpa_found == 0:
+            gpa = '$'
+
+        data_frame.at[id, self.__CUMULATIVE_GPA] = gpa
         return data_frame
 
-    def __have_struggled(self, index, term):
-        struggle = pd.read_csv('..\\data\\strugling_per_term.csv').fillna('')
-        prev_terms = 1
-        value = ''
-        while struggle.at[0, prev_terms] != struggle.at[0, term]:
-            if struggle.at[index, prev_terms] == 'E':
-                value = 'E'
-            if struggle.at[index, prev_terms] == 'S' and value != 'E':
-                value = 'S'
-            if struggle.at[index, prev_terms] == 'G' and (value != 'E' or value != 'S'):
-                value = 'G'
-            prev_terms = prev_terms + 1
-        return value
+    def __have_struggled(self, data_frame, id, term):
+        struggle_per_term = pd.read_csv('..\\data\\struggling_per_term.csv').fillna('')
+        columns = list(struggle_per_term)
+
+        index = columns.index(str(term)) - 1  # starting index
+        struggle_found = 0
+        while index != -1 and struggle_found != 1:
+            if struggle_per_term.at[id, columns[index]] != '':
+                struggle = struggle_per_term.at[id, columns[index]]
+                struggle_found = 1
+            else:
+                index -= 1
+        if struggle_found == 0:
+            struggle = '$'
+
+        data_frame.at[id, self.__STRUGGLE] = struggle
+        return data_frame
 
 
 if __name__ == "__main__":
-    structure = pd.read_csv('..\\data\\combined_structure.csv').fillna('')
+    structure = pd.read_csv('..\\..\\Data\\combined_course_structure.csv').fillna('')
     grades = pd.read_csv('..\\data\\student_grade_list_with_terms.csv').fillna('')
-    prerequisite_tree_maker = TreeMaker('..\\data\\combined_structure.csv')
+    prerequisite_tree_maker = TreeMaker('..\\..\\Data\\combined_course_structure.csv')
+    postreqquisite_lrm = PostreqLinearRegressionModel()
+    count = 1
     for i, row in structure.iterrows():
+        print(count)
         tree = prerequisite_tree_maker.process(row['postreq'])
-        data_frame = PostreqLinearRegressionModel.__create_data_frame(tree, grades)
+        data_frame = postreqquisite_lrm.create_data_frame(tree, grades)
         data_frame.to_csv('..\\data\\LinearRegressionCSV\\'
                           + "".join([c for c in tree.get_name() if c.isalpha() or c.isdigit() or c == ' ']).rstrip()
                           + '.csv')
+        count = count + 1
     print("Done!")
