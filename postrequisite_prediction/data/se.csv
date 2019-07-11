@@ -14,11 +14,11 @@ rank,postreq,prereqs
 4,Introduction to Microprocessors,"AND({Programming in C++#c-},{Logic and Digital Design#c-})"
 4,Object-Oriented Programming and Data Structures II,SINGLE({Object-Oriented Programming and Data Structures I#c-})
 4,Precalculus,SINGLE({Intermediate Algebra#b-})
-4,Software Project II,"AND({Software Quality#c-},{Software Engineering Project I#c-})"
+4,Software Engineering Project II,"AND({Software Quality#c-},{Software Engineering Project I#c-})"
 4,Trigonometry and Analytic Geometry,SINGLE({College Algebra#c-})
 3,College Algebra,SINGLE({Intermediate Algebra#c-})
 3,General Physics II,"AND({Calculus and Analytic Geometry II#c-},{General Physics I#c-})"
-3,Logic and Digital Design,"OR({Electrical Engineering Projects and Tools#c-},OR({Computer Architecture/Operating Systems#c-},{Circuit Modeling I#c-}))"
+3,Logic and Digital Design,"OR({Electrical Engineering Projects and Tools#c-},AND({Computer Architecture/Operating Systems#c-},{Circuit Modeling I#c-}))"
 3,Object-Oriented Programming and Data Structures I,SINGLE({Programming in C++#c-})
 3,Software Engineering Project I,"AND({Discrete Mathematics#c-},AND({Intermediate Software Engineering#c-},{Object Oriented Analysis and Design#c-}))"
 3,Software Maintenance and Reengineering,"AND({Object-Oriented Programming and Data Structures II#c-},AND({Introduction to Software Engineering#c-},{Object Oriented Analysis and Design#c-}))"
@@ -26,7 +26,7 @@ rank,postreq,prereqs
 2,Circuit Modeling I,SINGLE({Calculus and Analytic Geometry I#c-})
 2,General Physics I,"OR({Calculus and Analytic Geometry I#c-},{Fundamentals of Engineering Analysis Tools#c-})"
 2,Human Factors Engineering,"AND({Calculus and Analytic Geometry II#c-},{Anatomy#})"
-2,Intermediate Algebra,"OR({Elementary Algebra#c-},{Mathematical Problem Solving#c-})"
+2,Intermediate Algebra,"OR({Mathematical Problem Solving#c-},{Elementary Algebra#c-})"
 2,Intermediate Software Engineering,"AND({Object-Oriented Programming and Data Structures II#c-},{Introduction to Software Engineering#c-})"
 2,Object Oriented Analysis and Design,"AND({Object-Oriented Programming and Data Structures I#c-},{Introduction to Software Engineering#c-})"
 2,Principles and Applications of Project Management,SINGLE({Engineering Management#})

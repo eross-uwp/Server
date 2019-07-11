@@ -1,0 +1,56 @@
+postreq,prereqs
+Applications in Computer Science,SINGLE({Systems Development and Implementation#})
+Artificial Intelligence,"AND({Discrete Mathematics#c-},{Object-Oriented Programming and Data Structures II#c-})"
+Business Analytics,"AND({College Algebra#},OR({Microcomputer Applications#},{Microsoft Excel for Business#}))"
+Calculus and Analytic Geometry I,"OR({Trigonometry and Analytic Geometry#c-},{Precalculus#c-})"
+Calculus and Analytic Geometry II,SINGLE({Calculus and Analytic Geometry I#c-})
+Calculus and Analytic Geometry III,SINGLE({Calculus and Analytic Geometry II#c-})
+Circuit Modeling I,SINGLE({Calculus and Analytic Geometry I#c-})
+College Algebra,SINGLE({Intermediate Algebra#c-})
+College Writing II,SINGLE({College Writing I#})
+Computer Architecture/Operating Systems,SINGLE({Object-Oriented Programming and Data Structures I#c-})
+Computer Graphics,"AND({Calculus and Analytic Geometry II#c-},{Object-Oriented Programming and Data Structures II#c-})"
+Corporate Finance,"OR({Introduction to Marketing#},{Financial Accounting#})"
+Data Communications and Computer Networks,SINGLE({Object-Oriented Programming and Data Structures I#c-})
+Database Design and Implementation,"AND({Object-Oriented Programming and Data Structures I#c-},OR({Finite Mathematics with Applications#},{Discrete Mathematics#}))"
+Discrete Mathematics,SINGLE({Calculus and Analytic Geometry I#c-})
+Discrete Structures,SINGLE({Intermediate Algebra#c-})
+Elementary Algebra,SINGLE({Basic Algebra#c-})
+Elementary Statistics,"OR({Intermediate Algebra#c-},OR({Mathematical Problem Solving#c-},{Elementary Algebra#c-}))"
+Financial Accounting,SINGLE({Management Accounting#})
+Finite Mathematics with Applications,SINGLE({Intermediate Algebra#c-})
+Fundamentals of Engineering Analysis Tools,"OR({College Algebra#c-},{Intermediate Algebra#c-})"
+General Physics I,"OR({Calculus and Analytic Geometry I#c-},{Fundamentals of Engineering Analysis Tools#c-})"
+General Physics II,"AND({Calculus and Analytic Geometry II#c-},{General Physics I#c-})"
+Human Factors Engineering,"AND({Calculus and Analytic Geometry II#c-},{Anatomy#})"
+Intermediate Algebra,"OR({Mathematical Problem Solving#c-},{Elementary Algebra#c-})"
+Intermediate Software Engineering,"AND({Object-Oriented Programming and Data Structures II#c-},{Introduction to Software Engineering#c-})"
+Interpretation of Business and Economic Data,SINGLE({Finite Mathematics with Applications#})
+Introduction to Computer Security,SINGLE({Object-Oriented Programming and Data Structures I#c-})
+Introduction to Microprocessors,"AND({Programming in C++#c-},{Logic and Digital Design#c-})"
+Introduction to Software Engineering,SINGLE({Object-Oriented Programming and Data Structures I#c-})
+Logic and Digital Design,"OR({Electrical Engineering Projects and Tools#c-},AND({Computer Architecture/Operating Systems#c-},{Circuit Modeling I#c-}))"
+Object Oriented Analysis and Design,"AND({Object-Oriented Programming and Data Structures I#c-},{Introduction to Software Engineering#c-})"
+Object-Oriented Programming and Data Structures I,SINGLE({Programming in C++#c-})
+Object-Oriented Programming and Data Structures II,SINGLE({Object-Oriented Programming and Data Structures I#c-})
+Operations Management,"AND(OR({Business Analytics#},{Elementary Statistics#}),OR({Interpretation of Business and Economic Data#},OR({Introduction to Agribusiness#},{Leadership and Management#})))"
+Operations Research I,SINGLE({Statistical Methods with Applications#})
+Organizational Behavior,"AND({Introduction to Agribusiness#},{Leadership and Management#})"
+Precalculus,SINGLE({Intermediate Algebra#b-})
+Principles and Applications of Project Management,SINGLE({Engineering Management#})
+Programming in C++,SINGLE({Introduction to Programming#})
+Programming Language Structures,SINGLE({Object-Oriented Programming and Data Structures II#c-})
+Quality Engineering,SINGLE({Statistical Methods with Applications#})
+Quality Management,"AND({Introduction to Agribusiness#},{Leadership and Management#})"
+Real-Time Embedded Systems Programming,"AND(AND({Object-Oriented Programming and Data Structures II#c-},{Object Oriented Analysis and Design#c-}),OR({Introduction to Microprocessors#c-},{Computer Architecture/Operating Systems#c-}))"
+Software Engineering Project II,"AND({Software Quality#c-},{Software Engineering Project I#c-})"
+Software Engineering Project I,"AND({Discrete Mathematics#c-},AND({Intermediate Software Engineering#c-},{Object Oriented Analysis and Design#c-}))"
+Software Maintenance and Reengineering,"AND({Object-Oriented Programming and Data Structures II#c-},AND({Introduction to Software Engineering#c-},{Object Oriented Analysis and Design#c-}))"
+Software Quality,SINGLE({Object-Oriented Programming and Data Structures II#c-})
+Statistical Methods with Applications,SINGLE({Calculus and Analytic Geometry II#c-})
+Systems Analysis and Design,SINGLE({Programming in COBOL#})
+Systems Development and Implementation,SINGLE({Programming in COBOL#})
+Technical Writing,"AND({College Writing II#},OR({College Writing I#},{Studio College Writing#}))"
+Trigonometry and Analytic Geometry,SINGLE({College Algebra#c-})
+"Web Protocols, Technologies, and Applications","OR({Object-Oriented Programming and Data Structures II#},AND({Database Design and Implementation#},{Windows Programming#}))"
+Windows Programming,"AND({Programming in VB.NET#},{Object-Oriented Programming and Data Structures I#c-})"
