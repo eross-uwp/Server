@@ -1,4 +1,4 @@
-rank,postreq,
+rank,postreq,prereqs
 2,Intermediate Algebra,"OR({Mathematical Problem Solving 3#c-},{Elementary Algebra#c-})"
 3,College Algebra,SINGLE({Intermediate Algebra#c-})
 3,Elementary Statistics,"OR({Intermediate Algebra#c-},OR({Mathematical Problem Solving 3#c-},{Elementary Algebra#c-}))"
