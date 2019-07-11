@@ -4,19 +4,16 @@ import pandas as pd
 from TreeScripts.TreeMaker import TreeMaker
 from TreeScripts.Node import Node
 
+
 class PostreqLogisticRegressionModel:
-
-    def __get_course_info(self, tree, grades):
+    def __create_data_frame(self , tree, grades):
         postrequisite = tree.get_name()
-        data_frame = pd.DataFrame(columns = ['student_id', postrequisite])
+        data_frame = pd.DataFrame(columns=['student_id', postrequisite])
         prerequisite = tree.get_prereq()
-        prerequisite_names = []
-        pre_grades = []
-        
-
+        for j in prerequisite:
+            data_frame[prerequisite[j].get_name]
+        data_frame['struggle', 'extreme_struggle', 'term_difference']
         return data_frame
-
-    def __get_if_struggled(self, pre_grades):
 
 
 if __name__ == "__main__":
@@ -29,4 +26,5 @@ if __name__ == "__main__":
                                             # 'cumulative_gpa', 'prev_term_gpa', 'struggle', 'extreme_struggle',
                                             # 'postreq', 'postreg_grade', 'term_difference'])
         tree = prerequisite_tree_maker.process(row['postreq'])
-        data_frame = PostreqLogisticRegressionModel.get_course_info(tree, grades, data_frame)
+        data_frame = PostreqLogisticRegressionModel.__create_data_frame(tree, grades)
+        PostreqLogisticRegressionModel.__get_student_info(data_frame, grades)
