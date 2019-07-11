@@ -106,9 +106,9 @@ class PostreqLinearRegressionModel:
 
 
 if __name__ == "__main__":
-    structure = pd.read_csv('..\\data\\combined_structure.csv').fillna('')
+    structure = pd.read_csv('..\\..\\Data\\combined_course_structure.csv').fillna('')
     grades = pd.read_csv('..\\data\\student_grade_list_with_terms.csv').fillna('')
-    prerequisite_tree_maker = TreeMaker('..\\data\\combined_structure.csv')
+    prerequisite_tree_maker = TreeMaker('..\\..\\Data\\combined_course_structure.csv')
     postreqquisite_lrm = PostreqLinearRegressionModel()
     count = 1
     for i, row in structure.iterrows():
