@@ -4,7 +4,7 @@ rank,postreq,prereqs
 4,Fundamentals of Engineering Analysis Tools,"OR({College Algebra#c-},{Intermediate Algebra#c-})"
 4,Precalculus,"OR({Intermediate Algebra#b-},{College Algebra#c-})"
 4,Trigonometry and Analytic Geometry,SINGLE({College Algebra#c-})
-5,Calculus I,"OR({Precalculus#c-},{Trigonemetry and Analytic Geometry#c-})"
+5,Calculus I,"OR({Precalculus#c-},{Trigonometry and Analytic Geometry#c-})"
 6,Discrete Mathematics,SINGLE({Calculus I#c-})
 1,Circuit Modeling 1,SINGLE({Calculus I#c-})
 2,Logic and Digital Design,"OR({Calculus 1#c-},AND({Object Oriented Programming and Data Structures I#c-},{Computer Architecture/Operating Systems#c-}))"
