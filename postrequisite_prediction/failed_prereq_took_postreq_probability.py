@@ -1,4 +1,6 @@
-import copy
+"""
+___authors___: Austin FitzGerald
+"""
 
 from numpy.core.defchararray import upper
 
