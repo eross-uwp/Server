@@ -32,7 +32,7 @@ class TreeMaker:
         :param file:
         """
         self.__READ_FILE = pd.read_csv(file)
-        self.__OUTPUT_NAME = file.split('\\')[2][:-4]
+        self.__OUTPUT_NAME = file.rpartition('\\')[:-1][:-4]
 
     def __create_trees(self, postreq, prereqs):
         """
@@ -68,6 +68,7 @@ class TreeMaker:
             if item_1.split('(')[0] == self.__AND_RELATIONSHIP or item_1.split('(')[0] == self.__OR_RELATIONSHIP or \
                     item_1.split('(')[0] == self.__SINGLE_RELATIONSHIP:
                 nodes[0].set_name(self.virtual_node_name)
+                nodes[0].set_virtual(nodes[0].VIRTUAL_TYPE)
                 self.virtual_node_name += 1
                 self.__create_trees(nodes[0], item_1)
 
@@ -85,6 +86,7 @@ class TreeMaker:
             if item_2.split('(')[0] == self.__AND_RELATIONSHIP or item_2.split('(')[0] == self.__OR_RELATIONSHIP or \
                     item_2.split('(')[0] == self.__SINGLE_RELATIONSHIP:
                 nodes[1].set_name(random.randint(1, 101))
+                nodes[1].set_virtual(nodes[1].VIRTUAL_TYPE)
                 self.__create_trees(nodes[1], item_2)
                 return postreq
 

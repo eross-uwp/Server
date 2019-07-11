@@ -27,5 +27,5 @@ rank,postreq,prereqs
 3,Systems Development and Implementation,SINGLE({Programming in COBOL#})
 3,Systems Analysis and Design,SINGLE({Programming in COBOL#})
 3,Computer Architecture/Operating Systems,SINGLE({Object-Oriented Programming and Data Structures I#c-})
-4,Applications in Computer Science,SINGLE({Systems Development and Implementation#})
+4,Applications in Information Systems,SINGLE({Systems Development and Implementation#})
 4,"Web Protocols, Technologies, and Applications","OR({Object-Oriented Programming and Data Structures II#},AND({Database Design and Implementation#},{Windows Programming#}))"
