@@ -1,8 +1,6 @@
 """
 ___authors___: Austin FitzGerald and Evan Majerus
 """
-from collections import Iterable
-
 
 class Node:
     __SINGLE_RELATIONSHIP = 'SINGLE'
@@ -55,10 +53,13 @@ class Node:
         temp_list = []
         for prereq in self._prereqs:
             if prereq.get_virtual() == self.VIRTUAL_TYPE:
-                temp_list.append(prereq.get_immediate_prereqs())
+                virtual_list = prereq.get_immediate_prereqs()
+                for n in virtual_list:
+                    temp_list.append(n)
             else:
                 temp_list.append(prereq)
-        return self.flatten(temp_list)
+
+        return temp_list
 
     def set_relationship(self, relationship):
         if self.__check_relationship(relationship) == 1:
@@ -79,12 +80,3 @@ class Node:
         copy.set_grade(self._grade)
         copy.set_virtual(self._virtual)
         return copy
-
-    def flatten(self, items):
-        """Yield items from any nested iterable; see Reference."""
-        for x in items:
-            if isinstance(x, Iterable) and not isinstance(x, (str, bytes)):
-                for sub_x in self.flatten(x):
-                    yield sub_x
-            else:
-                yield x
