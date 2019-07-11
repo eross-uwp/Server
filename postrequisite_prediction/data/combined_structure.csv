@@ -1,5 +1,5 @@
 postreq,prereqs
-Applications in Computer Science,SINGLE({Systems Development and Implementation#})
+Applications in Information Systems,SINGLE({Systems Development and Implementation#})
 Artificial Intelligence,"AND({Discrete Mathematics#c-},{Object-Oriented Programming and Data Structures II#c-})"
 Business Analytics,"AND({College Algebra#},OR({Microcomputer Applications#},{Microsoft Excel for Business#}))"
 Calculus and Analytic Geometry I,"OR({Trigonometry and Analytic Geometry#c-},{Precalculus#c-})"
