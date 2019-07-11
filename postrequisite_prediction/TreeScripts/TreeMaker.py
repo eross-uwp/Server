@@ -140,3 +140,4 @@ class TreeMaker:
         items = self.__find_items(postreq_class_name)
         self.__create_trees(class_node, items)
         return class_node
+
