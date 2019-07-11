@@ -156,4 +156,4 @@ if __name__ == "__main__":
          'prereq_passed_postreq_passed_probability': prereq_passed_postreq_passed_probability,
          'prereq_passed_postreq_failed': prereq_passed_postreq_failed_list,
          'prereq_passed_postreq_taken_probability': prereq_passed_postreq_taken_probability})
-    final_dataframe.to_csv(__OUTPUT_FILEPATH)
+    final_dataframe.to_csv(__OUTPUT_FILEPATH, index=False)

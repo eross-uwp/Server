@@ -1,0 +1,501 @@
+class_1,class_2,pval,rho,n
+Introduction to Engineering Projects,Introduction to Ethnic Studies,0.0000022,0.837370443,21
+Artificial Intelligence,Linear Algebra,7.96E-08,0.75925675,36
+College Writing II,Psychology of Women,0.000000408,0.753860962,33
+Differential Equations I,Linear Algebra,2.44E-11,0.751772647,56
+Artificial Intelligence,Intermediate Software Engineering,2.45E-09,0.741708991,47
+Fitness Assessment and Management,Introduction to Mass Media,0.000000519,0.719615631,37
+Introduction to College Life,Music Appreciation,0.000000323,0.714588343,39
+Differential Equations I,Statistical Methods with Applications,8.17E-16,0.712392606,94
+Artificial Intelligence,Calculus and Analytic Geometry III,0.000000247,0.706350935,41
+Linear Algebra,Statistical Methods with Applications,1.8E-17,0.699822356,110
+Introduction to College Life,World Civilization II,0.000000128,0.699417593,44
+Artificial Intelligence,Principles of Microeconomics,0.000000626,0.689248342,41
+Artificial Intelligence,Programming Language Structures,8.42E-10,0.684705423,62
+Artificial Intelligence,Statistical Methods with Applications,0.000000828,0.683864545,41
+Artificial Intelligence,Object-Oriented Programming and Data Structures II,5.88E-11,0.68188892,71
+Differential Equations I,Object-Oriented Programming and Data Structures II,2.31E-12,0.661413089,88
+Fitness Assessment and Management,Introduction to American Government,3.96E-09,0.648367563,66
+Circuit Modeling I,Object-Oriented Programming and Data Structures I,8.73E-20,0.647466881,155
+Calculus and Analytic Geometry II,Precalculus,0.00000156,0.647078349,45
+Artificial Intelligence,Object-Oriented Programming and Data Structures I,6.2E-09,0.646014551,65
+Calculus and Analytic Geometry II,Differential Equations I,1.51E-10,0.644159007,79
+Introduction to Marketing,Object Oriented Analysis and Design,0.00000193,0.631580198,47
+Linear Algebra,Object-Oriented Programming and Data Structures II,1.49E-14,0.624656231,122
+Discrete Mathematics,Object-Oriented Programming and Data Structures II,1.51E-32,0.621133301,292
+Intermediate Software Engineering,Object Oriented Analysis and Design,8.31E-23,0.619604432,202
+Discrete Mathematics,General Physics II,4.52E-17,0.616492448,150
+Object-Oriented Programming and Data Structures II,Programming Language Structures,6.32E-29,0.615584841,264
+Calculus and Analytic Geometry III,Differential Equations I,1.69E-11,0.614504159,98
+Data Communications and Computer Networks,Linear Algebra,9.71E-14,0.611164766,121
+Concepts of Biology,General Psychology,0.000000359,0.610580135,58
+Computer Architecture/Operating Systems,Intermediate Software Engineering,8.16E-22,0.60810325,202
+Calculus and Analytic Geometry II,Object-Oriented Programming and Data Structures II,2.45E-19,0.607516715,178
+Database Design and Implementation,Object Oriented Analysis and Design,1.14E-26,0.607094768,251
+Artificial Intelligence,Discrete Mathematics,3.22E-08,0.606988459,69
+Object Oriented Analysis and Design,Statistical Methods with Applications,1.24E-17,0.603273769,164
+Linear Algebra,Software Quality,2.75E-11,0.602058323,101
+Introduction to Marketing,Principles of Macroeconomics,4.77E-14,0.601500847,129
+Intermediate Software Engineering,Statistical Methods with Applications,2.26E-16,0.600657582,153
+Real-Time Embedded Systems Programming,Software Engineering Project I,5.62E-15,0.600400189,139
+Data Communications and Computer Networks,Object-Oriented Programming and Data Structures II,1.11E-31,0.599867331,310
+Computer Architecture/Operating Systems,Object-Oriented Programming and Data Structures II,2.47E-30,0.598401731,298
+Calculus and Analytic Geometry III,Discrete Mathematics,9.28E-19,0.596924605,180
+Object Oriented Analysis and Design,Software Quality,1.04E-19,0.596708829,190
+Data Communications and Computer Networks,Object Oriented Analysis and Design,8.41E-29,0.596044443,285
+Introduction to Software Engineering,Object-Oriented Programming and Data Structures I,2.89E-33,0.595681908,332
+College Algebra,Trigonometry and Analytic Geometry,1.14E-08,0.595145134,77
+Real-Time Embedded Systems Programming,Statistical Methods with Applications,1.82E-14,0.594720839,137
+Database Design and Implementation,Linear Algebra,1.35E-10,0.589632621,99
+Discrete Mathematics,Object-Oriented Programming and Data Structures I,3.79E-30,0.588200116,309
+Discrete Mathematics,Linear Algebra,1.11E-12,0.58768996,122
+Circuit Modeling I,Object-Oriented Programming and Data Structures II,9.51E-15,0.586161582,145
+Introduction to Software Engineering,Object-Oriented Programming and Data Structures II,5.66E-30,0.582947931,314
+Circuit Modeling I,Object Oriented Analysis and Design,2.46E-14,0.582022944,143
+Object-Oriented Programming and Data Structures I,Object-Oriented Programming and Data Structures II,1.75E-29,0.578097902,315
+Calculus and Analytic Geometry III,Object-Oriented Programming and Data Structures II,1E-16,0.576771998,173
+Discrete Mathematics,Statistical Methods with Applications,7.95E-16,0.575174411,164
+Intermediate Software Engineering,Programming Language Structures,1.17E-17,0.570985006,188
+Data Communications and Computer Networks,"Web Protocols, Technologies and Applications",1.03E-08,0.569789403,86
+Calculus and Analytic Geometry III,Object-Oriented Programming and Data Structures I,1.31E-17,0.569033649,189
+Artificial Intelligence,Object Oriented Analysis and Design,0.000000236,0.568218859,71
+Artificial Intelligence,Computer Architecture/Operating Systems,0.000000248,0.567356268,71
+Object Oriented Analysis and Design,Software Engineering Project I,2.27E-13,0.567135354,141
+Artificial Intelligence,Data Communications and Computer Networks,0.000000326,0.56610615,70
+General Physics II,Principles of Microeconomics,0.000000105,0.565124883,76
+Discrete Mathematics,Software Engineering Project I,5.3E-13,0.563220577,139
+Calculus and Analytic Geometry III,Principles of Microeconomics,1.97E-09,0.562790092,97
+General Psychology,Principles of Macroeconomics,2.66E-12,0.562687428,131
+General Physics II,Statistical Methods with Applications,9.28E-14,0.560019935,150
+Intermediate Software Engineering,Principles of Macroeconomics,3.68E-10,0.559689711,107
+Differential Equations I,Discrete Mathematics,5.61E-09,0.559358852,93
+Calculus and Analytic Geometry III,Linear Algebra,1.23E-10,0.559093077,113
+Differential Equations I,Object Oriented Analysis and Design,1.28E-08,0.558647662,89
+Leadership and Management,Precalculus,2.47E-10,0.55770233,110
+Principles of Macroeconomics,"Science, Technology, and Ethics",2.65E-08,0.556483919,86
+Computer Architecture/Operating Systems,Discrete Mathematics,4.62E-24,0.555404978,280
+Object Oriented Analysis and Design,Object-Oriented Programming and Data Structures II,2.05E-24,0.55489026,285
+Elementary Statistics,Programming in COBOL,0.00000114,0.554237974,67
+Calculus and Analytic Geometry III,Intermediate Software Engineering,4.49E-13,0.553132543,146
+General Physics I,Object-Oriented Programming and Data Structures II,1.11E-14,0.553026939,166
+Introduction to Microprocessors,Object Oriented Analysis and Design,1.17E-09,0.550529163,105
+Computer Architecture/Operating Systems,Data Communications and Computer Networks,1.26E-25,0.550326298,306
+Calculus and Analytic Geometry II,Introduction to Software Engineering,3.45E-16,0.550187613,187
+Object-Oriented Programming and Data Structures I,Programming in C++,6.42E-33,0.549964746,399
+Database Design and Implementation,Statistical Methods with Applications,1.25E-11,0.547996569,131
+Introduction to College Life,Programming in C++,0.00000112,0.547609736,69
+General Physics II,Real-Time Embedded Systems Programming,1.64E-11,0.54713159,130
+Calculus and Analytic Geometry III,General Physics II,1.78E-13,0.547035505,155
+Artificial Intelligence,Introduction to Software Engineering,0.000000885,0.545150508,71
+Discrete Mathematics,Introduction to Software Engineering,1.1E-24,0.544997456,301
+Introduction to Marketing,Programming in COBOL,5.62E-09,0.544651528,99
+Intermediate Software Engineering,Software Quality,3.29E-14,0.543326504,167
+Programming Language Structures,Statistical Methods with Applications,8.23E-13,0.543187013,149
+Object-Oriented Programming and Data Structures II,Statistical Methods with Applications,6.73E-14,0.541875984,164
+Circuit Modeling I,Programming in C++,8.46E-12,0.541369991,137
+Computer Architecture/Operating Systems,Introduction to Software Engineering,8.66E-24,0.540619474,295
+Intermediate Software Engineering,Object-Oriented Programming and Data Structures II,7.16E-17,0.540513133,204
+Object Oriented Analysis and Design,Principles of Macroeconomics,2.27E-12,0.540492497,145
+Data Communications and Computer Networks,Statistical Methods with Applications,9.72E-14,0.540349244,163
+College Algebra,Leadership and Management,9.38E-10,0.540238019,111
+Introduction to Microprocessors,Linear Algebra,0.00000147,0.5391354,70
+Database Design and Implementation,Real-Time Embedded Systems Programming,4.33E-10,0.538968737,116
+Calculus and Analytic Geometry II,Circuit Modeling I,4.16E-11,0.537818523,130
+Computer Architecture/Operating Systems,Object-Oriented Programming and Data Structures I,1.59E-24,0.537443853,309
+Calculus and Analytic Geometry III,Circuit Modeling I,1.06E-10,0.537201735,125
+Calculus and Analytic Geometry III,Statistical Methods with Applications,1.47E-13,0.537033859,163
+Software Engineering Project I,Statistical Methods with Applications,1.13E-11,0.535261152,139
+Data Communications and Computer Networks,Introduction to Software Engineering,6.35E-24,0.53514569,304
+Computer Architecture/Operating Systems,Object Oriented Analysis and Design,3.37E-22,0.534093015,282
+Circuit Modeling I,Linear Algebra,5.01E-08,0.533981731,91
+Data Communications and Computer Networks,Intermediate Software Engineering,2.88E-16,0.532561859,203
+Discrete Mathematics,Real-Time Embedded Systems Programming,5.61E-12,0.532212778,145
+Principles of Microeconomics,Programming Language Structures,2.25E-11,0.530248414,138
+General Physics II,Programming Language Structures,7.22E-11,0.528686821,132
+General Physics II,Object Oriented Analysis and Design,7.08E-12,0.528480397,146
+Object-Oriented Programming and Data Structures I,Programming in COBOL,4.15E-13,0.528470558,163
+Calculus and Analytic Geometry II,Object-Oriented Programming and Data Structures I,2.64E-16,0.527628242,208
+General Physics I,Linear Algebra,2.08E-08,0.527152428,99
+Concepts of Biology,Principles of Macroeconomics,0.00000167,0.526959502,73
+Introduction to Software Engineering,Principles of Macroeconomics,1.71E-14,0.526188856,184
+Intermediate Software Engineering,"Science, Technology, and Ethics",6.33E-10,0.525012,121
+Discrete Mathematics,Object Oriented Analysis and Design,2.98E-21,0.524380735,281
+Calculus and Analytic Geometry III,Computer Architecture/Operating Systems,2.46E-13,0.523284193,170
+Introduction to Microprocessors,Statistical Methods with Applications,1.31E-08,0.522172091,104
+Linear Algebra,Real-Time Embedded Systems Programming,0.000000115,0.521570934,91
+Calculus and Analytic Geometry II,Discrete Mathematics,2.01E-14,0.520147392,188
+Software Quality,Statistical Methods with Applications,1.31E-11,0.519633105,148
+Object-Oriented Programming and Data Structures II,Software Engineering Project I,4.44E-11,0.518690991,141
+Introduction to Software Engineering,Object Oriented Analysis and Design,2.27E-21,0.518657246,290
+Differential Equations I,Object-Oriented Programming and Data Structures I,6.44E-08,0.518076447,96
+Engineering Success Skills,Precalculus,6.96E-08,0.516952685,96
+Data Communications and Computer Networks,Discrete Mathematics,1.01E-20,0.516737252,283
+Circuit Modeling I,Statistical Methods with Applications,9.46E-10,0.516719749,123
+Circuit Modeling I,Discrete Mathematics,1.4E-11,0.515967149,150
+Object Oriented Analysis and Design,Real-Time Embedded Systems Programming,2.41E-11,0.515330979,147
+Computer Architecture/Operating Systems,Programming Language Structures,3.06E-19,0.515303346,263
+General Physics II,Logic and Digital Design,4.22E-10,0.515101974,129
+Data Communications and Computer Networks,Database Design and Implementation,1.08E-22,0.514570934,315
+Computer Architecture/Operating Systems,Statistical Methods with Applications,2.23E-12,0.514097929,163
+Discrete Mathematics,Principles of Macroeconomics,1.32E-12,0.511950031,168
+Computer Architecture/Operating Systems,Principles of Microeconomics,3.76E-12,0.510879134,162
+Discrete Mathematics,General Physics I,1.32E-12,0.510616766,169
+Computer Architecture/Operating Systems,Differential Equations I,0.000000375,0.510510844,88
+Elementary Statistics,Financial Accounting,0.000000841,0.510071805,83
+Differential Equations I,Programming Language Structures,0.000000752,0.509292763,84
+Linear Algebra,Object Oriented Analysis and Design,3.92E-09,0.50915108,118
+Discrete Mathematics,Programming Language Structures,3.39E-18,0.507936154,256
+Linear Algebra,Object-Oriented Programming and Data Structures I,2.03E-09,0.507855533,123
+Database Design and Implementation,Introduction to Microprocessors,0.000000822,0.507763076,84
+General Psychology,Introduction to Programming,0.000000838,0.507440197,84
+Object Oriented Analysis and Design,Software Maintenance and Reengineering,8.96E-13,0.506158031,175
+Object Oriented Analysis and Design,Principles of Microeconomics,5.5E-11,0.505770054,148
+Programming in COBOL,Programming in VB.NET,8.41E-09,0.50534778,115
+Principles of Microeconomics,Software Quality,0.000000521,0.50506939,88
+Circuit Modeling I,Intermediate Software Engineering,1.23E-09,0.504790905,128
+Intermediate Software Engineering,Real-Time Embedded Systems Programming,1.35E-10,0.504271093,143
+Object-Oriented Programming and Data Structures I,Principles of Macroeconomics,5.43E-18,0.502690446,259
+Object-Oriented Programming and Data Structures II,Real-Time Embedded Systems Programming,9.29E-11,0.502021296,147
+Intermediate Software Engineering,Introduction to Software Engineering,2.03E-14,0.501985805,204
+Differential Equations I,General Physics II,0.00000158,0.501666389,82
+Intermediate Software Engineering,Linear Algebra,6.94E-08,0.501235215,103
+Introduction to Software Engineering,Programming in COBOL,0.00000108,0.497857123,86
+Global Business,Principles of Macroeconomics,4.43E-11,0.497721582,155
+Calculus and Analytic Geometry II,General Physics I,8.08E-12,0.497344525,167
+Calculus and Analytic Geometry I,Precalculus,0.000000298,0.497158129,95
+Financial Accounting,Management Accounting,9.7E-09,0.495992488,119
+Database Design and Implementation,Object-Oriented Programming and Data Structures II,2.06E-18,0.495900347,274
+Circuit Modeling I,General Physics II,1.82E-08,0.495332983,115
+Engineering Success Skills,Financial Accounting,0.00000127,0.494931558,86
+Circuit Modeling I,Data Communications and Computer Networks,2.57E-10,0.494594907,145
+General Physics II,Object-Oriented Programming and Data Structures II,2.42E-10,0.493687017,146
+General Psychology,Planet Earth,0.000000076,0.49360942,106
+Data Communications and Computer Networks,General Physics II,2.86E-10,0.493438551,145
+Principles of Macroeconomics,Programming in C++,3.09E-19,0.493111487,291
+Introduction to Microprocessors,Real-Time Embedded Systems Programming,0.000000173,0.49208754,101
+Introduction to Microprocessors,Software Engineering Project I,0.00000018,0.491473681,101
+Database Design and Implementation,"Web Protocols, Technologies and Applications",0.000000894,0.491024265,90
+Calculus and Analytic Geometry III,Object Oriented Analysis and Design,1.22E-11,0.490989345,169
+Calculus and Analytic Geometry III,Database Design and Implementation,7.58E-10,0.490615769,140
+Circuit Modeling I,Real-Time Embedded Systems Programming,6.73E-08,0.489239086,109
+Data Communications and Computer Networks,Object-Oriented Programming and Data Structures I,2.78E-22,0.489233904,347
+Circuit Modeling I,Introduction to Software Engineering,2.46E-10,0.489116444,149
+Financial Accounting,Introduction to Marketing,2.65E-10,0.488368004,149
+Object-Oriented Programming and Data Structures II,Windows Programming,4.36E-09,0.488275834,129
+Financial Accounting,Programming in COBOL,0.0000003,0.488007344,99
+Intermediate Software Engineering,Object-Oriented Programming and Data Structures I,3.5E-13,0.48800261,197
+General Psychology,Introduction to Software Engineering,4.05E-09,0.487482514,130
+Database Design and Implementation,Software Quality,8.26E-11,0.487480705,158
+Circuit Modeling I,General Physics I,8.18E-09,0.487413024,125
+Introduction to Software Engineering,Leadership and Management,2.59E-20,0.48732972,317
+Calculus and Analytic Geometry II,Calculus and Analytic Geometry III,3.3E-11,0.486987969,165
+Calculus and Analytic Geometry III,Introduction to Software Engineering,4.91E-12,0.486719919,179
+Circuit Modeling I,"Science, Technology, and Ethics",6.25E-08,0.486344705,111
+Discrete Mathematics,Principles of Microeconomics,1.08E-10,0.486219641,157
+General Physics I,Principles of Macroeconomics,0.000000194,0.486090066,103
+General Physics II,Linear Algebra,0.000000723,0.485094468,94
+General Physics II,Software Engineering Project I,3.86E-09,0.484768704,132
+Oral Communication for Professionals,Precalculus,0.00000306,0.484209284,84
+Object-Oriented Programming and Data Structures II,Principles of Macroeconomics,1.03E-11,0.483829221,176
+Database Design and Implementation,General Physics II,5.83E-08,0.483447075,113
+Data Communications and Computer Networks,Principles of Microeconomics,7.19E-12,0.483382427,179
+Database Design and Implementation,Software Maintenance and Reengineering,9.49E-10,0.482076294,144
+Object Oriented Analysis and Design,Software Engineering Project II,2.19E-09,0.481828876,138
+General Physics I,Statistical Methods with Applications,2.85E-10,0.480524002,154
+Computer Architecture/Operating Systems,Linear Algebra,0.000000028,0.48047068,120
+Computer Architecture/Operating Systems,General Physics I,8.98E-11,0.479979504,163
+Data Communications and Computer Networks,Software Maintenance and Reengineering,1.92E-11,0.479406837,175
+Introduction to Software Engineering,"Science, Technology, and Ethics",1.62E-09,0.479131895,142
+Circuit Modeling I,Database Design and Implementation,2.44E-08,0.478729348,122
+Introduction to Marketing,Management Accounting,6.62E-08,0.477905178,115
+Object-Oriented Programming and Data Structures II,Principles of Microeconomics,1.29E-10,0.477718457,162
+Calculus and Analytic Geometry I,Calculus and Analytic Geometry III,3.53E-08,0.477360924,120
+General Physics II,Intermediate Software Engineering,2.87E-09,0.477183269,139
+Discrete Mathematics,Intermediate Software Engineering,1.04E-12,0.477166284,199
+Linear Algebra,Programming in C++,0.000000393,0.475219519,103
+Introduction to Software Engineering,Statistical Methods with Applications,9.09E-11,0.474710239,167
+Introduction to Programming,Leadership and Management,3.04E-10,0.474394894,158
+Object Oriented Analysis and Design,Programming Language Structures,5.73E-16,0.473190694,261
+Precalculus,Programming in C++,7.09E-09,0.472694557,135
+Database Design and Implementation,Planet Earth,9.04E-10,0.472506192,151
+Software Maintenance and Reengineering,Statistical Methods with Applications,1.57E-09,0.472128385,147
+Data Communications and Computer Networks,"Science, Technology, and Ethics",4.63E-09,0.471601417,139
+Engineering Success Skills,Leadership and Management,1.73E-19,0.471320422,327
+General Psychology,Programming in C++,1.28E-12,0.471263914,203
+Global Business,Introduction to Marketing,1.28E-10,0.470147822,168
+Calculus and Analytic Geometry III,Programming Language Structures,1.01E-09,0.46991178,152
+General Physics I,Object Oriented Analysis and Design,4.18E-10,0.46978846,159
+Data Communications and Computer Networks,Software Quality,8.75E-12,0.469042476,190
+Object-Oriented Programming and Data Structures II,Programming in COBOL,0.00000276,0.468879984,91
+Leadership and Management,Object-Oriented Programming and Data Structures II,3.59E-18,0.468704379,307
+Data Communications and Computer Networks,Programming Language Structures,9.11E-16,0.468682803,263
+College Writing I,Precalculus,8.77E-08,0.468515153,118
+Introduction to Software Engineering,Oral Communication for Professionals,6.38E-15,0.467461514,249
+Calculus and Analytic Geometry I,Intermediate Software Engineering,1.87E-08,0.467045295,131
+Circuit Modeling I,Computer Architecture/Operating Systems,4.7E-09,0.466920324,142
+General Physics I,Object-Oriented Programming and Data Structures I,3.51E-11,0.466775463,181
+Computer Architecture/Operating Systems,General Physics II,3.84E-09,0.464902887,145
+Software Engineering Project I,Software Maintenance and Reengineering,6.37E-09,0.464826459,141
+Introduction to Software Engineering,Programming in C++,4.68E-17,0.464094128,293
+Logic and Digital Design,Object-Oriented Programming and Data Structures II,6.17E-09,0.46372584,142
+Calculus and Analytic Geometry II,Statistical Methods with Applications,9.04E-09,0.463629524,139
+Circuit Modeling I,Leadership and Management,4.37E-09,0.461967112,146
+Logic and Digital Design,Object-Oriented Programming and Data Structures I,1.01E-08,0.460797479,140
+Linear Algebra,Software Maintenance and Reengineering,0.00000159,0.46078659,99
+Calculus and Analytic Geometry II,Computer Architecture/Operating Systems,1.58E-10,0.460777414,174
+Calculus and Analytic Geometry I,Object-Oriented Programming and Data Structures II,1.08E-12,0.459722794,216
+Data Communications and Computer Networks,Programming in C++,1.29E-17,0.459718409,310
+Intermediate Software Engineering,Software Engineering Project I,1.06E-08,0.458788555,141
+Programming Language Structures,Real-Time Embedded Systems Programming,2.29E-08,0.458240475,135
+Data Communications and Computer Networks,Software Engineering Project I,1.15E-08,0.457750801,141
+Calculus and Analytic Geometry I,Calculus and Analytic Geometry II,7.24E-10,0.457635725,164
+Circuit Modeling I,Logic and Digital Design,0.000000155,0.456988616,120
+Introduction to Software Engineering,Linear Algebra,8.61E-08,0.456744651,125
+Calculus and Analytic Geometry I,Object-Oriented Programming and Data Structures I,1.77E-15,0.456040185,274
+College Algebra,College Writing I,0.000000395,0.45565584,113
+Object-Oriented Programming and Data Structures II,"Science, Technology, and Ethics",2.21E-08,0.455644081,137
+Leadership and Management,World Civilization I,2.27E-08,0.455326512,137
+Calculus and Analytic Geometry III,Data Communications and Computer Networks,4.07E-10,0.454960013,171
+Circuit Modeling I,Electrical Engineering Projects and Tools,7.42E-09,0.454401438,147
+General Psychology,Object-Oriented Programming and Data Structures I,6.33E-10,0.454072868,168
+Calculus and Analytic Geometry I,General Psychology,4.52E-08,0.452566851,133
+Leadership and Management,Object Oriented Analysis and Design,5E-15,0.452405249,270
+General Physics II,Object-Oriented Programming and Data Structures I,5.07E-09,0.45195851,152
+Object-Oriented Programming and Data Structures I,Principles of Microeconomics,2.02E-12,0.450085235,221
+Discrete Mathematics,Programming in C++,3.58E-15,0.449367356,277
+Data Communications and Computer Networks,Windows Programming,7.13E-10,0.4492417,171
+Data Communications and Computer Networks,Principles of Macroeconomics,5.71E-11,0.449121926,193
+College Writing II,Global Business,2.05E-11,0.449032119,202
+Data Communications and Computer Networks,Programming in COBOL,5.52E-08,0.446916305,135
+Real-Time Embedded Systems Programming,Software Engineering Project II,4.04E-08,0.446506653,138
+Computer Architecture/Operating Systems,Real-Time Embedded Systems Programming,1.53E-08,0.445753877,147
+Circuit Modeling I,Software Engineering Project I,0.00000121,0.445473094,109
+Data Communications and Computer Networks,Programming in VB.NET,1.53E-09,0.444873384,168
+Planet Earth,Programming Language Structures,0.00000143,0.444583016,108
+College Writing II,Linear Algebra,0.00000128,0.444551437,109
+Engineering Success Skills,Fitness Assessment and Management,2.43E-19,0.44438574,370
+College Writing I,Leadership and Management,1.46E-18,0.444328895,354
+Logic and Digital Design,Statistical Methods with Applications,5.41E-08,0.444199607,137
+College Writing I,Engineering Success Skills,1.3E-15,0.443718963,294
+Introduction to Microprocessors,Software Quality,0.00000271,0.443482446,103
+College Writing II,Introduction to Software Engineering,3.05E-15,0.44325074,287
+Object Oriented Analysis and Design,Planet Earth,0.000000813,0.442721133,114
+Database Design and Implementation,Introduction to Software Engineering,4.86E-14,0.44256016,263
+Object-Oriented Programming and Data Structures II,Software Maintenance and Reengineering,9.33E-10,0.441800808,175
+Discrete Mathematics,Introduction to Philosophy,0.00000193,0.441495617,107
+Calculus and Analytic Geometry II,Engineering Success Skills,4.57E-11,0.440948228,203
+Intermediate Software Engineering,Software Maintenance and Reengineering,3.85E-09,0.440907547,163
+College Writing II,Principles of Macroeconomics,9.49E-15,0.440231884,281
+Database Design and Implementation,Programming Language Structures,1.54E-12,0.439878782,235
+Global Business,Programming in C++,2.26E-11,0.439417442,211
+Engineering Success Skills,Object-Oriented Programming and Data Structures II,5.56E-13,0.439296667,245
+Data Communications and Computer Networks,General Physics I,5.63E-09,0.439142695,161
+General Physics I,General Physics II,1.11E-08,0.4389567,155
+Object-Oriented Programming and Data Structures I,"Science, Technology, and Ethics",3.45E-08,0.438539456,145
+Introduction to Microprocessors,Logic and Digital Design,0.00000264,0.438122571,106
+Database Design and Implementation,Introduction to Engineering Projects,9.46E-10,0.437145249,179
+Database Design and Implementation,Discrete Mathematics,3.94E-13,0.43704008,251
+Discrete Mathematics,"Science, Technology, and Ethics",0.000000095,0.436785828,137
+Engineering Success Skills,Programming in C++,1.09E-17,0.436750941,349
+Object-Oriented Programming and Data Structures II,Programming in C++,1.47E-14,0.436682437,282
+Intermediate Software Engineering,Leadership and Management,4.64E-10,0.435607985,187
+Database Design and Implementation,General Psychology,0.000000387,0.435465903,125
+"Science, Technology, and Ethics",Software Quality,0.000000944,0.435157769,117
+Data Communications and Computer Networks,Real-Time Embedded Systems Programming,3.84E-08,0.43446334,147
+Leadership and Management,Linear Algebra,0.000000719,0.434325908,120
+Calculus and Analytic Geometry II,Principles of Microeconomics,0.00000139,0.434232336,114
+Discrete Mathematics,Software Maintenance and Reengineering,2.82E-09,0.433606629,172
+Software Maintenance and Reengineering,Software Quality,8.18E-09,0.43244544,163
+Computer Architecture/Operating Systems,Software Maintenance and Reengineering,2.36E-09,0.432117139,175
+Database Design and Implementation,Intermediate Software Engineering,3.03E-09,0.431698514,173
+Real-Time Embedded Systems Programming,Software Quality,7.32E-08,0.431691247,143
+Database Design and Implementation,General Physics I,0.000000246,0.431160425,132
+Computer Architecture/Operating Systems,"Science, Technology, and Ethics",0.000000124,0.430346772,139
+Calculus and Analytic Geometry I,Discrete Mathematics,5.99E-11,0.429036435,213
+Object-Oriented Programming and Data Structures I,Statistical Methods with Applications,8.22E-09,0.428807239,166
+Computer Architecture/Operating Systems,Logic and Digital Design,9.14E-08,0.428794763,143
+Introduction to Programming,Programming in C++,2.67E-08,0.428483513,155
+Leadership and Management,Object-Oriented Programming and Data Structures I,1.38E-19,0.427813212,408
+Computer Architecture/Operating Systems,Database Design and Implementation,1.19E-13,0.427601567,275
+Calculus and Analytic Geometry I,Programming Language Structures,2.99E-09,0.427360084,177
+Data Communications and Computer Networks,Introduction to Philosophy,0.000000757,0.427035122,124
+Global Business,Leadership and Management,2.46E-11,0.426914611,224
+Data Communications and Computer Networks,Logic and Digital Design,0.000000122,0.426393225,142
+Linear Algebra,Programming Language Structures,0.00000227,0.426180159,114
+General Physics I,Introduction to Software Engineering,6.87E-09,0.426153802,170
+Database Design and Implementation,Principles of Macroeconomics,2.34E-09,0.425566606,181
+Leadership and Management,Programming in C++,5.21E-21,0.424783957,447
+Object Oriented Analysis and Design,Object-Oriented Programming and Data Structures I,1.73E-13,0.422208903,279
+Computer Architecture/Operating Systems,Programming in C++,2.63E-13,0.422093817,275
+Object Oriented Analysis and Design,"Science, Technology, and Ethics",0.000000341,0.422093116,135
+College Algebra,Programming in C++,0.00000206,0.421038033,118
+Database Design and Implementation,Windows Programming,0.000000007,0.420313764,175
+Calculus and Analytic Geometry II,Data Communications and Computer Networks,8.21E-09,0.419659698,174
+Circuit Modeling I,Software Quality,0.00000155,0.419118704,122
+Calculus and Analytic Geometry II,Programming Language Structures,5.97E-08,0.418547924,155
+General Physics II,Introduction to Software Engineering,9.99E-08,0.418324682,150
+Real-Time Embedded Systems Programming,Software Maintenance and Reengineering,0.000000209,0.417734227,143
+Introduction to Engineering Projects,Object-Oriented Programming and Data Structures I,4.4E-12,0.417338957,253
+College Writing II,General Psychology,3.04E-10,0.416121824,211
+Database Design and Implementation,Object-Oriented Programming and Data Structures I,1.05E-14,0.415511632,318
+Intermediate Software Engineering,World Civilization II,0.000000505,0.415084285,136
+College Writing II,Object Oriented Analysis and Design,9.7E-12,0.414167022,249
+College Writing I,Programming in C++,1.63E-17,0.413676534,389
+General Physics I,Real-Time Embedded Systems Programming,0.00000167,0.413293078,125
+Discrete Mathematics,Leadership and Management,1.87E-13,0.412978152,292
+Object-Oriented Programming and Data Structures I,Programming Language Structures,7.86E-12,0.412808702,253
+Intermediate Software Engineering,Logic and Digital Design,0.000000683,0.410694493,136
+Database Design and Implementation,Programming in C++,3.5E-13,0.410616581,289
+Object-Oriented Programming and Data Structures I,Software Quality,6.62E-09,0.410301682,185
+General Physics I,Programming in C++,0.000000034,0.410014863,168
+Computer Architecture/Operating Systems,Leadership and Management,1.4E-13,0.409853976,300
+Introduction to Marketing,Programming in C++,5.56E-08,0.409810236,163
+Leadership and Management,Music Appreciation,3.09E-12,0.409115302,268
+Introduction to Marketing,Leadership and Management,9.82E-09,0.409088567,182
+Calculus and Analytic Geometry I,Introduction to Software Engineering,1.37E-10,0.408686468,228
+Circuit Modeling I,Introduction to Engineering Projects,0.000000648,0.408676877,138
+Programming Language Structures,"Science, Technology, and Ethics",0.00000144,0.406615998,131
+Planet Earth,Principles of Macroeconomics,0.00000123,0.40613916,133
+Data Communications and Computer Networks,Software Engineering Project II,0.000000781,0.405973717,138
+Discrete Mathematics,Software Quality,7.57E-09,0.405820179,188
+Calculus and Analytic Geometry I,World Civilization II,2.23E-09,0.405114779,202
+Object-Oriented Programming and Data Structures I,Programming in VB.NET,4.3E-09,0.404956401,195
+Object-Oriented Programming and Data Structures I,Real-Time Embedded Systems Programming,0.000000506,0.404188025,144
+College Writing I,Introduction to Programming,0.000000429,0.403900959,146
+Calculus and Analytic Geometry II,Programming in C++,3.99E-09,0.403838648,197
+Object-Oriented Programming and Data Structures II,Software Quality,7.6E-09,0.403793781,190
+Discrete Mathematics,World Civilization II,2.69E-09,0.403197862,202
+Leadership and Management,Principles of Macroeconomics,1.79E-12,0.401016152,286
+Software Engineering Project II,Statistical Methods with Applications,0.00000137,0.400387608,136
+Oral Communication for Professionals,Principles of Macroeconomics,1.48E-10,0.399986481,238
+College Writing II,Leadership and Management,1.77E-17,0.399849493,418
+Circuit Modeling I,Programming Language Structures,0.00000174,0.399443158,134
+College Writing II,Object-Oriented Programming and Data Structures II,4.21E-12,0.398629779,280
+Calculus and Analytic Geometry I,Programming in C++,5.1E-13,0.398594568,304
+Introduction to Software Engineering,World Civilization II,1.03E-09,0.398500156,218
+Calculus and Analytic Geometry I,Object Oriented Analysis and Design,9.77E-09,0.398177398,193
+Software Engineering Project I,Software Engineering Project II,0.00000135,0.397852711,138
+Data Communications and Computer Networks,General Psychology,0.00000191,0.396651276,135
+Fitness Assessment and Management,Leadership and Management,1.88E-18,0.395112854,455
+Calculus and Analytic Geometry III,Programming in C++,0.000000142,0.394714639,166
+Introduction to Engineering Projects,Principles of Macroeconomics,0.000000191,0.394311588,163
+Discrete Mathematics,Logic and Digital Design,0.00000121,0.394192703,142
+Electrical Engineering Projects and Tools,Introduction to Engineering Projects,1.84E-08,0.394161268,190
+Art Survey,College Writing II,0.00000206,0.394145538,136
+Fitness Assessment and Management,Music Appreciation,8.44E-12,0.393407345,280
+Financial Accounting,Programming in C++,0.000000255,0.392800914,161
+Computer Architecture/Operating Systems,Software Quality,2.48E-08,0.392749639,188
+Calculus and Analytic Geometry I,Principles of Macroeconomics,0.000000056,0.392300123,179
+Calculus and Analytic Geometry III,General Physics I,0.000000159,0.391114783,168
+College Writing II,Software Quality,0.00000023,0.389663376,165
+Logic and Digital Design,Object Oriented Analysis and Design,0.00000168,0.389328551,142
+Introduction to Engineering Projects,Introduction to Software Engineering,2.1E-09,0.389124167,221
+College Writing I,Object-Oriented Programming and Data Structures II,5.31E-09,0.38827822,211
+Calculus and Analytic Geometry II,Object Oriented Analysis and Design,0.00000019,0.386680006,170
+Introduction to Software Engineering,Principles of Microeconomics,0.000000232,0.386271024,168
+Introduction to Software Engineering,Programming Language Structures,9.61E-11,0.386130724,262
+Calculus and Analytic Geometry I,Data Communications and Computer Networks,3.6E-09,0.384658361,220
+Object Oriented Analysis and Design,Oral Communication for Professionals,5.44E-09,0.383818049,216
+Leadership and Management,Programming in COBOL,0.000000471,0.383539124,162
+Leadership and Management,Statistical Methods with Applications,0.00000101,0.383311191,153
+College Writing II,Programming in C++,2.34E-16,0.382469817,428
+Introduction to Software Engineering,Music Appreciation,5.77E-08,0.382114341,189
+Introduction to Software Engineering,Software Quality,5.42E-08,0.381893762,190
+Database Design and Implementation,Oral Communication for Professionals,9.93E-10,0.38141603,240
+General Physics I,Intermediate Software Engineering,0.00000275,0.379309297,144
+Leadership and Management,Principles of Microeconomics,2.12E-10,0.378794144,263
+Calculus and Analytic Geometry I,Leadership and Management,8.6E-11,0.377781838,276
+College Writing II,Object-Oriented Programming and Data Structures I,2.75E-14,0.377564972,379
+Introduction to Engineering Projects,Object-Oriented Programming and Data Structures II,2.03E-08,0.376799288,208
+College Writing I,Fitness Assessment and Management,1.07E-14,0.376230014,394
+College Writing II,Oral Communication for Professionals,1.13E-13,0.376089012,364
+Calculus and Analytic Geometry I,Computer Architecture/Operating Systems,2.38E-08,0.375925029,207
+Programming in C++,Windows Programming,0.00000105,0.375865398,159
+Object Oriented Analysis and Design,World Civilization II,0.000000139,0.375468997,185
+Programming Language Structures,Software Maintenance and Reengineering,0.000000761,0.374842879,164
+College Writing I,Music Appreciation,5.85E-09,0.374282545,227
+Data Communications and Computer Networks,World Civilization II,8.43E-09,0.373729451,223
+College Writing II,Music Appreciation,1.97E-10,0.373511961,272
+Leadership and Management,Software Quality,0.00000049,0.371367463,173
+Financial Accounting,Leadership and Management,0.000000636,0.370963422,170
+Data Communications and Computer Networks,Introduction to Engineering Projects,3.88E-08,0.37057833,207
+General Psychology,World Civilization II,0.000000983,0.370257055,165
+Object-Oriented Programming and Data Structures I,World Civilization II,2.05E-10,0.370008495,277
+Computer Architecture/Operating Systems,Engineering Success Skills,5.71E-09,0.369967893,233
+General Psychology,Leadership and Management,7.41E-08,0.369268717,200
+College Writing II,Introduction to Marketing,0.00000281,0.368340845,153
+College Writing II,Intermediate Software Engineering,0.000000495,0.367255402,177
+Computer Architecture/Operating Systems,Principles of Macroeconomics,0.000000861,0.366882101,170
+Introduction to Engineering Projects,Leadership and Management,4.33E-09,0.366115702,242
+Engineering Success Skills,Music Appreciation,5.46E-08,0.365120465,209
+Data Communications and Computer Networks,Planet Earth,0.00000294,0.364270511,156
+Object Oriented Analysis and Design,Programming in C++,4.15E-09,0.363715558,246
+Calculus and Analytic Geometry I,Engineering Success Skills,3.63E-09,0.362920508,249
+College Writing I,Object Oriented Analysis and Design,0.000000446,0.362864975,183
+Object-Oriented Programming and Data Structures II,Oral Communication for Professionals,6.45E-09,0.362268508,242
+Intermediate Software Engineering,Oral Communication for Professionals,0.00000293,0.362148883,158
+Engineering Success Skills,Oral Communication for Professionals,8.37E-10,0.361804119,271
+Principles of Microeconomics,Programming in C++,4.22E-09,0.361482178,249
+Planet Earth,Programming in C++,0.00000022,0.360804368,195
+College Writing II,World Civilization II,6.42E-11,0.360574438,309
+Database Design and Implementation,Programming in VB.NET,0.00000131,0.360188037,171
+Engineering Success Skills,Object-Oriented Programming and Data Structures I,4.06E-11,0.359734135,317
+Fitness Assessment and Management,Planet Earth,0.000000056,0.358430538,217
+Engineering Success Skills,Introduction to Software Engineering,3.04E-09,0.357254358,260
+College Writing II,Database Design and Implementation,7.53E-10,0.356595279,281
+Calculus and Analytic Geometry II,Leadership and Management,0.000000475,0.355680647,190
+Engineering Success Skills,Introduction to Engineering Projects,1.2E-09,0.354379789,278
+Financial Accounting,Global Business,0.00000281,0.354370313,166
+Music Appreciation,Programming in C++,2.63E-09,0.353505027,268
+Data Communications and Computer Networks,Leadership and Management,1.95E-11,0.353372648,340
+Calculus and Analytic Geometry II,Introduction to Engineering Projects,0.00000133,0.352191481,179
+Fitness Assessment and Management,Introduction to Software Engineering,1.59E-10,0.350307717,315
+Calculus and Analytic Geometry III,College Writing II,0.00000159,0.348845297,180
+Calculus and Analytic Geometry II,College Writing II,0.000000875,0.348734306,189
+Music Appreciation,Principles of Macroeconomics,0.00000295,0.348702254,171
+Computer Architecture/Operating Systems,Oral Communication for Professionals,2.87E-08,0.348696539,240
+Engineering Success Skills,Programming Language Structures,0.000000369,0.348623597,202
+Programming Language Structures,Software Quality,0.00000209,0.347888505,177
+Data Communications and Computer Networks,Engineering Success Skills,1.69E-08,0.347330989,250
+College Writing I,Introduction to Software Engineering,0.000000162,0.346537199,217
+Leadership and Management,Programming Language Structures,1.72E-08,0.345867502,252
+Database Design and Implementation,Leadership and Management,4.14E-10,0.344268852,312
+Principles of Macroeconomics,World Civilization II,0.000000614,0.343957271,200
+Introduction to Engineering Projects,Programming in C++,0.000000028,0.342950821,249
+Leadership and Management,World Civilization II,6.81E-10,0.342301423,308
+Calculus and Analytic Geometry III,Engineering Success Skills,0.00000262,0.341069319,181
+Engineering Success Skills,Principles of Macroeconomics,0.000000194,0.340043999,223
+College Writing I,Data Communications and Computer Networks,0.00000014,0.339404266,229
+Calculus and Analytic Geometry I,Introduction to Engineering Projects,0.00000141,0.339056497,193
+Fitness Assessment and Management,Principles of Macroeconomics,2.24E-09,0.337048915,299
+Introduction to Engineering Projects,Object Oriented Analysis and Design,0.00000147,0.336896228,195
+Discrete Mathematics,Introduction to Engineering Projects,0.000000529,0.334866829,214
+Object-Oriented Programming and Data Structures II,World Civilization II,0.000000868,0.334838576,206
+Computer Architecture/Operating Systems,Introduction to Engineering Projects,0.0000013,0.334460061,200
+Electrical Engineering Projects and Tools,Fitness Assessment and Management,0.00000109,0.334321589,203
+Leadership and Management,Oral Communication for Professionals,2.27E-10,0.332865205,345
+Electrical Engineering Projects and Tools,Leadership and Management,0.00000213,0.332786696,194
+College Writing I,College Writing II,2.61E-11,0.332458897,382
+College Writing II,Discrete Mathematics,3.73E-08,0.325458551,273
+Discrete Mathematics,Engineering Success Skills,0.000000188,0.32357687,248
+Electrical Engineering Projects and Tools,Object-Oriented Programming and Data Structures I,0.00000247,0.322139759,205
+Data Communications and Computer Networks,Oral Communication for Professionals,0.000000105,0.321897268,261
+Music Appreciation,Object-Oriented Programming and Data Structures I,0.000000215,0.321491683,249
+Oral Communication for Professionals,Programming in C++,1.35E-09,0.321142075,340
+Calculus and Analytic Geometry II,Fitness Assessment and Management,0.000002,0.31976781,212
+Discrete Mathematics,Oral Communication for Professionals,0.000000529,0.31829065,238
+Object-Oriented Programming and Data Structures I,Oral Communication for Professionals,9.54E-09,0.31771072,312
+Calculus and Analytic Geometry I,Oral Communication for Professionals,0.00000121,0.317651148,224
+Calculus and Analytic Geometry I,College Writing II,7.16E-08,0.316734563,277
+Fitness Assessment and Management,Programming in C++,5.63E-12,0.31421392,459
+Database Design and Implementation,Engineering Success Skills,0.00000209,0.313579351,220
+Music Appreciation,Oral Communication for Professionals,0.00000268,0.311072316,219
+College Writing II,Computer Architecture/Operating Systems,0.000000158,0.310317513,274
+Fitness Assessment and Management,Object-Oriented Programming and Data Structures II,4.16E-08,0.309084397,302
+College Writing II,Engineering Success Skills,7.36E-09,0.308426214,337
+Programming in C++,World Civilization II,0.000000184,0.29370058,304
+College Writing I,Object-Oriented Programming and Data Structures I,0.000000251,0.289193079,307
+Fitness Assessment and Management,Object-Oriented Programming and Data Structures I,1.44E-08,0.276034121,408
+College Writing II,Data Communications and Computer Networks,0.00000128,0.27356486,304
+College Writing II,Fitness Assessment and Management,1.98E-08,0.258817762,457
+Fitness Assessment and Management,Oral Communication for Professionals,0.000000434,0.258422943,372
