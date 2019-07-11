@@ -1,15 +1,15 @@
 rank,postreq,prereqs
-2,Intermediate Algebra,"OR({Mathematical Problem Solving 3#c-},{Elementary Algebra#c-})"
+2,Intermediate Algebra,"OR({Mathematical Problem Solving#c-},{Elementary Algebra#c-})"
 3,College Algebra,SINGLE({Intermediate Algebra#c-})
 3,Elementary Statistics,"OR({Intermediate Algebra#c-},OR({Mathematical Problem Solving 3#c-},{Elementary Algebra#c-}))"
 3,Finite Mathematics with Applications,SINGLE({Intermediate Algebra#c-})
-4,Precalculus,SINGLE({Intermediate Algebra#c-})
+4,Precalculus,SINGLE({Intermediate Algebra#b-})
 4,Discrete Structures,SINGLE({Intermediate Algebra#c-})
 4,Trigonometry and Analytic Geometry,SINGLE({College Algebra#c-})
 4,Interpretation of Business and Economic Data,SINGLE({Finite Mathematics with Applications#})
-5,Calculus I,"OR({Precalculus#c-},{Trigonometry and Analytic Geometry#c-})"
+5,Calculus and Analytic Geometry I,"OR({Precalculus#c-},{Trigonometry and Analytic Geometry#c-})"
 5,Business Analytics,"AND({College Algebra#},OR({Microcomputer Applications#},{Microsoft Excel for Business#}))"
-6,Discrete Mathematics,SINGLE({Calculus I#c-})
+6,Discrete Mathematics,SINGLE({Calculus and Analytic Geometry I#c-})
 2,College Writing II,SINGLE({College Writing I#})
 3,Technical Writing,"AND({College Writing II#},OR({College Writing I#},{Studio College Writing#}))"
 2,Organizational Behavior,"AND({Introduction to Agribusiness#},{Leadership and Management#})"

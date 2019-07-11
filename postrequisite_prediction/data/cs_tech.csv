@@ -1,16 +1,16 @@
 rank,postreq,prereqs
-2,Intermediate Algebra,"OR({Mathematical Problem Solving 3#c-},{Elementary Algebra#c-})"
+2,Intermediate Algebra,"OR({Mathematical Problem Solving#c-},{Elementary Algebra#c-})"
 3,College Algebra,SINGLE({Intermediate Algebra#c-})
 4,Fundamentals of Engineering Analysis Tools,"OR({College Algebra#c-},{Intermediate Algebra#c-})"
-4,Precalculus,"OR({Intermediate Algebra#b-},{College Algebra#c-})"
+4,Precalculus,SINGLE({Intermediate Algebra#b-})
 4,Trigonometry and Analytic Geometry,SINGLE({College Algebra#c-})
-5,Calculus I,"OR({Precalculus#c-},{Trigonometry and Analytic Geometry#c-})"
-6,Discrete Mathematics,SINGLE({Calculus I#c-})
-1,Circuit Modeling 1,SINGLE({Calculus I#c-})
-2,Logic and Digital Design,"OR({Calculus 1#c-},AND({Object Oriented Programming and Data Structures I#c-},{Computer Architecture/Operating Systems#c-}))"
-3,Introduction to Microprocessors,SINGLE({Logic and Digital Design#c-})
-1,Software Engineering Project 1,"AND({Discrete Mathematics#c-},AND({Intermediate Software Engineering#c-},{Object Oriented Analysis and Design#c-}))"
-2,Software Engineering Project 2,"AND({Software Quality#c-},{Software Engineering Project I#c-})"
+5,Calculus and Analytic Geometry I,"OR({Precalculus#c-},{Trigonometry and Analytic Geometry#c-})"
+6,Discrete Mathematics,SINGLE({Calculus and Analytic Geometry I#c-})
+1,Circuit Modeling I,SINGLE({Calculus and Analytic Geometry I#c-})
+2,Logic and Digital Design,"OR({Electrical Engineering Projects and Tools#c-},AND({Computer Architecture/Operating Systems#c-},{Circuit Modeling I#c-}))"
+3,Introduction to Microprocessors,"AND({Programming in C++#c-},{Logic and Digital Design#c-})"
+1,Software Engineering Project I,"AND({Discrete Mathematics#c-},AND({Intermediate Software Engineering#c-},{Object Oriented Analysis and Design#c-}))"
+2,Software Engineering Project II,"AND({Software Quality#c-},{Software Engineering Project I#c-})"
 2,Programming in C++,SINGLE({Introduction to Programming#})
 2,Object Oriented Analysis and Design,"AND({Object-Oriented Programming and Data Structures I#c-},{Introduction to Software Engineering#c-})"
 1,Introduction to Software Engineering,SINGLE({Object-Oriented Programming and Data Structures I#c-})
