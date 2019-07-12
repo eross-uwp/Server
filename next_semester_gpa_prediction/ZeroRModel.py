@@ -8,7 +8,7 @@ import pandas as pd
 from sklearn.metrics import mean_squared_error
 
 PREV_GPA = 'prev GPA'
-CURR_GPA = 'current GPA'
+CURR_GPA = 'next GPA'
 TRAIN_DATA_PATH = 'data\\test_train\\train_'  # Raw file address
 TEST_DATA_PATH = 'data\\test_train\\test_'  # Raw file address
 NUM_TRAIN_TEST = 5  # 5 datasets
