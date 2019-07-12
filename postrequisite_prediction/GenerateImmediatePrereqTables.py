@@ -3,6 +3,9 @@ import pandas as pd
 from TreeScripts.TreeMaker import TreeMaker
 from TreeScripts.Node import Node
 
+__COMBINED_COURSE_STRUCTURE_FILEPATH = '..\\Data\\combined_course_structure.csv'
+__STUDENT_GRADE_LIST_WITH_TERMS_FILEPATH = 'data\\student_grade_list_with_terms.csv'
+__OUTPUT_CSV_FILEPATH = 'data\\ImmediatePrereqTables\\'
 
 class PostreqLinearRegressionModel:
     __STUDENT_ID = 'student_id'
@@ -10,6 +13,9 @@ class PostreqLinearRegressionModel:
     __PREV_TERM_GPA = 'prev_term_gpa'
     __STRUGGLE = 'struggle'
     __TERM_DIFFERENCE = 'term_difference'
+    __CUMULATIVE_GPA_FILEPATH = 'data\\cumulative_gpa.csv'
+    __TERM_GPA_FILEPATH = 'data\\term_gpa.csv'
+    __STRUGGLING_PER_TERM_FILEPATH = 'data\\struggling_per_term.csv'
 
     def create_data_frame(self, tree, grades):
         postrequisite = tree.get_name()
@@ -51,7 +57,7 @@ class PostreqLinearRegressionModel:
         return False
 
     def get_cumulative_gpa(self, data_frame, id, term):
-        cumulative = pd.read_csv('..\\data\\cumulative_gpa.csv').fillna('')
+        cumulative = pd.read_csv(self.__CUMULATIVE_GPA_FILEPATH).fillna('')
         columns = list(cumulative)
 
         index = columns.index(str(term)) - 1  # starting index
@@ -69,7 +75,7 @@ class PostreqLinearRegressionModel:
         return data_frame
 
     def get_prev_term_gpa(self, data_frame, id, term):
-        prev_term_gpa = pd.read_csv('..\\data\\term_gpa.csv').fillna('')
+        prev_term_gpa = pd.read_csv(self.__TERM_GPA_FILEPATH).fillna('')
         columns = list(prev_term_gpa)
 
         index = columns.index(str(term)) - 1  # starting index
@@ -87,7 +93,7 @@ class PostreqLinearRegressionModel:
         return data_frame
 
     def __have_struggled(self, data_frame, id, term):
-        struggle_per_term = pd.read_csv('..\\data\\struggling_per_term.csv').fillna('')
+        struggle_per_term = pd.read_csv(self.__STRUGGLING_PER_TERM_FILEPATH).fillna('')
         columns = list(struggle_per_term)
 
         index = columns.index(str(term)) - 1  # starting index
@@ -106,16 +112,16 @@ class PostreqLinearRegressionModel:
 
 
 if __name__ == "__main__":
-    structure = pd.read_csv('..\\..\\Data\\combined_course_structure.csv').fillna('')
-    grades = pd.read_csv('..\\data\\student_grade_list_with_terms.csv').fillna('')
-    prerequisite_tree_maker = TreeMaker('..\\..\\Data\\combined_course_structure.csv')
+    structure = pd.read_csv(__COMBINED_COURSE_STRUCTURE_FILEPATH).fillna('')
+    grades = pd.read_csv(__STUDENT_GRADE_LIST_WITH_TERMS_FILEPATH).fillna('')
+    prerequisite_tree_maker = TreeMaker(__COMBINED_COURSE_STRUCTURE_FILEPATH)
     postreqquisite_lrm = PostreqLinearRegressionModel()
     count = 1
     for i, row in structure.iterrows():
         print(count)
         tree = prerequisite_tree_maker.process(row['postreq'])
         data_frame = postreqquisite_lrm.create_data_frame(tree, grades)
-        data_frame.to_csv('..\\data\\LinearRegressionCSV\\'
+        data_frame.to_csv(__OUTPUT_CSV_FILEPATH
                           + "".join([c for c in tree.get_name() if c.isalpha() or c.isdigit() or c == ' ']).rstrip()
                           + '.csv')
         count = count + 1
