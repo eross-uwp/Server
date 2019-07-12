@@ -1,13 +1,13 @@
 import pandas as pd
 
 from TreeScripts.TreeMaker import TreeMaker
-from TreeScripts.Node import Node
 
 __COMBINED_COURSE_STRUCTURE_FILEPATH = '..\\Data\\combined_course_structure.csv'
 __STUDENT_GRADE_LIST_WITH_TERMS_FILEPATH = 'data\\student_grade_list_with_terms.csv'
 __OUTPUT_CSV_FILEPATH = 'data\\ImmediatePrereqTables\\'
 
-class PostreqLinearRegressionModel:
+
+class GenerateImmediatePrereqTables:
     __STUDENT_ID = 'student_id'
     __CUMULATIVE_GPA = 'cumulative_gpa'
     __PREV_TERM_GPA = 'prev_term_gpa'
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     structure = pd.read_csv(__COMBINED_COURSE_STRUCTURE_FILEPATH).fillna('')
     grades = pd.read_csv(__STUDENT_GRADE_LIST_WITH_TERMS_FILEPATH).fillna('')
     prerequisite_tree_maker = TreeMaker(__COMBINED_COURSE_STRUCTURE_FILEPATH)
-    postreqquisite_lrm = PostreqLinearRegressionModel()
+    postreqquisite_lrm = GenerateImmediatePrereqTables()
     count = 1
     for i, row in structure.iterrows():
         print(count)
