@@ -7,7 +7,7 @@ from numpy.core.defchararray import upper
 from TreeScripts.TreeMaker import TreeMaker
 import pandas as pd
 
-__COMBINED_STRUCTURE = 'data\\combined_structure.csv'
+__COMBINED_STRUCTURE = '..\\Data\\combined_course_structure.csv'
 __COMBINED_STRUCTURE_DATAFRAME = pd.read_csv(__COMBINED_STRUCTURE)
 __GRADES_WITH_TERM_DATAFRAME_ = pd.read_csv('data\\student_grade_list_with_terms.csv').fillna('')
 __OUTPUT_FILEPATH = 'results\\failed_prereq_took_postreq_probability.csv'
