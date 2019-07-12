@@ -38,7 +38,7 @@ def convert_grade(string_grade):
     elif string_grade == 'F':
         return 0
     else:
-        return 0
+        return 1
 
 
 def append_if_division_allowed(append_to, divide_this, by_this):
@@ -100,7 +100,7 @@ if __name__ == "__main__":
                         prereq_grade = __GRADES_WITH_TERM_DATAFRAME_[prereq.get_name()].values[idx]
                         if prereq_grade != '':  # took prereq
                             prereq_grade = convert_grade(prereq_grade.split(',')[1])
-                            if prereq_grade <= prereq_grade_req:  # failed prereq
+                            if prereq_grade < prereq_grade_req:  # failed prereq
                                 if postreq_term_and_grade != '':  # took postreq
                                     prereq_failed_postreq_taken += 1
                                     if convert_grade(postreq_term_and_grade.split(',')[1]) >= convert_grade(

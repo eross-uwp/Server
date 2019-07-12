@@ -6,7 +6,7 @@ ___authors___: Zhiwei Yang
 
 import pandas as pd
 import numpy as np
-import StratifyAndGenerateDatasets as sd
+#import StratifyAndGenerateDatasets as sd
 from sklearn.metrics import confusion_matrix, roc_auc_score, recall_score, precision_score, accuracy_score
 
 GRAPH_FILE_PREFIX = 'graph_term_'
@@ -20,7 +20,7 @@ def get_training_testing(term, number):
 
 
 def zr_predict():
-    np.random.seed(sd.RANDOM_SEED)
+    np.random.seed(313131)
     for term in ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']:
         prediction_array = np.zeros(0)
         target = np.ones(0)
