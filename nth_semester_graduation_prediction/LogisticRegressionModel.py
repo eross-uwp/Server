@@ -1,7 +1,6 @@
-# Using logistic regression to predict if a student will graduate or not
-
 """
 ___authors___: Austin FitzGerald
+ Using logistic regression to predict if a student will graduate or not
 """
 
 import numpy as np
@@ -127,7 +126,6 @@ def lr_predict(term_number, c, penalty, solver):
 
 if __name__ == "__main__":
     get_training_testing()
-    # TODO: tuning
     lr_predict(sD.FIRST_TERM, c=11.288378916846883, penalty='l1', solver='liblinear')
     lr_predict(sD.SECOND_TERM, c=0.615848211066026, penalty='l2', solver='liblinear')
     lr_predict(sD.THIRD_TERM, c=1.0, penalty='l1', solver='liblinear')
