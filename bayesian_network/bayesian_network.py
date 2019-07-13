@@ -1,5 +1,8 @@
 """
 __Author__: Nate Braukhoff
+
+__Purpose__: The Bayesian Network will consist of a graph and a list of Parameters. Will be able to calculate any
+             probability of a Node in the Graph. The results will be outputted to the terminal.
 """
 
 

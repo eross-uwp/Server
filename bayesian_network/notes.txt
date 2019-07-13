@@ -12,6 +12,7 @@ Todo:
         Apply Filters to Columns
         Keep duplicate combinations
     3. Look for Libraries
+    4. Read in Data
 
 Connections:
     Serial: kind of like Single
@@ -31,3 +32,5 @@ Questions:
         calculations will be different is so
             P(A/B) = P(A)
             P(A,B) = P(A)P(B)
+
+Only Focus on Serial Relationships

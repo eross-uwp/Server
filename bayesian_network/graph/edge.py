@@ -1,5 +1,9 @@
 """
-__Author__: Nate Braukhoff
+__Author__: Nate Braukhofff
+
+__Purpose: The Edge will contain the following:
+        A pair a nodes that will contain the parent and the child
+        Data that will be sent from the parent to the child
 """
 
 
