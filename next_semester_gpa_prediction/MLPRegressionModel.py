@@ -75,10 +75,11 @@ def mlp():
         # Calculating the stats from the actual curr-term GPAs and predicted curr-term GPAs
     rr = metrics.r2_score(flatten(__y_test), y_preds)
     rmse = np.math.sqrt(metrics.mean_squared_error(flatten(__y_test), y_preds)) / 4
+    nrmse = rmse / (max(y_preds) - min(y_preds))
 
     # Saving the stats to a text file.
     with open(RESULTS_FOLDER + RESULTS_TEXTFILE, "w") as text_file:
-        text_file.write('R^2 = ' + str(rr) + ', RMSE = ' + str(rmse))
+        text_file.write('R^2 = ' + str(rr) + ', RMSE = ' + str(rmse) + ', NRMSE = ' + str(nrmse))
 
     # save predictions (matching with tests) to files
     predictions = pd.DataFrame(

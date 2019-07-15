@@ -61,6 +61,13 @@ def lr_predict(term_number, c, penalty, solver):
         x_tests += list(x_test_array[term_number][fold_num])
         y_preds += list(y_pred)
 
+    auc = metrics.roc_auc_score(y_tests, y_preds)
+    acc = metrics.accuracy_score(y_tests, y_preds)
+
+    with open(RESULTS_FOLDER + RESULTS_TEXTFILE_PREFIX + str(term_number + 1) + '.txt', "w") as text_file:
+        text_file.write(
+            'AUC = ' + str(auc) + ', Accuracy = ' + str(acc))
+
     # save predictions (matching with tests) to files
     predictions = pd.DataFrame({'actual':y_tests, 'prediction': y_preds, 'prob of grad':y_grad_probs})
     predictions.to_csv(RESULTS_FOLDER + PREDICTION_OUTPUT_PREFIX + str(term_number + 1) + '.csv', index=False)
