@@ -113,6 +113,17 @@ def lr_predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
                                                 pd.DataFrame(y_test[3]),
                                                 pd.DataFrame(y_test[4])], ignore_index=True)
     y_df.columns = [postreq_name]
+    y_df[postreq_name] = y_df[postreq_name].replace(0, 'F')
+    y_df[postreq_name] = y_df[postreq_name].replace(1, 'D')
+    y_df[postreq_name] = y_df[postreq_name].replace(2, 'D+')
+    y_df[postreq_name] = y_df[postreq_name].replace(3, 'C-')
+    y_df[postreq_name] = y_df[postreq_name].replace(4, 'C')
+    y_df[postreq_name] = y_df[postreq_name].replace(5, 'C+')
+    y_df[postreq_name] = y_df[postreq_name].replace(6, 'B-')
+    y_df[postreq_name] = y_df[postreq_name].replace(7, 'B')
+    y_df[postreq_name] = y_df[postreq_name].replace(8, 'B+')
+    y_df[postreq_name] = y_df[postreq_name].replace(9, 'A-')
+    y_df[postreq_name] = y_df[postreq_name].replace(10, 'A')
 
     converted_y_preds = []
     for yp in y_preds:
@@ -128,6 +139,7 @@ def lr_predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
 
 flatten = lambda l: [item for sublist in l for item in
                      sublist]  # https://stackoverflow.com/questions/952914/how-to-make-a-flat-list-out-of-list-of-lists
+
 
 def reverse_convert_grade(int_grade):
     if int_grade == 10:
@@ -152,6 +164,7 @@ def reverse_convert_grade(int_grade):
         return 'D'
     elif int_grade == 0:
         return 'F'
+
 
 if __name__ == "__main__":
     for filename in os.listdir(__DATA_FOLDER):
