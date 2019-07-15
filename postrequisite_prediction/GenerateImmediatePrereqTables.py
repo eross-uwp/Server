@@ -48,13 +48,13 @@ class GenerateImmediatePrereqTables:
         for j, tier in grades.iterrows():
             if grades.at[j, postrequisite] != '' and self.__taken_prereq(j, grades, prerequisite):
                 data_frame.at[data_frame_row, self.__STUDENT_ID] = grades.at[j, self.__STUDENT_ID]
-                data_frame.at[data_frame_row, postrequisite] = grades.at[j, postrequisite].split(',')[1]
+                data_frame.at[data_frame_row, postrequisite] = convert_grade(grades.at[j, postrequisite].split(',')[1])
                 postreq_term = int(grades.at[j, postrequisite].split(',')[0])
                 earliest_term = 2000
                 for k in prerequisite:
                     if self.__check_course(k.get_name(), grades):
                         if grades.at[j, k.get_name()] != '':
-                            data_frame.at[data_frame_row, k.get_name()] = grades.at[j, k.get_name()].split(',')[1]
+                            data_frame.at[data_frame_row, k.get_name()] = convert_grade(grades.at[j, k.get_name()].split(',')[1])
                             if int(grades.at[j, k.get_name()].split(',')[0]) < earliest_term:
                                 earliest_term = int(grades.at[j, k.get_name()].split(',')[0])
                 data_frame.at[data_frame_row, self.__TERM_DIFFERENCE] = postreq_term - earliest_term
@@ -120,7 +120,7 @@ class GenerateImmediatePrereqTables:
         struggle_found = 0
         while index != 0 and struggle_found != 1:
             if struggle_per_term.at[id, columns[index]] != '':
-                struggle = struggle_per_term.at[id, columns[index]]
+                struggle = convert_struggle(struggle_per_term.at[id, columns[index]])
                 struggle_found = 1
             else:
                 index -= 1
@@ -138,6 +138,40 @@ class GenerateImmediatePrereqTables:
             if course == j:
                 return True
         return False
+
+
+def convert_struggle(string_struggle):
+    if string_struggle == 'G':
+        return 3
+    elif string_struggle == 'S':
+        return 2
+    elif string_struggle == 'E':
+        return 1
+
+
+def convert_grade(string_grade):
+    if string_grade == 'A':
+        return 10
+    elif string_grade == 'A-':
+        return 9
+    elif string_grade == 'B+':
+        return 8
+    elif string_grade == 'B':
+        return 7
+    elif string_grade == 'B-':
+        return 6
+    elif string_grade == 'C+':
+        return 5
+    elif string_grade == 'C':
+        return 4
+    elif string_grade == 'C-':
+        return 3
+    elif string_grade == 'D+':
+        return 2
+    elif string_grade == 'D':
+        return 1
+    elif string_grade == 'F':
+        return 0
 
 
 if __name__ == "__main__":

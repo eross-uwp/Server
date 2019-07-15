@@ -86,7 +86,13 @@ def stratify_fold():
         for col_name in term.columns:
             if term[col_name].dtype == 'object':
                 term[col_name] = term[col_name].astype('category')
-                term[col_name] = term[col_name].cat.codes
+                term[col_name] = term[col_name].str.replace('Good', '4')
+                term[col_name] = term[col_name].str.replace('Dismissed', '3')
+                term[col_name] = term[col_name].str.replace('Probation', '2')
+                term[col_name] = term[col_name].str.replace('NA', '1')
+                term[col_name] = term[col_name].fillna('1')
+
+                print()
 
         x = term[HEADERS_ARRAY[i]].copy().values  # each term file has a different headers array
         y = term[GRADUATED_HEADER].copy().values.reshape(-1, 1)  # reshape to one column
@@ -115,14 +121,15 @@ def stratify_fold():
             loop_count += 1
 
 
-# https://stackoverflow.com/a/43886290
-def round_school(x):
-    if x < 0:
-        return 0
-    else:
-        i, f = divmod(x, 1)
-        return int(i + ((f >= 0.5) if (x > 0) else (f > 0.5)))
-
+def convert_academic_standing(string_standing):
+    if string_standing == 'Good':
+        return 4
+    elif string_standing == 'Probation':
+        return 3
+    elif string_standing == 'Dismissed':
+        return 2
+    elif string_standing == 'NA':
+        return 1
 
 if __name__ == "__main__":
     stratify_fold()
