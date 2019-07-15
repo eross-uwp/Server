@@ -17,4 +17,4 @@ Contains datafiles and python scripts relating to different predictive models fo
  - **nth_semester_graduation_prediction**
 	 - Predicting whether a student will graduate or not based off of their 1st through nth term gpa. 
  - **postrequisite_prediction**
-	 - Predicting a postrequisite course grade based on features related to grades from all immediate prerequisite courses. Contains a script to generate a csv containing probabilities for prerequisite and postrequisite failure.
+	 - Predicting a postrequisite course grade based on features related to grades from all or immediate prerequisite courses. Contains a script to generate a csv containing probabilities for prerequisite and postrequisite failure.
