@@ -63,4 +63,17 @@ class TestNode(TestCase):
         a.update_column(d.get_name(), ['C', 'B'])
         print(a.get_probability_table())
 
+    def test_remove_child(self):
+        a = Node('A')
+        b = Node('B')
+        c = Node('C')
+
+        a.get_child(b)
+        a.add_child(c)
+
+        a.remove_child('B')
+
+        self.assertTrue(1 == len(a.get_children()))
+        self.assertTrue(c == a.get_children()[0])
+
 

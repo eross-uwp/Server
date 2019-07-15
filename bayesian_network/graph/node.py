@@ -19,6 +19,12 @@ class Node:
         :param children: list of Nodes
         :param grade: Grade for the Node (Type: char)
         """
+        if children is None:
+            children = []
+
+        if grade is None:
+            grade = ''
+
         self._name = name
         self._children = children
         self._probability_table = pd.DataFrame()
@@ -45,11 +51,11 @@ class Node:
         :param name_of_child: The name of a child (Type: String)
         :return: Node or None
         """
-        if self._children is not None:
+        if len(self._children) != 0:
             for child in self._children:
                 if name_of_child == child.get_name():
                     return child
-            return None
+        return None
 
     def get_grade(self):
         return self._grade
@@ -70,6 +76,15 @@ class Node:
             self._children = [child]
         else:
             self._children.append(child)
+
+    def remove_child(self, name_of_child):
+        """
+        remove_child will remove the node from the node's children's list
+        :param name_of_child: String
+        """
+        for child in self._children:
+            if child.get_name() == name_of_child:
+                self._children.remove(child)
 
     def update_column(self, parent_name, column):
         """
