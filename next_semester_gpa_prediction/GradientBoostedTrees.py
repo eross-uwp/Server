@@ -42,8 +42,8 @@ def get_training_testing():
 
 def gbt_predict():
     np.random.seed(bD.RANDOM_SEED)
-    model = GradientBoostingRegressor(n_estimators=500, learning_rate=0.01, max_features=1, max_depth=4, loss='ls',
-                                      random_state=bD.RANDOM_SEED)
+
+    model = GradientBoostingRegressor(loss='ls', criterion='friedman_mse', learning_rate=0.01, max_depth=1, max_features='log2', min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=500, subsample=0.5, random_state=bD.RANDOM_SEED)
 
     y_preds = []
 
@@ -70,7 +70,7 @@ def gbt_predict():
         plt.savefig(RESULTS_FOLDER + GRAPH_FILE_PREFIX + str(i + 1))  # saving graphs
         plt.close()
 
-        # Calculating the stats from the actual curr-term GPAs and predicted curr-term GPAs
+    # Calculating the stats from the actual curr-term GPAs and predicted curr-term GPAs
     rr = metrics.r2_score(flatten(__y_test), y_preds)
     rmse = np.math.sqrt(metrics.mean_squared_error(flatten(__y_test), y_preds)) / 4
 

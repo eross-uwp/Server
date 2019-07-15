@@ -51,7 +51,7 @@ def mlp():
 
     for i in range(0, bD.NUMBER_OF_FOLDS):
         # fitting the model and storing the predicted value from the test set
-        model.fit(__x_train[i], __y_train[i])
+        model.fit(__x_train[i], np.ravel(__y_train[i]))
         y_pred = model.predict(__x_test[i])
 
         y_preds += list(y_pred)  # the predicted next term gpa
