@@ -50,6 +50,12 @@ class Node:
     def get_name(self):
         return self._name
 
+    def does_have_prereq(self):
+        if len(self._prereqs) > 0:
+            return 1
+        else:
+            return 0
+
     def get_immediate_prereqs(self):
         temp_list = []
         for prereq in self._prereqs:
