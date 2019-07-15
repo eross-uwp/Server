@@ -104,3 +104,5 @@ class Node:
         # Todo: return the probability for for the combination parent and grand_parent
 
         return self._probability_table
+
+    

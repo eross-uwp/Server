@@ -170,3 +170,5 @@ class TestAcyclicGraph(TestCase):
         n = g.get_node('A')
 
         self.assertTrue(n.get_child('B') is None)
+
+
