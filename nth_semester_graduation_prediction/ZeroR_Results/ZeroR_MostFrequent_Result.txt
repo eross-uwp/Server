@@ -1,26 +1,99 @@
 first term result:
 true negative:  0 
-false positive:  792 
-false negative:  0 
-true positive:  840
-Precision:  0.5147058823529411
-Recall:  1.0
+false positive:  1004
+false negative:  0
+true positive:  1752
+Precision score:  0.6357039187227866
+Recall score:  1.0
 ROC_AUC score:0.5
+Accuracy score:0.6357039187227866
 
 second term result:
-true negative:  0 
-false positive:  228 
-false negative:  0 
-true positive:  840
-Precision:  0.7865168539325843
-Recall:  1.0
+true negative:  0
+false positive:  764
+false negative:  0
+true positive:  1748
+Precision score:  0.695859872611465
+Recall score:  1.0
 ROC_AUC score:0.5
+Accuracy score:0.695859872611465
 
 third term result:
-true negative:  0 
-false positive:  32 
-false negative:  0 
-true positive:  840
-Precision:  0.963302752293578
-Recall:  1.0
+true negative:  0
+false positive:  512
+false negative:  0
+true positive:  1748
+Precision score:  0.7734513274336283
+Recall score:  1.0
 ROC_AUC score:0.5
+Accuracy score:0.7734513274336283
+
+fourth term result:
+true negative:  0
+false positive:  392
+false negative:  0
+true positive:  1740
+Precision score:  0.8161350844277674
+Recall score:  1.0
+ROC_AUC score:0.5
+Accuracy score:0.8161350844277674
+
+fifth term result:
+true negative:  0
+false positive:  248
+false negative:  0
+true positive:  1724
+Precision score:  0.8742393509127789
+Recall score:  1.0
+ROC_AUC score:0.5
+Accuracy score:0.8742393509127789
+
+sixth term result:
+true negative:  0
+false positive:  204
+false negative:  0
+true positive:  1692
+Precision score:  0.8924050632911392
+Recall score:  1.0
+ROC_AUC score:0.5
+Accuracy score:0.8924050632911392
+
+seventh term result:
+true negative:  0
+false positive:  160
+false negative:  0
+true positive:  1616
+Precision score:  0.9099099099099099
+Recall score:  1.0
+ROC_AUC score:0.5
+Accuracy score:0.9099099099099099
+
+eighth term result:
+true negative:  0
+false positive:  116
+false negative:  0
+true positive:  1512
+Precision score:  0.9287469287469288
+Recall score:  1.0
+ROC_AUC score:0.5
+Accuracy score:0.9287469287469288
+
+ninth term result:
+true negative:  0
+false positive:  76
+false negative:  0
+true positive:  1108
+Precision score:  0.9358108108108109
+Recall score:  1.0
+ROC_AUC score:0.5
+Accuracy score:0.9358108108108109
+
+tenth term result:
+true negative:  0
+false positive:  48
+false negative:  0
+true positive:  740
+Precision score:  0.9390862944162437
+Recall score:  1.0
+ROC_AUC score:0.5
+Accuracy score:0.9390862944162437

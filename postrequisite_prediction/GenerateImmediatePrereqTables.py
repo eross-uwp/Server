@@ -1,3 +1,11 @@
+"""
+___authors___: Evan Majerus and Austin FitzGerald
+Script that retrieves a student's grade for each post requisite course and each immediate prerequisite course
+they have taken and creates a csv with that inside.  It also gathers the term before the earliest prerequisite course
+to get the cumulative GPA in that term and the term GPA.  It also saves the difference between the term of the
+postrequisite and the prerequisite.  If a student did not take both the postrequisite and at least one of the
+prerequisites they are not added to the csv.
+"""
 import pandas as pd
 
 from TreeScripts.TreeMaker import TreeMaker
@@ -17,6 +25,8 @@ class GenerateImmediatePrereqTables:
     __TERM_GPA_FILEPATH = 'data\\term_gpa.csv'
     __STRUGGLING_PER_TERM_FILEPATH = 'data\\struggling_per_term.csv'
 
+    # Creates a data frame for a postrequisite as the title and adds all the prerequisite courses as columns along with:
+    # cumulative gpa, previous term gpa, struggle, and term difference.
     def create_data_frame(self, tree, grades):
         postrequisite = tree.get_name()
         data_frame = pd.DataFrame(columns=[self.__STUDENT_ID, postrequisite])
@@ -27,42 +37,49 @@ class GenerateImmediatePrereqTables:
         data_frame[self.__PREV_TERM_GPA] = ''
         data_frame[self.__STRUGGLE] = ''
         data_frame[self.__TERM_DIFFERENCE] = ''
-        data_frame = self.__get_student_info(data_frame, grades, postrequisite, prerequisite)
+        if self.__check_course(postrequisite, grades):
+            data_frame = self.__get_student_info(data_frame, grades, postrequisite, prerequisite)
         return data_frame
 
+    # Retrieves all of the information each student has for the postrequisite and prerequisite courses and ignores those
+    # who haven't taken those courses.
     def __get_student_info(self, data_frame, grades, postrequisite, prerequisite):
         data_frame_row = 1
         for j, tier in grades.iterrows():
             if grades.at[j, postrequisite] != '' and self.__taken_prereq(j, grades, prerequisite):
                 data_frame.at[data_frame_row, self.__STUDENT_ID] = grades.at[j, self.__STUDENT_ID]
-                temp = grades.at[j, postrequisite]
+                data_frame.at[data_frame_row, postrequisite] = grades.at[j, postrequisite].split(',')[1]
                 postreq_term = int(grades.at[j, postrequisite].split(',')[0])
                 earliest_term = 2000
                 for k in prerequisite:
-                    if grades.at[j, k.get_name()] != '':
-                        data_frame.at[data_frame_row, k.get_name()] = grades.at[j, k.get_name()].split(',')[1]
-                        if int(grades.at[j, k.get_name()].split(',')[0]) < earliest_term:
-                            earliest_term = int(grades.at[j, k.get_name()].split(',')[0])
+                    if self.__check_course(k.get_name(), grades):
+                        if grades.at[j, k.get_name()] != '':
+                            data_frame.at[data_frame_row, k.get_name()] = grades.at[j, k.get_name()].split(',')[1]
+                            if int(grades.at[j, k.get_name()].split(',')[0]) < earliest_term:
+                                earliest_term = int(grades.at[j, k.get_name()].split(',')[0])
                 data_frame.at[data_frame_row, self.__TERM_DIFFERENCE] = postreq_term - earliest_term
-                data_frame = self.get_cumulative_gpa(data_frame, j, earliest_term)
-                data_frame = self.get_prev_term_gpa(data_frame, j, earliest_term)
-                data_frame = self.__have_struggled(data_frame, j, earliest_term)
+                data_frame = self.__get_cumulative_gpa(data_frame, data_frame_row, j, earliest_term)
+                data_frame = self.__get_prev_term_gpa(data_frame, data_frame_row, j, earliest_term)
+                data_frame = self.__have_struggled(data_frame, data_frame_row, j, earliest_term)
                 data_frame_row = data_frame_row + 1
         return data_frame
 
+    # Determines if a student has taken at least one of the prerequisites.
     def __taken_prereq(self, index, grades, prerequisite):
         for k in prerequisite:
-            if grades.at[index, k.get_name()] != '':
-                return True
+            if self.__check_course(k.get_name(), grades):
+                if grades.at[index, k.get_name()] != '':
+                    return True
         return False
 
-    def get_cumulative_gpa(self, data_frame, id, term):
+    # Gets the cumulative gpa of the term right before the earliest prerequisite course.
+    def __get_cumulative_gpa(self, data_frame, data_frame_row, id, term):
         cumulative = pd.read_csv(self.__CUMULATIVE_GPA_FILEPATH).fillna('')
         columns = list(cumulative)
 
-        index = columns.index(str(term)) - 1  # starting index
+        index = columns.index(str(term))  # starting index TODO Add - 1
         gpa_found = 0
-        while index != -1 and gpa_found != 1:
+        while index != 0 and gpa_found != 1:
             if cumulative.at[id, columns[index]] != '':
                 gpa = cumulative.at[id, columns[index]]
                 gpa_found = 1
@@ -71,16 +88,17 @@ class GenerateImmediatePrereqTables:
         if gpa_found == 0:
             gpa = '$'
 
-        data_frame.at[id, self.__CUMULATIVE_GPA] = gpa
+        data_frame.at[data_frame_row, self.__CUMULATIVE_GPA] = gpa
         return data_frame
 
-    def get_prev_term_gpa(self, data_frame, id, term):
+    # Gets the gpa of the term right before the earliest prerequisite course.
+    def __get_prev_term_gpa(self, data_frame, data_frame_row, id, term):
         prev_term_gpa = pd.read_csv(self.__TERM_GPA_FILEPATH).fillna('')
         columns = list(prev_term_gpa)
 
-        index = columns.index(str(term)) - 1  # starting index
+        index = columns.index(str(term))  # starting index TODO Add - 1
         gpa_found = 0
-        while index != -1 and gpa_found != 1:
+        while index != 0 and gpa_found != 1:
             if prev_term_gpa.at[id, columns[index]] != '':
                 gpa = prev_term_gpa.at[id, columns[index]]
                 gpa_found = 1
@@ -89,16 +107,18 @@ class GenerateImmediatePrereqTables:
         if gpa_found == 0:
             gpa = '$'
 
-        data_frame.at[id, self.__CUMULATIVE_GPA] = gpa
+        data_frame.at[data_frame_row, self.__PREV_TERM_GPA] = gpa
         return data_frame
 
-    def __have_struggled(self, data_frame, id, term):
+    # Retrieves if a student was in good standing, struggled, or extremely struggled before they took the earliest
+    # prerequisite.
+    def __have_struggled(self, data_frame, data_frame_row, id, term):
         struggle_per_term = pd.read_csv(self.__STRUGGLING_PER_TERM_FILEPATH).fillna('')
         columns = list(struggle_per_term)
 
-        index = columns.index(str(term)) - 1  # starting index
+        index = columns.index(str(term))  # starting index TODO Add - 1
         struggle_found = 0
-        while index != -1 and struggle_found != 1:
+        while index != 0 and struggle_found != 1:
             if struggle_per_term.at[id, columns[index]] != '':
                 struggle = struggle_per_term.at[id, columns[index]]
                 struggle_found = 1
@@ -107,8 +127,17 @@ class GenerateImmediatePrereqTables:
         if struggle_found == 0:
             struggle = '$'
 
-        data_frame.at[id, self.__STRUGGLE] = struggle
+        data_frame.at[data_frame_row, self.__STRUGGLE] = struggle
         return data_frame
+
+    # Checks to make sure that the given course is in the student_grade_list_with_terms.csv because if it is in that
+    # file then that means someone has taken that course.
+    def __check_course (self, course, grades):
+        courses = list(grades)
+        for j in courses:
+            if course == j:
+                return True
+        return False
 
 
 if __name__ == "__main__":
@@ -123,6 +152,6 @@ if __name__ == "__main__":
         data_frame = postreqquisite_lrm.create_data_frame(tree, grades)
         data_frame.to_csv(__OUTPUT_CSV_FILEPATH
                           + "".join([c for c in tree.get_name() if c.isalpha() or c.isdigit() or c == ' ']).rstrip()
-                          + '.csv')
+                          + '.csv', index=False)
         count = count + 1
     print("Done!")
