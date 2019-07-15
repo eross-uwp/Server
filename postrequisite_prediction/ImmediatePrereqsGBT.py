@@ -79,9 +79,10 @@ def lr_predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
 
     rr = metrics.r2_score(flatten(y_test), y_preds)
     rmse = np.math.sqrt(metrics.mean_squared_error(flatten(y_test), y_preds))
+    acc = metrics.accuracy_score(flatten(y_test), y_preds)
 
     with open(__RESULTS_FOLDER + postreq_name + '.txt', "w") as text_file:
-        text_file.write('R^2 = ' + str(rr) + ', RMSE = ' + str(rmse))
+        text_file.write('R^2 = ' + str(rr) +', Accuracy = ' + str(acc) + ' , RMSE = ' + str(rmse) + ', NRMSE = ' + str(rmse/10))
     x_df = pd.concat([pd.DataFrame(x_test[0]),
                                                 pd.DataFrame(x_test[1]),
                                                 pd.DataFrame(x_test[2]),

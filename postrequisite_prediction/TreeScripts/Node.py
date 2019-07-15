@@ -2,6 +2,7 @@
 ___authors___: Austin FitzGerald and Evan Majerus
 """
 
+
 class Node:
     __SINGLE_RELATIONSHIP = 'SINGLE'
     __AND_RELATIONSHIP = 'AND'
@@ -58,6 +59,25 @@ class Node:
                     temp_list.append(n)
             else:
                 temp_list.append(prereq)
+
+        return temp_list
+
+    def get_all_prereqs(self):
+        temp_list = []
+
+        for prereq in self._prereqs:
+            if prereq.get_virtual() == self.VIRTUAL_TYPE:
+                virtual_list = prereq.get_immediate_prereqs()
+                for n in virtual_list:
+                    temp_list.append(n)
+                    temp_prereq_list = n.get_all_prereqs()
+                    for t in temp_prereq_list:
+                        temp_list.append(t)
+            else:
+                temp_list.append(prereq)
+                temp_prereq_list = prereq.get_all_prereqs()
+                for t in temp_prereq_list:
+                    temp_list.append(t)
 
         return temp_list
 
