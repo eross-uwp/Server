@@ -1,98 +1,98 @@
 first term result:
 true negative:  0 
-false positive:  1004
-false negative:  0
-true positive:  1752
+false positive:  251 
+false negative:  0 
+true positive:  438
 Precision score:  0.6357039187227866
 Recall score:  1.0
 ROC_AUC score:0.5
 Accuracy score:0.6357039187227866
 
 second term result:
-true negative:  0
-false positive:  764
-false negative:  0
-true positive:  1748
+true negative:  0 
+false positive:  191 
+false negative:  0 
+true positive:  437
 Precision score:  0.695859872611465
 Recall score:  1.0
 ROC_AUC score:0.5
 Accuracy score:0.695859872611465
 
 third term result:
-true negative:  0
-false positive:  512
-false negative:  0
-true positive:  1748
+true negative:  0 
+false positive:  128 
+false negative:  0 
+true positive:  437
 Precision score:  0.7734513274336283
 Recall score:  1.0
 ROC_AUC score:0.5
 Accuracy score:0.7734513274336283
 
 fourth term result:
-true negative:  0
-false positive:  392
-false negative:  0
-true positive:  1740
+true negative:  0 
+false positive:  98 
+false negative:  0 
+true positive:  435
 Precision score:  0.8161350844277674
 Recall score:  1.0
 ROC_AUC score:0.5
 Accuracy score:0.8161350844277674
 
 fifth term result:
-true negative:  0
-false positive:  248
-false negative:  0
-true positive:  1724
+true negative:  0 
+false positive:  62 
+false negative:  0 
+true positive:  431
 Precision score:  0.8742393509127789
 Recall score:  1.0
 ROC_AUC score:0.5
 Accuracy score:0.8742393509127789
 
 sixth term result:
-true negative:  0
-false positive:  204
-false negative:  0
-true positive:  1692
+true negative:  0 
+false positive:  51 
+false negative:  0 
+true positive:  423
 Precision score:  0.8924050632911392
 Recall score:  1.0
 ROC_AUC score:0.5
 Accuracy score:0.8924050632911392
 
 seventh term result:
-true negative:  0
-false positive:  160
-false negative:  0
-true positive:  1616
+true negative:  0 
+false positive:  40 
+false negative:  0 
+true positive:  404
 Precision score:  0.9099099099099099
 Recall score:  1.0
 ROC_AUC score:0.5
 Accuracy score:0.9099099099099099
 
 eighth term result:
-true negative:  0
-false positive:  116
-false negative:  0
-true positive:  1512
+true negative:  0 
+false positive:  29 
+false negative:  0 
+true positive:  378
 Precision score:  0.9287469287469288
 Recall score:  1.0
 ROC_AUC score:0.5
 Accuracy score:0.9287469287469288
 
 ninth term result:
-true negative:  0
-false positive:  76
-false negative:  0
-true positive:  1108
+true negative:  0 
+false positive:  19 
+false negative:  0 
+true positive:  277
 Precision score:  0.9358108108108109
 Recall score:  1.0
 ROC_AUC score:0.5
 Accuracy score:0.9358108108108109
 
 tenth term result:
-true negative:  0
-false positive:  48
-false negative:  0
-true positive:  740
+true negative:  0 
+false positive:  12 
+false negative:  0 
+true positive:  185
 Precision score:  0.9390862944162437
 Recall score:  1.0
 ROC_AUC score:0.5

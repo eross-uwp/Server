@@ -16,7 +16,7 @@ STRATIFIED_DATA_PATH = 'data\\test_train\\'
 #  Iterate through all possible training/testing files and store them in appropriate arrays.
 def get_training_testing(term, number):
     return pd.read_csv(STRATIFIED_DATA_PATH + term + '_term_train_' + str(number) + '.csv'),\
-           pd.read_csv(STRATIFIED_DATA_PATH + term + '_term_train_' + str(number) + '.csv') # looping through each fold
+           pd.read_csv(STRATIFIED_DATA_PATH + term + '_term_test_' + str(number) + '.csv') # looping through each fold
 
 
 def zr_predict():
