@@ -6,7 +6,7 @@ import os
 import pandas as pd
 import numpy as np
 from sklearn import metrics
-from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold
 
 __DATA_FOLDER = 'data\\ImmediatePrereqTables\\'
@@ -23,7 +23,7 @@ np.random.seed(__RANDOM_SEED)
 def get_prereq_table(filename):
     file = pd.read_csv(__DATA_FOLDER + '\\' + filename)
     y = file.iloc[:, 1]
-    x = file.drop(file.columns[1], axis=1)
+    x = file.drop([file.columns[1], file.columns[0]], axis=1)  # drop the postreq grade and student_id columns
 
     return x, y
 
@@ -72,8 +72,8 @@ def stratify_and_split(filename):
 def lr_predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
     model = LogisticRegression(random_state=__RANDOM_SEED)
     y_preds = []
-            #   F,  D,  D+, C-, C,  C+, B-, B,  B+, A-, A
-    y_grades = [[], [], [], [], [], [], [], [] ,[] ,[], []]
+    #   F,  D,  D+, C-, C,  C+, B-, B,  B+, A-, A
+    y_grades = [[], [], [], [], [], [], [], [], [], [], []]
 
     for fold_num in range(0, __NUMBER_FOLDS):
         model.fit(x_train[fold_num], y_train[fold_num])
@@ -94,24 +94,26 @@ def lr_predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
 
     rr = metrics.r2_score(flatten(y_test), y_preds)
     rmse = np.math.sqrt(metrics.mean_squared_error(flatten(y_test), y_preds))
+    acc = metrics.accuracy_score(flatten(y_test), y_preds)
 
     with open(__RESULTS_FOLDER + postreq_name + '.txt', "w") as text_file:
-        text_file.write('R^2 = ' + str(rr) + ', RMSE = ' + str(rmse))
+        text_file.write(
+            'R^2 = ' + str(rr) + ', Accuracy = ' + str(acc) + ' , RMSE = ' + str(rmse) + ', NRMSE = ' + str(rmse / 10))
     x_df = pd.concat([pd.DataFrame(x_test[0]),
-                                                pd.DataFrame(x_test[1]),
-                                                pd.DataFrame(x_test[2]),
-                                                pd.DataFrame(x_test[3]),
-                                                pd.DataFrame(x_test[4])], ignore_index=True)
+                      pd.DataFrame(x_test[1]),
+                      pd.DataFrame(x_test[2]),
+                      pd.DataFrame(x_test[3]),
+                      pd.DataFrame(x_test[4])], ignore_index=True)
     x_df.columns = x_columns
     x_df['struggle'] = x_df['struggle'].replace(3, 'G')
     x_df['struggle'] = x_df['struggle'].replace(2, 'S')
     x_df['struggle'] = x_df['struggle'].replace(1, 'E')
 
     y_df = pd.concat([pd.DataFrame(y_test[0]),
-                                                pd.DataFrame(y_test[1]),
-                                                pd.DataFrame(y_test[2]),
-                                                pd.DataFrame(y_test[3]),
-                                                pd.DataFrame(y_test[4])], ignore_index=True)
+                      pd.DataFrame(y_test[1]),
+                      pd.DataFrame(y_test[2]),
+                      pd.DataFrame(y_test[3]),
+                      pd.DataFrame(y_test[4])], ignore_index=True)
     y_df.columns = [postreq_name]
     y_df[postreq_name] = y_df[postreq_name].replace(0, 'F')
     y_df[postreq_name] = y_df[postreq_name].replace(1, 'D')
@@ -130,9 +132,10 @@ def lr_predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
         converted_y_preds.append(reverse_convert_grade(yp))
     y_predict_df = pd.DataFrame(converted_y_preds, columns=['predicted score'])
 
-    y_grades_df = pd.DataFrame({'F':y_grades[0], 'D':y_grades[1], 'D+':y_grades[2], 'C-':y_grades[3], 'C':y_grades[4],
-                                'C+':y_grades[5], 'B-':y_grades[6], 'B':y_grades[7], 'B+':y_grades[8],
-                                'A-':y_grades[9], 'A':y_grades[10]})
+    y_grades_df = pd.DataFrame(
+        {'F': y_grades[0], 'D': y_grades[1], 'D+': y_grades[2], 'C-': y_grades[3], 'C': y_grades[4],
+         'C+': y_grades[5], 'B-': y_grades[6], 'B': y_grades[7], 'B+': y_grades[8],
+         'A-': y_grades[9], 'A': y_grades[10]})
     predictions = pd.concat([x_df, y_df, y_predict_df, y_grades_df], axis=1)
     predictions.to_csv(__RESULTS_FOLDER + 'PREDICTION_' + filename + '.csv', index=False)
 
