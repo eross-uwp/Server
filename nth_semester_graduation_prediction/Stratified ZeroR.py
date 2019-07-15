@@ -20,7 +20,7 @@ population = [0, 1]
 #  Iterate through all possible training/testing files and store them in appropriate dataframe.
 def get_training_testing(term, number):
     return pd.read_csv(STRATIFIED_DATA_PATH + term + '_term_train_' + str(number) + '.csv'),\
-           pd.read_csv(STRATIFIED_DATA_PATH + term + '_term_train_' + str(number) + '.csv')
+           pd.read_csv(STRATIFIED_DATA_PATH + term + '_term_test_' + str(number) + '.csv')
 
 
 def zr_predict():
