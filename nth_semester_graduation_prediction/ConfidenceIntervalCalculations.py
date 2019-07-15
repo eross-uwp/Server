@@ -12,6 +12,7 @@ __NUMBER_TERMS = 10
 __NUMBER_ITER = 10000
 __CONFIDENCE_INTERVAL = 0.95
 
+
 # https://stackoverflow.com/a/43886290
 def round_school(x_list):
     temp_list = []
