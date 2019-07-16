@@ -120,7 +120,7 @@ def lr_predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
                                 'C+':y_grades[5], 'B-':y_grades[6], 'B':y_grades[7], 'B+':y_grades[8],
                                 'A-':y_grades[9], 'A':y_grades[10]})
     predictions = pd.concat([x_df, y_df, y_predict_df, y_grades_df], axis=1)
-    predictions.to_csv(__RESULTS_FOLDER + 'PREDICTION_' + filename + '.csv', index=False)
+    predictions.to_csv(__RESULTS_FOLDER + 'PREDICTION_' + filename, index=False)
 
 
 flatten = lambda l: [item for sublist in l for item in
