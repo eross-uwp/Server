@@ -62,7 +62,7 @@ def stratify_and_split(filename):
             (pd.concat(
                 [pd.DataFrame(x_test, columns=x_columns),
                  pd.DataFrame(y_test, columns=[filename[:-4]])],
-                axis=1)).to_csv(__FOLDS_OUTPUT + filename[:-4] + '+' +
+                axis=1)).to_csv(__FOLDS_OUTPUT + filename[:-4] + '_' +
                                 __TEST_PREFIX + str(loop_count + 1) + '.csv', encoding='utf-8', index=False)
             loop_count += 1
 
