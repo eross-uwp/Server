@@ -1,6 +1,8 @@
+import itertools
 from unittest import TestCase
 from node import Node
-
+from itertools import combinations
+from itertools import combinations_with_replacement
 
 class TestNode(TestCase):
     def test_get_name(self):
@@ -46,22 +48,25 @@ class TestNode(TestCase):
         self.assertTrue(2 == len(b.get_children()))
 
     def test_update_column(self):
-        a = Node('ClassA')
-        b = Node('ClassB')
-        c = Node('ClassC')
-        d = Node('ClassD')
+        combo = combinations(['T', 'F'], 2)
+        c = combinations_with_replacement(['T', 'F'], 2)
+        t = itertools.product(['T', 'F'], repeat=2)
+        for i in list(t):
+            print(i)
 
-        # create new column
-        a.update_column(b.get_name(), ['A', 'B', 'C'])
-        print(a.get_probability_table())
+    def test_get_all_combination(self):
+        a = Node('A')
+        b = Node('B')
+        c = Node('C')
 
-        # add another column with a different index size (greater)
-        a.update_column(c.get_name(), ['C', 'B', 'D', 'F'])
-        print(a.get_probability_table())
+        a.add_parent(b)
+        a.add_parent(c)
 
-        # add another column with a different index size (smaller)
-        a.update_column(d.get_name(), ['C', 'B'])
-        print(a.get_probability_table())
+        self.assertTrue(8 == len(a.get_all_combination(['T', 'F'])))
+        print(a.get_all_combination(['T', 'F']))
+
+        self.assertTrue(125 == len(a.get_all_combination(['A', 'B', 'C', 'D', 'F'])))
+        print(a.get_all_combination(['A', 'B', 'C', 'D', 'F']))
 
     def test_remove_child(self):
         a = Node('A')
@@ -76,4 +81,11 @@ class TestNode(TestCase):
         self.assertTrue(1 == len(a.get_children()))
         self.assertTrue(c == a.get_children()[0])
 
+    def test_add_parent(self):
+        a = Node('A')
+        b = Node('B')
+        c = Node('C')
 
+        a.add_parent(a)
+
+        self.assertTrue(a == a.get_parents()[0])

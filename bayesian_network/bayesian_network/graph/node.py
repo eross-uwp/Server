@@ -8,7 +8,7 @@ __Purpose__: The Node will contain the following:
 """
 import pandas as pd
 import numpy as np
-
+import itertools
 
 class Node:
     def __init__(self, name, children=None, grade=None, parents=None):
@@ -101,8 +101,7 @@ class Node:
         add_parent will add the parent to the end of the parent list if the parents doesn't already exists in _parents.
         :param parent: Node
         """
-        if self.get_parent(parent.get_name()) is None:
-            self._parents.appent(parent)
+        self._parents.append(parent)
 
     def remove_child(self, name_of_child):
         """
@@ -125,11 +124,22 @@ class Node:
             df = pd.DataFrame({parent_name: column})
             self._probability_table = pd.concat([self._probability_table, df], axis=1)
     '''
-    def update_probability_table(self, parent, grand_parent):
+    def update_probability_table(self, data):
+
         # Todo: Get All Combinations of Grades
         # Todo: Get Probability of each grad combination
-        # Todo: return the probability for for the combination parent and grand_parent
+        # Todo: return the probability for for the combination parent.
 
         return self._probability_table
 
-    
+    def get_all_combination(self, l):
+        """
+        get_all_combination takes in a list of items, then returns all possible combinations of each item.
+        :param l: list of items
+        :return: list of combinations 
+        """
+        combination_list = []
+        for i in list(itertools.product(l, repeat=len(self._parents) + 1)):
+            combination_list.append(i)
+
+        return combination_list

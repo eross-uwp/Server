@@ -25,5 +25,13 @@ class BayesianNetwork:
     def get_knowledge_base(self):
         return self._knowledge_base
 
-    def get_probability_for_node(self, name_of_start, grade, name_of_finish):
-        return 1
+    # Todo: Send node it's parents information
+    def update_node_table(self, node_name):
+        node = self._graph.get_nod(node_name)
+        parent_list = []
+
+        for parent in node.get_parents():
+            parent_list.append(parent.get_name())
+        parent_list.append(node.get_name())
+
+        node.update_probability_table(self._knowledge_base.get_class_data(parent_list))
