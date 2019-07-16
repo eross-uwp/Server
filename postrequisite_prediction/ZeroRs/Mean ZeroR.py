@@ -5,10 +5,11 @@ from random import choices
 import random
 import sys
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, roc_auc_score, accuracy_score
+import statistics
 
 GRAPH_FILE_PREFIX = 'graph_term_'
 STRATIFIED_DATA_PATH = '..\\data\\ImmediatePrereqFolds\\'
-RESULTS_FOLDER = '..\\results\\ImmediatePrereqModZeroR\\'
+RESULTS_FOLDER = '..\\results\\ImmediatePrereqMeanZeroR\\'
 UNIQUE_COURSE = '..\\data\\uniqueCourses.csv'
 random.seed = 313131
 population = [0, 1]
@@ -42,7 +43,14 @@ if __name__ == "__main__":
                     grades_distribution[key] = 0
                 for each_grade in y_train:
                     grades_distribution[each_grade] = grades_distribution[each_grade] + 1
-                prediction = max(grades_distribution, key=grades_distribution.get)
+                #prediction = max(grades_distribution, key=grades_distribution.get)
+                sum = 0
+                count = 0
+                for grade, amount in grades_distribution.items():
+                    sum = sum + grade*amount
+                    count = count + amount
+                prediction = sum / count
+
 
                 for_conca = np.full_like(y_test, prediction)
                 prediction_array = np.concatenate((prediction_array, for_conca), axis=0)
