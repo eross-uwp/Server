@@ -139,6 +139,8 @@ def lr_predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
     predictions = pd.concat([x_df, y_df, y_predict_df, y_grades_df], axis=1)
     predictions.to_csv(__RESULTS_FOLDER + 'PREDICTION_' + filename, index=False)
 
+    return [predictions['predicted score'].values, y_df[postreq_name].values]
+
 
 flatten = lambda l: [item for sublist in l for item in
                      sublist]  # https://stackoverflow.com/questions/952914/how-to-make-a-flat-list-out-of-list-of-lists
@@ -170,7 +172,16 @@ def reverse_convert_grade(int_grade):
 
 
 if __name__ == "__main__":
+    big_predicted = []
+    big_actual = []
     for filename in os.listdir(__DATA_FOLDER):
         x_train, x_test, y_train, y_test, x_columns = stratify_and_split(filename)
         if len(x_train) > 0:
-            lr_predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
+            predicted_and_actual = lr_predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
+            big_predicted += list(predicted_and_actual[0])
+            big_actual += list(predicted_and_actual[1])
+
+    predictions = pd.DataFrame(big_predicted, columns=['predicted'])
+    actuals = pd.DataFrame(big_actual, columns=['actual'])
+    all_results = pd.concat([predictions, actuals], axis=1)
+    all_results.to_csv(__RESULTS_FOLDER + 'ROOT_COURSES_PREDICTIONS.csv', index=False)
