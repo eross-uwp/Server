@@ -124,9 +124,7 @@ class Node:
             df = pd.DataFrame({parent_name: column})
             self._probability_table = pd.concat([self._probability_table, df], axis=1)
     '''
-    def update_probability_table(self, data):
-
-        # Todo: Get All Combinations of Grades
+    def update_probability_table(self, data, scale):
         # Todo: Get Probability of each grad combination
         # Todo: return the probability for for the combination parent.
 
@@ -136,10 +134,31 @@ class Node:
         """
         get_all_combination takes in a list of items, then returns all possible combinations of each item.
         :param l: list of items
-        :return: list of combinations 
+        :return: list of combinations
         """
         combination_list = []
-        for i in list(itertools.product(l, repeat=len(self._parents) + 1)):
+        for i in list(itertools.product(l, repeat=len(self._parents))):
             combination_list.append(i)
 
         return combination_list
+
+    def get_combination_probability(self, combination, data, predict):
+        """
+        get_combination_probability will return the probability of the node's state given it's parents' states.
+        :param combination: list of strings
+        :param data: DataFrame
+        :param predict: state of Node
+        :return:
+        """
+        df = data
+        for i in range(0, len(self._parents)):
+            df = df[df[self._parents[i].get_name()] == combination[i]]
+
+        total = df.shape[0]
+        occurrence = len(df[df[self._name] == predict])
+        
+        return occurrence / total
+
+        
+
+        # count how many time a grade shows up.

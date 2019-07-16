@@ -3,6 +3,7 @@ from unittest import TestCase
 from node import Node
 from itertools import combinations
 from itertools import combinations_with_replacement
+import pandas as pd
 
 class TestNode(TestCase):
     def test_get_name(self):
@@ -67,6 +68,17 @@ class TestNode(TestCase):
 
         self.assertTrue(125 == len(a.get_all_combination(['A', 'B', 'C', 'D', 'F'])))
         print(a.get_all_combination(['A', 'B', 'C', 'D', 'F']))
+
+    def test_get_combination_probability(self):
+        a = Node('Smart')
+        b = Node('Work Hard')
+        c = Node('Success')
+
+        c.add_parent(a)
+        c.add_parent(b)
+
+        test_data = pd.read_csv('..\\..\\..\\test_data\\doug_example.csv')
+        self.assertTrue(.8 == c.get_combination_probability(['T', 'T'], test_data, 'T'))
 
     def test_remove_child(self):
         a = Node('A')
