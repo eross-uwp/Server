@@ -7,6 +7,7 @@ ___authors___: Zhiwei Yang
 import pandas as pd
 import numpy as np
 #import StratifyAndGenerateDatasets as sd
+from sklearn import metrics
 from sklearn.metrics import confusion_matrix, roc_auc_score, recall_score, precision_score, accuracy_score
 import copy
 
@@ -55,7 +56,18 @@ def zr_predict():
         del set
 
         final = pd.concat([test_total, predictions], axis=1)
-        final.to_csv(RESULTS_FOLDER + '\\most_frequent_prediction_output\\term_' + str(counter) + '.csv', index=False)
+        final.to_csv(RESULTS_FOLDER + 'most_frequent_prediction_output\\term_' + str(counter) + '.csv', index=False)
+
+        actual = final['graduated'].values
+        probs = final['prob of grad'].values
+
+        auc = metrics.roc_auc_score(actual, probs)
+        acc = metrics.accuracy_score(actual, round_school(probs))
+
+        with open(RESULTS_FOLDER + 'MostFrequent' + str(counter) + '.txt', "w") as text_file:
+            text_file.write(
+                'AUC = ' + str(auc) + ', Accuracy = ' + str(acc))
+
         counter += 1
 
         # tn, fp, fn, tp =confusion_matrix(target, prediction_array).ravel()      # Decompose confusion matrix
@@ -67,6 +79,17 @@ def zr_predict():
         # print('ROC_AUC score:' + str(roc_auc_score(target, prediction_array)))
         # print('Accuracy score:' + str(accuracy_score(target, prediction_array)))
 
+
+# https://stackoverflow.com/a/43886290
+def round_school(x_list):
+    temp_list = []
+    for x in x_list:
+        if x < 0:
+            return 0
+        else:
+            i, f = divmod(x, 1)
+            temp_list.append(int(i + ((f >= 0.5) if (x > 0) else (f > 0.5))))
+    return temp_list
 
 if __name__ == "__main__":
     zr_predict()

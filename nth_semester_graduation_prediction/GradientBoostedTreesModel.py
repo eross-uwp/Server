@@ -64,7 +64,7 @@ def gbt_predict(term_number, criterion, learning_rate, loss, max_depth, max_feat
         x_tests += list(x_test_array[term_number][fold_num])
         y_preds += list(y_pred)
 
-    auc = metrics.roc_auc_score(y_tests, y_preds)
+    auc = metrics.roc_auc_score(y_tests, y_grad_probs)
     acc = metrics.accuracy_score(y_tests, y_preds)
 
     with open(RESULTS_FOLDER + RESULTS_TEXTFILE_PREFIX + str(term_number + 1) + '.txt', "w") as text_file:
