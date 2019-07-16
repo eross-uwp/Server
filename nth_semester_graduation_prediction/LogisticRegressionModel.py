@@ -73,6 +73,24 @@ def lr_predict(term_number, c, penalty, solver):
     predictions.to_csv(RESULTS_FOLDER + PREDICTION_OUTPUT_PREFIX + str(term_number + 1) + '.csv', index=False)
 
 
+def get_all_term_stats():
+    actuals = []
+    predicted_grad_prob = []
+    predicted_grad = []
+    for i in range(0, sD.NUM_TERMS):
+        term_predections_df = pd.read_csv(RESULTS_FOLDER+PREDICTION_OUTPUT_PREFIX+str(i+1) + '.csv')
+        actuals += list(term_predections_df['actual'])
+        predicted_grad_prob += list(term_predections_df['prob of grad'])
+        predicted_grad += list(term_predections_df['prediction'])
+
+    auc = metrics.roc_auc_score(actuals, predicted_grad_prob)
+    acc = metrics.accuracy_score(actuals, predicted_grad)
+
+    with open(RESULTS_FOLDER + RESULTS_TEXTFILE_PREFIX + '_all' + '.txt', "w") as text_file:
+        text_file.write(
+            'AUC = ' + str(auc) + ', Accuracy = ' + str(acc))
+
+
 if __name__ == "__main__":
     get_training_testing()
     lr_predict(sD.FIRST_TERM, c=11.288378916846883, penalty='l1', solver='liblinear')
@@ -85,3 +103,5 @@ if __name__ == "__main__":
     lr_predict(sD.EIGHTH_TERM, c=1.0, penalty='l1', solver='liblinear')
     lr_predict(sD.NINTH_TERM, c=1.0, penalty='l1', solver='liblinear')
     lr_predict(sD.TENTH_TERM, c=1.0, penalty='l1', solver='liblinear')
+
+    get_all_term_stats()

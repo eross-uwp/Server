@@ -76,6 +76,24 @@ def gbt_predict(term_number, criterion, learning_rate, loss, max_depth, max_feat
     predictions.to_csv(RESULTS_FOLDER + PREDICTION_OUTPUT_PREFIX + str(term_number + 1) + '.csv', index=False)
 
 
+def get_all_term_stats():
+    actuals = []
+    predicted_grad_prob = []
+    predicted_grad = []
+    for i in range(0, sD.NUM_TERMS):
+        term_predections_df = pd.read_csv(RESULTS_FOLDER+PREDICTION_OUTPUT_PREFIX+str(i+1) + '.csv')
+        actuals += list(term_predections_df['actual'])
+        predicted_grad_prob += list(term_predections_df['prob of grad'])
+        predicted_grad += list(term_predections_df['prediction'])
+
+    auc = metrics.roc_auc_score(actuals, predicted_grad_prob)
+    acc = metrics.accuracy_score(actuals, predicted_grad)
+
+    with open(RESULTS_FOLDER + RESULTS_TEXTFILE_PREFIX + '_all' + '.txt', "w") as text_file:
+        text_file.write(
+            'AUC = ' + str(auc) + ', Accuracy = ' + str(acc))
+
+
 if __name__ == "__main__":
     get_training_testing()
     # TUNED
@@ -103,3 +121,5 @@ if __name__ == "__main__":
                 min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=1.0)
     gbt_predict(sD.TENTH_TERM, criterion='mae', learning_rate=0.1, loss='deviance', max_depth=1, max_features=0.1,
                 min_samples_leaf=0.1, min_samples_split=0.1, n_estimators=300, subsample=0.8)
+
+    get_all_term_stats()
