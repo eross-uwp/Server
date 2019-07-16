@@ -3,13 +3,13 @@ from scipy.stats import spearmanr
 import pandas as pd
 from matplotlib import pyplot as plt
 
-COURSE_LIST = pd.read_csv('data\\raw_courses.csv')['courses']
-STUDENT_ID_LIST = pd.read_csv('data\\raw_student_ids.csv')['student_id']
-GRADES_LIST = pd.read_csv('data\\raw_grades.csv')
+COURSE_LIST = pd.read_csv('..\\Data\\unique_courses.csv')['courses']
+STUDENT_ID_LIST = pd.read_csv('..\\Data\\unique_student_ids.csv')['student_id']
+GRADES_LIST = pd.read_csv('..\\Data\\id_term_course_grade.csv')
 GRADES_LIST[['student_id', 'term_number']] = GRADES_LIST[['student_id', 'term_number']].apply(pd.to_numeric)
 STUDENT_GRADE_LIST = pd.read_csv('data\\student_grade_list.csv')
-COURSE_COMBINATIONS = pd.read_csv('data\\course_combinations.csv')
-FINAL_FILE = 'results\\final.csv'
+COURSE_COMBINATIONS = pd.read_csv('..\\Data\\course_combinations.csv')
+FINAL_FILE = 'results\\final_correlations.csv'
 GRAPHS_FOLDER = 'results\\graphs\\'
 GRADE_SCALE = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F']
 ALPHA_VALUE = 0.05
