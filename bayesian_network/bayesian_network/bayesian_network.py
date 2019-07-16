@@ -29,21 +29,12 @@ class BayesianNetwork:
         return self._data_base
 
     def add_data(self, data_file_path):
-        """
-        add_data will add columns to the bayesian network's DataFrame
-        :param data_file_path: string
-        """
-        df = pd.read_csv(data_file_path)
-        self._data_base = pd.concat([self._data_base, df], axis=1)
+        # Todo - update this method
+        return 1
 
     def update_data(self, data_file_path):
-        """
-        update_data updates existing columns in the bayesian network's DataFrame
-        :param data_file_path: string
-        """
-        df = pd.read_csv(data_file_path)
-        self._data_base.update(df)
-
+        # Todo - update this method
+        return 1
 
     def get_probability_for_node(self, name_of_start, grade, name_of_finish):
         return 1

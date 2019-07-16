@@ -11,7 +11,7 @@ import numpy as np
 
 
 class Node:
-    def __init__(self, name, children=None, grade=None):
+    def __init__(self, name, children=None, grade=None, parents=None):
         """
         Create a Node with a name and an option of having a list of children and a grade. If the node has no children
         then _children will be set to none.
@@ -25,10 +25,14 @@ class Node:
         if grade is None:
             grade = ''
 
+        if parents is None:
+            parents = []
+
         self._name = name
         self._children = children
         self._probability_table = pd.DataFrame()
         self._grade = grade
+        self._parents = parents
 
     def get_name(self):
         """
@@ -66,6 +70,21 @@ class Node:
     def set_grade(self, grade):
         self._grade = grade
 
+    def get_parents(self):
+        return self._parents
+
+    def get_parent(self, name_of_parent):
+        """
+        get_parent searches through the list of parents and returns the parent the user is looking for. If the parent
+        does not exist in the list then the method will return None.
+        :param name_of_parent: String
+        :return: parent of None
+        """
+        for parent in self._parents:
+            if parent.get_name() == name_of_parent:
+                return parent
+        return None
+
     def add_child(self, child):
         """
         add_child will add a child to the end of _children. If _children is None then a new list will be created with
@@ -76,6 +95,14 @@ class Node:
             self._children = [child]
         else:
             self._children.append(child)
+
+    def add_parent(self, parent):
+        """
+        add_parent will add the parent to the end of the parent list if the parents doesn't already exists in _parents.
+        :param parent: Node
+        """
+        if self.get_parent(parent.get_name()) is None:
+            self._parents.appent(parent)
 
     def remove_child(self, name_of_child):
         """
