@@ -25,6 +25,7 @@ flatten = lambda l: [item for sublist in l for item in sublist]
 
 def zr_predict():
     np.random.seed(313131)
+    counter = 1
     for term in ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']:
         test_total = None
         prediction_array = np.zeros(0)
@@ -42,7 +43,7 @@ def zr_predict():
                 prediction_array = np.concatenate((prediction_array, temp_predict_array), axis=0)
                 target = np.concatenate((target, test['graduated']), axis=0)    # Add prediction
         del train, test
-        predictions = pd.DataFrame.from_records(prediction_array.reshape(-1,1))
+        predictions = pd.DataFrame.from_records(prediction_array.reshape(-1,1), columns=['prob of grad'])
         del set
         for set in range(1, 6):
             train, test = get_training_testing(term, set)
@@ -54,7 +55,8 @@ def zr_predict():
         del set
 
         final = pd.concat([test_total, predictions], axis=1)
-        final.to_csv(RESULTS_FOLDER + 'most_frequent_zeroR_results_' + str(term) + '.csv', index=False)
+        final.to_csv(RESULTS_FOLDER + '\\most_frequent_prediction_output\\term_' + str(counter) + '.csv', index=False)
+        counter += 1
 
         # tn, fp, fn, tp =confusion_matrix(target, prediction_array).ravel()      # Decompose confusion matrix
         # print()
