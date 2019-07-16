@@ -112,7 +112,7 @@ class Node:
         for child in self._children:
             if child.get_name() == name_of_child:
                 self._children.remove(child)
-
+    '''
     def update_column(self, parent_name, column):
         """
         update_column will update the parents column for the Nodes DataFrame
@@ -124,8 +124,8 @@ class Node:
         else:
             df = pd.DataFrame({parent_name: column})
             self._probability_table = pd.concat([self._probability_table, df], axis=1)
-
-    def get_serial_probability(self, parent, grand_parent):
+    '''
+    def update_probability_table(self, parent, grand_parent):
         # Todo: Get All Combinations of Grades
         # Todo: Get Probability of each grad combination
         # Todo: return the probability for for the combination parent and grand_parent
