@@ -8,8 +8,8 @@ from sklearn.metrics import confusion_matrix, precision_score, recall_score, roc
 import statistics
 
 GRAPH_FILE_PREFIX = 'graph_term_'
-STRATIFIED_DATA_PATH = '..\\data\\ImmediatePrereqFolds\\'
-RESULTS_FOLDER = '..\\results\\ImmediatePrereqMeanZeroR\\'
+STRATIFIED_DATA_PATH = '..\\data\\RootPrereqFolds\\'
+RESULTS_FOLDER = '..\\results\\RootPrereqMeanZeroR\\'
 UNIQUE_COURSE = '..\\data\\uniqueCourses.csv'
 random.seed = 313131
 population = [0, 1]
