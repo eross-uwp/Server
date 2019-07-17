@@ -48,13 +48,6 @@ class TestNode(TestCase):
         self.assertTrue('X' == b.get_children()[1].get_name())
         self.assertTrue(2 == len(b.get_children()))
 
-    def test_update_column(self):
-        combo = combinations(['T', 'F'], 2)
-        c = combinations_with_replacement(['T', 'F'], 2)
-        t = itertools.product(['T', 'F'], repeat=2)
-        for i in list(t):
-            print(i)
-
     def test_get_all_combination(self):
         a = Node('A')
         b = Node('B')
@@ -101,3 +94,15 @@ class TestNode(TestCase):
         a.add_parent(a)
 
         self.assertTrue(a == a.get_parents()[0])
+
+    def test_update_probability_table(self):
+        a = Node('Smart')
+        b = Node('Work Hard')
+        c = Node('Success')
+
+        c.add_parent(a)
+        c.add_parent(b)
+
+        test_data = pd.read_csv('..\\..\\..\\test_data\\doug_example.csv')
+
+        print(c.update_probability_table(test_data, ['T', 'F']))

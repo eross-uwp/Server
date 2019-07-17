@@ -111,24 +111,27 @@ class Node:
         for child in self._children:
             if child.get_name() == name_of_child:
                 self._children.remove(child)
-    '''
-    def update_column(self, parent_name, column):
-        """
-        update_column will update the parents column for the Nodes DataFrame
-        :param parent_name: string
-        :param column: list
-        """
-        if self._probability_table.empty or parent_name in self._probability_table.columns:
-            self._probability_table[parent_name] = column
-        else:
-            df = pd.DataFrame({parent_name: column})
-            self._probability_table = pd.concat([self._probability_table, df], axis=1)
-    '''
+
     def update_probability_table(self, data, scale):
+        parent_list = []
+        for parent in self._parents:
+            parent_list.append(parent.get_name())
+        parent_list.extend(scale)
+
+        df = pd.DataFrame(columns=parent_list)
+
+        combo = self.get_all_combination(scale)
+        for i in range(0, len(combo)):
+            row = []
+            row.extend(combo[i])
+            for value in scale:
+                self.get_combination_probability(combo[i], data, value)
+            df.loc[i] = row
+
+        return df
+
         # Todo: Get Probability of each grad combination
         # Todo: return the probability for for the combination parent.
-
-        return self._probability_table
 
     def get_all_combination(self, l):
         """
@@ -151,14 +154,11 @@ class Node:
         :return:
         """
         df = data
+        # filter data based on the combination
         for i in range(0, len(self._parents)):
             df = df[df[self._parents[i].get_name()] == combination[i]]
 
-        total = df.shape[0]
+        number_of_rows = df.shape[0]
         occurrence = len(df[df[self._name] == predict])
         
-        return occurrence / total
-
-        
-
-        # count how many time a grade shows up.
+        return occurrence / number_of_rows
