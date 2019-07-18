@@ -51,22 +51,25 @@ class GenerateRootPrereqTables:
         data_frame_row = 1
         for j, tier in grades.iterrows():
             if grades.at[j, postrequisite] != '' and self.__taken_prereq(j, grades, prerequisite):
-                data_frame.at[data_frame_row, self.__STUDENT_ID] = grades.at[j, self.__STUDENT_ID]
-                data_frame.at[data_frame_row, postrequisite] = convert_grade(grades.at[j, postrequisite].split(',')[1])
                 postreq_term = int(grades.at[j, postrequisite].split(',')[0])
-                earliest_term = 2000
-                for k in prerequisite:
-                    if self.__check_course(k.get_name(), grades):
-                        if grades.at[j, k.get_name()] != '':
-                            data_frame.at[data_frame_row, k.get_name()] = convert_grade(
-                                grades.at[j, k.get_name()].split(',')[1])
-                            if int(grades.at[j, k.get_name()].split(',')[0]) < earliest_term:
-                                earliest_term = int(grades.at[j, k.get_name()].split(',')[0])
-                data_frame.at[data_frame_row, self.__TERM_DIFFERENCE] = postreq_term - earliest_term
-                data_frame = self.__get_cumulative_gpa(data_frame, data_frame_row, j, earliest_term)
-                data_frame = self.__get_prev_term_gpa(data_frame, data_frame_row, j, earliest_term)
-                data_frame = self.__have_struggled(data_frame, data_frame_row, j, earliest_term)
-                data_frame_row = data_frame_row + 1
+                taken_prerequiste = self.__get_taken_prereq(j, grades, postreq_term, prerequisite)
+                if len(taken_prerequiste) != 0:
+                    data_frame.at[data_frame_row, self.__STUDENT_ID] = grades.at[j, self.__STUDENT_ID]
+                    data_frame.at[data_frame_row, postrequisite] = convert_grade(
+                        grades.at[j, postrequisite].split(',')[1])
+                    earliest_term = postreq_term + 1
+                    for k in taken_prerequiste:
+                        if self.__check_course(k.get_name(), grades):
+                            if grades.at[j, k.get_name()] != '':
+                                data_frame.at[data_frame_row, k.get_name()] = convert_grade(
+                                    grades.at[j, k.get_name()].split(',')[1])
+                                if int(grades.at[j, k.get_name()].split(',')[0]) < earliest_term:
+                                    earliest_term = int(grades.at[j, k.get_name()].split(',')[0])
+                    data_frame.at[data_frame_row, self.__TERM_DIFFERENCE] = postreq_term - earliest_term
+                    data_frame = self.__get_cumulative_gpa(data_frame, data_frame_row, j, earliest_term)
+                    data_frame = self.__get_prev_term_gpa(data_frame, data_frame_row, j, earliest_term)
+                    data_frame = self.__have_struggled(data_frame, data_frame_row, j, earliest_term)
+                    data_frame_row = data_frame_row + 1
         return data_frame
 
     # Determines if a student has taken at least one of the prerequisites.
@@ -76,6 +79,15 @@ class GenerateRootPrereqTables:
                 if grades.at[index, k.get_name()] != '':
                     return True
         return False
+
+    def __get_taken_prereq(self, index, grades, postreq_term, prerequisite):
+        taken_prerequisite = []
+        for k in prerequisite:
+            if self.__check_course(k.get_name(), grades):
+                if grades.at[index, k.get_name()] != '':
+                    if int(grades.at[index, k.get_name()].split(',')[0]) <= postreq_term:
+                        taken_prerequisite.append(k)
+        return taken_prerequisite
 
     # Gets the cumulative gpa of the term right before the earliest prerequisite course.
     def __get_cumulative_gpa(self, data_frame, data_frame_row, id, term):

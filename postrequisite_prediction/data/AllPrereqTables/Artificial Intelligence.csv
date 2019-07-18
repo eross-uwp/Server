@@ -1,5 +1,5 @@
 student_id,Artificial Intelligence,Discrete Mathematics,Calculus and Analytic Geometry I,Trigonometry and Analytic Geometry,College Algebra,Intermediate Algebra,Mathematical Problem Solving,Elementary Algebra,Basic Algebra,Precalculus,Object-Oriented Programming and Data Structures II,Object-Oriented Programming and Data Structures I,Programming in C++,Introduction to Programming,cumulative_gpa,prev_term_gpa,struggle,term_difference
-211,5,3,7,,,,,,,,7,7,,,2.883333333,2.883333333,3,40
+211,5,3,,,,,,,,,7,7,,,2.883333333,2.883333333,3,40
 330,10,10,,,,,,,,,10,10,10,,4.0,4.0,3,100
 780,7,4,,,,,,,,,4,,10,,3.4,3.4,3,40
 875,7,0,0,,,,,,,,,7,,,2.625,2.625,2,40

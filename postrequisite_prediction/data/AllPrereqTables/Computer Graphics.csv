@@ -1,7 +1,7 @@
 student_id,Computer Graphics,Calculus and Analytic Geometry II,Calculus and Analytic Geometry I,Trigonometry and Analytic Geometry,College Algebra,Intermediate Algebra,Mathematical Problem Solving,Elementary Algebra,Basic Algebra,Precalculus,Object-Oriented Programming and Data Structures II,Object-Oriented Programming and Data Structures I,Programming in C++,Introduction to Programming,cumulative_gpa,prev_term_gpa,struggle,term_difference
 43,7,4,1,,,,,,,,6,4,7,,2.7125,2.7125,2,90
 68,4,7,1,,,,,,,,0,4,7,,2.5333333330000003,2.5333333330000003,2,150
-211,4,,7,,,,,,,,7,7,,,2.883333333,2.883333333,3,60
+211,4,,,,,,,,,,7,7,,,2.883333333,2.883333333,3,60
 290,7,,,,,,,,,,6,5,5,,2.6076923080000003,2.6076923080000003,3,60
 291,5,,4,,,,,,,,4,7,7,,3.214285714,3.214285714,3,60
 347,4,,3,1,,,,,,,6,3,4,,2.08,2.08,2,90
