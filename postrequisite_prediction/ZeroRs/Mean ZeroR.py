@@ -10,7 +10,7 @@ from sklearn.metrics import confusion_matrix, precision_score, recall_score, roc
 import statistics
 
 GRAPH_FILE_PREFIX = 'graph_term_'
-PREREQ_PROCESS_TYPE = 'Immediate'
+PREREQ_PROCESS_TYPE = 'All'
 STRATIFIED_DATA_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqFolds\\'
 RESULTS_FOLDER = '..\\results\\' + PREREQ_PROCESS_TYPE + 'PrereqMeanZeroR\\'
 TABLES_FILE_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqTables\\'
