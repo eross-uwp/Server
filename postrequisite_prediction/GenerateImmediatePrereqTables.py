@@ -77,7 +77,7 @@ class GenerateImmediatePrereqTables:
         cumulative = pd.read_csv(self.__CUMULATIVE_GPA_FILEPATH).fillna('')
         columns = list(cumulative)
 
-        index = columns.index(str(term))  # starting index TODO Add - 1
+        index = columns.index(str(term))  # starting index
         gpa_found = 0
         while index != 0 and gpa_found != 1:
             if cumulative.at[id, columns[index]] != '':
@@ -96,7 +96,7 @@ class GenerateImmediatePrereqTables:
         prev_term_gpa = pd.read_csv(self.__TERM_GPA_FILEPATH).fillna('')
         columns = list(prev_term_gpa)
 
-        index = columns.index(str(term))  # starting index TODO Add - 1
+        index = columns.index(str(term))  # starting index
         gpa_found = 0
         while index != 0 and gpa_found != 1:
             if prev_term_gpa.at[id, columns[index]] != '':
@@ -116,7 +116,7 @@ class GenerateImmediatePrereqTables:
         struggle_per_term = pd.read_csv(self.__STRUGGLING_PER_TERM_FILEPATH).fillna('')
         columns = list(struggle_per_term)
 
-        index = columns.index(str(term))  # starting index TODO Add - 1
+        index = columns.index(str(term))  # starting index
         struggle_found = 0
         while index != 0 and struggle_found != 1:
             if struggle_per_term.at[id, columns[index]] != '':
