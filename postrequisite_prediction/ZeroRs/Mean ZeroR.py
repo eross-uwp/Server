@@ -14,6 +14,7 @@ PREREQ_PROCESS_TYPE = 'Immediate'
 STRATIFIED_DATA_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqFolds\\'
 RESULTS_FOLDER = '..\\results\\' + PREREQ_PROCESS_TYPE + 'PrereqMeanZeroR\\'
 TABLES_FILE_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqTables\\'
+TUNING_FILE_PATH = '..\\TuningResults\\' + PREREQ_PROCESS_TYPE + '\\LR\\'
 random.seed = 313131
 population = [0, 1]
 possible_grades = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
@@ -55,7 +56,7 @@ if __name__ == "__main__":
     big_predictions = []
 
     prediction_array = None
-    for each_course in os.listdir(TABLES_FILE_PATH):
+    for each_course in os.listdir(TUNING_FILE_PATH):
         each_course = each_course[:-4]
         try:
             train, test = get_training_testing(each_course, 1)

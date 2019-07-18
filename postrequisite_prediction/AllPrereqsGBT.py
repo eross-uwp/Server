@@ -2,21 +2,65 @@
 ___authors___: Austin FitzGerald
 """
 import os
+import sys
+import warnings
 
 import pandas as pd
 import numpy as np
 from sklearn import metrics
 from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold, GridSearchCV, train_test_split
+from sklearn.utils import column_or_1d
+
+if not sys.warnoptions:
+    warnings.simplefilter("ignore")
+    os.environ["PYTHONWARNINGS"] = "ignore" # Also affect subprocesses
 
 __DATA_FOLDER = 'data\\AllPrereqTables\\'
 __RESULTS_FOLDER = 'results\\AllPrereq_GBTClassifier_Results\\'
+__TUNING_RESULTS_FOLDER = 'TuningResults\\All\\GBT\\'
 __TRAIN_PREFIX = 'train_'
 __TEST_PREFIX = 'test_'
 __NUMBER_FOLDS = 5
 __RANDOM_SEED = 313131
 __MIN_SAMPLES_FOR_PREDICTING = 25
 np.random.seed(__RANDOM_SEED)
+
+
+def hyperparameter_tuning():
+    counter = 0
+    for filename in os.listdir(__DATA_FOLDER):
+        model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
+
+        x, y = get_prereq_table(filename)
+        x = x.fillna(-1).values
+        y = y.fillna(-1).values
+
+        param_grid = {
+            "loss": ["deviance"],
+            "learning_rate": [0.01, 1],
+            "min_samples_split": [0.1, 0.5],
+            "min_samples_leaf": [0.1, 0.5],
+            "max_depth": [1, 4],
+            "max_features": ["log2", "sqrt"],
+            "criterion": ["friedman_mse", "mae"],
+            "subsample": [0.8],
+            "n_estimators": [300, 500]
+        }
+
+        clf = GridSearchCV(model, param_grid, cv=5, n_jobs=-1, verbose=1)
+
+        if len(x) >= __MIN_SAMPLES_FOR_PREDICTING and len(y) >= __MIN_SAMPLES_FOR_PREDICTING:
+            X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=__RANDOM_SEED)
+            check_y = column_or_1d(y_train)
+            unique_y, y_inversed = np.unique(check_y, return_inverse=True)
+            y_counts = np.bincount(y_inversed)
+            if not np.all([__NUMBER_FOLDS] > y_counts):
+                best_clf = clf.fit(X_train, y_train)
+
+                np.save(__TUNING_RESULTS_FOLDER + filename[:-4], best_clf.best_params_)
+        print(counter)
+        counter += 1
 
 
 def get_prereq_table(filename):
@@ -54,8 +98,10 @@ def stratify_and_split(filename):
     return x_trains, x_tests, y_trains, y_tests, x_columns
 
 
-def lr_predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
-    model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
+def gbt_predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
+    read_dictionary = np.load(__TUNING_RESULTS_FOLDER + postreq_name + '.npy', allow_pickle=True).item()
+
+    model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **read_dictionary)
     y_preds = []
             #   F,  D,  D+, C-, C,  C+, B-, B,  B+, A-, A
     y_grades = [[], [], [], [], [], [], [], [] ,[] ,[], []]
@@ -120,7 +166,7 @@ def lr_predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
                                 'C+':y_grades[5], 'B-':y_grades[6], 'B':y_grades[7], 'B+':y_grades[8],
                                 'A-':y_grades[9], 'A':y_grades[10]})
     predictions = pd.concat([x_df, y_df, y_predict_df, y_grades_df], axis=1)
-    predictions.to_csv(__RESULTS_FOLDER + 'PREDICTION_' + filename, index=False)
+    predictions.to_csv(__RESULTS_FOLDER + 'PREDICTION_' + postreq_name + '.csv', index=False)
 
     return [predictions['predicted score'].values, y_df[postreq_name].values]
 
@@ -155,14 +201,20 @@ def reverse_convert_grade(int_grade):
 
 
 if __name__ == "__main__":
+    hyperparameter_tuning()
+
     big_predicted = []
     big_actual = []
-    for filename in os.listdir(__DATA_FOLDER):
+
+    counter = 0
+    for filename in os.listdir(__TUNING_RESULTS_FOLDER):
+        filename = str(filename[:-4] + '.csv')
         x_train, x_test, y_train, y_test, x_columns = stratify_and_split(filename)
-        if len(x_train) > 0:
-            predicted_and_actual = lr_predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
-            big_predicted += list(predicted_and_actual[0])
-            big_actual += list(predicted_and_actual[1])
+        predicted_and_actual = gbt_predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
+        big_predicted += list(predicted_and_actual[0])
+        big_actual += list(predicted_and_actual[1])
+        print(counter)
+        counter += 1
 
     predictions = pd.DataFrame(big_predicted, columns=['predicted'])
     actuals = pd.DataFrame(big_actual, columns=['actual'])

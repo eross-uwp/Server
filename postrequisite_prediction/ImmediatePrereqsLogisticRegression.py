@@ -2,22 +2,57 @@
 ___authors___: Evan Majerus & Austin FitzGerald
 """
 import os
+import sys
+import warnings
 
 import pandas as pd
 import numpy as np
 from sklearn import metrics
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold, GridSearchCV, train_test_split
+from sklearn.utils import column_or_1d
+
+if not sys.warnoptions:
+    warnings.simplefilter("ignore")
+    os.environ["PYTHONWARNINGS"] = "ignore" # Also affect subprocesses
 
 __DATA_FOLDER = 'data\\ImmediatePrereqTables\\'
 __FOLDS_OUTPUT = 'data\\ImmediatePrereqFolds\\'
 __RESULTS_FOLDER = 'results\\ImmediatePrereq_LogisticRegression_Results\\'
+__TUNING_RESULTS_FOLDER = 'TuningResults\\Immediate\\LR\\'
 __TRAIN_PREFIX = 'train_'
 __TEST_PREFIX = 'test_'
 __NUMBER_FOLDS = 5
 __RANDOM_SEED = 313131
 __MIN_SAMPLES_FOR_PREDICTING = 25
 np.random.seed(__RANDOM_SEED)
+
+
+def hyperparameter_tuning():
+    counter = 0
+    for filename in os.listdir(__DATA_FOLDER):
+        model = LogisticRegression(random_state=__RANDOM_SEED, multi_class='auto')
+        param_grid = [
+            {'penalty': ['l1'], 'solver': ['liblinear', 'saga'], "C": np.logspace(-5, 8, 15)},
+            {'penalty': ['l2', 'none'], 'solver': ['newton-cg', 'sag', 'saga', 'lbfgs'], "C": np.logspace(-5, 8, 15)}
+        ]
+
+        clf = GridSearchCV(model, param_grid, cv=5, n_jobs=-1)
+
+        x, y = get_prereq_table(filename)
+        x = x.fillna(-1).values
+        y = y.fillna(-1).values
+        if len(x) >= __MIN_SAMPLES_FOR_PREDICTING and len(y) >= __MIN_SAMPLES_FOR_PREDICTING:
+            X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=__RANDOM_SEED)
+            check_y = column_or_1d(y_train)
+            unique_y, y_inversed = np.unique(check_y, return_inverse=True)
+            y_counts = np.bincount(y_inversed)
+            if not np.all([__NUMBER_FOLDS] > y_counts):
+                best_clf = clf.fit(X_train, y_train)
+
+                np.save(__TUNING_RESULTS_FOLDER + filename[:-4], best_clf.best_params_)
+        print(counter)
+        counter += 1
 
 
 def get_prereq_table(filename):
@@ -70,7 +105,9 @@ def stratify_and_split(filename):
 
 
 def lr_predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
-    model = LogisticRegression(random_state=__RANDOM_SEED)
+    read_dictionary = np.load(__TUNING_RESULTS_FOLDER + postreq_name + '.npy', allow_pickle=True).item()
+
+    model = LogisticRegression(random_state=__RANDOM_SEED, **read_dictionary)
     y_preds = []
     #   F,  D,  D+, C-, C,  C+, B-, B,  B+, A-, A
     y_grades = [[], [], [], [], [], [], [], [], [], [], []]
@@ -172,16 +209,22 @@ def reverse_convert_grade(int_grade):
 
 
 if __name__ == "__main__":
+    hyperparameter_tuning()
+
     big_predicted = []
     big_actual = []
-    for filename in os.listdir(__DATA_FOLDER):
+
+    counter = 0
+    for filename in os.listdir(__TUNING_RESULTS_FOLDER):
+        filename = str(filename[:-4] + '.csv')
         x_train, x_test, y_train, y_test, x_columns = stratify_and_split(filename)
-        if len(x_train) > 0:
-            predicted_and_actual = lr_predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
-            big_predicted += list(predicted_and_actual[0])
-            big_actual += list(predicted_and_actual[1])
+        predicted_and_actual = lr_predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
+        big_predicted += list(predicted_and_actual[0])
+        big_actual += list(predicted_and_actual[1])
+        print(counter)
+        counter += 1
 
     predictions = pd.DataFrame(big_predicted, columns=['predicted'])
     actuals = pd.DataFrame(big_actual, columns=['actual'])
     all_results = pd.concat([predictions, actuals], axis=1)
-    all_results.to_csv(__RESULTS_FOLDER + 'IMMEDIATE_COURSES_PREDICTIONS.csv', index=False)
+    all_results.to_csv(__RESULTS_FOLDER + 'ALL_COURSES_PREDICTIONS.csv', index=False)
