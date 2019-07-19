@@ -210,7 +210,7 @@ def reverse_convert_grade(int_grade):
 
 
 if __name__ == "__main__":
-    hyperparameter_tuning()
+    #hyperparameter_tuning()
 
     big_predicted = []
     big_actual = []
