@@ -1,7 +1,7 @@
 import os
 
 import numpy as np
-np.random.seed(0)
+np.random.seed(313131)
 import pandas as pd
 from random import choices
 import random
@@ -10,7 +10,7 @@ from sklearn.metrics import confusion_matrix, precision_score, recall_score, roc
 import statistics
 
 GRAPH_FILE_PREFIX = 'graph_term_'
-PREREQ_PROCESS_TYPE = 'All'
+PREREQ_PROCESS_TYPE = 'Root'
 STRATIFIED_DATA_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqFolds\\'
 RESULTS_FOLDER = '..\\results\\' + PREREQ_PROCESS_TYPE + 'PrereqMeanZeroR\\'
 TABLES_FILE_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqTables\\'
@@ -50,6 +50,15 @@ def reverse_convert_grade(int_grade):
         return 'D'
     elif int_grade == 0:
         return 'F'
+
+
+# https://stackoverflow.com/a/43886290
+def round_school(x):
+        if x < 0:
+            return 0
+        else:
+            i, f = divmod(x, 1)
+            return int(i + ((f >= 0.5) if (x > 0) else (f > 0.5)))
 
 
 if __name__ == "__main__":
@@ -101,6 +110,6 @@ if __name__ == "__main__":
         big_predictions += list(predictions['prediction'].values)
     converted_grades = []
     for grade in big_predictions:
-        converted_grades.append(reverse_convert_grade(grade))
+        converted_grades.append(reverse_convert_grade(round_school(grade)))
     all_predictions = pd.DataFrame(converted_grades, columns=['predictions'])
     all_predictions.to_csv(RESULTS_FOLDER + 'ALL_PREDICTIONS' + '.csv', index=False)

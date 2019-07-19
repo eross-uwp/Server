@@ -1,7 +1,7 @@
 import os
 
 import numpy as np
-np.random.seed(0)
+np.random.seed(313131)
 import pandas as pd
 from random import choices
 import random
@@ -9,7 +9,7 @@ import sys
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, roc_auc_score, accuracy_score
 
 GRAPH_FILE_PREFIX = 'graph_term_'
-PREREQ_PROCESS_TYPE = 'All'
+PREREQ_PROCESS_TYPE = 'Immediate'
 STRATIFIED_DATA_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqFolds\\'
 TABLES_FILE_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqTables\\'
 RESULTS_FOLDER = '..\\results\\' + PREREQ_PROCESS_TYPE + 'PrereqModZeroR\\'
