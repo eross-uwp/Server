@@ -34,4 +34,4 @@ class BayesianNetwork:
             parent_list.append(parent.get_name())
         parent_list.append(node.get_name())
 
-        node.update_probability_table(self._knowledge_base.get_class_data(parent_list))
+        node.update_cp_table(self._knowledge_base.get_class_data(parent_list))

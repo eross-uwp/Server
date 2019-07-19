@@ -105,4 +105,27 @@ class TestNode(TestCase):
 
         test_data = pd.read_csv('..\\..\\..\\test_data\\doug_example.csv')
 
-        print(c.update_probability_table(test_data, ['T', 'F']))
+        c.update_cp_table(test_data, ['T', 'F'])
+        print(c.get_cp_table())
+
+        a.update_cp_table(test_data, ['T', 'F'])
+        print(a.get_cp_table())
+
+        b.update_cp_table(test_data, ['T', 'F'])
+        print(b.get_cp_table())
+
+    def test_filter_data(self):
+        a = Node('Smart')
+        b = Node('Work Hard')
+        c = Node('Success')
+        test_data = pd.read_csv('..\\..\\..\\test_data\\doug_example.csv')
+
+        c.add_parent(a)
+        c.add_parent(b)
+
+        combo = ['T', 'T']
+
+        print(c.filter_data(test_data, combo))
+
+        combo = ['F', 'T']
+        print(c.filter_data(test_data, combo))

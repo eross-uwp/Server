@@ -1,14 +1,12 @@
 """
 __Author__: Nate Braukhoff
 
-__Purpose__: The Node will contain the following:
-                Class Name,
-                List of Nodes that will be it's Parents,
-                Data Frame that will be have data from it's parents
+__Purpose__:
 """
 import pandas as pd
 import numpy as np
 import itertools
+
 
 class Node:
     def __init__(self, name, children=None, grade=None, parents=None):
@@ -30,7 +28,7 @@ class Node:
 
         self._name = name
         self._children = children
-        self._probability_table = pd.DataFrame()
+        self._cp_table = pd.DataFrame()
         self._grade = grade
         self._parents = parents
 
@@ -64,8 +62,8 @@ class Node:
     def get_grade(self):
         return self._grade
 
-    def get_probability_table(self):
-        return self._probability_table
+    def get_cp_table(self):
+        return self._cp_table
 
     def set_grade(self, grade):
         self._grade = grade
@@ -84,6 +82,30 @@ class Node:
             if parent.get_name() == name_of_parent:
                 return parent
         return None
+
+    def get_all_combination(self, l):
+        """
+        get_all_combination takes in a list of items, then returns all possible combinations of each item.
+        :param l: list of items
+        :return: list of combinations
+        """
+        combination_list = []
+        for i in list(itertools.product(l, repeat=len(self._parents))):
+            combination_list.append(i)
+
+        return combination_list
+
+    def get_combination_probability(self, filtered_data, predict):
+        """
+        get_combination_probability will return the probability of the node's state given it's parents' states.
+        :param filtered_data: DataFrame
+        :param predict: state of Node
+        :return: float
+        """
+        number_of_rows = filtered_data.shape[0]
+        occurrence = len(filtered_data[filtered_data[self._name] == predict])
+
+        return occurrence / number_of_rows
 
     def add_child(self, child):
         """
@@ -112,53 +134,63 @@ class Node:
             if child.get_name() == name_of_child:
                 self._children.remove(child)
 
-    def update_probability_table(self, data, scale):
-        parent_list = []
-        for parent in self._parents:
-            parent_list.append(parent.get_name())
-        parent_list.extend(scale)
-
-        df = pd.DataFrame(columns=parent_list)
-
-        combo = self.get_all_combination(scale)
-        for i in range(0, len(combo)):
-            row = []
-            row.extend(combo[i])
-            for value in scale:
-                self.get_combination_probability(combo[i], data, value)
-            df.loc[i] = row
-
-        return df
-
-        # Todo: Get Probability of each grad combination
-        # Todo: return the probability for for the combination parent.
-
-    def get_all_combination(self, l):
+    def update_cp_table(self, data, scale):
         """
-        get_all_combination takes in a list of items, then returns all possible combinations of each item.
-        :param l: list of items
-        :return: list of combinations
-        """
-        combination_list = []
-        for i in list(itertools.product(l, repeat=len(self._parents))):
-            combination_list.append(i)
-
-        return combination_list
-
-    def get_combination_probability(self, combination, data, predict):
-        """
-        get_combination_probability will return the probability of the node's state given it's parents' states.
-        :param combination: list of strings
+        update_probability_table will up a DataFrame that will represent the Node's Conditional Probability Table
+        (CP Table). This DataFrame will contain all of the probability of the Node's states given the parent's states.
         :param data: DataFrame
-        :param predict: state of Node
-        :return:
+        :param scale: List of strings
+        """
+        cpt = self.create_data_frame_columns(scale)
+        # When a Node has no parents then filtering based on parent states is not needed.
+        if len(self._parents) == 0:
+            for i in range(0, len(scale)):
+                row = [scale[i]]
+                for value in scale:
+                    row.append(self.get_combination_probability(data, value))
+                cpt.loc[i] = row
+
+            self._cp_table = cpt
+        else:
+            combo = self.get_all_combination(scale)
+
+            for i in range(0, len(combo)):
+                row = []
+                row.extend(combo[i])
+                for value in scale:
+                    row.append(self.get_combination_probability(self.filter_data(data, combo[i]), value))
+                cpt.loc[i] = row
+
+            self._cp_table = cpt
+
+    def create_data_frame_columns(self, scale):
+        """
+        create_data_frame_columns will add all the node's parent's names as columns in the DataFrame. After the parent's
+        each value in the scale will also be a column after the parents name.
+        :param scale: list of Strings
+        :return: DataFrame
+        """
+        columns = []
+
+        if len(self._parents) == 0:
+            columns.append(self._name)
+        else:
+            for parent in self._parents:
+                columns.append(parent.get_name())
+
+        columns.extend(scale)
+
+        return pd.DataFrame(columns=columns)
+
+    def filter_data(self, data, combination):
+        """
+        filter_data will filter the data frame based on the combination of the parents states.
+        :param data: Data Frame. Pre condition: Node must have at least one parent
+        :param combination: list of strings
+        :return: Data Frame
         """
         df = data
-        # filter data based on the combination
+
         for i in range(0, len(self._parents)):
             df = df[df[self._parents[i].get_name()] == combination[i]]
-
-        number_of_rows = df.shape[0]
-        occurrence = len(df[df[self._name] == predict])
-        
-        return occurrence / number_of_rows
+        return df
