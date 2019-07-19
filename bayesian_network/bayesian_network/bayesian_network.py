@@ -5,6 +5,7 @@ __Purpose__: The Bayesian Network will consist of a graph and a list of Paramete
              probability of a Node in the Graph. The results will be outputted to the terminal.
 """
 from knowledge_base import KnowledgeBase
+import pandas as pd
 
 
 class BayesianNetwork:
@@ -15,6 +16,8 @@ class BayesianNetwork:
         self._graph = graph
         self._parameters_set = parameters_set
         self._knowledge_base = knowledge_base
+
+        self._scale = []
 
     def get_graph(self):
         return self._graph
@@ -35,3 +38,12 @@ class BayesianNetwork:
         parent_list.append(node.get_name())
 
         node.update_cp_table(self._knowledge_base.get_class_data(parent_list))
+
+    def get_scale(self):
+        return pd.unique(self._knowledge_base[self.get_parent_name_list()])
+
+    def get_parent_name_list(self):
+        l = []
+        for parent in self._graph.get_nodes():
+            l.append(parent.get_name())
+        return l

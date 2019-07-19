@@ -114,6 +114,8 @@ class TestNode(TestCase):
         b.update_cp_table(test_data, ['T', 'F'])
         print(b.get_cp_table())
 
+        #
+
     def test_filter_data(self):
         a = Node('Smart')
         b = Node('Work Hard')
