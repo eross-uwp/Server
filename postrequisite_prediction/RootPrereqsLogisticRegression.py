@@ -60,7 +60,7 @@ def get_prereq_table(filename):
     file = pd.read_csv(__DATA_FOLDER + '\\' + filename)
     y = file.iloc[:, 1]
     x = file.drop([file.columns[1], file.columns[0]], axis=1)  # drop the postreq grade and student_id columns
-    #x = file.drop(file.columns[len(file.columns)-1], axis=1)  # drop the term diff column
+    x = file.drop(file.columns[len(file.columns)-1], axis=1)  # drop the term diff column
     return x, y
 
 
@@ -210,7 +210,7 @@ def reverse_convert_grade(int_grade):
 
 
 if __name__ == "__main__":
-    hyperparameter_tuning()
+    #hyperparameter_tuning()
 
     big_predicted = []
     big_actual = []
