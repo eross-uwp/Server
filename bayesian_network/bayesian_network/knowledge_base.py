@@ -18,6 +18,9 @@ class KnowledgeBase:
         else:
             self._data = pd.read_csv(class_data_file_path)
 
+        # https: // stackoverflow.com / questions / 26977076 / pandas - unique - values - multiple - columns
+        self._scale = pd.unique(self._data[self._data.columns].values.ravel('k'))
+
     def get_data(self):
         return self._data
 
@@ -51,6 +54,9 @@ class KnowledgeBase:
         else:
             return None
 
+    def get_scale(self):
+        return self._scale
+
     def add_data(self, data_file_path):
         """
         add_data will add columns to the bayesian network's DataFrame
@@ -58,6 +64,7 @@ class KnowledgeBase:
         """
         df = pd.read_csv(data_file_path)
         self._data = pd.concat([self._data, df], axis=1)
+        self.update_scale()
 
     def update_data(self, data_file_path):
         """
@@ -66,6 +73,7 @@ class KnowledgeBase:
         """
         df = pd.read_csv(data_file_path)
         self._data.update(df)
+        self.update_scale()
 
     def update_relation(self, relation_file_path):
         """
@@ -75,6 +83,9 @@ class KnowledgeBase:
         # Todo need to implement
         return self
 
+    def update_scale(self):
+        self._scale = pd.unique(self._data[self._data.columns].values.ravel('k'))
+
     def add_relation(self, relation_file_path):
         """
         Adds relations between Nodes
@@ -82,3 +93,4 @@ class KnowledgeBase:
         """
         # Todo need to implement
         return self
+

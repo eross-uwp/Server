@@ -3,6 +3,10 @@ from knowledge_base import KnowledgeBase
 
 
 class TestKnowledgeBase(TestCase):
+    def test_create_scale(self):
+        kb = KnowledgeBase(None, '/Users/natebraukhoff/Documents/Server/bayesian_network/test_data/doug_example.csv')
+        print(kb.get_scale())
+
     def test_get_data(self):
         kb = KnowledgeBase(None, '..\\..\\test_data\\Test_Data_AB.csv')
         print(kb.get_data())

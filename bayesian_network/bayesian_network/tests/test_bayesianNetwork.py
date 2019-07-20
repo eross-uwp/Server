@@ -44,6 +44,4 @@ class TestBayesianNetwork(TestCase):
 
         print(bn.get_knowledge_base())
 
-    def test_get_scale(self):
-
 
