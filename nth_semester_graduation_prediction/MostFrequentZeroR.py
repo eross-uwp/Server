@@ -21,7 +21,8 @@ def get_training_testing(term, number):
     return pd.read_csv(STRATIFIED_DATA_PATH + term + '_term_train_' + str(number) + '.csv'),\
            pd.read_csv(STRATIFIED_DATA_PATH + term + '_term_test_' + str(number) + '.csv') # looping through each fold
 
-flatten = lambda l: [item for sublist in l for item in sublist]
+
+flatten = lambda l: [item for sublist in l for item in sublist] # equivalent to numpy.reshape(-1, 1)
 
 
 def zr_predict():
@@ -29,16 +30,18 @@ def zr_predict():
     counter = 1
     all_actual = []
     all_probs = []
+
     for term in ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']:
         test_total = None
         prediction_array = np.zeros(0)
         target = np.ones(0)
-        for set in range(1, 6):
+        for set in range(1, 6):   # for 5 folds
             train, test = get_training_testing(term, set)
             nonz = np.count_nonzero(train['graduated'].values)          # Graduated Count
             train_size = train['graduated'].values.size
             probability = nonz/train_size
             temp_predict_array = np.full_like(test['graduated'].values, probability, dtype=np.double)
+
             if probability < 0.5:
                 prediction_array = np.concatenate((prediction_array, temp_predict_array), axis=0)
                 target = np.concatenate((target, test['graduated']), axis=0)    # Add prediction
@@ -48,18 +51,18 @@ def zr_predict():
         del train, test
         predictions = pd.DataFrame.from_records(prediction_array.reshape(-1,1), columns=['prob of grad'])
         del set
-        for set in range(1, 6):
+        for set in range(1, 6):     # Get all the training set
             train, test = get_training_testing(term, set)
             if set == 1:
                 test_total = test
             else:
                 test_total = pd.concat([test_total, test], axis=0, ignore_index=True)
-            # del train, test
+
         del set
 
         final = pd.concat([test_total, predictions], axis=1)
         final.to_csv(RESULTS_FOLDER + 'most_frequent_prediction_output\\term_' + str(counter) + '.csv', index=False)
-
+                        # Save results
         actual = final['graduated'].values
         all_actual += list(actual)
         probs = final['prob of grad'].values
@@ -87,7 +90,7 @@ def zr_predict():
 
     with open(RESULTS_FOLDER + 'MostFrequent__all' + '.txt', "w") as text_file:
         text_file.write(
-            'AUC = ' + str(auc) + ', Accuracy = ' + str(acc))
+            'AUC = ' + str(auc) + ', Accuracy = ' + str(acc))    # Save results for AUC and Accuracy.
 
 
 # https://stackoverflow.com/a/43886290

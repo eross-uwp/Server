@@ -22,10 +22,12 @@ def predict(original_data):
     sum_of_gpa = 0
     for row in original_data:
         sum_of_gpa = sum_of_gpa + row
-    prediction = sum_of_gpa/original_data.size
+    prediction = sum_of_gpa/original_data.size  # Prediction is the mean of all the GPAs
     return prediction
 
+
 flatten = lambda l: [item for sublist in l for item in sublist]
+
 
 if __name__ == "__main__":
     prediction_array = np.zeros(0)
@@ -37,15 +39,12 @@ if __name__ == "__main__":
         # Run the ZeroRModel predict function
 
         testData = pd.read_csv(TEST_DATA_PATH + str(x) + '.csv')
-        # Getting training dataset from Github
-
 
         rmse_val = math.sqrt(mean_squared_error(testData[CURR_GPA].values.reshape(1, testData[CURR_GPA].size),
                                                 np.full((1, testData[CURR_GPA].size),
                                                         predictGPA))) / 4  # normalized by 4.0 gpa scale
-        # Saving the RMSE to a text file.
 
-        temp_predict =  np.full((1, testData[CURR_GPA].size), predictGPA)
+        temp_predict = np.full((1, testData[CURR_GPA].size), predictGPA)
 
         if x == 1:
             prediction_array = temp_predict
@@ -53,7 +52,7 @@ if __name__ == "__main__":
             prediction_array = np.concatenate((prediction_array, temp_predict), axis=1)
 
         with open(RESULTS_FOLDER + RESULTS_TEXTFILE, "w") as text_file:
-            text_file.write('RMSE = ' + str(rmse_val))
+            text_file.write('RMSE = ' + str(rmse_val))              # Saving the RMSE to a text file.
 
         predictions = pd.DataFrame({'prediction': flatten(prediction_array)})
         if x == NUM_TRAIN_TEST:
@@ -67,6 +66,4 @@ if __name__ == "__main__":
                     partial_test_prediction.to_csv(RESULTS_FOLDER + 'totalt_test' + '.csv', index=False)
             predictions = pd.DataFrame({'prediction': flatten(prediction_array)})
             predictions.to_csv(RESULTS_FOLDER + PREDICTION_OUTPUT_PREFIX + '.csv', index=False)
-        # test_prediction = pd.concat([])
 
-    # test_prediction.to_csv(RESULTS_FOLDER + PREDICTION_OUTPUT_PREFIX + '.csv', index=False)
