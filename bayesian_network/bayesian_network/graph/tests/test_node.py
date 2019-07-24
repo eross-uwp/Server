@@ -71,7 +71,7 @@ class TestNode(TestCase):
         c.add_parent(b)
 
         test_data = pd.read_csv('..\\..\\..\\test_data\\doug_example.csv')
-        self.assertTrue(.8 == c.get_combination_probability(['T', 'T'], test_data, 'T'))
+        self.assertTrue(.8 == c.get_combination_probability(c.filter_data(test_data, ['T', 'T']), 'T'))
 
     def test_remove_child(self):
         a = Node('A')
