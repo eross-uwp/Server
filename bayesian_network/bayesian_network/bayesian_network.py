@@ -17,15 +17,17 @@ class BayesianNetwork:
             knowledge_base = KnowledgeBase(None, None)
         self._knowledge_base = knowledge_base
 
-        # make graph
-        # get all node names
-        # create nodes and add children and parents to each node.
+        # create all nodes
         node_list = []
         names = knowledge_base.get_data().columns
         for i in range(0, len(names)):
             node_list.append(Node(names[i]))
 
-        self._graph = AcyclicGraph(None, None)
+        # create edges/add children and add parents for each node
+        # todo implement ^
+
+        # create graph
+        self._graph = AcyclicGraph(node_list, None)
 
     def get_graph(self):
         return self._graph

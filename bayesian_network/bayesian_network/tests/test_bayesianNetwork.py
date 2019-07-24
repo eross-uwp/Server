@@ -9,8 +9,10 @@ import pandas as pd
 
 class TestBayesianNetwork(TestCase):
     def test_get_graph(self):
-        kb = KnowledgeBase(None, '..\\..\\test_data\\doug_example.csv')
+        kb = KnowledgeBase('..\\..\\test_data\\', '..\\..\\test_data\\doug_example.csv')
         bn = BayesianNetwork(kb)
+        for node in bn.get_graph().get_nodes():
+            print(node.get_name())
 
 
     def test_get_knowledge_base(self):
