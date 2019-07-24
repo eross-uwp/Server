@@ -42,7 +42,7 @@ class TreeMaker:
             if item_1[0] == '{':
                 nodes[0].set_grade(item_1.split('#')[1][:-1])
                 nodes[0].set_name(item_1[item_1.find('{') + 1: item_1.find(
-                    str('#') + nodes[0].get_grade() + str('}'))])
+                    str('#') + nodes[0].get_state() + str('}'))])
                 self.__create_trees(nodes[0], self.__find_items(nodes[0].get_name()))
 
             if item_1.split('(')[0] == self.__AND_RELATIONSHIP or item_1.split('(')[0] == self.__OR_RELATIONSHIP or \
@@ -53,7 +53,7 @@ class TreeMaker:
             if item_2[0] == '{':
                 nodes[1].set_grade(item_2.split('#')[1][:-1])
                 nodes[1].set_name(item_2[item_2.find('{') + 1: item_2.find(
-                    str('#') + nodes[1].get_grade() + str('}'))])
+                    str('#') + nodes[1].get_state() + str('}'))])
                 self.__create_trees(nodes[1], self.__find_items(nodes[1].get_name()))
                 return postreq
 

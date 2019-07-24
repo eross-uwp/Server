@@ -6,44 +6,54 @@ __Purpose__: The Bayesian Network will consist of a graph and a list of Paramete
 """
 from knowledge_base import KnowledgeBase
 import pandas as pd
+from acyclic_graph import AcyclicGraph
+from node import Node
 
 
 class BayesianNetwork:
 
-    def __init__(self, graph, parameters_set, knowledge_base=None):
+    def __init__(self, knowledge_base=None):
         if knowledge_base is None:
             knowledge_base = KnowledgeBase(None, None)
-        self._graph = graph
-        self._parameters_set = parameters_set
         self._knowledge_base = knowledge_base
 
-        self._scale = []
+        # make graph
+        # get all node names
+        # create nodes and add children and parents to each node.
+        node_list = []
+        names = knowledge_base.get_data().columns
+        for i in range(0, len(names)):
+            node_list.append(Node(names[i]))
+
+        self._graph = AcyclicGraph(None, None)
 
     def get_graph(self):
         return self._graph
 
-    def get_parameters(self):
-        return self._parameters_set
-
     def get_knowledge_base(self):
         return self._knowledge_base
 
-    # Todo: Send node it's parents information
-    def update_node_table(self, node_name):
-        node = self._graph.get_nod(node_name)
-        parent_list = []
+    def get_probability_of_node_state(self, name_of_node, state):
+        """
+        This method will get a probability of a node's state bases the current state of it's parents.
+        :param name_of_node: string
+        :param state: string
+        :return: float
+        """
+        return .420
 
-        for parent in node.get_parents():
-            parent_list.append(parent.get_name())
-        parent_list.append(node.get_name())
+    def get_node_relations(self, name_of_node):
+        """
+        This method will return all relations that the node has with it's children.
+        :param name_of_node: string
+        :return: list
+        """
+        return ['Hello', 'World']
 
-        node.update_cp_table(self._knowledge_base.get_class_data(parent_list))
-
-    def get_scale(self):
-        return pd.unique(self._knowledge_base[self.get_parent_name_list()])
-
-    def get_parent_name_list(self):
-        l = []
-        for parent in self._graph.get_nodes():
-            l.append(parent.get_name())
-        return l
+    def get_node_cp_table(self, name_of_node):
+        """
+        This method will return a DataFrame that will contain all probabilities for each state of the node
+        :param name_of_node: string
+        :return: DataFrame
+        """
+        return 'DataFrame'

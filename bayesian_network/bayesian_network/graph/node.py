@@ -9,19 +9,19 @@ import itertools
 
 
 class Node:
-    def __init__(self, name, children=None, grade=None, parents=None):
+    def __init__(self, name, children=None, state=None, parents=None):
         """
         Create a Node with a name and an option of having a list of children and a grade. If the node has no children
         then _children will be set to none.
         :param name: string
         :param children: list of Nodes
-        :param grade: Grade for the Node (Type: char)
+        :param state: Grade for the Node (Type: char)
         """
         if children is None:
             children = []
 
-        if grade is None:
-            grade = ''
+        if state is None:
+            state = ''
 
         if parents is None:
             parents = []
@@ -29,7 +29,7 @@ class Node:
         self._name = name
         self._children = children
         self._cp_table = pd.DataFrame()
-        self._grade = grade
+        self._state = state
         self._parents = parents
 
     def get_name(self):
@@ -46,6 +46,18 @@ class Node:
         """
         return self._children
 
+    def get_state(self):
+        return self._state
+
+    def get_cp_table(self):
+        return self._cp_table
+
+    def set_grade(self, grade):
+        self._state = grade
+
+    def get_parents(self):
+        return self._parents
+
     def get_child(self, name_of_child):
         """
         get_child will iterate through the list of children and return the desired child. If a child is not found the
@@ -58,18 +70,6 @@ class Node:
                 if name_of_child == child.get_name():
                     return child
         return None
-
-    def get_grade(self):
-        return self._grade
-
-    def get_cp_table(self):
-        return self._cp_table
-
-    def set_grade(self, grade):
-        self._grade = grade
-
-    def get_parents(self):
-        return self._parents
 
     def get_parent(self, name_of_parent):
         """
@@ -146,11 +146,10 @@ class Node:
         cpt = self.create_data_frame_columns(scale)
         # When a Node has no parents then filtering based on parent states is not needed.
         if len(self._parents) == 0:
+            row = []
             for i in range(0, len(scale)):
-                row = [scale[i]]
-                for value in scale:
-                    row.append(self.get_combination_probability(data, value))
-                cpt.loc[i] = row
+                row.append(self.get_combination_probability(data, scale[i]))
+            cpt.loc[0] = row
 
             self._cp_table = cpt
         else:
@@ -174,9 +173,7 @@ class Node:
         """
         columns = []
 
-        if len(self._parents) == 0:
-            columns.append(self._name)
-        else:
+        if len(self._parents) != 0:
             for parent in self._parents:
                 columns.append(parent.get_name())
 
@@ -191,21 +188,8 @@ class Node:
         :param combination: list of strings
         :return: Data Frame
         """
-        # Creates new data frame with item name as column name
-        data_frame = pd.DataFrame(columns=[self.get_name()])
+        df = data
 
-        # Initialize a row count for indexing
-        data_frame_row = 1
-        parents = self.get_parents()
-
-        for i, rows in data.iterrows():
-            valid_combo = True
-            index = 0
-            for parent in parents:
-                if data.at[i, parent.get_name()] != combination[index]:
-                    valid_combo = False
-                index = index + 1
-            if valid_combo:
-                data_frame.at[data_frame_row, self.get_name()] = data.at[i, self.get_name()]
-                data_frame_row = data_frame_row + 1
-        return data_frame
+        for i in range(0, len(self._parents)):
+            df = df[df[self._parents[i].get_name()] == combination[i]]
+        return df

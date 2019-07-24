@@ -5,6 +5,7 @@ from itertools import combinations
 from itertools import combinations_with_replacement
 import pandas as pd
 
+
 class TestNode(TestCase):
     def test_get_name(self):
         a = Node('ClassA', None)
@@ -56,10 +57,10 @@ class TestNode(TestCase):
         a.add_parent(b)
         a.add_parent(c)
 
-        self.assertTrue(8 == len(a.get_all_combination(['T', 'F'])))
+        self.assertTrue(4 == len(a.get_all_combination(['T', 'F'])))
         print(a.get_all_combination(['T', 'F']))
 
-        self.assertTrue(125 == len(a.get_all_combination(['A', 'B', 'C', 'D', 'F'])))
+        self.assertTrue(25 == len(a.get_all_combination(['A', 'B', 'C', 'D', 'F'])))
         print(a.get_all_combination(['A', 'B', 'C', 'D', 'F']))
 
     def test_get_combination_probability(self):
@@ -114,8 +115,6 @@ class TestNode(TestCase):
 
         b.update_cp_table(test_data, ['T', 'F'])
         print(b.get_cp_table())
-
-        #
 
     def test_filter_data(self):
         a = Node('Smart')
