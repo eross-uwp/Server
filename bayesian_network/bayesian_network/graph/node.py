@@ -1,5 +1,5 @@
 """
-__Author__: Nate Braukhoff
+__Author__: Nate Braukhoff and Evan Majerus
 
 __Purpose__:
 """
