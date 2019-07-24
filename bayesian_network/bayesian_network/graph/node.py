@@ -103,6 +103,8 @@ class Node:
         :return: float
         """
         number_of_rows = filtered_data.shape[0]
+        if number_of_rows == 0:
+            return 0
         occurrence = len(filtered_data[filtered_data[self._name] == predict])
 
         return occurrence / number_of_rows
@@ -189,8 +191,21 @@ class Node:
         :param combination: list of strings
         :return: Data Frame
         """
-        df = data
+        # Creates new data frame with item name as column name
+        data_frame = pd.DataFrame(columns=[self.get_name()])
 
-        for i in range(0, len(self._parents)):
-            df = df[df[self._parents[i].get_name()] == combination[i]]
-        return df
+        # Initialize a row count for indexing
+        data_frame_row = 1
+        parents = self.get_parents()
+
+        for i, rows in data.iterrows():
+            valid_combo = True
+            index = 0
+            for parent in parents:
+                if data.at[i, parent.get_name()] != combination[index]:
+                    valid_combo = False
+                index = index + 1
+            if valid_combo:
+                data_frame.at[data_frame_row, self.get_name()] = data.at[i, self.get_name()]
+                data_frame_row = data_frame_row + 1
+        return data_frame
