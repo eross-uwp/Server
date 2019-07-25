@@ -18,7 +18,7 @@ from sklearn.utils import column_or_1d
 
 if not sys.warnoptions:
     warnings.simplefilter("ignore")
-    os.environ["PYTHONWARNINGS"] = "ignore" # Also affect subprocesses
+    os.environ["PYTHONWARNINGS"] = "ignore"  # Also affect subprocesses
 
 __data_folder = ''
 __folds_folder = ''
@@ -44,34 +44,34 @@ flatten = lambda l: [item for sublist in l for item in
 
 def set_paths():
     if __tree_type == __TREE_TYPES_ENUM.ALL_PREREQS:
-        __data_folder = 'data\\AllPrereqTables\\'
-        __folds_output = 'data\\AllPrereqFolds\\'
+        data_folder = 'data\\AllPrereqTables\\'
+        folds_output = 'data\\AllPrereqFolds\\'
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-            __results_folder = 'results\\AllPrereq_LogisticRegression_Results\\'
-            __tuning_results_folder = 'TuningResults\\All\\LR\\'
+            results_folder = 'results\\AllPrereq_LogisticRegression_Results\\'
+            tuning_results_folder = 'TuningResults\\All\\LR\\'
         elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-            __results_folder = 'results\\AllPrereq_GBTClassifier_Results\\'
-            __tuning_results_folder = 'TuningResults\\All\\GBT\\'
+            results_folder = 'results\\AllPrereq_GBTClassifier_Results\\'
+            tuning_results_folder = 'TuningResults\\All\\GBT\\'
     elif __tree_type == __TREE_TYPES_ENUM.ROOT_PREREQS:
-        __data_folder = 'data\\RootPrereqTables\\'
-        __folds_output = 'data\\RootPrereqFolds\\'
+        data_folder = 'data\\RootPrereqTables\\'
+        folds_output = 'data\\RootPrereqFolds\\'
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-            __results_folder = 'results\\RootPrereq_LogisticRegression_Results\\'
-            __tuning_results_folder = 'TuningResults\\Root\\LR\\'
+            results_folder = 'results\\RootPrereq_LogisticRegression_Results\\'
+            tuning_results_folder = 'TuningResults\\Root\\LR\\'
         elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-            __results_folder = 'results\\RootPrereq_GBTClassifier_Results\\'
-            __tuning_results_folder = 'TuningResults\\Root\\GBT\\'
+            results_folder = 'results\\RootPrereq_GBTClassifier_Results\\'
+            tuning_results_folder = 'TuningResults\\Root\\GBT\\'
     elif __tree_type == __TREE_TYPES_ENUM.IMMEDIATE_PREREQS:
-        __data_folder = 'data\\ImmediatePrereqTables\\'
-        __folds_output = 'data\\ImmediatePrereqFolds\\'
+        data_folder = 'data\\ImmediatePrereqTables\\'
+        folds_output = 'data\\ImmediatePrereqFolds\\'
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-            __results_folder = 'results\\ImmediatePrereq_LogisticRegression_Results\\'
-            __tuning_results_folder = 'TuningResults\\Immediate\\LR\\'
+            results_folder = 'results\\ImmediatePrereq_LogisticRegression_Results\\'
+            tuning_results_folder = 'TuningResults\\Immediate\\LR\\'
         elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-            __results_folder = 'results\\ImmediatePrereq_GBTClassifier_Results\\'
-            __tuning_results_folder = 'TuningResults\\Immediate\\GBT\\'
+            results_folder = 'results\\ImmediatePrereq_GBTClassifier_Results\\'
+            tuning_results_folder = 'TuningResults\\Immediate\\GBT\\'
 
-    return __data_folder, __folds_output, __results_folder, __tuning_results_folder
+    return data_folder, folds_output, results_folder, tuning_results_folder
 
 
 def get_prereq_table(filename):
@@ -83,6 +83,8 @@ def get_prereq_table(filename):
 
 
 def hyperparameter_tuning():
+    print('Hyperparameter tuning beginning. A counter will print after the completion of each tuning. \n')
+
     counter = 0
     for filename in os.listdir(__data_folder):
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
@@ -122,6 +124,8 @@ def hyperparameter_tuning():
                 np.save(__tuning_results_folder + filename[:-4], best_clf.best_params_)
         print(counter)
         counter += 1
+
+        print('Hyperparameter tuning completed. Files saved to: \'' + __tuning_results_folder + '\' \n')
 
 
 def reverse_convert_grade(int_grade):
@@ -266,6 +270,8 @@ def stratify_and_split(filename):
 
 
 def read_predict_write():
+    print('Training and testing beginning. A counter will print after the completion of each training set. \n')
+
     big_predicted = []
     big_actual = []
 
@@ -283,6 +289,8 @@ def read_predict_write():
     actuals = pd.DataFrame(big_actual, columns=['actual'])
     all_results = pd.concat([predictions, actuals], axis=1)
     all_results.to_csv(__results_folder + 'ALL_COURSES_PREDICTIONS.csv', index=False)
+
+    print('Model training, testing, and evaluation completed. Files saved to: \'' + __results_folder + '\' \n')
 
 
 if __name__ == "__main__":
