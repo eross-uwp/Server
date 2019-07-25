@@ -125,7 +125,7 @@ def hyperparameter_tuning():
         print(counter)
         counter += 1
 
-        print('Hyperparameter tuning completed. Files saved to: \'' + __tuning_results_folder + '\' \n')
+    print('Hyperparameter tuning completed. Files saved to: \'' + __tuning_results_folder + '\' \n')
 
 
 def reverse_convert_grade(int_grade):

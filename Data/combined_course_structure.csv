@@ -27,18 +27,17 @@ Intermediate Algebra,"OR({Mathematical Problem Solving#c-},{Elementary Algebra#c
 Intermediate Software Engineering,"AND({Object-Oriented Programming and Data Structures II#c-},{Introduction to Software Engineering#c-})"
 Interpretation of Business and Economic Data,SINGLE({Finite Mathematics with Applications#})
 Introduction to Computer Security,SINGLE({Object-Oriented Programming and Data Structures I#c-})
-Introduction to Microprocessors,"AND({Programming in C++#c-},{Logic and Digital Design#c-})"
+Introduction to Microprocessors,"AND({Logic and Digital Design#c-},OR({Programming in C++#c-},{Introduction to Programming#}))"
 Introduction to Software Engineering,SINGLE({Object-Oriented Programming and Data Structures I#c-})
 Logic and Digital Design,"OR({Electrical Engineering Projects and Tools#c-},AND({Computer Architecture/Operating Systems#c-},{Circuit Modeling I#c-}))"
 Object Oriented Analysis and Design,"AND({Object-Oriented Programming and Data Structures I#c-},{Introduction to Software Engineering#c-})"
-Object-Oriented Programming and Data Structures I,SINGLE({Programming in C++#c-})
+Object-Oriented Programming and Data Structures I,"OR({Programming in C++#c-},{Introduction to Programming#})"
 Object-Oriented Programming and Data Structures II,SINGLE({Object-Oriented Programming and Data Structures I#c-})
 Operations Management,"AND(OR({Business Analytics#},{Elementary Statistics#}),OR({Interpretation of Business and Economic Data#},OR({Introduction to Agribusiness#},{Leadership and Management#})))"
 Operations Research I,SINGLE({Statistical Methods with Applications#})
 Organizational Behavior,"AND({Introduction to Agribusiness#},{Leadership and Management#})"
 Precalculus,SINGLE({Intermediate Algebra#b-})
 Principles and Applications of Project Management,SINGLE({Engineering Management#})
-Programming in C++,SINGLE({Introduction to Programming#})
 Programming Language Structures,SINGLE({Object-Oriented Programming and Data Structures II#c-})
 Quality Engineering,SINGLE({Statistical Methods with Applications#})
 Quality Management,"AND({Introduction to Agribusiness#},{Leadership and Management#})"
