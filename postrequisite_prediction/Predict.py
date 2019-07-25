@@ -156,7 +156,11 @@ def reverse_convert_grade(int_grade):
 def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
     read_dictionary = np.load(__tuning_results_folder + postreq_name + '.npy', allow_pickle=True).item()
 
-    model = LogisticRegression(random_state=__RANDOM_SEED, **read_dictionary)
+    if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
+        model = LogisticRegression(random_state=__RANDOM_SEED, **read_dictionary)
+    elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+        model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **read_dictionary)
+
     y_preds = []
     #   F,  D,  D+, C-, C,  C+, B-, B,  B+, A-, A
     y_grades = [[], [], [], [], [], [], [], [], [], [], []]
@@ -225,7 +229,7 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
     predictions = pd.concat([x_df, y_df, y_predict_df, y_grades_df], axis=1)
     predictions.to_csv(__results_folder + 'PREDICTION_' + postreq_name + '.csv', index=False)
 
-    return [predictions['predicted score'].values, y_df[postreq_name].values]
+    return predictions['predicted score'].values, y_df[postreq_name].values, rr, acc, (rmse/10)
 
 
 def stratify_and_split(filename):
@@ -266,7 +270,7 @@ def stratify_and_split(filename):
                                 __TEST_PREFIX + str(loop_count + 1) + '.csv', encoding='utf-8', index=False)
             loop_count += 1
 
-    return x_trains, x_tests, y_trains, y_tests, x_columns
+    return x_trains, x_tests, y_trains, y_tests, x_columns, len(x)
 
 
 def read_predict_write():
@@ -275,13 +279,20 @@ def read_predict_write():
     big_predicted = []
     big_actual = []
 
+    results_each_postreq = [[], [], [], [], []]
+
     counter = 0
     for filename in os.listdir(__tuning_results_folder):
         filename = str(filename[:-4] + '.csv')
-        x_train, x_test, y_train, y_test, x_columns = stratify_and_split(filename)
-        predicted_and_actual = predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
-        big_predicted += list(predicted_and_actual[0])
-        big_actual += list(predicted_and_actual[1])
+        x_train, x_test, y_train, y_test, x_columns, n_samples = stratify_and_split(filename)
+        predicted, actual, rr, acc, nrmse = predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
+        big_predicted += list(predicted)
+        big_actual += list(actual)
+        results_each_postreq[0].append(filename[:-4])
+        results_each_postreq[1].append(rr)
+        results_each_postreq[2].append(acc)
+        results_each_postreq[3].append(nrmse)
+        results_each_postreq[4].append(n_samples)
         print(counter)
         counter += 1
 
@@ -289,6 +300,9 @@ def read_predict_write():
     actuals = pd.DataFrame(big_actual, columns=['actual'])
     all_results = pd.concat([predictions, actuals], axis=1)
     all_results.to_csv(__results_folder + 'ALL_COURSES_PREDICTIONS.csv', index=False)
+
+    all_stats = pd.DataFrame({'postreq':results_each_postreq[0], 'r^2':results_each_postreq[1], 'accuracy':results_each_postreq[2], 'nrmse':results_each_postreq[3], 'n':results_each_postreq[4]})
+    all_stats.to_csv(__results_folder + 'ALL_COURSES_STATS.csv', index=False)
 
     print('Model training, testing, and evaluation completed. Files saved to: \'' + __results_folder + '\' \n')
 

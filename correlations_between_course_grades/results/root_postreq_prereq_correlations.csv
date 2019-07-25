@@ -1,4 +1,4 @@
 postreq,prereq,relationship,pval,rho,n
-College Writing II,College Writing I,SINGLE,2.6100000000000002e-11,0.332458897,382
-Management Accounting,Financial Accounting,SINGLE,9.7e-09,0.49599248799999995,119
-Programming in C++,Introduction to Programming,SINGLE,2.67e-08,0.428483513,155
+College Writing II,College Writing I,SINGLE,2.6100000000000002e-11,0.332458897,383
+Management Accounting,Financial Accounting,SINGLE,9.7e-09,0.49599248799999995,120
+Programming in C++,Introduction to Programming,SINGLE,2.67e-08,0.428483513,156

@@ -678,7 +678,7 @@ F,F
 C+,C+
 C,F
 C,C
-C,D
+D,D
 B+,B+
 C,C
 C+,C+
@@ -697,7 +697,7 @@ B+,A
 A-,A-
 C,C
 A-,B+
-C+,B-
+B-,B-
 C+,B-
 B,B
 B,B
@@ -706,7 +706,7 @@ C,C
 B,B
 C-,D
 C,C
-C+,C+
+B-,C+
 C,C-
 B,B
 F,F
@@ -721,7 +721,7 @@ C,C
 C,C
 B,B
 B-,B-
-C-,B-
+B-,B-
 B,B
 F,F
 B-,C+
