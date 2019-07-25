@@ -14,7 +14,11 @@ STUDENT_ID = 'student_id'
 GRADE = 'grade'
 RETAKE_COUNT = 'count'
 
-# Finds each time when a grades occurs in the grades file of for each course for each student.
+"""
+Finds each time a grade occurs in the grades file and calls add_grade.
+Parameters: None
+Returns: None
+"""
 def grade_finder():
     count = 0
     for i, row in courses.iterrows():
@@ -27,14 +31,22 @@ def grade_finder():
             if grades.at[j, COURSE] == courses.at[i, UNIQUE_COURSE]:
                 add_grade(grades.at[j, STUDENT_ID], grades.at[j, GRADE], courses.at[i, START_COLUMN])
 
-# Adds the grade from the final data sheet to the dataframe under the correct student and course.
+"""
+Adds the grade found in the grade_finder to the data frame under the correct class.
+Parameters: id, grade, course_column
+Returns: None
+"""
 def add_grade(id, grade, course_column):
     index = students.loc[students[STUDENT_ID] == id].index[0]
     grade_index = course_column + students.at[index, RETAKE_COUNT] + 1
     students.loc[index, students.columns[grade_index]] = grade
     students.at[index, RETAKE_COUNT] = students.at[index, RETAKE_COUNT] + 1
 
-# Resets the retake counter for each student in the dataframe.
+"""
+resets the count that keeps track of how many times it has found a grade for each class that each student has taken.
+Parameters: None
+Returns: None
+"""
 def reset_count():
     students[RETAKE_COUNT] = 0
 

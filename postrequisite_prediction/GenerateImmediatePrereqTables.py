@@ -25,8 +25,12 @@ class GenerateImmediatePrereqTables:
     __TERM_GPA_FILEPATH = 'data\\term_gpa.csv'
     __STRUGGLING_PER_TERM_FILEPATH = 'data\\struggling_per_term.csv'
 
-    # Creates a data frame for a postrequisite as the title and adds all the prerequisite courses as columns along with:
-    # cumulative gpa, previous term gpa, struggle, and term difference.
+    """
+    Creates a dataframe titled by the postrequisite course and with column headers of student id, postrequisite course
+    name, all the prerequisite course names, cumulative gpa, previous term gpa, struggle, and term difference.
+    Parameters: tree, grades
+    Returns: data_frame
+    """
     def create_data_frame(self, tree, grades):
         postrequisite = tree.get_name()
         data_frame = pd.DataFrame(columns=[self.__STUDENT_ID, postrequisite])
@@ -41,8 +45,13 @@ class GenerateImmediatePrereqTables:
             data_frame = self.__get_student_info(data_frame, grades, postrequisite, prerequisite)
         return data_frame
 
-    # Retrieves all of the information each student has for the postrequisite and prerequisite courses and ignores those
-    # who haven't taken those courses.
+    """
+    Method that retrieves all the information for each student that has taken the postrequisite and at least one
+    prerequisite for that postrequisite.  It then files the student information under the correct column headings in
+    the data frame.
+    Parameters: data_frame, grades, postrequisite, prerequisite
+    Returns: data_frame
+    """
     def __get_student_info(self, data_frame, grades, postrequisite, prerequisite):
         data_frame_row = 1
         for j, tier in grades.iterrows():
@@ -66,7 +75,11 @@ class GenerateImmediatePrereqTables:
                     data_frame_row = data_frame_row + 1
         return data_frame
 
-    # Determines if a student has taken at least one of the prerequisites.
+    """
+    Method that checks if a student has taken at least one prerequisite course for the postrequisite.
+    Parameters: index, grades, prerequisite
+    Returns: True, False
+    """
     def __taken_prereq(self, index, grades, prerequisite):
         for k in prerequisite:
             if self.__check_course(k.get_name(), grades):
@@ -74,6 +87,11 @@ class GenerateImmediatePrereqTables:
                     return True
         return False
 
+    """
+    Method that retrieves the prerequisite courses that the student has taken.
+    Parameters: index, grades, postreq_term, prerequisite
+    Returns: taken_prerequisite
+    """
     def __get_taken_prereq(self, index, grades, postreq_term, prerequisite):
         taken_prerequisite = []
         for k in prerequisite:
@@ -84,7 +102,11 @@ class GenerateImmediatePrereqTables:
         return taken_prerequisite
 
 
-    # Gets the cumulative gpa of the term right before the earliest prerequisite course.
+    """
+    Method that gets teh cumulative gpa of the student the semester before they took the earliest prerequisite course.
+    Parameters: data_frame, data_frame_row, id, term
+    Returns: data_frame
+    """
     def __get_cumulative_gpa(self, data_frame, data_frame_row, id, term):
         cumulative = pd.read_csv(self.__CUMULATIVE_GPA_FILEPATH).fillna('')
         columns = list(cumulative)
@@ -103,7 +125,11 @@ class GenerateImmediatePrereqTables:
         data_frame.at[data_frame_row, self.__CUMULATIVE_GPA] = gpa
         return data_frame
 
-    # Gets the gpa of the term right before the earliest prerequisite course.
+    """
+    Method that gets the term gpa of the term right before the student took the earliest prerequisite course.
+    Parameters: data_frame, data_frame_row, id, term
+    Returns: data_frame
+    """
     def __get_prev_term_gpa(self, data_frame, data_frame_row, id, term):
         prev_term_gpa = pd.read_csv(self.__TERM_GPA_FILEPATH).fillna('')
         columns = list(prev_term_gpa)
@@ -122,8 +148,11 @@ class GenerateImmediatePrereqTables:
         data_frame.at[data_frame_row, self.__PREV_TERM_GPA] = gpa
         return data_frame
 
-    # Retrieves if a student was in good standing, struggled, or extremely struggled before they took the earliest
-    # prerequisite.
+    """
+    Method that checks a student's struggling status up to the earliest prerequisite
+    Parameters: data_frame, data_frame_row, id, term
+    Returns: data_frame
+    """
     def __have_struggled(self, data_frame, data_frame_row, id, term):
         struggle_per_term = pd.read_csv(self.__STRUGGLING_PER_TERM_FILEPATH).fillna('')
         columns = list(struggle_per_term)
@@ -142,8 +171,11 @@ class GenerateImmediatePrereqTables:
         data_frame.at[data_frame_row, self.__STRUGGLE] = struggle
         return data_frame
 
-    # Checks to make sure that the given course is in the student_grade_list_with_terms.csv because if it is in that
-    # file then that means someone has taken that course.
+    """
+    Method that checks if a course is in the list of taken and existing courses.
+    Parameters: course, grades
+    Returns: True, False
+    """
     def __check_course (self, course, grades):
         courses = list(grades)
         for j in courses:
@@ -151,7 +183,11 @@ class GenerateImmediatePrereqTables:
                 return True
         return False
 
-
+"""
+Method that converts the stuggling strings into their associated numeric values
+Parameters: string_struggle
+Returns: 1, 2, 3
+"""
 def convert_struggle(string_struggle):
     if string_struggle == 'G':
         return 3
@@ -160,7 +196,11 @@ def convert_struggle(string_struggle):
     elif string_struggle == 'E':
         return 1
 
-
+"""
+Method that converts a string grade into it's associated numeric value.
+Parameters: string_grade
+Returns: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+"""
 def convert_grade(string_grade):
     if string_grade == 'A':
         return 10
