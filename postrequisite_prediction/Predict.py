@@ -189,8 +189,8 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
             for q in not_filled:
                 y_grades[q].append(0)
 
-    filename = 'Regressor_model.eross'
-    pickle.dump(model, open(filename, 'wb'))
+    yfilename = 'models\\GBT_model_imme.eross'
+    pickle.dump(model, open(yfilename, 'wb'))
 
     rr = metrics.r2_score(flatten(y_test), y_preds)
     rmse = np.math.sqrt(metrics.mean_squared_error(flatten(y_test), y_preds))
