@@ -9,7 +9,7 @@ import sys
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, roc_auc_score, accuracy_score
 
 GRAPH_FILE_PREFIX = 'graph_term_'
-PREREQ_PROCESS_TYPE = 'Immediate'
+PREREQ_PROCESS_TYPE = 'All'
 STRATIFIED_DATA_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqFolds\\'
 TABLES_FILE_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqTables\\'
 RESULTS_FOLDER = '..\\results\\' + PREREQ_PROCESS_TYPE + 'PrereqModZeroR\\'
@@ -97,3 +97,4 @@ if __name__ == "__main__":
         converted_grades.append(reverse_convert_grade(grade))
     all_predictions = pd.DataFrame(converted_grades, columns=['predictions'])
     all_predictions.to_csv(RESULTS_FOLDER + 'ALL_PREDICTIONS' + '.csv', index=False)
+    print('Done')
