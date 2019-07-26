@@ -14,6 +14,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, GridSearchCV, train_test_split
 import warnings
 
+from sklearn.externals import joblib
+
+from joblib import dump, load
+import pickle
+
 from sklearn.utils import column_or_1d
 
 if not sys.warnoptions:
@@ -165,8 +170,10 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
     #   F,  D,  D+, C-, C,  C+, B-, B,  B+, A-, A
     y_grades = [[], [], [], [], [], [], [], [], [], [], []]
 
+
     for fold_num in range(0, __NUMBER_FOLDS):
         model.fit(x_train[fold_num], y_train[fold_num])
+        # model = pickle.load(open('Regressor_model.sav', 'rb'))
         y_pred = model.predict(x_test[fold_num])
         y_preds += list(y_pred)
 
@@ -181,6 +188,9 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
                 count += 1
             for q in not_filled:
                 y_grades[q].append(0)
+
+    filename = 'Regressor_model.eross'
+    pickle.dump(model, open(filename, 'wb'))
 
     rr = metrics.r2_score(flatten(y_test), y_preds)
     rmse = np.math.sqrt(metrics.mean_squared_error(flatten(y_test), y_preds))
@@ -286,6 +296,7 @@ def read_predict_write():
         filename = str(filename[:-4] + '.csv')
         x_train, x_test, y_train, y_test, x_columns, n_samples = stratify_and_split(filename)
         predicted, actual, rr, acc, nrmse = predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
+
         big_predicted += list(predicted)
         big_actual += list(actual)
         results_each_postreq[0].append(filename[:-4])
@@ -335,3 +346,4 @@ if __name__ == "__main__":
         hyperparameter_tuning()
     elif tune_or_predict == 2:
         read_predict_write()
+        print('a')
