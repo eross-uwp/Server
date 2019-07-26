@@ -9,11 +9,11 @@ Calculus and Analytic Geometry III,Calculus and Analytic Geometry II,SINGLE,3.3e
 Calculus and Analytic Geometry III,Calculus and Analytic Geometry I,SINGLE,3.53e-08,0.47736092399999996,121
 College Writing II,College Writing I,SINGLE,2.6100000000000002e-11,0.332458897,383
 Computer Architecture/Operating Systems,Object-Oriented Programming and Data Structures I,SINGLE,1.59e-24,0.537443853,310
-Computer Architecture/Operating Systems,Programming in C++,SINGLE,2.6300000000000004e-13,0.42209381700000004,276
+Computer Architecture/Operating Systems,Programming in C++,OR,2.6300000000000004e-13,0.42209381700000004,276
 Data Communications and Computer Networks,Object-Oriented Programming and Data Structures I,SINGLE,2.78e-22,0.489233904,348
-Data Communications and Computer Networks,Programming in C++,SINGLE,1.29e-17,0.459718409,311
+Data Communications and Computer Networks,Programming in C++,OR,1.29e-17,0.459718409,311
 Database Design and Implementation,Object-Oriented Programming and Data Structures I,AND,1.05e-14,0.415511632,319
-Database Design and Implementation,Programming in C++,SINGLE,3.4999999999999997e-13,0.41061658100000004,290
+Database Design and Implementation,Programming in C++,OR,3.4999999999999997e-13,0.41061658100000004,290
 Database Design and Implementation,Discrete Mathematics,OR,3.9399999999999994e-13,0.43704008,252
 Discrete Mathematics,Calculus and Analytic Geometry I,SINGLE,5.99e-11,0.429036435,214
 Management Accounting,Financial Accounting,SINGLE,9.7e-09,0.49599248799999995,120
@@ -24,19 +24,18 @@ Intermediate Software Engineering,Introduction to Software Engineering,AND,2.03e
 Intermediate Software Engineering,Object-Oriented Programming and Data Structures I,SINGLE,3.4999999999999997e-13,0.48800261,198
 Introduction to Microprocessors,Logic and Digital Design,AND,2.64e-06,0.438122571,107
 Introduction to Software Engineering,Object-Oriented Programming and Data Structures I,SINGLE,2.8899999999999997e-33,0.595681908,333
-Introduction to Software Engineering,Programming in C++,SINGLE,4.68e-17,0.464094128,294
+Introduction to Software Engineering,Programming in C++,OR,4.68e-17,0.464094128,294
 Logic and Digital Design,Computer Architecture/Operating Systems,AND,9.140000000000001e-08,0.42879476299999997,144
 Logic and Digital Design,Object-Oriented Programming and Data Structures I,SINGLE,1.01e-08,0.460797479,141
 Logic and Digital Design,Circuit Modeling I,AND,1.55e-07,0.456988616,121
 Object Oriented Analysis and Design,Object-Oriented Programming and Data Structures I,AND,1.73e-13,0.42220890299999997,280
-Object Oriented Analysis and Design,Programming in C++,SINGLE,4.15e-09,0.363715558,247
+Object Oriented Analysis and Design,Programming in C++,OR,4.15e-09,0.363715558,247
 Object Oriented Analysis and Design,Introduction to Software Engineering,AND,2.27e-21,0.518657246,291
 Object Oriented Analysis and Design,Object-Oriented Programming and Data Structures I,SINGLE,1.73e-13,0.42220890299999997,280
-Object Oriented Analysis and Design,Programming in C++,SINGLE,4.15e-09,0.363715558,247
-Object-Oriented Programming and Data Structures I,Programming in C++,SINGLE,6.42e-33,0.549964746,400
+Object Oriented Analysis and Design,Programming in C++,OR,4.15e-09,0.363715558,247
+Object-Oriented Programming and Data Structures I,Programming in C++,OR,6.42e-33,0.549964746,400
 Object-Oriented Programming and Data Structures II,Object-Oriented Programming and Data Structures I,SINGLE,1.75e-29,0.578097902,316
-Object-Oriented Programming and Data Structures II,Programming in C++,SINGLE,1.47e-14,0.43668243700000003,283
-Programming in C++,Introduction to Programming,SINGLE,2.67e-08,0.428483513,156
+Object-Oriented Programming and Data Structures II,Programming in C++,OR,1.47e-14,0.43668243700000003,283
 Programming Language Structures,Object-Oriented Programming and Data Structures II,SINGLE,6.32e-29,0.615584841,265
 Programming Language Structures,Object-Oriented Programming and Data Structures I,SINGLE,7.860000000000001e-12,0.412808702,254
 Real-Time Embedded Systems Programming,Object-Oriented Programming and Data Structures II,AND,9.290000000000001e-11,0.502021296,148
@@ -62,4 +61,4 @@ Software Quality,Object-Oriented Programming and Data Structures II,SINGLE,7.6e-
 Software Quality,Object-Oriented Programming and Data Structures I,SINGLE,6.620000000000001e-09,0.41030168200000006,186
 Statistical Methods with Applications,Calculus and Analytic Geometry II,SINGLE,9.04e-09,0.46362952399999996,140
 Trigonometry and Analytic Geometry,College Algebra,SINGLE,1.14e-08,0.595145134,78
-Windows Programming,Programming in C++,SINGLE,1.05e-06,0.37586539799999996,160
+Windows Programming,Programming in C++,OR,1.05e-06,0.37586539799999996,160

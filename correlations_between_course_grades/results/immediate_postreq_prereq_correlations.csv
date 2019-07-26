@@ -20,9 +20,8 @@ Logic and Digital Design,Computer Architecture/Operating Systems,AND,9.140000000
 Logic and Digital Design,Circuit Modeling I,AND,1.55e-07,0.456988616,121
 Object Oriented Analysis and Design,Object-Oriented Programming and Data Structures I,AND,1.73e-13,0.42220890299999997,280
 Object Oriented Analysis and Design,Introduction to Software Engineering,AND,2.27e-21,0.518657246,291
-Object-Oriented Programming and Data Structures I,Programming in C++,SINGLE,6.42e-33,0.549964746,400
+Object-Oriented Programming and Data Structures I,Programming in C++,OR,6.42e-33,0.549964746,400
 Object-Oriented Programming and Data Structures II,Object-Oriented Programming and Data Structures I,SINGLE,1.75e-29,0.578097902,316
-Programming in C++,Introduction to Programming,SINGLE,2.67e-08,0.428483513,156
 Programming Language Structures,Object-Oriented Programming and Data Structures II,SINGLE,6.32e-29,0.615584841,265
 Real-Time Embedded Systems Programming,Object-Oriented Programming and Data Structures II,AND,9.290000000000001e-11,0.502021296,148
 Real-Time Embedded Systems Programming,Object Oriented Analysis and Design,AND,2.4100000000000003e-11,0.515330979,148

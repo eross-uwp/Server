@@ -1,4 +1,12 @@
 postreq,prereq,relationship,pval,rho,n
 College Writing II,College Writing I,SINGLE,2.6100000000000002e-11,0.332458897,383
+Computer Architecture/Operating Systems,Programming in C++,OR,2.6300000000000004e-13,0.42209381700000004,276
+Data Communications and Computer Networks,Programming in C++,OR,1.29e-17,0.459718409,311
+Database Design and Implementation,Programming in C++,OR,3.4999999999999997e-13,0.41061658100000004,290
 Management Accounting,Financial Accounting,SINGLE,9.7e-09,0.49599248799999995,120
-Programming in C++,Introduction to Programming,SINGLE,2.67e-08,0.428483513,156
+Introduction to Software Engineering,Programming in C++,OR,4.68e-17,0.464094128,294
+Object Oriented Analysis and Design,Programming in C++,OR,4.15e-09,0.363715558,247
+Object Oriented Analysis and Design,Programming in C++,OR,4.15e-09,0.363715558,247
+Object-Oriented Programming and Data Structures I,Programming in C++,OR,6.42e-33,0.549964746,400
+Object-Oriented Programming and Data Structures II,Programming in C++,OR,1.47e-14,0.43668243700000003,283
+Windows Programming,Programming in C++,OR,1.05e-06,0.37586539799999996,160
