@@ -71,7 +71,7 @@ B,B
 C+,C+
 B,B
 C,C
-B,C+
+C+,C+
 B,C
 C,C
 B,B
@@ -497,7 +497,7 @@ C,C
 C+,C+
 B-,C+
 C,C
-B+,B+
+B,B+
 B-,B-
 C,C
 B+,A-
@@ -538,7 +538,7 @@ C+,C+
 B+,B+
 B,B
 C+,C+
-C,C-
+F,C-
 C,C
 B+,B+
 B,B
@@ -547,7 +547,7 @@ C+,C+
 C+,B-
 D,F
 C,C
-A,B-
+B+,B-
 B,B
 D,D
 A,A
@@ -564,7 +564,7 @@ B+,B+
 F,F
 B,B
 C,C
-B-,C+
+C+,C+
 F,D
 A,A
 B-,B-
@@ -3217,13 +3217,13 @@ C,B-
 A,A
 A,A
 B+,B+
-A-,B
+B,B
 A,A
 A,B-
 A-,A-
 A,A
 B+,B+
-B,C
+B-,C
 A-,A-
 A,A
 B+,B+
@@ -5314,7 +5314,7 @@ B,B
 C,C
 A,A
 C,C
-B+,A-
+B,A-
 A,A
 B,B
 C+,B-
@@ -5389,13 +5389,13 @@ B,B
 C+,B-
 B,B
 A,A
-C+,C+
+B,C+
 A,A
 C,C
 A,A
 A-,A-
 B,B-
-B-,C+
+B,C+
 B-,B-
 B,B
 B-,B-
@@ -5547,7 +5547,7 @@ B,B
 B+,B+
 B,B
 A-,A-
-A-,A-
+B+,A-
 A,A
 A,A
 B,B
@@ -5615,7 +5615,7 @@ A,A
 A,A
 B+,B+
 B,C-
-A,B+
+B+,B+
 B,B
 A-,A-
 B+,B+
