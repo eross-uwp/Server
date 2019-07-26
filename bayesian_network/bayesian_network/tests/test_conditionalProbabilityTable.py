@@ -41,17 +41,21 @@ class TestConditionalProbabilityTable(TestCase):
 
         combo = ['T', 'T']
 
-        print(cpt.filter_data(test_data, combo))
+        print(cpt.filter_data(combo))
 
         combo = ['F', 'T']
-        print(cpt.filter_data(test_data, combo))
+        print(cpt.filter_data(combo))
+
+        test_data1 = pd.read_csv('..\\..\\test_data\\missing_data.csv')
+        cpt1 = ConditionalProbabilityTable('ClassC', ['ClassA', 'ClassB'], test_data1)
+        print(cpt1.filter_data(['C', 'B']))
 
     def test_get_combination_probability(self):
         test_data = pd.read_csv('..\\..\\test_data\\doug_example.csv')
         cpt = ConditionalProbabilityTable('Success', ['Smart', 'Work Hard'], test_data)
 
-        self.assertTrue(.8 == cpt.get_combination_probability(cpt.filter_data(test_data, ['T', 'T']), 'T'))
-        self.assertTrue(0 == cpt.get_combination_probability(cpt.filter_data(test_data, ['T', 'I']), 'T'))
+        self.assertTrue(.8 == cpt.get_combination_probability(cpt.filter_data(['T', 'T']), 'T'))
+        self.assertTrue(0 == cpt.get_combination_probability(cpt.filter_data(['T', 'I']), 'T'))
 
     def test_create_data_frame_columns(self):
         test_data = pd.read_csv('..\\..\\test_data\\doug_example.csv')

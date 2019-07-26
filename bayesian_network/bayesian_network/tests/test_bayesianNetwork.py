@@ -14,7 +14,6 @@ class TestBayesianNetwork(TestCase):
         for node in bn.get_graph().get_nodes():
             print(node.get_name())
 
-
     def test_get_knowledge_base(self):
         kb = KnowledgeBase(None, '..\\..\\test_data\\doug_example.csv')
         bn = BayesianNetwork(kb)

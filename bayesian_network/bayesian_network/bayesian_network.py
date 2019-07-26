@@ -42,7 +42,7 @@ class BayesianNetwork:
         :param state: string
         :return: float
         """
-        return .420
+        return .42
 
     def get_node_relations(self, name_of_node):
         """

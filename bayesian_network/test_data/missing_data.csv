@@ -1,0 +1,10 @@
+ClassA,ClassB,ClassC
+A,B,C
+A,A,B
+B,C,C
+A,B,D
+B,B,A
+B,B,C
+B,C,C
+A,C,D
+B,C,B

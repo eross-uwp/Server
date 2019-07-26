@@ -83,7 +83,7 @@ class ConditionalProbabilityTable:
                 row = []
                 row.extend(combo[i])
                 for value in scale:
-                    row.append(self.get_combination_probability(self.filter_data(data, combo[i]), value))
+                    row.append(self.get_combination_probability(self.filter_data(combo[i]), value))
                 cpt.loc[i] = row
 
             self._cpt = cpt
@@ -105,15 +105,16 @@ class ConditionalProbabilityTable:
 
         return pd.DataFrame(columns=columns)
 
-    def filter_data(self, data, combination):
+    def filter_data(self, combination):
         """
         filter_data will filter the data frame based on the combination of the parents states.
-        :param data: Data Frame. Pre condition: Node must have at least one parent
         :param combination: list of strings
         :return: Data Frame
         """
-        df = data
+        df = self._parents_data
 
         for i in range(0, len(self._parent_list)):
-            df = df[df[self._parent_list[i]] == combination[i]]
+            temp_df = df[df[self._parent_list[i]] == combination[i]]
+            if temp_df.shape[0] != 0:  # change to shape[0] >= 20
+                df = temp_df
         return df
