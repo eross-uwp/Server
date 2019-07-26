@@ -2,6 +2,12 @@ import itertools
 
 import pandas as pd
 
+# Todo: Need to implement how to get the probability when their is not enough data.
+"""
+When there isn't enough data to make a accurate prediction, we will weigh each grades then normalized the probability.
+See Adjusted_CPT_Tables.xlsx for more details. 
+"""
+
 
 class ConditionalProbabilityTable:
     def __init__(self, owner_name, parent_list=None, parents_data=None):
