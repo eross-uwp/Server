@@ -17,17 +17,8 @@ class BayesianNetwork:
             knowledge_base = KnowledgeBase(None, None)
         self._knowledge_base = knowledge_base
 
-        # create all nodes
-        node_list = []
-        names = knowledge_base.get_data().columns
-        for i in range(0, len(names)):
-            node_list.append(Node(names[i]))
-
-        # create edges/add children and add parents for each node
-        # todo implement ^
-
-        # create graph
-        self._graph = AcyclicGraph(node_list, None)
+        node_names = knowledge_base.get_data().columns
+        self._graph = AcyclicGraph(node_names, knowledge_base.get_relations())
 
     def get_graph(self):
         return self._graph
@@ -44,18 +35,18 @@ class BayesianNetwork:
         """
         return .42
 
-    def get_node_relations(self, name_of_node):
-        """
-        This method will return all relations that the node has with it's children.
-        :param name_of_node: string
-        :return: list
-        """
-        return ['Hello', 'World']
-
     def get_node_cp_table(self, name_of_node):
         """
         This method will return a DataFrame that will contain all probabilities for each state of the node
         :param name_of_node: string
         :return: DataFrame
         """
-        return 'DataFrame'
+        return self._graph.get_node(name_of_node).get_cp_table()
+
+    def create_cpt_tables(self):
+        """
+        This method will iterate through all nodes in the graph and create a CPT table for everyone.
+        :return:
+        """
+        for node in self._graph.get_nodes():
+            node.get_cp_table().update_cp_table(self._knowledge_base.get_data() ,self._knowledge_base.get_scale())
