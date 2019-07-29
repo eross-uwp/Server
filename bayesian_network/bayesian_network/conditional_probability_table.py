@@ -5,7 +5,8 @@ import pandas as pd
 # Todo: Need to implement how to get the probability when their is not enough data.
 """
 When there isn't enough data to make a accurate prediction, we will weigh each grades then normalized the probability.
-See Adjusted_CPT_Tables.xlsx for more details. 
+See Adjusted_CPT_Tables.xlsx for more details. In the method filter_data there is a condition that needs to be changes. 
+This right condition is next to the if statement and is commented out. 
 """
 
 
