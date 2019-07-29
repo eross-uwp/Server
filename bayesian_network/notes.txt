@@ -1,3 +1,19 @@
+Todo:
+    1. Data Format
+        Create Test data
+        ClassA ClassB ClassC
+            A   B       C
+            B   C       D
+            C   A       C
+            A   A       D
+            A   B       D
+    2. Probability equation
+        Add up columns and count all the different possibilities and then divide by the total.
+        Apply Filters to Columns
+        Keep duplicate combinations
+    3. Look for Libraries
+    4. Read in Data
+
 Connections:
     Serial: kind of like Single
     Diverging: parent is independent from it's children
@@ -6,3 +22,15 @@ Connections:
 http://www.ee.columbia.edu/~vittorio/Lecture12.pdf
 
 https://www.bayesserver.com/docs/introduction/bayesian-networks
+
+Bayes' Theorem: If events E1, E2....En are MEEE's (each event are independent from each other) when P(Ei) = 0 for
+    i = 1, 2...n. Then for any event B in S where P(B) != 0, then P(Er/B) = P(Er, B) / sum(P(Ei, B)).
+        Note - sum(P(Ei, B)) = P(B).
+
+Questions:
+    1. Are classes independent?
+        calculations will be different is so
+            P(A/B) = P(A)
+            P(A,B) = P(A)P(B)
+
+Only Focus on Serial Relationships
