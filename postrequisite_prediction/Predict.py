@@ -29,6 +29,7 @@ __data_folder = ''
 __folds_folder = ''
 __results_folder = ''
 __tuning_results_folder = ''
+__model_output = ''
 
 __model_enum = 0
 __tree_type = 0
@@ -54,29 +55,35 @@ def set_paths():
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
             results_folder = 'results\\AllPrereq_LogisticRegression_Results\\'
             tuning_results_folder = 'TuningResults\\All\\LR\\'
+            model_output = 'models\\LR_model_all.eross'
         elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
             results_folder = 'results\\AllPrereq_GBTClassifier_Results\\'
             tuning_results_folder = 'TuningResults\\All\\GBT\\'
+            model_output = 'models\\GBT_model_all.eross'
     elif __tree_type == __TREE_TYPES_ENUM.ROOT_PREREQS:
         data_folder = 'data\\RootPrereqTables\\'
         folds_output = 'data\\RootPrereqFolds\\'
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
             results_folder = 'results\\RootPrereq_LogisticRegression_Results\\'
             tuning_results_folder = 'TuningResults\\Root\\LR\\'
+            model_output = 'models\\LR_model_root.eross'
         elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
             results_folder = 'results\\RootPrereq_GBTClassifier_Results\\'
             tuning_results_folder = 'TuningResults\\Root\\GBT\\'
+            model_output = 'models\\GBT_model_root.eross'
     elif __tree_type == __TREE_TYPES_ENUM.IMMEDIATE_PREREQS:
         data_folder = 'data\\ImmediatePrereqTables\\'
         folds_output = 'data\\ImmediatePrereqFolds\\'
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
             results_folder = 'results\\ImmediatePrereq_LogisticRegression_Results\\'
             tuning_results_folder = 'TuningResults\\Immediate\\LR\\'
+            model_output = 'models\\LR_model_imme.eross'
         elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
             results_folder = 'results\\ImmediatePrereq_GBTClassifier_Results\\'
             tuning_results_folder = 'TuningResults\\Immediate\\GBT\\'
+            model_output = 'models\\GBT_model_imme.eross'
 
-    return data_folder, folds_output, results_folder, tuning_results_folder
+    return data_folder, folds_output, results_folder, tuning_results_folder, model_output
 
 
 def get_prereq_table(filename):
@@ -188,8 +195,7 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
             for q in not_filled:
                 y_grades[q].append(0)
 
-    yfilename = 'models\\GBT_model_imme.eross'
-    joblib.dump(model, open(yfilename, 'wb'))
+    joblib.dump(model, open(__model_output, 'wb'))
 
     rr = metrics.r2_score(flatten(y_test), y_preds)
     rmse = np.math.sqrt(metrics.mean_squared_error(flatten(y_test), y_preds))
@@ -334,7 +340,7 @@ if __name__ == "__main__":
     if __model_enum != __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION and __model_enum != __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
         raise ValueError('An invalid model type was passed. Must be \'1\' or \'2\'')
 
-    __data_folder, __folds_folder, __results_folder, __tuning_results_folder = set_paths()
+    __data_folder, __folds_folder, __results_folder, __tuning_results_folder, __model_output = set_paths()
 
     tune_or_predict = int(input("Enter one of the following process types: \n"
                                 "'1': Tune hyperparameters \n"
@@ -347,4 +353,3 @@ if __name__ == "__main__":
         hyperparameter_tuning()
     elif tune_or_predict == 2:
         read_predict_write()
-        print('a')
