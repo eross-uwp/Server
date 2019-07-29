@@ -85,6 +85,11 @@ class GraphBuilder:
             return edges
 
     def build_nodes(self):
+        """
+        This method will created each node in the graph. Then it will add the nodes' children and parents for each node.
+        Finally create edges that are in the graph.
+        :return:
+        """
         nodes = []
         for i, row in self._relations.iterrows():
             name = self._relations.at[i, self.__POSTREQ]
