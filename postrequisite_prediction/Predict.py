@@ -55,33 +55,33 @@ def set_paths():
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
             results_folder = 'results\\AllPrereq_LogisticRegression_Results\\'
             tuning_results_folder = 'TuningResults\\All\\LR\\'
-            model_output = 'models\\LR_model_all.eross'
+            model_output = 'models\\LR_model_all\\'
         elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
             results_folder = 'results\\AllPrereq_GBTClassifier_Results\\'
             tuning_results_folder = 'TuningResults\\All\\GBT\\'
-            model_output = 'models\\GBT_model_all.eross'
+            model_output = 'models\\GBT_model_all\\'
     elif __tree_type == __TREE_TYPES_ENUM.ROOT_PREREQS:
         data_folder = 'data\\RootPrereqTables\\'
         folds_output = 'data\\RootPrereqFolds\\'
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
             results_folder = 'results\\RootPrereq_LogisticRegression_Results\\'
             tuning_results_folder = 'TuningResults\\Root\\LR\\'
-            model_output = 'models\\LR_model_root.eross'
+            model_output = 'models\\LR_model_root\\'
         elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
             results_folder = 'results\\RootPrereq_GBTClassifier_Results\\'
             tuning_results_folder = 'TuningResults\\Root\\GBT\\'
-            model_output = 'models\\GBT_model_root.eross'
+            model_output = 'models\\GBT_model_root\\'
     elif __tree_type == __TREE_TYPES_ENUM.IMMEDIATE_PREREQS:
         data_folder = 'data\\ImmediatePrereqTables\\'
         folds_output = 'data\\ImmediatePrereqFolds\\'
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
             results_folder = 'results\\ImmediatePrereq_LogisticRegression_Results\\'
             tuning_results_folder = 'TuningResults\\Immediate\\LR\\'
-            model_output = 'models\\LR_model_imme.eross'
+            model_output = 'models\\LR_model_imme\\'
         elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
             results_folder = 'results\\ImmediatePrereq_GBTClassifier_Results\\'
             tuning_results_folder = 'TuningResults\\Immediate\\GBT\\'
-            model_output = 'models\\GBT_model_imme.eross'
+            model_output = 'models\\GBT_model_imme\\'
 
     return data_folder, folds_output, results_folder, tuning_results_folder, model_output
 
@@ -179,7 +179,6 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
 
     for fold_num in range(0, __NUMBER_FOLDS):
         model.fit(x_train[fold_num], y_train[fold_num])
-        # model = pickle.load(open('Regressor_model.sav', 'rb'))
         y_pred = model.predict(x_test[fold_num])
         y_preds += list(y_pred)
 
@@ -195,7 +194,7 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
             for q in not_filled:
                 y_grades[q].append(0)
 
-    joblib.dump(model, open(__model_output, 'wb'))
+
 
     rr = metrics.r2_score(flatten(y_test), y_preds)
     rmse = np.math.sqrt(metrics.mean_squared_error(flatten(y_test), y_preds))
@@ -244,7 +243,7 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
     predictions = pd.concat([x_df, y_df, y_predict_df, y_grades_df], axis=1)
     predictions.to_csv(__results_folder + 'PREDICTION_' + postreq_name + '.csv', index=False)
 
-    return predictions['predicted score'].values, y_df[postreq_name].values, rr, acc, (rmse / 10)
+    return predictions['predicted score'].values, y_df[postreq_name].values, rr, acc, (rmse / 10), model
 
 
 def stratify_and_split(filename):
@@ -300,7 +299,9 @@ def read_predict_write():
     for filename in os.listdir(__tuning_results_folder):
         filename = str(filename[:-4] + '.csv')
         x_train, x_test, y_train, y_test, x_columns, n_samples = stratify_and_split(filename)
-        predicted, actual, rr, acc, nrmse = predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
+        predicted, actual, rr, acc, nrmse, model = predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
+
+        joblib.dump(model, open(__model_output + filename[:-4] + '.eross', 'wb'))
 
         big_predicted += list(predicted)
         big_actual += list(actual)
