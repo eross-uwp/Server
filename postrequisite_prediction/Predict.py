@@ -170,7 +170,6 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
     #   F,  D,  D+, C-, C,  C+, B-, B,  B+, A-, A
     y_grades = [[], [], [], [], [], [], [], [], [], [], []]
 
-
     for fold_num in range(0, __NUMBER_FOLDS):
         model.fit(x_train[fold_num], y_train[fold_num])
         # model = pickle.load(open('Regressor_model.sav', 'rb'))
@@ -239,7 +238,7 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
     predictions = pd.concat([x_df, y_df, y_predict_df, y_grades_df], axis=1)
     predictions.to_csv(__results_folder + 'PREDICTION_' + postreq_name + '.csv', index=False)
 
-    return predictions['predicted score'].values, y_df[postreq_name].values, rr, acc, (rmse/10)
+    return predictions['predicted score'].values, y_df[postreq_name].values, rr, acc, (rmse / 10)
 
 
 def stratify_and_split(filename):
@@ -312,7 +311,9 @@ def read_predict_write():
     all_results = pd.concat([predictions, actuals], axis=1)
     all_results.to_csv(__results_folder + 'ALL_COURSES_PREDICTIONS.csv', index=False)
 
-    all_stats = pd.DataFrame({'postreq':results_each_postreq[0], 'r^2':results_each_postreq[1], 'accuracy':results_each_postreq[2], 'nrmse':results_each_postreq[3], 'n':results_each_postreq[4]})
+    all_stats = pd.DataFrame(
+        {'postreq': results_each_postreq[0], 'r^2': results_each_postreq[1], 'accuracy': results_each_postreq[2],
+         'nrmse': results_each_postreq[3], 'n': results_each_postreq[4]})
     all_stats.to_csv(__results_folder + 'ALL_COURSES_STATS.csv', index=False)
 
     print('Model training, testing, and evaluation completed. Files saved to: \'' + __results_folder + '\' \n')

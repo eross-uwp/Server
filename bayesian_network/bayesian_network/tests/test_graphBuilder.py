@@ -7,13 +7,21 @@ from acyclic_graph import AcyclicGraph
 
 class TestGraphBuilder(TestCase):
     def test_build_graph(self):
-        relations = pd.read_csv('..\\..\\ExcelFiles\\se.csv')
-        node_names = list(relations['postreq'])
-        print(node_names)
+        #relations = pd.read_csv('..\\..\\..\\Data\\combined_course_structure.csv')
+        #node_names = list(relations['postreq'])
+        #print(node_names)
 
+        #gb = GraphBuilder(node_names, relations)
+        #g = gb.build_graph()
+        #print(g.get_node('Calculus and Analytic Geometry I').get_parents()[0].get_name())
+
+        relations = pd.read_csv('..\\..\\..\\Data\\combined_course_structure.csv')
+        data = pd.read_csv('..\\..\\ExcelFiles\\courses_and_grades.csv')
+
+        node_names = list(data.columns)
         gb = GraphBuilder(node_names, relations)
         g = gb.build_graph()
-        print(g.get_node('Calculus and Analytic Geometry II').get_parents()[0].get_name())
+        print(g)
 
     def test_get_parent_names(self):
         gb = GraphBuilder([], None)

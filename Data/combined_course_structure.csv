@@ -22,7 +22,7 @@ Finite Mathematics with Applications,SINGLE({Intermediate Algebra#c-})
 Fundamentals of Engineering Analysis Tools,"OR({College Algebra#c-},{Intermediate Algebra#c-})"
 General Physics I,"OR({Calculus and Analytic Geometry I#c-},{Fundamentals of Engineering Analysis Tools#c-})"
 General Physics II,"AND({Calculus and Analytic Geometry II#c-},{General Physics I#c-})"
-Human Factors Engineering,"AND({Calculus and Analytic Geometry II#c-},{Anatomy#})"
+Human Factors Engineering,"AND({Calculus and Analytic Geometry II#c-},{Essentials of Anatomy and Physiology#})"
 Intermediate Algebra,"OR({Mathematical Problem Solving#c-},{Elementary Algebra#c-})"
 Intermediate Software Engineering,"AND({Object-Oriented Programming and Data Structures II#c-},{Introduction to Software Engineering#c-})"
 Interpretation of Business and Economic Data,SINGLE({Finite Mathematics with Applications#})

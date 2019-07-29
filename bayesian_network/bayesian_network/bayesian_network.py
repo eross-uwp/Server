@@ -8,6 +8,7 @@ from knowledge_base import KnowledgeBase
 import pandas as pd
 from acyclic_graph import AcyclicGraph
 from node import Node
+from graph_builder import GraphBuilder
 
 
 class BayesianNetwork:
@@ -18,10 +19,12 @@ class BayesianNetwork:
         self._knowledge_base = knowledge_base
 
         node_names = knowledge_base.get_data().columns
-        self._graph = AcyclicGraph(node_names, knowledge_base.get_relations())
+        graph_builder = GraphBuilder(node_names, knowledge_base.get_relations())
+        self._graph = graph_builder.build_graph()
         
         for node in self._graph.get_nodes():
-            node.get_cp_table().update_cp_table(self._knowledge_base.get_data() ,self._knowledge_base.get_scale())
+            node.set_network(self)
+            node.get_cp_table().update_cp_table(self._knowledge_base.get_data(), self._knowledge_base.get_scale())
 
     def get_graph(self):
         return self._graph
@@ -46,10 +49,10 @@ class BayesianNetwork:
         """
         return self._graph.get_node(name_of_node).get_cp_table()
 
-    def create_cpt_tables(self):
+    def update_cpt_tables(self):
         """
         This method will iterate through all nodes in the graph and create a CPT table for everyone.
         :return:
         """
         for node in self._graph.get_nodes():
-            node.get_cp_table().update_cp_table(self._knowledge_base.get_data() ,self._knowledge_base.get_scale())
+            node.get_cp_table().update_cp_table(self._knowledge_base.get_data(), self._knowledge_base.get_scale())

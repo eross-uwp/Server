@@ -86,7 +86,7 @@ class GraphBuilder:
 
     def build_nodes(self):
         """
-        This method will created each node in the graph. Then it will add the nodes' children and parents for each node.
+        This method will create each node in the graph. Then it will add the nodes' children and parents for each node.
         Finally create edges that are in the graph.
         :return:
         """
@@ -101,10 +101,8 @@ class GraphBuilder:
             for p_name in name_of_parents:
                 node.add_parent(self.get_node(p_name))
                 parent = self.get_node(p_name)
+                print(p_name)
 
-                if parent is None:
-                    nodes.append(Node(p_name, [node]))
-                else:
-                    parent.add_child(node)
-                    nodes.append(node)
+                parent.add_child(node)
+                nodes.append(node)
         return nodes

@@ -90,6 +90,9 @@ class Node:
                 return parent
         return None
 
+    def set_network(self, bn):
+        self._network = bn
+
     def add_child(self, child):
         """
         add_child will add a child to the end of _children. If _children is None then a new list will be created with
@@ -116,5 +119,4 @@ class Node:
         for child in self._children:
             if child.get_name() == name_of_child:
                 self._children.remove(child)
-
 
