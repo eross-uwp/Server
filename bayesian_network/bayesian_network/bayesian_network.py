@@ -19,6 +19,9 @@ class BayesianNetwork:
 
         node_names = knowledge_base.get_data().columns
         self._graph = AcyclicGraph(node_names, knowledge_base.get_relations())
+        
+        for node in self._graph.get_nodes():
+            node.get_cp_table().update_cp_table(self._knowledge_base.get_data() ,self._knowledge_base.get_scale())
 
     def get_graph(self):
         return self._graph
