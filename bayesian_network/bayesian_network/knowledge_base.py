@@ -7,16 +7,9 @@ import pandas as pd
 
 
 class KnowledgeBase:
-    def __init__(self, relations_file_path=None, class_data_file_path=None):
-        if relations_file_path is None:
-            self._relations = pd.DataFrame()
-        else:
-            self._relations = pd.read_csv(relations_file_path)
-
-        if class_data_file_path is None:
-            self._data = pd.DataFrame()
-        else:
-            self._data = pd.read_csv(class_data_file_path)
+    def __init__(self, relations_file_path, class_data_file_path):
+        self._relations = pd.read_csv(relations_file_path)
+        self._data = pd.read_csv(class_data_file_path)
 
         # https: // stackoverflow.com / questions / 26977076 / pandas - unique - values - multiple - columns
         self._scale = pd.unique(self._data[self._data.columns].values.ravel('k'))

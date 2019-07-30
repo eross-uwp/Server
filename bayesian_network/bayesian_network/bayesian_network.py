@@ -9,6 +9,7 @@ import pandas as pd
 from acyclic_graph import AcyclicGraph
 from node import Node
 from graph_builder import GraphBuilder
+from conditional_probability_table import ConditionalProbabilityTable
 
 
 class BayesianNetwork:
@@ -16,7 +17,10 @@ class BayesianNetwork:
     def __init__(self, knowledge_base, graph):
         self._graph = graph
         self._kb = knowledge_base
-        self._cpt_dictionary = {}
+        self._cpt_dictionary = dict()
+
+        for node in graph.get_nodes():
+            self._cpt_dictionary.update({node.get_name(): ConditionalProbabilityTable(node)})
 
     def get_graph(self):
         return self._graph

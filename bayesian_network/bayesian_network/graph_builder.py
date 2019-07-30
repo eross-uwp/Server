@@ -50,14 +50,14 @@ class GraphBuilder:
                 return node
         return None
 
-    def new_build_nodes(self, node_names):
+    def build_nodes(self, node_names):
         for name in node_names:
             self._nodes.append(Node(name))
 
         return self
 
     def add_parents(self, relations):
-        for i, row in relations.itterow():
+        for i, row in relations.iterrows():
             node_name = relations.at[i, self.__POSTREQ]
             relation = relations.at[i, self.__PREREQ]
 
@@ -77,7 +77,7 @@ class GraphBuilder:
 
         return self
 
-    def new_build_edges(self):
+    def build_edges(self):
         for node in self._nodes:
             children = node.get_children()
             for child in children:
@@ -85,5 +85,5 @@ class GraphBuilder:
 
         return self
 
-    def new_build_graph(self):
+    def build_graph(self):
         return AcyclicGraph(self._nodes, self._edges)

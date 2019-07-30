@@ -11,28 +11,26 @@ This right condition is next to the if statement and is commented out.
 
 
 class ConditionalProbabilityTable:
-    def __init__(self, owner_name, parent_list=None):
+    def __init__(self, node):
         """
         Constructs a Conditional Probability Table
-        :param owner_name: String 
-        :param parent_list: list of Strings
-        :param parents_data: DataFrame
+        :param node: Node
         """
-        if parent_list is None:
-            parent_list = []
-
+        self._node = node
         self._cpt = pd.DataFrame()
-        self._parent_list = parent_list
-        self._owner = owner_name
 
     def get_table(self):
         return self._cpt
 
-    def get_parent_list(self):
-        return self._parent_list
+    def get_node(self):
+        return self._node
 
-    def get_owner_name(self):
-        return self._owner
+    def _get_parent_names(self):
+        names = []
+        for parent in self._node.get_parents():
+            names.append(parent.get_name())
+
+        return names
 
     def get_all_combination(self, l):
         """
@@ -41,7 +39,7 @@ class ConditionalProbabilityTable:
         :return: list of combinations
         """
         combination_list = []
-        for i in list(itertools.product(l, repeat=len(self._parent_list))):
+        for i in list(itertools.product(l, repeat=len(self._get_parent_names()))):
             combination_list.append(i)
 
         return combination_list
@@ -56,7 +54,7 @@ class ConditionalProbabilityTable:
         number_of_rows = filtered_data.shape[0]
         if number_of_rows == 0:
             return 0
-        occurrence = len(filtered_data[filtered_data[self._owner] == predict])
+        occurrence = len(filtered_data[filtered_data[self._node.get_name()] == predict])
 
         return occurrence / number_of_rows
 
@@ -69,7 +67,7 @@ class ConditionalProbabilityTable:
         """
         cpt = self.create_data_frame_columns(scale)
         # When a Node has no parents then filtering based on parent states is not needed.
-        if len(self._parent_list) == 0:
+        if len(self._get_parent_names()) == 0:
             row = []
             for i in range(0, len(scale)):
                 row.append(self.get_combination_probability(data, scale[i]))
@@ -97,8 +95,8 @@ class ConditionalProbabilityTable:
         """
         columns = []
 
-        if len(self._parent_list) != 0:
-            for parent in self._parent_list:
+        if len(self._get_parent_names()) != 0:
+            for parent in self._get_parent_names():
                 columns.append(parent)
 
         columns.extend(scale)
@@ -113,9 +111,9 @@ class ConditionalProbabilityTable:
         :return: Data Frame
         """
         df = data
-
-        for i in range(0, len(self._parent_list)):
-            temp_df = df[df[self._parent_list[i]] == combination[i]]
+        parent_names = self._get_parent_names()
+        for i in range(0, len(parent_names)):
+            temp_df = df[df[parent_names[i]] == combination[i]]
             if temp_df.shape[0] != 0:  # change to shape[0] >= 20
                 df = temp_df
         return df
