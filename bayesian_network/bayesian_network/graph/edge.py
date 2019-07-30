@@ -8,11 +8,8 @@ __Purpose: The Edge will contain the following:
 
 
 class Edge:
-    def __init__(self, parent, child):
-        self.edge = [parent, child]
+    def __init__(self, node1, node2):
+        self._node1 = node1
+        self._node2 = node2
 
-    def get_parent(self):
-        return self.edge[0]
 
-    def get_child(self):
-        return self.edge[1]

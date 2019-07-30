@@ -13,24 +13,16 @@ from graph_builder import GraphBuilder
 
 class BayesianNetwork:
 
-    def __init__(self, knowledge_base=None):
-        if knowledge_base is None:
-            knowledge_base = KnowledgeBase(None, None)
-        self._knowledge_base = knowledge_base
-
-        node_names = knowledge_base.get_data().columns
-        graph_builder = GraphBuilder(node_names, knowledge_base.get_relations())
-        self._graph = graph_builder.build_graph()
-        
-        for node in self._graph.get_nodes():
-            node.set_network(self)
-            node.get_cp_table().update_cp_table(self._knowledge_base.get_data(), self._knowledge_base.get_scale())
+    def __init__(self, knowledge_base, graph):
+        self._graph = graph
+        self._kb = knowledge_base
+        self._cpt_dictionary = {}
 
     def get_graph(self):
         return self._graph
 
     def get_knowledge_base(self):
-        return self._knowledge_base
+        return self._kb
 
     def get_probability_of_node_state(self, name_of_node, state):
         """
@@ -49,10 +41,3 @@ class BayesianNetwork:
         """
         return self._graph.get_node(name_of_node).get_cp_table()
 
-    def update_cpt_tables(self):
-        """
-        This method will iterate through all nodes in the graph and create a CPT table for everyone.
-        :return:
-        """
-        for node in self._graph.get_nodes():
-            node.get_cp_table().update_cp_table(self._knowledge_base.get_data(), self._knowledge_base.get_scale())

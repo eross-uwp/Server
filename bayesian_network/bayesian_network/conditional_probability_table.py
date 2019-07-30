@@ -11,19 +11,16 @@ This right condition is next to the if statement and is commented out.
 
 
 class ConditionalProbabilityTable:
-    def __init__(self, owner_name, parent_list=None, parents_data=None):
+    def __init__(self, owner_name, parent_list=None):
         """
         Constructs a Conditional Probability Table
         :param owner_name: String 
         :param parent_list: list of Strings
         :param parents_data: DataFrame
         """
-        if parents_data is None:
-            parents_data = pd.DataFrame()
         if parent_list is None:
             parent_list = []
 
-        self._parents_data = parents_data
         self._cpt = pd.DataFrame()
         self._parent_list = parent_list
         self._owner = owner_name
@@ -36,10 +33,6 @@ class ConditionalProbabilityTable:
 
     def get_owner_name(self):
         return self._owner
-
-    def add_parents_data(self, parents_data):
-        self._parents_data = parents_data
-        self._parent_list = list(parents_data.columns)
 
     def get_all_combination(self, l):
         """
@@ -112,13 +105,14 @@ class ConditionalProbabilityTable:
 
         return pd.DataFrame(columns=columns)
 
-    def filter_data(self, combination):
+    def filter_data(self, data, combination):
         """
         filter_data will filter the data frame based on the combination of the parents states.
+        :param data: DataFrame
         :param combination: list of strings
         :return: Data Frame
         """
-        df = self._parents_data
+        df = data
 
         for i in range(0, len(self._parent_list)):
             temp_df = df[df[self._parent_list[i]] == combination[i]]

@@ -15,31 +15,9 @@ class GraphBuilder:
     __POSTREQ = 'postreq'
     __PREREQ = 'prereqs'
 
-    def __init__(self, node_names, relations):
-        """
-        The constructor will create a graph builder.
-        :param node_names: list
-        :param relations: DataFrame
-        """
-        nodes = []
-        for name in node_names:
-            nodes.append(Node(name))
-        self._nodes = nodes
-        self._relations = relations
-
-    def build_graph(self):
-        """
-        This method will create a list of nodes and a list of edges. With the two list the method will create and return
-        an acyclic graph
-        :return: AcyclicGraph
-        """
-        self._nodes = self.build_nodes()
-
-        edges = []
-        for node in self._nodes:
-            edges.extend(self.build_edges(node))
-
-        return AcyclicGraph(self._nodes, edges)
+    def __init__(self):
+        self._nodes = []
+        self._edges = []
 
     def get_parent_names(self, relation):
         """
@@ -72,37 +50,40 @@ class GraphBuilder:
                 return node
         return None
 
-    def build_edges(self, node):
-        """
-        This method will iterate through nodes child list and create an edge for each child.
-        :param node: Node
-        :return: list
-        """
-        if node.get_children() is not None:
-            edges = []
-            for child in node.get_children():
-                edges.append(Edge(node, child))
-            return edges
+    def new_build_nodes(self, node_names):
+        for name in node_names:
+            self._nodes.append(Node(name))
 
-    def build_nodes(self):
-        """
-        This method will create each node in the graph. Then it will add the nodes' children and parents for each node.
-        Finally create edges that are in the graph.
-        :return:
-        """
-        nodes = []
-        for i, row in self._relations.iterrows():
-            name = self._relations.at[i, self.__POSTREQ]
-            relation = self._relations.at[i, self.__PREREQ]
+        return self
 
-            name_of_parents = self.get_parent_names(relation)
-            node = self.get_node(name)
+    def add_parents(self, relations):
+        for i, row in relations.itterow():
+            node_name = relations.at[i, self.__POSTREQ]
+            relation = relations.at[i, self.__PREREQ]
 
-            for p_name in name_of_parents:
-                node.add_parent(self.get_node(p_name))
-                parent = self.get_node(p_name)
-                print(p_name)
+            parent_name_list = self.get_parent_names(relation)
+            node = self.get_node(node_name)
 
+            for name in parent_name_list:
+                node.add_parent(self.get_node(name))
+
+        return self
+
+    def add_children(self):
+        for node in self._nodes:
+            parents = node.get_parents()
+            for parent in parents:
                 parent.add_child(node)
-                nodes.append(node)
-        return nodes
+
+        return self
+
+    def new_build_edges(self):
+        for node in self._nodes:
+            children = node.get_children()
+            for child in children:
+                self._edges.append(Edge(node, child))
+
+        return self
+
+    def new_build_graph(self):
+        return AcyclicGraph(self._nodes, self._edges)
