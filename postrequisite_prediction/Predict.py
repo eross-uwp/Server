@@ -90,7 +90,7 @@ def get_prereq_table(filename):
     file = pd.read_csv(__data_folder + '\\' + filename)
     y = file.iloc[:, 1]
     x = file.drop([file.columns[1], file.columns[0]], axis=1)  # drop the postreq grade and student_id columns
-    x = file.drop(file.columns[len(file.columns) - 1], axis=1)  # drop the term diff column
+    x = x.drop(x.columns[len(x.columns) - 1], axis=1)  # drop the term diff column
     return x, y
 
 
@@ -301,7 +301,7 @@ def read_predict_write():
         x_train, x_test, y_train, y_test, x_columns, n_samples = stratify_and_split(filename)
         predicted, actual, rr, acc, nrmse, model = predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
 
-        joblib.dump(model, open(__model_output + filename[:-4] + '.eross', 'wb'))
+
 
         big_predicted += list(predicted)
         big_actual += list(actual)
@@ -326,6 +326,33 @@ def read_predict_write():
     print('Model training, testing, and evaluation completed. Files saved to: \'' + __results_folder + '\' \n')
 
 
+def save_models():
+    print('Model saving beginning. A counter will print after the completion of each postreq. \n')
+
+    counter = 0
+    for filename in os.listdir(__tuning_results_folder):
+        filename = str(filename[:-4] + '.csv')
+        x, y = get_prereq_table(filename)
+        x_columns = list(x.columns.values)
+        x = x.fillna(-1).values
+        y = y.fillna(-1).values
+
+        read_dictionary = np.load(__tuning_results_folder + filename[:-4] + '.npy', allow_pickle=True).item()
+
+        if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
+            model = LogisticRegression(random_state=__RANDOM_SEED, **read_dictionary)
+        elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+            model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **read_dictionary)
+
+        model.fit(x, y)
+
+        pickle.dump(model, open(__model_output + filename[:-4] + '.pkl', 'wb'))
+        print(counter)
+        counter += 1
+
+    print('Model saving completed. Files saved to: \'' + __model_output + '\' \n')
+
+
 if __name__ == "__main__":
     __tree_type = int(input("Enter one of the following for prereq type: \n"
                             "'1': Root prerequisites \n"
@@ -345,12 +372,15 @@ if __name__ == "__main__":
 
     tune_or_predict = int(input("Enter one of the following process types: \n"
                                 "'1': Tune hyperparameters \n"
-                                "'2': Run predictions \n"))
+                                "'2': Run predictions \n"
+                                "'3': Save models \n"))
 
-    if tune_or_predict != 1 and tune_or_predict != 2:
-        raise ValueError('An invalid process type was passed. Must be \'1\' or \'2\'')
+    if tune_or_predict != 1 and tune_or_predict != 2 and tune_or_predict != 3:
+        raise ValueError('An invalid process type was passed. Must be \'1\', \'2\', or \'3\'')
 
     if tune_or_predict == 1:
         hyperparameter_tuning()
     elif tune_or_predict == 2:
         read_predict_write()
+    elif tune_or_predict == 3:
+        save_models()
