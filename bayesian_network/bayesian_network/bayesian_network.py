@@ -5,6 +5,7 @@ __Purpose__: The Bayesian Network will consist of a graph and a list of Paramete
              probability of a Node in the Graph. The results will be outputted to the terminal.
 """
 from conditional_probability_table import ConditionalProbabilityTable
+from conditional_probability_table_builder import CPTBuilder
 
 
 class BayesianNetwork:
@@ -15,13 +16,12 @@ class BayesianNetwork:
         self._cpt_dictionary = dict()
 
         for node in graph.get_nodes():
-            self._cpt_dictionary.update({node.get_name(): ConditionalProbabilityTable(node)})
+            builder = CPTBuilder(node.get_name(), node.get_parent_names(), knowledge_base)
+            table = builder.build()
+            self._cpt_dictionary.update({node.get_name(): ConditionalProbabilityTable(table)})
 
     def get_graph(self):
         return self._graph
-
-    def get_knowledge_base(self):
-        return self._kb
 
     def get_probability_of_node_state(self, name_of_node, state):
         """

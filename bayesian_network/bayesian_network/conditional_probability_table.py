@@ -1,5 +1,6 @@
+from conditional_probability_table_builder import CPTBuilder
+from node import Node
 import itertools
-
 import pandas as pd
 
 # Todo: Need to implement how to get the probability when their is not enough data.
@@ -11,23 +12,18 @@ This right condition is next to the if statement and is commented out.
 
 
 class ConditionalProbabilityTable:
-    def __init__(self, node, table):
+    def __init__(self, table):
         """
         Constructs a Conditional Probability Table
         :param node: Node
         """
-        self._node = node
         self._cpt = table
 
     def get_table(self):
         return self._cpt
 
-    def get_node(self):
-        return self._node
+    def update_table(self, node, kb):
+        builder = CPTBuilder(node.get_name(), node.get_parent_names(), kb)
+        self._cpt = builder.build()
 
-    def _get_parent_names(self):
-        names = []
-        for parent in self._node.get_parents():
-            names.append(parent.get_name())
 
-        return names

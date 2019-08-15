@@ -6,7 +6,6 @@ __Purpose__:
 import pandas as pd
 import numpy as np
 import itertools
-from conditional_probability_table import ConditionalProbabilityTable
 
 
 class Node:
@@ -69,6 +68,12 @@ class Node:
             if parent.get_name() == name_of_parent:
                 return parent
         return None
+
+    def get_parent_names(self):
+        names = []
+        for parent in self._parents:
+            names.append(parent.get_name())
+        return names
 
     def add_child(self, child):
         """

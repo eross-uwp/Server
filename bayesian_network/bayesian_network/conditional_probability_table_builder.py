@@ -1,9 +1,13 @@
-from node import Node
-from conditional_probability_table import ConditionalProbabilityTable
+"""
+__Author__: Nate Braukhoff
+"""
+from knowledge_base import KnowledgeBase
 
 import pandas as pd
 import itertools as it
 import copy
+
+# Todo: Need to implement how to get the probability when their is not enough data.
 
 
 class CPTBuilder:
@@ -41,7 +45,6 @@ class CPTBuilder:
     def filter_data(self, combination):
         """
         filter_data will filter the data frame based on the combination of the parents states.
-        :param data: DataFrame
         :param combination: list of strings
         :return: Data Frame
         """
