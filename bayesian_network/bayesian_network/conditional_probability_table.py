@@ -31,4 +31,3 @@ class ConditionalProbabilityTable:
             names.append(parent.get_name())
 
         return names
-
