@@ -6,15 +6,14 @@ from conditional_probability_table_builder import CPTBuilder
 class TestCPTBuilder(TestCase):
     def test_build(self):
         kb = KnowledgeBase('..\\..\\test_data\\doug_example.csv', '..\\..\\test_data\\doug_example.csv')
-        builder = CPTBuilder('Success', ['Smart', 'Work Hard'], kb)
+        builder1 = CPTBuilder('Success', ['Smart', 'Work Hard'])
 
-        kb1 = KnowledgeBase('..\\..\\test_data\\doug_example.csv', '..\\..\\test_data\\doug_example.csv')
-        builder1 = CPTBuilder('Success', [], kb1)
-        builder2 = CPTBuilder('Success', None, kb1)
+        builder2 = CPTBuilder('Success', [])
+        builder3 = CPTBuilder('Success', None)
 
-        print(builder1.build())
-        print(builder.build())
-        print(builder2.build())
+        print(builder1.build(kb.get_data(), kb.get_scale()))
+        print(builder2.build(kb.get_data(), kb.get_scale()))
+        print(builder3.build(kb.get_data(), kb.get_scale()))
 
     def test__build_columns(self):
         kb = KnowledgeBase('..\\..\\test_data\\doug_example.csv', '..\\..\\test_data\\doug_example.csv')

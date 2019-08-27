@@ -16,8 +16,19 @@ if __name__ == "__main__":
 
     graph = builder.build_graph()
 
-    bayes_net = BayesianNetwork(knowledge_base, graph)
+    nodes = graph.get_nodes()
+    max = 0
+    class_name = ''
+    for node in nodes:
+        if len(node.get_parents()) > max:
+            max = len(node.get_parents())
+            class_name = node.get_name()
 
-    print(bayes_net.get_graph().get_node('Calculus and Analytic Geometry I').get_parents())
+    print(class_name)
+    print(max)
+    print(len(knowledge_base.get_scale()))
+
+    # bayes_net = BayesianNetwork(knowledge_base, graph)
+    # print(bayes_net.get_graph().get_node('Calculus and Analytic Geometry I').get_parents())
 
 
