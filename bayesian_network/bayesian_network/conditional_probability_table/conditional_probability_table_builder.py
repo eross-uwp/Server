@@ -89,8 +89,8 @@ class CPTBuilder:
 
     def _get_all_possible_combination(self):
         """
-        This method will return a list with all combination that is possible with the scale and the number of parents the
-        owner has.
+        This method will return a list with all combination that is possible with the scale and the number of parents
+        the owner has.
         :return: list of combinations
         """
         combination_list = []

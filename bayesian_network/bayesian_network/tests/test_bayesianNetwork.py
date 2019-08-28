@@ -1,4 +1,6 @@
 from unittest import TestCase
+
+from graph_builder import GraphBuilder
 from node import Node
 from edge import Edge
 from acyclic_graph import AcyclicGraph
@@ -25,17 +27,18 @@ class TestBayesianNetwork(TestCase):
         bn = BayesianNetwork(kb, g)
         print()
 
-    def test_get_graph(self):
-        kb = KnowledgeBase('..\\..\\test_data\\', '..\\..\\test_data\\doug_example.csv')
-        bn = BayesianNetwork(kb)
-        for node in bn.get_graph().get_nodes():
-            print(node.get_name())
+        # test with our data set
+        _data_file_path = '..\\..\\ExcelFiles\\courses_and_grades.csv'
+        _relations_file_path = '..\\..\\..\\Data\\combined_course_structure.csv'
 
-    def test_get_probability_of_node_state(self):
-        self.fail()
+        knowledge_base = KnowledgeBase(_relations_file_path, _data_file_path)
 
-    def test_get_node_relations(self):
-        self.fail()
+        builder = GraphBuilder()
+        builder = builder.build_nodes(list(knowledge_base.get_data().columns))
+        builder = builder.add_parents(knowledge_base.get_relations())
+        builder = builder.add_children()
+        builder = builder.build_edges()
 
-    def test_get_node_cp_table(self):
-        self.fail()
+        graph = builder.build_graph()
+        bayes_net = BayesianNetwork(knowledge_base, graph)
+        print()
