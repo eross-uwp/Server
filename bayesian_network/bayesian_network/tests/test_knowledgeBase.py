@@ -37,3 +37,9 @@ class TestKnowledgeBase(TestCase):
         print(kb.get_class_data(['Z']))
         print(kb.get_class_data(['A', 'B', 'Z']))
 
+    def test_get_query(self):
+        kb = KnowledgeBase('..\\..\\test_data\\doug_example.csv', '..\\..\\test_data\\doug_example.csv')
+
+        print(kb.get_query(['Work Hard']))
+        print(kb.get_query(['Success', 'Smart']))
+

@@ -17,6 +17,14 @@ class KnowledgeBase:
     def get_data(self):
         return self._data
 
+    def get_query(self, names):
+        """
+        This method will take in a list of names, and will return a DataFrame only containing the columns of the names
+        :param names: list of Strings
+        :return: DataFrame
+        """
+        return self._data[names]
+
     def get_relations(self):
         return self._relations
 
