@@ -1,5 +1,4 @@
 from unittest import TestCase
-from node import Node
 from conditional_probability_table import ConditionalProbabilityTable
 import pandas as pd
 

@@ -4,8 +4,6 @@ __Author__: Nate Braukhoff
 __Purpose__: The Bayesian Network will consist of a graph and a list of Parameters. Will be able to calculate any
              probability of a Node in the Graph. The results will be outputted to the terminal.
 """
-from conditional_probability_table import ConditionalProbabilityTable
-from conditional_probability_table_builder import CPTBuilder
 
 
 class BayesianNetwork:
@@ -14,7 +12,7 @@ class BayesianNetwork:
         self._graph = graph
         self._kb = knowledge_base
         self._cpt_dictionary = dict()
-        
+
     def get_graph(self):
         return self._graph
 
