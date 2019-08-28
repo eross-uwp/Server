@@ -60,3 +60,10 @@ class TestCPTBuilder(TestCase):
 
         print(builder1.build_with_no_parents())
 
+    def test_build_with_parents(self):
+        kb = KnowledgeBase('..\\..\\..\\test_data\\doug_example.csv', '..\\..\\..\\test_data\\doug_example.csv')
+        data = kb.get_query(['Success', 'Smart', 'Work Hard'])
+
+        builder = CPTBuilder(data, kb.get_scale())
+
+        print(builder.build_with_parents())

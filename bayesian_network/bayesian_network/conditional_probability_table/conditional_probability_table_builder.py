@@ -32,6 +32,10 @@ class CPTBuilder:
         return table
 
     def build_with_parents(self):
+        """
+        This method will build the Conditional Probability table for a Node that has parents
+        :return:
+        """
         table = self._make_columns()
         combinations = self._get_all_possible_combination()
 
