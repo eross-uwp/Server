@@ -14,12 +14,7 @@ class BayesianNetwork:
         self._graph = graph
         self._kb = knowledge_base
         self._cpt_dictionary = dict()
-        '''
-        for node in graph.get_nodes():
-            builder = CPTBuilder(node.get_name(), node.get_parent_names())
-            table = builder.build(knowledge_base.get_data(), knowledge_base.get_scale())
-            self._cpt_dictionary.update({node.get_name(): ConditionalProbabilityTable(table)})
-        '''
+        
     def get_graph(self):
         return self._graph
 
