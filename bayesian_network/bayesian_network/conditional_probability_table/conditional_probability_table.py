@@ -22,8 +22,4 @@ class ConditionalProbabilityTable:
     def get_table(self):
         return self._cpt
 
-    def update_table(self, node, kb):
-        builder = CPTBuilder(node.get_name(), node.get_parent_names())
-        self._cpt = builder.build(kb.get_data(), kb.get_scale())
-
 

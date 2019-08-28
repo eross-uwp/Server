@@ -17,6 +17,9 @@ class KnowledgeBase:
     def get_data(self):
         return self._data
 
+    def get_scale(self):
+        return self._scale
+
     def get_query(self, names):
         """
         This method will take in a list of names, and will return a DataFrame only containing the columns of the names
@@ -54,9 +57,6 @@ class KnowledgeBase:
             return self._data[valid_name]
         else:
             return None
-
-    def get_scale(self):
-        return self._scale
 
     def add_data(self, data_file_path):
         """
