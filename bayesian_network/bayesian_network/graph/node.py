@@ -6,38 +6,20 @@ __Purpose__:
 import pandas as pd
 import numpy as np
 import itertools
-from conditional_probability_table import ConditionalProbabilityTable
 
 
 class Node:
-    def __init__(self, name, children=None, state=None, parents=None, parents_data=None):
+    def __init__(self, name):
         """
         Create a Node with a name and an option of having a list of children and a grade. If the node has no children
         then _children will be set to none.
-        :param parents_data: DataFrame
         :param name: string
-        :param children: list of Nodes
-        :param state: Char
         """
-        if children is None:
-            children = []
-
-        if state is None:
-            state = ''
-
-        if parents is None:
-            parents = []
 
         self._name = name
-        self._children = children
-        self._state = state
-        self._parents = parents
-
-        pl = []
-        for parent in parents:
-            pl.append(parent.get_name())
-
-        self._cpt = ConditionalProbabilityTable(name, pl, parents_data)
+        self._children = []
+        self._state = ''
+        self._parents = []
 
     def get_name(self):
         """
@@ -55,9 +37,6 @@ class Node:
 
     def get_state(self):
         return self._state
-
-    def get_cp_table(self):
-        return self._cpt
 
     def set_grade(self, grade):
         self._state = grade
@@ -90,8 +69,11 @@ class Node:
                 return parent
         return None
 
-    def set_network(self, bn):
-        self._network = bn
+    def get_parent_names(self):
+        names = []
+        for parent in self._parents:
+            names.append(parent.get_name())
+        return names
 
     def add_child(self, child):
         """

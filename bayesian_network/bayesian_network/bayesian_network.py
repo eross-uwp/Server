@@ -4,33 +4,31 @@ __Author__: Nate Braukhoff
 __Purpose__: The Bayesian Network will consist of a graph and a list of Parameters. Will be able to calculate any
              probability of a Node in the Graph. The results will be outputted to the terminal.
 """
-from knowledge_base import KnowledgeBase
-import pandas as pd
-from acyclic_graph import AcyclicGraph
-from node import Node
-from graph_builder import GraphBuilder
+from conditional_probability_table import ConditionalProbabilityTable
+from conditional_probability_table_builder import CPTBuilder
 
 
 class BayesianNetwork:
 
-    def __init__(self, knowledge_base=None):
-        if knowledge_base is None:
-            knowledge_base = KnowledgeBase(None, None)
-        self._knowledge_base = knowledge_base
+    def __init__(self, knowledge_base, graph):
+        self._graph = graph
+        self._kb = knowledge_base
+        self._cpt_dictionary = dict()
 
-        node_names = knowledge_base.get_data().columns
-        graph_builder = GraphBuilder(node_names, knowledge_base.get_relations())
-        self._graph = graph_builder.build_graph()
-        
-        for node in self._graph.get_nodes():
-            node.set_network(self)
-            node.get_cp_table().update_cp_table(self._knowledge_base.get_data(), self._knowledge_base.get_scale())
+        for node in graph.get_nodes():
+            column_list = [node.get_name()]
+            column_list.extend(node.get_parent_names())
+            node_data = knowledge_base.get_query(column_list)
+
+            builder = CPTBuilder(node_data, knowledge_base.get_scale())
+            if len(column_list) < 1:
+                cpt = builder.build_with_no_parents()
+            else:
+                cpt = builder.build_with_parents()
+            self._cpt_dictionary.update({node.get_name(): ConditionalProbabilityTable(cpt)})
 
     def get_graph(self):
         return self._graph
-
-    def get_knowledge_base(self):
-        return self._knowledge_base
 
     def get_probability_of_node_state(self, name_of_node, state):
         """
@@ -49,10 +47,3 @@ class BayesianNetwork:
         """
         return self._graph.get_node(name_of_node).get_cp_table()
 
-    def update_cpt_tables(self):
-        """
-        This method will iterate through all nodes in the graph and create a CPT table for everyone.
-        :return:
-        """
-        for node in self._graph.get_nodes():
-            node.get_cp_table().update_cp_table(self._knowledge_base.get_data(), self._knowledge_base.get_scale())

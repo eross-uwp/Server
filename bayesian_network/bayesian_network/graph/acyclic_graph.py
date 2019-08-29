@@ -9,9 +9,7 @@ from node import Node
 
 
 class AcyclicGraph:
-    def __init__(self, list_of_nodes, list_of_edges=None):
-        if list_of_edges is None:
-            list_of_edges = []
+    def __init__(self, list_of_nodes, list_of_edges):
         self._nodes = list_of_nodes
         self._edges = list_of_edges
 

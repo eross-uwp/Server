@@ -1,4 +1,6 @@
 from unittest import TestCase
+
+from graph_builder import GraphBuilder
 from node import Node
 from edge import Edge
 from acyclic_graph import AcyclicGraph
@@ -8,24 +10,35 @@ import pandas as pd
 
 
 class TestBayesianNetwork(TestCase):
-    def test_get_graph(self):
-        kb = KnowledgeBase('..\\..\\test_data\\', '..\\..\\test_data\\doug_example.csv')
-        bn = BayesianNetwork(kb)
-        for node in bn.get_graph().get_nodes():
-            print(node.get_name())
+    def test_BayesianNetwork(self):
+        node_a = Node('Smart')
+        node_b = Node('Work Hard')
+        node_c = Node('Success')
 
-    def test_get_knowledge_base(self):
-        kb = KnowledgeBase(None, '..\\..\\test_data\\doug_example.csv')
-        bn = BayesianNetwork(kb)
+        node_a.add_child(node_c)
+        node_b.add_child(node_c)
 
-        print(bn.get_knowledge_base().get_data())
-        print(bn.get_knowledge_base().get_scale())
+        node_c.add_parent(node_a)
+        node_c.add_parent(node_b)
 
-    def test_get_probability_of_node_state(self):
-        self.fail()
+        g = AcyclicGraph([node_a, node_b, node_c], [])
+        kb = KnowledgeBase('..\\..\\test_data\\doug_example.csv', '..\\..\\test_data\\doug_example.csv')
 
-    def test_get_node_relations(self):
-        self.fail()
+        bn = BayesianNetwork(kb, g)
+        print()
 
-    def test_get_node_cp_table(self):
-        self.fail()
+        # test with our data set
+        _data_file_path = '..\\..\\ExcelFiles\\courses_and_grades.csv'
+        _relations_file_path = '..\\..\\..\\Data\\combined_course_structure.csv'
+
+        knowledge_base = KnowledgeBase(_relations_file_path, _data_file_path)
+
+        builder = GraphBuilder()
+        builder = builder.build_nodes(list(knowledge_base.get_data().columns))
+        builder = builder.add_parents(knowledge_base.get_relations())
+        builder = builder.add_children()
+        builder = builder.build_edges()
+
+        graph = builder.build_graph()
+        bayes_net = BayesianNetwork(knowledge_base, graph)
+        print()

@@ -7,22 +7,26 @@ import pandas as pd
 
 
 class KnowledgeBase:
-    def __init__(self, relations_file_path=None, class_data_file_path=None):
-        if relations_file_path is None:
-            self._relations = pd.DataFrame()
-        else:
-            self._relations = pd.read_csv(relations_file_path)
-
-        if class_data_file_path is None:
-            self._data = pd.DataFrame()
-        else:
-            self._data = pd.read_csv(class_data_file_path)
+    def __init__(self, relations_file_path, class_data_file_path):
+        self._relations = pd.read_csv(relations_file_path)
+        self._data = pd.read_csv(class_data_file_path)
 
         # https: // stackoverflow.com / questions / 26977076 / pandas - unique - values - multiple - columns
         self._scale = pd.unique(self._data[self._data.columns].values.ravel('k'))
 
     def get_data(self):
         return self._data
+
+    def get_scale(self):
+        return self._scale
+
+    def get_query(self, names):
+        """
+        This method will take in a list of names, and will return a DataFrame only containing the columns of the names
+        :param names: list of Strings
+        :return: DataFrame
+        """
+        return self._data[names]
 
     def get_relations(self):
         return self._relations
@@ -53,9 +57,6 @@ class KnowledgeBase:
             return self._data[valid_name]
         else:
             return None
-
-    def get_scale(self):
-        return self._scale
 
     def add_data(self, data_file_path):
         """
