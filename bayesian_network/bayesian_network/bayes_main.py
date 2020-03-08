@@ -3,7 +3,6 @@ from knowledge_base import KnowledgeBase
 from graph_builder import GraphBuilder
 
 if __name__ == "__main__":
-    '''
     _data_file_path = '..\\ExcelFiles\\courses_and_grades.csv'
     _relations_file_path = '..\\..\\Data\\combined_course_structure.csv'
 
@@ -21,4 +20,4 @@ if __name__ == "__main__":
 
     # bayes_net = BayesianNetwork(knowledge_base, graph)
     # print(bayes_net.get_graph().get_node('Calculus and Analytic Geometry I').get_parents())
-    '''
+

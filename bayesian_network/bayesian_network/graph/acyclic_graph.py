@@ -1,5 +1,5 @@
 """
-__Author__: Nate Braukhofff
+__Author__: Nate Braukhoffc
 
 __Purpose: The Acyclic Graph will be a directed graph that will not contain any cycles. This graph will be contain a
             list of Nodes and Edges. Users will be allowed to add and remove Nodes and Edges.

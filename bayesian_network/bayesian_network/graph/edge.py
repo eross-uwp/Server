@@ -12,4 +12,3 @@ class Edge:
         self._node1 = node1
         self._node2 = node2
 
-
