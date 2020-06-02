@@ -71,6 +71,10 @@ if __name__ == "__main__":
 
             try:
                 train, test = get_training_testing(each_course, number_for_fold)
+                if set == 1:
+                    test_total = test
+                else:
+                    test_total = pd.concat([test_total, test], axis=0, ignore_index=True)
                 y_train = train[each_course].values
                 y_test = test[each_course].values
 
@@ -94,13 +98,6 @@ if __name__ == "__main__":
 
             except Exception as e:
                 break
-
-        for set in range(1, 6):
-            train, test = get_training_testing(each_course, set)
-            if set == 1:
-                test_total = test
-            else:
-                test_total = pd.concat([test_total, test], axis=0, ignore_index=True)
 
         # Make predictions a single vertical array and add it to pandas.
         predictions = pd.DataFrame.from_records(prediction_array.reshape(-1, 1), columns=['predicted'])

@@ -92,7 +92,6 @@ if __name__ == "__main__":
                     count = count + amount
                 prediction = sum / count
 
-
                 for_conca = np.full_like(y_test, prediction)
                 prediction_array = np.concatenate((prediction_array, for_conca), axis=0)
             except Exception as e:
