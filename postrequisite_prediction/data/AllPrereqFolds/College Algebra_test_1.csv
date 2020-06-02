@@ -1,7 +1,7 @@
-Intermediate Algebra,Mathematical Problem Solving,Elementary Algebra,Basic Algebra,cumulative_gpa,prev_term_gpa,struggle,College Algebra
-4.0,-1.0,-1.0,-1.0,2.62,2.62,3.0,3
-4.0,-1.0,-1.0,-1.0,2.326666667,2.326666667,2.0,1
-4.0,-1.0,-1.0,-1.0,2.41875,2.41875,3.0,8
-4.0,-1.0,-1.0,-1.0,2.25,2.25,2.0,1
-4.0,-1.0,-1.0,-1.0,3.06,3.06,3.0,0
-7.0,-1.0,-1.0,-1.0,3.8125,3.8125,3.0,10
+student_id,College Algebra,Intermediate Algebra,Mathematical Problem Solving,Elementary Algebra,Basic Algebra,cumulative_gpa,prev_term_gpa,struggle,College Algebra
+180.0,5.0,4.0,-1.0,-1.0,-1.0,1.933333333,1.933333333,2.0,5
+5148.0,8.0,4.0,-1.0,-1.0,-1.0,2.41875,2.41875,3.0,8
+5372.0,1.0,4.0,-1.0,-1.0,-1.0,2.25,2.25,2.0,1
+5563.0,0.0,4.0,-1.0,-1.0,-1.0,2.625,2.625,3.0,0
+6765.0,4.0,7.0,-1.0,-1.0,-1.0,3.083333333,3.083333333,3.0,4
+9183.0,1.0,4.0,-1.0,-1.0,-1.0,1.935294118,1.935294118,2.0,1
