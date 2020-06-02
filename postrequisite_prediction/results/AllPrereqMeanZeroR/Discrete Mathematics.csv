@@ -1,4 +1,4 @@
-student_id,Discrete Mathematics,Calculus and Analytic Geometry I,Trigonometry and Analytic Geometry,College Algebra,Intermediate Algebra,Mathematical Problem Solving,Elementary Algebra,Basic Algebra,Precalculus,cumulative_gpa,prev_term_gpa,struggle,Discrete Mathematics.1,prediction
+student_id,Discrete Mathematics,Calculus and Analytic Geometry I,Trigonometry and Analytic Geometry,College Algebra,Intermediate Algebra,Mathematical Problem Solving,Elementary Algebra,Basic Algebra,Precalculus,cumulative_gpa,prev_term_gpa,struggle,Discrete Mathematics.1,predicted
 342.0,0.0,1.0,4.0,6.0,-1.0,-1.0,-1.0,-1.0,-1.0,3.56875,3.56875,3.0,0,3.4702380952380953
 348.0,5.0,5.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,2.8,2.8,3.0,5,3.4702380952380953
 381.0,4.0,0.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,0.0,2.5266666669999998,2.5266666669999998,2.0,4,3.4702380952380953

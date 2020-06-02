@@ -1,4 +1,4 @@
-student_id,Intermediate Software Engineering,Object-Oriented Programming and Data Structures II,Object-Oriented Programming and Data Structures I,Programming in C++,Introduction to Programming,Introduction to Software Engineering,cumulative_gpa,prev_term_gpa,struggle,Intermediate Software Engineering.1,prediction
+student_id,Intermediate Software Engineering,Object-Oriented Programming and Data Structures II,Object-Oriented Programming and Data Structures I,Programming in C++,Introduction to Programming,Introduction to Software Engineering,cumulative_gpa,prev_term_gpa,struggle,Intermediate Software Engineering.1,predicted
 153.0,7.0,7.0,7.0,7.0,10.0,7.0,3.8125,3.8125,3.0,7,6.63125
 177.0,10.0,10.0,10.0,10.0,-1.0,9.0,3.764705882,3.764705882,3.0,10,6.63125
 437.0,7.0,10.0,10.0,10.0,-1.0,6.0,2.320689655,2.442857143,2.0,7,6.63125

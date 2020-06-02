@@ -1,4 +1,4 @@
-student_id,Circuit Modeling I,Calculus and Analytic Geometry I,Trigonometry and Analytic Geometry,College Algebra,Intermediate Algebra,Mathematical Problem Solving,Elementary Algebra,Basic Algebra,Precalculus,cumulative_gpa,prev_term_gpa,struggle,Circuit Modeling I.1,prediction
+student_id,Circuit Modeling I,Calculus and Analytic Geometry I,Trigonometry and Analytic Geometry,College Algebra,Intermediate Algebra,Mathematical Problem Solving,Elementary Algebra,Basic Algebra,Precalculus,cumulative_gpa,prev_term_gpa,struggle,Circuit Modeling I.1,predicted
 134.0,0.0,6.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,3.4,3.4,3.0,0,4.402439024390244
 153.0,4.0,7.0,-1.0,-1.0,10.0,-1.0,-1.0,-1.0,10.0,3.8125,3.8125,3.0,4,4.402439024390244
 177.0,10.0,7.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,3.764705882,3.764705882,3.0,10,4.402439024390244

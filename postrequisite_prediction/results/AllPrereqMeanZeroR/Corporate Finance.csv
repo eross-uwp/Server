@@ -1,4 +1,4 @@
-student_id,Corporate Finance,Introduction to Marketing,Financial Accounting,cumulative_gpa,prev_term_gpa,struggle,Corporate Finance.1,prediction
+student_id,Corporate Finance,Introduction to Marketing,Financial Accounting,cumulative_gpa,prev_term_gpa,struggle,Corporate Finance.1,predicted
 281.0,10.0,9.0,7.0,3.25625,3.54,3.0,10,5.236363636363636
 715.0,6.0,5.0,4.0,2.878125,2.625,3.0,6,5.236363636363636
 800.0,6.0,4.0,10.0,3.061290323,3.175,3.0,6,5.236363636363636

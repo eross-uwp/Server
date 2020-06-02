@@ -1,4 +1,4 @@
-student_id,Technical Writing,College Writing II,College Writing I,Studio College Writing,cumulative_gpa,prev_term_gpa,struggle,Technical Writing.1,prediction
+student_id,Technical Writing,College Writing II,College Writing I,Studio College Writing,cumulative_gpa,prev_term_gpa,struggle,Technical Writing.1,predicted
 281.0,9.0,6.0,-1.0,-1.0,3.241176471,3.241176471,3.0,9,7.413793103448276
 300.0,7.0,6.0,7.0,-1.0,3.206666667,3.206666667,3.0,7,7.413793103448276
 585.0,5.0,3.0,9.0,-1.0,3.5066666669999997,3.5066666669999997,3.0,5,7.413793103448276

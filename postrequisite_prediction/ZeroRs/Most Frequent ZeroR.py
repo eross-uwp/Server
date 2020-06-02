@@ -7,7 +7,6 @@ import random
 # import sys
 # from sklearn.metrics import confusion_matrix, precision_score, recall_score, roc_auc_score, accuracy_score
 
-np.random.seed(313131)
 GRAPH_FILE_PREFIX = 'graph_term_'
 PREREQ_PROCESS_TYPE = 'All'
 STRATIFIED_DATA_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqFolds\\'

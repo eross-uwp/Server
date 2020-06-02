@@ -1,4 +1,4 @@
-student_id,College Algebra,Intermediate Algebra,Mathematical Problem Solving,Elementary Algebra,Basic Algebra,cumulative_gpa,prev_term_gpa,struggle,College Algebra.1,prediction
+student_id,College Algebra,Intermediate Algebra,Mathematical Problem Solving,Elementary Algebra,Basic Algebra,cumulative_gpa,prev_term_gpa,struggle,College Algebra.1,predicted
 180.0,5.0,4.0,-1.0,-1.0,-1.0,1.9333333330000002,1.9333333330000002,2.0,5,2.5
 5148.0,8.0,4.0,-1.0,-1.0,-1.0,2.41875,2.41875,3.0,8,2.5
 5372.0,1.0,4.0,-1.0,-1.0,-1.0,2.25,2.25,2.0,1,2.5

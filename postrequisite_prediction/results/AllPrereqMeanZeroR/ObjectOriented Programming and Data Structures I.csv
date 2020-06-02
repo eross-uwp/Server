@@ -1,4 +1,4 @@
-student_id,Object-Oriented Programming and Data Structures I,Programming in C++,Introduction to Programming,cumulative_gpa,prev_term_gpa,struggle,ObjectOriented Programming and Data Structures I,prediction
+student_id,Object-Oriented Programming and Data Structures I,Programming in C++,Introduction to Programming,cumulative_gpa,prev_term_gpa,struggle,ObjectOriented Programming and Data Structures I,predicted
 153.0,7.0,7.0,10.0,3.8125,3.8125,3.0,7,5.0
 177.0,10.0,10.0,-1.0,3.764705882,3.764705882,3.0,10,5.0
 236.0,4.0,7.0,-1.0,0.642857143,3.0,3.0,4,5.0

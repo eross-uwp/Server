@@ -1,4 +1,4 @@
-student_id,Management Accounting,Financial Accounting,cumulative_gpa,prev_term_gpa,struggle,Management Accounting.1,prediction
+student_id,Management Accounting,Financial Accounting,cumulative_gpa,prev_term_gpa,struggle,Management Accounting.1,predicted
 16.0,8.0,9.0,2.694594595,3.666666667,3.0,8,4.788888888888889
 32.0,5.0,7.0,2.7386363639999995,2.48,3.0,5,4.788888888888889
 60.0,0.0,4.0,1.984782609,2.0,3.0,0,4.788888888888889
