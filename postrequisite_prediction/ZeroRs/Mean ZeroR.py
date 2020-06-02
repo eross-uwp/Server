@@ -130,6 +130,6 @@ if __name__ == "__main__":
         all_predictions = np.vstack(
             (all_predictions, [reverse_convert_grade(round_school(actual.predicted)),
                                reverse_convert_grade(round_school(actual.actual))]))
-    pd.DataFrame(all_predictions, columns=['predicted', 'actual']).to_csv(RESULTS_FOLDER + 'ALL_PREDICTIONSS' + '.csv',
+    pd.DataFrame(all_predictions, columns=['predicted', 'actual']).to_csv(RESULTS_FOLDER + 'ALL_PREDICTIONS' + '.csv',
                                                                           index=False)
     print('Done')
