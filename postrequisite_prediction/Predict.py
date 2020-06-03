@@ -194,8 +194,6 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
             for q in not_filled:
                 y_grades[q].append(0)
 
-
-
     rr = metrics.r2_score(flatten(y_test), y_preds)
     rmse = np.math.sqrt(metrics.mean_squared_error(flatten(y_test), y_preds))
     acc = metrics.accuracy_score(flatten(y_test), y_preds)
@@ -301,8 +299,6 @@ def read_predict_write():
         x_train, x_test, y_train, y_test, x_columns, n_samples = stratify_and_split(filename)
         predicted, actual, rr, acc, nrmse, model = predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
 
-
-
         big_predicted += list(predicted)
         big_actual += list(actual)
         results_each_postreq[0].append(filename[:-4])
@@ -369,6 +365,13 @@ if __name__ == "__main__":
         raise ValueError('An invalid model type was passed. Must be \'1\' or \'2\'')
 
     __data_folder, __folds_folder, __results_folder, __tuning_results_folder, __model_output = set_paths()
+
+    if not os.path.exists(__folds_folder):
+        os.makedirs(__folds_folder)
+    if not os.path.exists(__results_folder):
+        os.makedirs(__results_folder)
+    if not os.path.exists(__model_output):
+        os.makedirs(__model_output)
 
     tune_or_predict = int(input("Enter one of the following process types: \n"
                                 "'1': Tune hyperparameters \n"

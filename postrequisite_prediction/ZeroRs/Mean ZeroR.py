@@ -112,6 +112,9 @@ if __name__ == "__main__":
             except Exception as e:
                 break
 
+        if not os.path.exists(RESULTS_FOLDER):
+            os.makedirs(RESULTS_FOLDER)
+
         # Make predictions a single vertical array and add it to pandas.
         predictions = pd.DataFrame.from_records(prediction_array.reshape(-1, 1), columns=['predicted'])
         # Concatenate test_total onto predictions.
