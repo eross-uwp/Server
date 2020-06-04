@@ -1,5 +1,6 @@
-student_id,College Algebra,Intermediate Algebra,cumulative_gpa,prev_term_gpa,struggle,College Algebra
-3460.0,1.0,4.0,2.326666667,2.326666667,2.0,1
-6449.0,4.0,1.0,2.153846154,2.153846154,2.0,4
-6788.0,0.0,0.0,2.214285714,2.214285714,2.0,0
-9024.0,1.0,4.0,2.0,2.0,2.0,1
+Intermediate Algebra,cumulative_gpa,prev_term_gpa,struggle,College Algebra
+4.0,1.933333333,1.933333333,2.0,5
+4.0,2.625,2.625,3.0,0
+4.0,1.8,1.8,2.0,4
+4.0,2.60625,2.60625,2.0,1
+4.0,2.764705882,2.764705882,3.0,1

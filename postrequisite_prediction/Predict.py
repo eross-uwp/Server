@@ -201,6 +201,7 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
     with open(__results_folder + postreq_name + '.txt', "w") as text_file:
         text_file.write(
             'R^2 = ' + str(rr) + ', Accuracy = ' + str(acc) + ' , RMSE = ' + str(rmse) + ', NRMSE = ' + str(rmse / 10))
+
     x_df = pd.concat([pd.DataFrame(x_test[0]),
                       pd.DataFrame(x_test[1]),
                       pd.DataFrame(x_test[2]),

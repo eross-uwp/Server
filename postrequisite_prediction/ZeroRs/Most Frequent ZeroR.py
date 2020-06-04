@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import numpy as np
 import random
+from sklearn import metrics
 
 # from random import choices
 # import sys
@@ -54,13 +55,14 @@ def reverse_convert_grade(int_grade):
 
 if __name__ == "__main__":
     big_predictions = None
+    results_each_postreq = [[], [], [], [], []]
 
     prediction_array = None
-    for each_course in os.listdir(TUNING_FILE_PATH):
-        each_course = each_course[:-4]  # Get the name of the courses from the .npy files and drop the extension.
+    for postreq_name in os.listdir(TUNING_FILE_PATH):
+        postreq_name = postreq_name[:-4]  # Get the name of the courses from the .npy files and drop the extension.
 
         try:
-            train, test = get_training_testing(each_course, 1)
+            train, test = get_training_testing(postreq_name, 1)
         except Exception as e:
             continue
 
@@ -69,13 +71,13 @@ if __name__ == "__main__":
         for number_for_fold in range(1, 6):
 
             try:
-                train, test = get_training_testing(each_course, number_for_fold)
+                train, test = get_training_testing(postreq_name, number_for_fold)
                 if set == 1:
                     test_total = test
                 else:
                     test_total = pd.concat([test_total, test], axis=0, ignore_index=True)
-                y_train = train[each_course].values
-                y_test = test[each_course].values
+                y_train = train[postreq_name].values
+                y_test = test[postreq_name].values
 
                 # Grab all possible grades and populate the grades_distribution dictionary with zeros.
                 grades_distribution = dict.fromkeys(possible_grades)
@@ -100,14 +102,35 @@ if __name__ == "__main__":
 
         # Make predictions a single vertical array and add it to pandas.
         predictions = pd.DataFrame.from_records(prediction_array.reshape(-1, 1), columns=['predicted'])
+        # Calculate metrics.
+        rr = metrics.r2_score(test_total[postreq_name].values, predictions['predicted'].values)
+        rmse = np.math.sqrt(metrics.mean_squared_error(test_total[postreq_name].values, predictions['predicted'].values))
+        acc = metrics.accuracy_score(test_total[postreq_name].values, predictions['predicted'].values)
+        # Save metrics.
+        with open(RESULTS_FOLDER + postreq_name + '.txt', "w") as text_file:
+            text_file.write(
+                'R^2 = ' + str(rr) + ', Accuracy = ' + str(acc) + ' , RMSE = ' + str(rmse) + ', NRMSE = ' + str(
+                    rmse / 10))
+
+        results_each_postreq[0].append(postreq_name)
+        results_each_postreq[1].append(rr)
+        results_each_postreq[2].append(acc)
+        results_each_postreq[3].append(rmse/10)
+        results_each_postreq[4].append(y_train.size + y_test.size)
+
+        all_stats = pd.DataFrame(
+            {'postreq': results_each_postreq[0], 'r^2': results_each_postreq[1], 'accuracy': results_each_postreq[2],
+             'nrmse': results_each_postreq[3], 'n': results_each_postreq[4]})
+        all_stats.to_csv(RESULTS_FOLDER + 'ALL_COURSES_STATS.csv', index=False)
+
         # Concatenate test_total onto predictions.
         predictions = pd.concat([test_total, predictions], axis=1)
         # Write to csv file.
-        predictions.to_csv(RESULTS_FOLDER + str(each_course) + '.csv', index=False)
+        predictions.to_csv(RESULTS_FOLDER + 'PREDICTION_' + str(postreq_name) + '.csv', index=False)
         # Add to the big_predictions list.
-        actual_data_frame = pd.DataFrame(test_total[each_course].values, columns=['actual'])
+        actual_data_frame = pd.DataFrame(test_total[postreq_name].values, columns=['actual'])
         big_predictions = pd.concat([big_predictions, pd.concat([predictions['predicted'],
-                                                                 pd.DataFrame(test_total[each_course].values,
+                                                                 pd.DataFrame(test_total[postreq_name].values,
                                                                               columns=['actual'])], axis=1)], axis=0)
 
     # Compile list of all predictions, and write to file.
@@ -115,6 +138,6 @@ if __name__ == "__main__":
     for actual in big_predictions.itertuples():
         all_predictions = np.vstack(
             (all_predictions, [reverse_convert_grade(actual.predicted), reverse_convert_grade(actual.actual)]))
-    pd.DataFrame(all_predictions, columns=['predicted', 'actual']).to_csv(RESULTS_FOLDER + 'ALL_PREDICTIONS' + '.csv',
+    pd.DataFrame(all_predictions, columns=['predicted', 'actual']).to_csv(RESULTS_FOLDER + 'ALL_COURSES_PREDICTIONS' + '.csv',
                                                                           index=False)
     print('Done')
