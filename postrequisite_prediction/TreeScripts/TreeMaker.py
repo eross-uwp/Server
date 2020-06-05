@@ -11,7 +11,7 @@ expression. Items can either be classes or other logical expressions.
 
 import random
 import pandas as pd
-from TreeScripts.Node import Node
+from postrequisite_prediction.TreeScripts.Node import Node
 
 
 class TreeMaker:

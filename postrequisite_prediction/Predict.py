@@ -166,12 +166,23 @@ def reverse_convert_grade(int_grade):
 
 
 def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
-    read_dictionary = np.load(__tuning_results_folder + postreq_name + '.npy', allow_pickle=True).item()
+    if not os.path.exists(__tuning_results_folder + postreq_name + '.npy'):
+        read_dictionary = None
+    else:
+        read_dictionary = np.load(__tuning_results_folder + postreq_name + '.npy', allow_pickle=True).item()
+
+    print(read_dictionary)
 
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-        model = LogisticRegression(random_state=__RANDOM_SEED, **read_dictionary)
+        if read_dictionary is None:
+            model = LogisticRegression(random_state=__RANDOM_SEED)
+        else:
+            model = LogisticRegression(random_state=__RANDOM_SEED, **read_dictionary)
     elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-        model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **read_dictionary)
+        if read_dictionary is None:
+            model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
+        else:
+            model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **read_dictionary)
 
     y_preds = []
     #   F,  D,  D+, C-, C,  C+, B-, B,  B+, A-, A
@@ -295,20 +306,23 @@ def read_predict_write():
     results_each_postreq = [[], [], [], [], []]
 
     counter = 0
-    for filename in os.listdir(__tuning_results_folder):
+    for filename in os.listdir(__data_folder):
+        print(filename)
         filename = str(filename[:-4] + '.csv')
+        print(filename)
         x_train, x_test, y_train, y_test, x_columns, n_samples = stratify_and_split(filename)
-        predicted, actual, rr, acc, nrmse, model = predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
+        if n_samples > __MIN_SAMPLES_FOR_PREDICTING:
+            predicted, actual, rr, acc, nrmse, model = predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
 
-        big_predicted += list(predicted)
-        big_actual += list(actual)
-        results_each_postreq[0].append(filename[:-4])
-        results_each_postreq[1].append(rr)
-        results_each_postreq[2].append(acc)
-        results_each_postreq[3].append(nrmse)
-        results_each_postreq[4].append(n_samples)
-        print(counter)
-        counter += 1
+            big_predicted += list(predicted)
+            big_actual += list(actual)
+            results_each_postreq[0].append(filename[:-4])
+            results_each_postreq[1].append(rr)
+            results_each_postreq[2].append(acc)
+            results_each_postreq[3].append(nrmse)
+            results_each_postreq[4].append(n_samples)
+            print(counter)
+            counter += 1
 
     predictions = pd.DataFrame(big_predicted, columns=['predicted'])
     actuals = pd.DataFrame(big_actual, columns=['actual'])
