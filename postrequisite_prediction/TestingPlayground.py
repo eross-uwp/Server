@@ -12,7 +12,7 @@ import warnings
 
 
 __data_folder = 'data\\AllPrereqTables\\'
-__folds_folder = 'data\\Testing\\'
+__folds_folder = 'data\\Practice\\'
 __model_enum = 0
 __tree_type = 0
 __tuning_results_folder = 'TuningResults\\All\\GBT\\'
