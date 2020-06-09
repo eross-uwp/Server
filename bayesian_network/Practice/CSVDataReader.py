@@ -22,8 +22,7 @@ def getData():
                     rowData.append(row[i])
 
                 allData.append(rowData)
-                print(
-                    f'{row[0]}, {row[1]}, {row[2]}, {row[3]}, {row[4]}, {row[5]}, {row[6]}, {row[7]}, {row[8]}, {row[9]}, {row[10]}, {row[11]}, {row[12]}')
+                print(f'{row[0]}, {row[1]}, {row[2]}, {row[3]}, {row[4]}, {row[5]}, {row[6]}, {row[7]}, {row[8]}, {row[9]}, {row[10]}, {row[11]}, {row[12]}')
                 line_count += 1
 
         print(f'Processed {line_count - 1} course grade probabilities. \n')
@@ -49,13 +48,36 @@ def getCourseEvent():
                 rowData = [f"{row[0]}", f"{row[1]}", f"{row[2]}", float(row[3])]
 
                 couse6Data.append(rowData)
-                print(
-                    f'{row[0]}, {row[1]}, {row[2]}, {row[3]}')
+                # print(f'{row[0]}, {row[1]}, {row[2]}, {row[3]}')
                 line_count += 1
 
         print(f'Processed {line_count - 1} course grade probabilities.\n')
 
     return couse6Data
+
+
+def getFittingData():
+    with open('PracticeSampleData - Fake Fitting Data.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        line_count = 0
+
+        fittingData = []
+
+        for row in csv_reader:
+
+            if line_count == 0:
+                print(f'{", ".join(row)}')
+                line_count += 1
+            else:
+                rowData = [f"{row[0]}", f"{row[1]}", f"{row[2]}"]
+
+                fittingData.append(rowData)
+                # print(f'{row[0]}, {row[1]}, {row[2]}')
+                line_count += 1
+
+        print(f'Processed {line_count - 1} course fitting data.\n')
+
+    return fittingData
 
 
 

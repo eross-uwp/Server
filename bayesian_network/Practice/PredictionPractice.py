@@ -21,10 +21,10 @@ numpy.set_printoptions(suppress=True)
 # Bayesian Network explanation (as understood on Jun 08 2020)
 # Using data along with the probabilities of each result occurring, states/nodes are created which represent
 # the data labels (courses). These states are connected with edges which represent data dependencies (prereqs)
-# and a acyclic tree is formed. Given specific complete or non complete data (grades for the courses), the data
-# follows down the tree, taking into account each of the probabilities of each direction, and outputs the missing or
-# end goal values (predicted grades) by choosing the most likely direction to travel (grade) based on the the
-# cumulative probabilities up to and/or after that branch point.
+# and a directed acyclic tree is formed. Given specific complete or non complete data (grades for the courses), the
+# data follows down the decision tree, taking into account each of the probabilities of each direction, and outputs
+# the missing or end goal values (predicted grades) by choosing the most likely direction to travel (grade) based on
+# the cumulative probabilities up to and/or after that branch point.
 # However, there is more to be said about how this can create the structure and probabilities using only data.
 
 # Code explanation
@@ -78,7 +78,7 @@ model.add_state(s6)
 for state in courseDiscDistStateList:
     model.add_edge(state, s6)
 
-# Makes the Bayesian network do its job
+# Finalizes the Bayesian Network structure
 model.bake()
 
 # Prints out the prediction and then the probabilities of the None values given as many other values as possible.
