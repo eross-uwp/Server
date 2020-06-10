@@ -20,7 +20,7 @@ def getFormattedDiscDist(courseData):
 # Returns a touple of list of Discrete Distributions and
 # a list of the States of the courses that are not dependent on other courses
 def createDiscDistList():
-    allData = getData()
+    allData = getData('PracticeSampleData - Fake Grade Probabilities Shortened.csv')
 
     discDistList = []
     stateList = []

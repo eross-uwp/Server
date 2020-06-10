@@ -44,8 +44,8 @@ for state in courseDiscDistStateList:
 
 model.add_state(s6)
 
-# Add edges which represent conditional dependencies, where the second node is
-# conditionally dependent on the first node
+# Add edges which represent conditional dependencies, where the second node is conditionally
+# dependent on the first node
 # This example makes an edge from each of the 5 loaded in courses to course6 - shortened version has 2 courses
 for state in courseDiscDistStateList:
     model.add_edge(state, s6)
