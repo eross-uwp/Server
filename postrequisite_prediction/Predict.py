@@ -119,7 +119,7 @@ def tune(filename):
                 }
                 model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
                 param_grid = {
-                    "learning_rate": np.arange(0.05, 0.201, 0.01),
+                    "learning_rate": [0.1],
                     "n_estimators": range(20, 91, 10)
                 }
 
