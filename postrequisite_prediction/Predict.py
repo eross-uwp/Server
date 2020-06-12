@@ -13,10 +13,9 @@ from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, GridSearchCV, train_test_split
 import warnings
-
-from sklearn.externals import joblib
-
-from joblib import dump, load
+import time
+from pathlib import Path
+from joblib import Parallel, delayed, parallel_backend
 import pickle
 
 from sklearn.utils import column_or_1d
@@ -25,11 +24,11 @@ if not sys.warnoptions:
     warnings.simplefilter("ignore")
     os.environ["PYTHONWARNINGS"] = "ignore"  # Also affect subprocesses
 
-__data_folder = ''
-__folds_folder = ''
-__results_folder = ''
-__tuning_results_folder = ''
-__model_output = ''
+__data_folder = Path()
+__folds_folder = Path()
+__results_folder = Path()
+__tuning_results_folder = Path()
+__model_output = Path()
 
 __model_enum = 0
 __tree_type = 0
@@ -50,94 +49,148 @@ flatten = lambda l: [item for sublist in l for item in
 
 def set_paths():
     if __tree_type == __TREE_TYPES_ENUM.ALL_PREREQS:
-        data_folder = 'data\\AllPrereqTables\\'
-        folds_output = 'data\\AllPrereqFolds\\'
+        data_folder = Path('data/AllPrereqTables/')
+        folds_output = Path('data/AllPrereqFolds/')
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-            results_folder = 'results\\AllPrereq_LogisticRegression_Results\\'
-            tuning_results_folder = 'TuningResults\\All\\LR\\'
-            model_output = 'models\\LR_model_all\\'
+            results_folder = Path('results/AllPrereq_LogisticRegression_Results/')
+            tuning_results_folder = Path('TuningResults/All/LR/')
+            model_output = Path('models/LR_model_all/')
         elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-            results_folder = 'results\\AllPrereq_GBTClassifier_Results\\'
-            tuning_results_folder = 'TuningResults\\All\\GBT\\'
-            model_output = 'models\\GBT_model_all\\'
+            results_folder = Path('results/AllPrereq_GBTClassifier_Results/')
+            tuning_results_folder = Path('TuningResults/All/GBT/')
+            model_output = Path('models/GBT_model_all/')
     elif __tree_type == __TREE_TYPES_ENUM.ROOT_PREREQS:
-        data_folder = 'data\\RootPrereqTables\\'
-        folds_output = 'data\\RootPrereqFolds\\'
+        data_folder = Path('data/RootPrereqTables/')
+        folds_output = Path('data/RootPrereqFolds/')
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-            results_folder = 'results\\RootPrereq_LogisticRegression_Results\\'
-            tuning_results_folder = 'TuningResults\\Root\\LR\\'
-            model_output = 'models\\LR_model_root\\'
+            results_folder = Path('results/RootPrereq_LogisticRegression_Results/')
+            tuning_results_folder = Path('TuningResults/Root/LR/')
+            model_output = Path('models/LR_model_root/')
         elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-            results_folder = 'results\\RootPrereq_GBTClassifier_Results\\'
-            tuning_results_folder = 'TuningResults\\Root\\GBT\\'
-            model_output = 'models\\GBT_model_root\\'
+            results_folder = Path('results/RootPrereq_GBTClassifier_Results/')
+            tuning_results_folder = Path('TuningResults/Root/GBT/')
+            model_output = Path('models/GBT_model_root/')
     elif __tree_type == __TREE_TYPES_ENUM.IMMEDIATE_PREREQS:
-        data_folder = 'data\\ImmediatePrereqTables\\'
-        folds_output = 'data\\ImmediatePrereqFolds\\'
+        data_folder = Path('data/ImmediatePrereqTables/')
+        folds_output = Path('data/ImmediatePrereqFolds/')
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-            results_folder = 'results\\ImmediatePrereq_LogisticRegression_Results\\'
-            tuning_results_folder = 'TuningResults\\Immediate\\LR\\'
-            model_output = 'models\\LR_model_imme\\'
+            results_folder = Path('results/ImmediatePrereq_LogisticRegression_Results/')
+            tuning_results_folder = Path('TuningResults/Immediate/LR/')
+            model_output = Path('models/LR_model_imme/')
         elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-            results_folder = 'results\\ImmediatePrereq_GBTClassifier_Results\\'
-            tuning_results_folder = 'TuningResults\\Immediate\\GBT\\'
-            model_output = 'models\\GBT_model_imme\\'
+            results_folder = Path('results/ImmediatePrereq_GBTClassifier_Results/')
+            tuning_results_folder = Path('TuningResults/Immediate/GBT/')
+            model_output = Path('models/GBT_model_imme/')
 
     return data_folder, folds_output, results_folder, tuning_results_folder, model_output
 
 
 def get_prereq_table(filename):
-    file = pd.read_csv(__data_folder + '\\' + filename)
+    file = pd.read_csv(__data_folder / filename)
     y = file.iloc[:, 1]
     x = file.drop([file.columns[1], file.columns[0]], axis=1)  # drop the postreq grade and student_id columns
     x = x.drop(x.columns[len(x.columns) - 1], axis=1)  # drop the term diff column
     return x, y
 
 
+def tune(filename):
+    loop_time = time.time()
+
+    x, y = get_prereq_table(filename)
+    x = x.fillna(-1).values
+    y = y.fillna(-1).values
+    if len(x) >= __MIN_SAMPLES_FOR_PREDICTING and len(y) >= __MIN_SAMPLES_FOR_PREDICTING:
+
+        check_y = column_or_1d(y)
+        unique_y, y_inversed = np.unique(check_y, return_inverse=True)
+        y_counts = np.bincount(y_inversed)
+        if not np.all([__NUMBER_FOLDS] > y_counts):
+            if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
+                model = LogisticRegression(random_state=__RANDOM_SEED, multi_class='auto')
+                param_grid = [
+                    {'penalty': ['l1'], 'solver': ['liblinear', 'saga'], "C": np.logspace(-5, 8, 15)},
+                    {'penalty': ['l2', 'none'], 'solver': ['newton-cg', 'sag', 'saga', 'lbfgs'],
+                     "C": np.logspace(-5, 8, 15)}
+                ]
+            elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+                params = {
+                    "max_features": "sqrt",
+                    "subsample": 0.8
+                }
+                model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
+                param_grid = {
+                    "learning_rate": np.arange(0.01, 0.201, 0.01),
+                    "n_estimators": range(10, 201, 10)
+                }
+
+            skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+            clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
+            done = False
+            count = 1
+            while not done:
+                clf.fit(x, y)
+                if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
+                    done = True
+                # print(str(filename) + ": " + str(clf.best_params_))
+                if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+                    done = True
+                    '''
+                    if count == 10:
+                        count += 1
+                        param_grid = {
+                            "n_estimators": range(40, 71, 10),
+                            "learning_rate": np.arange(0.05, 0.201, 0.01)
+                        }
+                        skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+                        clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
+                    elif clf.best_params_["n_estimators"] <= 30:
+                        count += 1
+                        param_grid["learning_rate"][0] = round(param_grid["learning_rate"][0] - param_grid["learning_rate"][0] / 2, 4)
+                        skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+                        clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
+
+                    elif clf.best_params_["n_estimators"] >= 80:
+                        count += 1
+                        param_grid["learning_rate"][0] = round(param_grid["learning_rate"][0] + param_grid["learning_rate"][0] / 2, 4)
+                        skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+                        clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
+                    else:
+                        done = True
+
+            if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+                
+                params.update(clf.best_params_)
+                model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
+                param_grid = {
+                    "max_depth": range(2, 15, 1),
+                    "min_samples_split": range(1, len(y), 1)
+                }
+                skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+                clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
+                clf.fit(x, y)
+                '''
+            params.update(clf.best_params_)
+            np.save(__tuning_results_folder / ("Stage1_" + filename[:-4]), params)
+            print(filename[:-4] + " " + str(round(time.time() - loop_time, 2)) + "s.: " + str(params))
+            print()
+
+
 def hyperparameter_tuning():
-    print('Hyperparameter tuning beginning. A counter will print after the completion of each tuning. \n')
+    print('Hyperparameter tuning beginning. Run time will print after the completion of each tuning. \n')
 
-    counter = 0
-    for filename in os.listdir(__data_folder):
-        if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-            model = LogisticRegression(random_state=__RANDOM_SEED, multi_class='auto')
-            param_grid = [
-                {'penalty': ['l1'], 'solver': ['liblinear', 'saga'], "C": np.logspace(-5, 8, 15)},
-                {'penalty': ['l2', 'none'], 'solver': ['newton-cg', 'sag', 'saga', 'lbfgs'],
-                 "C": np.logspace(-5, 8, 15)}
-            ]
-        elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-            model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
-            param_grid = {
-                "loss": ["deviance"],
-                "learning_rate": [0.01, 1],
-                "min_samples_split": [0.1, 0.5],
-                "min_samples_leaf": [0.1, 0.5],
-                "max_depth": [1, 4],
-                "max_features": ["log2", "sqrt"],
-                "criterion": ["friedman_mse", "mae"],
-                "subsample": [0.8],
-                "n_estimators": [300, 500]
-            }
+    start_time = time.time()
+    if not os.path.exists(__tuning_results_folder):
+        os.makedirs(__tuning_results_folder)
 
-        clf = GridSearchCV(model, param_grid, cv=5, n_jobs=-1)
+    with parallel_backend('loky', n_jobs=-1):
+        if os.cpu_count() > 10:
+            for filename in os.listdir(__data_folder):
+                tune(filename)
+        else:
+            Parallel()(delayed(tune)(filename) for filename in os.listdir(__data_folder))
 
-        x, y = get_prereq_table(filename)
-        x = x.fillna(-1).values
-        y = y.fillna(-1).values
-        if len(x) >= __MIN_SAMPLES_FOR_PREDICTING and len(y) >= __MIN_SAMPLES_FOR_PREDICTING:
-            X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=__RANDOM_SEED)
-            check_y = column_or_1d(y_train)
-            unique_y, y_inversed = np.unique(check_y, return_inverse=True)
-            y_counts = np.bincount(y_inversed)
-            if not np.all([__NUMBER_FOLDS] > y_counts):
-                best_clf = clf.fit(X_train, y_train)
-
-                np.save(__tuning_results_folder + filename[:-4], best_clf.best_params_)
-        print(counter)
-        counter += 1
-
-    print('Hyperparameter tuning completed. Files saved to: \'' + __tuning_results_folder + '\' \n')
+    print('Hyperparameter tuning completed in ' + str(round(time.time() - start_time, 2)) + 's. Files saved to: \''
+          + str(__tuning_results_folder) + '\' \n')
 
 
 def reverse_convert_grade(int_grade):
@@ -166,12 +219,12 @@ def reverse_convert_grade(int_grade):
 
 
 def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
-    if not os.path.exists(__tuning_results_folder + postreq_name + '.npy'):
+    if not os.path.exists(__tuning_results_folder / (postreq_name + '.npy')):
         read_dictionary = None
     else:
-        read_dictionary = np.load(__tuning_results_folder + postreq_name + '.npy', allow_pickle=True).item()
+        read_dictionary = np.load(__tuning_results_folder / (postreq_name + '.npy'), allow_pickle=True).item()
 
-    print(read_dictionary)
+    print(postreq_name + " Parameter Dictionary: " + str(read_dictionary))
 
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
         if read_dictionary is None:
@@ -189,6 +242,7 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
     y_grades = [[], [], [], [], [], [], [], [], [], [], []]
 
     for fold_num in range(0, __NUMBER_FOLDS):
+        # print(x_train[fold_num])
         model.fit(x_train[fold_num], y_train[fold_num])
         y_pred = model.predict(x_test[fold_num])
         y_preds += list(y_pred)
@@ -206,10 +260,10 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
                 y_grades[q].append(0)
 
     rr = metrics.r2_score(flatten(y_test), y_preds)
-    rmse = np.math.sqrt(metrics.mean_squared_error(flatten(y_test), y_preds))
+    rmse = metrics.mean_squared_error(flatten(y_test), y_preds, squared=False)
     acc = metrics.accuracy_score(flatten(y_test), y_preds)
 
-    with open(__results_folder + postreq_name + '.txt', "w") as text_file:
+    with open(__results_folder / (postreq_name + '.txt'), "w") as text_file:
         text_file.write(
             'R^2 = ' + str(rr) + ', Accuracy = ' + str(acc) + ' , RMSE = ' + str(rmse) + ', NRMSE = ' + str(rmse / 10))
 
@@ -251,7 +305,7 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
          'C+': y_grades[5], 'B-': y_grades[6], 'B': y_grades[7], 'B+': y_grades[8],
          'A-': y_grades[9], 'A': y_grades[10]})
     predictions = pd.concat([x_df, y_df, y_predict_df, y_grades_df], axis=1)
-    predictions.to_csv(__results_folder + 'PREDICTION_' + postreq_name + '.csv', index=False)
+    predictions.to_csv(__results_folder / ('PREDICTION_' + postreq_name + '.csv'), index=False)
 
     return predictions['predicted score'].values, y_df[postreq_name].values, rr, acc, (rmse / 10), model
 
@@ -284,14 +338,14 @@ def stratify_and_split(filename):
             (pd.concat(
                 [pd.DataFrame(x_train, columns=x_columns),
                  pd.DataFrame(y_train, columns=[filename[:-4]])],
-                axis=1)).to_csv(__folds_folder + filename[:-4] + '_' +
-                                __TRAIN_PREFIX + str(loop_count + 1) + '.csv', encoding='utf-8', index=False)
+                axis=1)).to_csv(__folds_folder / (filename[:-4] + '_' +
+                                __TRAIN_PREFIX + str(loop_count + 1) + '.csv'), encoding='utf-8', index=False)
 
             (pd.concat(
                 [pd.DataFrame(x_test, columns=x_columns),
                  pd.DataFrame(y_test, columns=[filename[:-4]])],
-                axis=1)).to_csv(__folds_folder + filename[:-4] + '_' +
-                                __TEST_PREFIX + str(loop_count + 1) + '.csv', encoding='utf-8', index=False)
+                axis=1)).to_csv(__folds_folder / (filename[:-4] + '_' +
+                                __TEST_PREFIX + str(loop_count + 1) + '.csv'), encoding='utf-8', index=False)
             loop_count += 1
 
     return x_trains, x_tests, y_trains, y_tests, x_columns, len(x)
@@ -299,6 +353,10 @@ def stratify_and_split(filename):
 
 def read_predict_write():
     print('Training and testing beginning. A counter will print after the completion of each training set. \n')
+    if not os.path.exists(__folds_folder):
+        os.makedirs(__folds_folder)
+    if not os.path.exists(__results_folder):
+        os.makedirs(__results_folder)
 
     big_predicted = []
     big_actual = []
@@ -307,9 +365,7 @@ def read_predict_write():
 
     counter = 0
     for filename in os.listdir(__data_folder):
-        print(filename)
         filename = str(filename[:-4] + '.csv')
-        print(filename)
         x_train, x_test, y_train, y_test, x_columns, n_samples = stratify_and_split(filename)
         if n_samples > __MIN_SAMPLES_FOR_PREDICTING:
             predicted, actual, rr, acc, nrmse, model = predict(filename[:-4], x_train, x_test, y_train, y_test, x_columns)
@@ -327,18 +383,20 @@ def read_predict_write():
     predictions = pd.DataFrame(big_predicted, columns=['predicted'])
     actuals = pd.DataFrame(big_actual, columns=['actual'])
     all_results = pd.concat([predictions, actuals], axis=1)
-    all_results.to_csv(__results_folder + 'ALL_COURSES_PREDICTIONS.csv', index=False)
+    all_results.to_csv(__results_folder / 'ALL_COURSES_PREDICTIONS.csv', index=False)
 
     all_stats = pd.DataFrame(
         {'postreq': results_each_postreq[0], 'r^2': results_each_postreq[1], 'accuracy': results_each_postreq[2],
          'nrmse': results_each_postreq[3], 'n': results_each_postreq[4]})
-    all_stats.to_csv(__results_folder + 'ALL_COURSES_STATS.csv', index=False)
+    all_stats.to_csv(__results_folder / 'ALL_COURSES_STATS.csv', index=False)
 
-    print('Model training, testing, and evaluation completed. Files saved to: \'' + __results_folder + '\' \n')
+    print('Model training, testing, and evaluation completed. Files saved to: \'' + str(__results_folder) + '\' \n')
 
 
 def save_models():
     print('Model saving beginning. A counter will print after the completion of each postreq. \n')
+    if not os.path.exists(__model_output):
+        os.makedirs(__model_output)
 
     counter = 0
     for filename in os.listdir(__tuning_results_folder):
@@ -348,7 +406,7 @@ def save_models():
         x = x.fillna(-1).values
         y = y.fillna(-1).values
 
-        read_dictionary = np.load(__tuning_results_folder + filename[:-4] + '.npy', allow_pickle=True).item()
+        read_dictionary = np.load(__tuning_results_folder / (filename[:-4] + '.npy'), allow_pickle=True).item()
 
         if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
             model = LogisticRegression(random_state=__RANDOM_SEED, **read_dictionary)
@@ -357,11 +415,11 @@ def save_models():
 
         model.fit(x, y)
 
-        pickle.dump(model, open(__model_output + filename[:-4] + '.pkl', 'wb'))
+        pickle.dump(model, open(__model_output / (filename[:-4] + '.pkl'), 'wb'))
         print(counter)
         counter += 1
 
-    print('Model saving completed. Files saved to: \'' + __model_output + '\' \n')
+    print('Model saving completed. Files saved to: ' + str(__model_output) + '\n')
 
 
 if __name__ == "__main__":
@@ -380,13 +438,6 @@ if __name__ == "__main__":
         raise ValueError('An invalid model type was passed. Must be \'1\' or \'2\'')
 
     __data_folder, __folds_folder, __results_folder, __tuning_results_folder, __model_output = set_paths()
-
-    if not os.path.exists(__folds_folder):
-        os.makedirs(__folds_folder)
-    if not os.path.exists(__results_folder):
-        os.makedirs(__results_folder)
-    if not os.path.exists(__model_output):
-        os.makedirs(__model_output)
 
     tune_or_predict = int(input("Enter one of the following process types: \n"
                                 "'1': Tune hyperparameters \n"
