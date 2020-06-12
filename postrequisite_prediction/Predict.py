@@ -119,8 +119,8 @@ def tune(filename):
                 }
                 model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
                 param_grid = {
-                    "learning_rate": np.arange(0.01, 0.201, 0.01),
-                    "n_estimators": range(10, 201, 10)
+                    "learning_rate": np.arange(0.05, 0.201, 0.01),
+                    "n_estimators": range(20, 91, 10)
                 }
 
             skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
@@ -129,12 +129,10 @@ def tune(filename):
             count = 1
             while not done:
                 clf.fit(x, y)
+                print(str(filename) + ": " + str(clf.best_params_))
                 if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
                     done = True
-                # print(str(filename) + ": " + str(clf.best_params_))
                 if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-                    done = True
-                    '''
                     if count == 10:
                         count += 1
                         param_grid = {
@@ -168,9 +166,8 @@ def tune(filename):
                 skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
                 clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
                 clf.fit(x, y)
-                '''
             params.update(clf.best_params_)
-            np.save(__tuning_results_folder / ("Stage1_" + filename[:-4]), params)
+            # np.save(__tuning_results_folder / ("Stage1_" + filename[:-4]), params)
             print(filename[:-4] + " " + str(round(time.time() - loop_time, 2)) + "s.: " + str(params))
             print()
 
