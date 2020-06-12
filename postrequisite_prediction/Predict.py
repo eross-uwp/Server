@@ -122,7 +122,7 @@ def tune(filename):
                 model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
                 param_grid = {
                     "learning_rate": np.arange(0.01, .26, .01),
-                    "n_estimators": range(10, 501, 10)
+                    "n_estimators": range(10, 1501, 10)
                 }
 
             skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
@@ -191,9 +191,10 @@ def tune(filename):
             # Round 4
             if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
                 model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
-                param_grid = {
-                    "max_features": range(1, x.shape[1], 1)
-                }
+                param_grid = [
+                    {"max_features": range(1, x.shape[1], 1)},
+                    {"max_features": ['log2', 'sqrt']}
+                    ]
                 skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
                 clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
                 clf.fit(x, y)
