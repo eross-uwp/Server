@@ -202,26 +202,18 @@ def tune(filename):
             print(clf.best_score_)
 
             # Round 5
-            """if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-                lr = params["learning_rate"]
-                ne = params["n_estimators"]
+            if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
                 model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
                 param_grid = {
-                    "learning_rate": [0.005, 0.05, 0.1, lr, lr/2, lr/5, lr/10, lr/20],
-                    "n_estimators": [ne, ne*2, ne*5, ne*10, ne*15, ne*20]
+                    "loss": ['deviance', 'exponential'],
+                    'subsample': np.arange(0.1, 1.1, 0.1),
+                    'criterion': ['friedman_mse', 'mse', 'mae']
                 }
-                '''[
-                    {"learning_rate": [lr], "n_estimators": [ne]},
-                    {"learning_rate": [lr/2], "n_estimators": [ne*2]},
-                    {"learning_rate": [lr/5], "n_estimators": [ne*5]},
-                    {"learning_rate": [lr/10], "n_estimators": [ne*10]},
-                    {"learning_rate": [lr/15], "n_estimators": [ne*15]},
-                    {"learning_rate": [lr/20], "n_estimators": [ne*20]},
-                ]'''
                 skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
                 clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
                 clf.fit(x, y)
-            params.update(clf.best_params_)"""
+            params.update(clf.best_params_)
+
             np.save(__tuning_results_folder / filename[:-4], params)
             print(filename[:-4] + " " + str(round(time.time() - loop_time, 2)) + "s.: " + str(params))
             print(clf.best_score_)

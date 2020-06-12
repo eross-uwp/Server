@@ -23,16 +23,6 @@ __NUMBER_FOLDS = 5
 __RANDOM_SEED = 313131
 __MIN_SAMPLES_FOR_PREDICTING = 25
 
-
-def d():
-    p()
-
-
-def p():
-    print(x)
-
-
 if __name__ == "__main__":
-    x = [1, 2, 3, 4, 5]
-    p()
-    d()
+    while True:
+        os.system('notepad.exe')
