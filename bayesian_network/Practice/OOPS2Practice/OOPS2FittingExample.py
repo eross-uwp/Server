@@ -1,8 +1,11 @@
 from pomegranate import *
-import seaborn; seaborn.set_style('whitegrid')
+import seaborn;
 
+from bayesian_network.Practice.OOPS2Practice.EventTableCreator import createEventTable
 from bayesian_network.Practice.OOPS2Practice.NodeCreator import *
 from bayesian_network.Practice.CSVDataReader import *
+
+seaborn.set_style('whitegrid')
 
 # The goal of this file was to see how fitting (training the network) with real data works and
 # to create a network from data alone, instead of with predetermined probabilities.
@@ -17,7 +20,10 @@ PREREQ_FILE = 'PracticeSampleData - OOPS2 Prereqs.csv'
 COURSE_FILE = 'PracticeSampleData - OOPS2 Event.csv'
 FIT_FILE = 'PracticeSampleData - OOPS2 Real Data.csv'
 
-# Create the Bayesian network object with a the previous data
+NUM_PREREQS = 3
+NUM_GRADES = 11
+
+# Create the Bayesian network object
 model = BayesianNetwork("OOPS2 Network")
 print("Bayesian Network created \n")
 
@@ -29,7 +35,7 @@ print("Prereq courses created \n")
 
 # Creates a conditional probability table for the target course with events read in from a csv and
 # the list of prereq course grade probabilities it is dependent on
-courseConProb = ConditionalProbabilityTable(getCourseEvents(COURSE_FILE), courseDiscDistList)
+courseConProb = ConditionalProbabilityTable(createEventTable(NUM_PREREQS, NUM_GRADES), courseDiscDistList)
 
 # Creates the node for the target course with the conditional probability table and a course name
 # Currently hard coded name for this file, but it should be read from csv

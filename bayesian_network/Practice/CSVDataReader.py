@@ -73,7 +73,7 @@ def getCourseEvent():
                 rowData = [f"{row[0]}", f"{row[1]}", f"{row[2]}", float(row[3])]
 
                 couse6Data.append(rowData)
-                # print(f'{row[0]}, {row[1]}, {row[2]}, {row[3]}')
+                print(f'{row[0]}, {row[1]}, {row[2]}, {row[3]}')
                 line_count += 1
 
         print(f'Processed {line_count - 1} course grade probabilities.\n')
