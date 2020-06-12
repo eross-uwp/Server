@@ -121,13 +121,14 @@ def tune(filename):
                 }
                 model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
                 param_grid = {
-                    "learning_rate": [0.1],
-                    "n_estimators": range(20, 91, 10)
+                    "learning_rate": np.arange(0.01, .26, .01),
+                    "n_estimators": range(10, 501, 10)
                 }
 
             skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
             clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
-            done = False
+            clf.fit(x, y)
+            """done = False
             count = 1
             while not done:
                 clf.fit(x, y)
@@ -155,7 +156,7 @@ def tune(filename):
                         skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
                         clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
                     else:
-                        done = True
+                        done = True"""
             params.update(clf.best_params_)
             print(str(filename) + ": " + str(params))
             print(clf.best_score_)
@@ -201,7 +202,7 @@ def tune(filename):
             print(clf.best_score_)
 
             # Round 5
-            if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+            """if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
                 lr = params["learning_rate"]
                 ne = params["n_estimators"]
                 model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
@@ -220,8 +221,8 @@ def tune(filename):
                 skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
                 clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
                 clf.fit(x, y)
-            params.update(clf.best_params_)
-            # np.save(__tuning_results_folder / ("Stage1_" + filename[:-4]), params)
+            params.update(clf.best_params_)"""
+            np.save(__tuning_results_folder / filename[:-4], params)
             print(filename[:-4] + " " + str(round(time.time() - loop_time, 2)) + "s.: " + str(params))
             print(clf.best_score_)
             print()
@@ -235,7 +236,7 @@ def hyperparameter_tuning():
         os.makedirs(__tuning_results_folder)
 
     with parallel_backend('loky', n_jobs=-1):
-        if os.cpu_count() > 10:
+        if os.cpu_count() > 8:
             for filename in sorted(os.listdir(__data_folder)):
                 tune(filename)
         else:
