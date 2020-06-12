@@ -105,7 +105,9 @@ def tune(filename):
         unique_y, y_inversed = np.unique(check_y, return_inverse=True)
         y_counts = np.bincount(y_inversed)
         if not np.all([__NUMBER_FOLDS] > y_counts):
+            # Round 1
             if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
+                params = {}
                 model = LogisticRegression(random_state=__RANDOM_SEED, multi_class='auto')
                 param_grid = [
                     {'penalty': ['l1'], 'solver': ['liblinear', 'saga'], "C": np.logspace(-5, 8, 15)},
@@ -133,7 +135,7 @@ def tune(filename):
                 if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
                     done = True
                 if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-                    if count == 10:
+                    if count == 5:
                         count += 1
                         param_grid = {
                             "n_estimators": range(40, 71, 10),
@@ -154,21 +156,74 @@ def tune(filename):
                         clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
                     else:
                         done = True
+            params.update(clf.best_params_)
+            print(str(filename) + ": " + str(params))
+            print(clf.best_score_)
 
+            # Round 2
             if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-                
-                params.update(clf.best_params_)
                 model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
                 param_grid = {
                     "max_depth": range(2, 15, 1),
-                    "min_samples_split": range(1, len(y), 1)
+                    "min_samples_split": range(1, len(y), 2)
                 }
+                skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+                clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
+                clf.fit(x, y)
+            params.update(clf.best_params_)
+            print(str(filename) + ": " + str(params))
+            print(clf.best_score_)
+
+            # Round 3
+            if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+                model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
+                param_grid = {
+                    "min_samples_leaf": range(1, len(y), 1)
+                }
+                skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+                clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
+                clf.fit(x, y)
+            params.update(clf.best_params_)
+            print(str(filename) + ": " + str(params))
+            print(clf.best_score_)
+
+            # Round 4
+            if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+                model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
+                param_grid = {
+                    "max_features": range(1, x.shape[1], 1)
+                }
+                skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+                clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
+                clf.fit(x, y)
+            params.update(clf.best_params_)
+            print(str(filename) + ": " + str(params))
+            print(clf.best_score_)
+
+            # Round 5
+            if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+                lr = params["learning_rate"]
+                ne = params["n_estimators"]
+                model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
+                param_grid = {
+                    "learning_rate": [0.005, 0.05, 0.1, lr, lr/2, lr/5, lr/10, lr/20],
+                    "n_estimators": [ne, ne*2, ne*5, ne*10, ne*15, ne*20]
+                }
+                '''[
+                    {"learning_rate": [lr], "n_estimators": [ne]},
+                    {"learning_rate": [lr/2], "n_estimators": [ne*2]},
+                    {"learning_rate": [lr/5], "n_estimators": [ne*5]},
+                    {"learning_rate": [lr/10], "n_estimators": [ne*10]},
+                    {"learning_rate": [lr/15], "n_estimators": [ne*15]},
+                    {"learning_rate": [lr/20], "n_estimators": [ne*20]},
+                ]'''
                 skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
                 clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
                 clf.fit(x, y)
             params.update(clf.best_params_)
             # np.save(__tuning_results_folder / ("Stage1_" + filename[:-4]), params)
             print(filename[:-4] + " " + str(round(time.time() - loop_time, 2)) + "s.: " + str(params))
+            print(clf.best_score_)
             print()
 
 
