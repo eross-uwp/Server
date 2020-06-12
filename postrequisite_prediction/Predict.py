@@ -181,7 +181,7 @@ def hyperparameter_tuning():
 
     with parallel_backend('loky', n_jobs=-1):
         if os.cpu_count() > 10:
-            for filename in os.listdir(__data_folder):
+            for filename in sorted(os.listdir(__data_folder)):
                 tune(filename)
         else:
             Parallel()(delayed(tune)(filename) for filename in os.listdir(__data_folder))
@@ -361,7 +361,7 @@ def read_predict_write():
     results_each_postreq = [[], [], [], [], []]
 
     counter = 0
-    for filename in os.listdir(__data_folder):
+    for filename in sorted(os.listdir(__data_folder)):
         filename = str(filename[:-4] + '.csv')
         x_train, x_test, y_train, y_test, x_columns, n_samples = stratify_and_split(filename)
         if n_samples > __MIN_SAMPLES_FOR_PREDICTING:
