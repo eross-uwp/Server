@@ -11,7 +11,7 @@ from pip._internal.utils.misc import enum
 from sklearn import metrics
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import StratifiedKFold, GridSearchCV, train_test_split
+from sklearn.model_selection import StratifiedKFold, GridSearchCV, train_test_split, RandomizedSearchCV
 import warnings
 import time
 from pathlib import Path
@@ -224,7 +224,9 @@ def tune(filename):
             print()
 
 
-def tune_old(filename):
+def tune_grid(filename):
+    loop_time = time.time()
+    scoring = None
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
         model = LogisticRegression(random_state=__RANDOM_SEED, multi_class='auto')
         param_grid = [
@@ -233,6 +235,7 @@ def tune_old(filename):
              "C": np.logspace(-5, 8, 15)}
         ]
     elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+        scoring = "neg_root_mean_squared_error"
         model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
         param_grid = {
             "loss": ["deviance"],
@@ -246,23 +249,67 @@ def tune_old(filename):
             "n_estimators": [300, 500]
         }
 
-    clf = GridSearchCV(model, param_grid, cv=5)
+    skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+    clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
 
     x, y = get_prereq_table(filename)
     x = x.fillna(-1).values
     y = y.fillna(-1).values
     if len(x) >= __MIN_SAMPLES_FOR_PREDICTING and len(y) >= __MIN_SAMPLES_FOR_PREDICTING:
-        X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=__RANDOM_SEED)
-        check_y = column_or_1d(y_train)
+        check_y = column_or_1d(y)
         unique_y, y_inversed = np.unique(check_y, return_inverse=True)
         y_counts = np.bincount(y_inversed)
         if not np.all([__NUMBER_FOLDS] > y_counts):
-            best_clf = clf.fit(X_train, y_train)
+            best_clf = clf.fit(x, y)
 
             # np.save(__tuning_results_folder / filename[:-4], best_clf.best_params_)
-            print(str(filename) + ": " + str(best_clf.best_score_))
+            print(filename[:-4] + " " + str(round(time.time() - loop_time, 2)) + "s.: " + str(best_clf.best_score_))
             print(best_clf.best_params_)
-    print()
+            print()
+
+
+def tune_rand(filename):
+    loop_time = time.time()
+    scoring = None
+    if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
+        model = LogisticRegression(random_state=__RANDOM_SEED, multi_class='auto')
+        param_grid = [
+            {'penalty': ['l1'], 'solver': ['liblinear', 'saga'], "C": np.logspace(-5, 8, 15)},
+            {'penalty': ['l2', 'none'], 'solver': ['newton-cg', 'sag', 'saga', 'lbfgs'],
+             "C": np.logspace(-5, 8, 15)}
+        ]
+    elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+        scoring = "neg_root_mean_squared_error"
+        model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
+        param_grid = {
+            "loss": ["deviance", "exponential"],
+            "learning_rate": [0.01, 0.1, 1],
+            "min_samples_split": [0.1, 0.5, 2],
+            "min_samples_leaf": [0.1, 0.5, 1],
+            "max_depth": [1, 3, 4],
+            "max_features": ["log2", "sqrt"],
+            "criterion": ["friedman_mse", "mae", "mse"],
+            "subsample": [0.8, 1.0],
+            "n_estimators": [50, 100, 300, 500]
+        }
+
+    skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+    clf = RandomizedSearchCV(model, param_grid, cv=skf, scoring=scoring, n_iter=128, random_state=__RANDOM_SEED)
+
+    x, y = get_prereq_table(filename)
+    x = x.fillna(-1).values
+    y = y.fillna(-1).values
+    if len(x) >= __MIN_SAMPLES_FOR_PREDICTING and len(y) >= __MIN_SAMPLES_FOR_PREDICTING:
+        check_y = column_or_1d(y)
+        unique_y, y_inversed = np.unique(check_y, return_inverse=True)
+        y_counts = np.bincount(y_inversed)
+        if not np.all([__NUMBER_FOLDS] > y_counts):
+            best_clf = clf.fit(x, y)
+
+            # np.save(__tuning_results_folder / filename[:-4], best_clf.best_params_)
+            print(filename[:-4] + " " + str(round(time.time() - loop_time, 2)) + "s.: " + str(best_clf.best_score_))
+            print(best_clf.best_params_)
+            print()
 
 
 def hyperparameter_tuning():
@@ -274,8 +321,9 @@ def hyperparameter_tuning():
 
     with parallel_backend('loky', n_jobs=-1):
         for filename in sorted(os.listdir(__data_folder)):
-            tune(filename)
-            # tune_old(filename)
+            # tune(filename)
+            tune_grid(filename)
+            # tune_rand(filename)
 
     print('Hyperparameter tuning completed in ' + str(round(time.time() - start_time, 2)) + 's. Files saved to: \''
           + str(__tuning_results_folder) + '\' \n')
