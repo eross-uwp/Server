@@ -115,6 +115,8 @@ def tune(filename):
                      "C": np.logspace(-5, 8, 15)}
                 ]
             elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+                # scoring = "neg_root_mean_squared_error"
+                scoring = None
                 params = {
                     "max_features": "sqrt",
                     "subsample": 0.8
@@ -122,11 +124,11 @@ def tune(filename):
                 model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
                 param_grid = {
                     "learning_rate": np.arange(0.01, .26, .01),
-                    "n_estimators": range(10, 1501, 10)
+                    "n_estimators": range(10, 501, 10)
                 }
 
             skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-            clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
+            clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
             clf.fit(x, y)
             """done = False
             count = 1
@@ -165,11 +167,11 @@ def tune(filename):
             if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
                 model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
                 param_grid = {
-                    "max_depth": range(2, 15, 1),
+                    "max_depth": range(3, 15, 2),
                     "min_samples_split": range(1, len(y), 2)
                 }
                 skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-                clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
+                clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
                 clf.fit(x, y)
             params.update(clf.best_params_)
             print(str(filename) + ": " + str(params))
@@ -182,7 +184,7 @@ def tune(filename):
                     "min_samples_leaf": range(1, len(y), 1)
                 }
                 skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-                clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
+                clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
                 clf.fit(x, y)
             params.update(clf.best_params_)
             print(str(filename) + ": " + str(params))
@@ -191,12 +193,13 @@ def tune(filename):
             # Round 4
             if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
                 model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
-                param_grid = [
+                param_grid = {"max_features": ['log2', 'sqrt']}
+                '''[
                     {"max_features": range(1, x.shape[1], 1)},
                     {"max_features": ['log2', 'sqrt']}
-                    ]
+                    ]'''
                 skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-                clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
+                clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
                 clf.fit(x, y)
             params.update(clf.best_params_)
             print(str(filename) + ": " + str(params))
@@ -211,7 +214,7 @@ def tune(filename):
                     'criterion': ['friedman_mse', 'mse', 'mae']
                 }
                 skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-                clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
+                clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
                 clf.fit(x, y)
             params.update(clf.best_params_)
 
@@ -271,8 +274,8 @@ def hyperparameter_tuning():
 
     with parallel_backend('loky', n_jobs=-1):
         for filename in sorted(os.listdir(__data_folder)):
-            # tune(filename)
-            tune_old(filename)
+            tune(filename)
+            # tune_old(filename)
 
     print('Hyperparameter tuning completed in ' + str(round(time.time() - start_time, 2)) + 's. Files saved to: \''
           + str(__tuning_results_folder) + '\' \n')
