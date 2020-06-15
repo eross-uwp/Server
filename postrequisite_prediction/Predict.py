@@ -257,8 +257,8 @@ def tune_old(filename):
             best_clf = clf.fit(X_train, y_train)
 
             # np.save(__tuning_results_folder / filename[:-4], best_clf.best_params_)
-    print(str(filename) + ": " + str(best_clf.best_score_))
-    print(best_clf.best_params_)
+            print(str(filename) + ": " + str(best_clf.best_score_))
+            print(best_clf.best_params_)
     print()
 
 
