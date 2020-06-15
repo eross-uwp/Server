@@ -221,6 +221,47 @@ def tune(filename):
             print()
 
 
+def tune_old(filename):
+    if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
+        model = LogisticRegression(random_state=__RANDOM_SEED, multi_class='auto')
+        param_grid = [
+            {'penalty': ['l1'], 'solver': ['liblinear', 'saga'], "C": np.logspace(-5, 8, 15)},
+            {'penalty': ['l2', 'none'], 'solver': ['newton-cg', 'sag', 'saga', 'lbfgs'],
+             "C": np.logspace(-5, 8, 15)}
+        ]
+    elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+        model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
+        param_grid = {
+            "loss": ["deviance"],
+            "learning_rate": [0.01, 1],
+            "min_samples_split": [0.1, 0.5],
+            "min_samples_leaf": [0.1, 0.5],
+            "max_depth": [1, 4],
+            "max_features": ["log2", "sqrt"],
+            "criterion": ["friedman_mse", "mae"],
+            "subsample": [0.8],
+            "n_estimators": [300, 500]
+        }
+
+    clf = GridSearchCV(model, param_grid, cv=5, n_jobs=-1)
+
+    x, y = get_prereq_table(filename)
+    x = x.fillna(-1).values
+    y = y.fillna(-1).values
+    if len(x) >= __MIN_SAMPLES_FOR_PREDICTING and len(y) >= __MIN_SAMPLES_FOR_PREDICTING:
+        X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=__RANDOM_SEED)
+        check_y = column_or_1d(y_train)
+        unique_y, y_inversed = np.unique(check_y, return_inverse=True)
+        y_counts = np.bincount(y_inversed)
+        if not np.all([__NUMBER_FOLDS] > y_counts):
+            best_clf = clf.fit(X_train, y_train)
+
+            # np.save(__tuning_results_folder + filename[:-4], best_clf.best_params_)
+    print(str(filename) + ": " + best_clf.best_score_)
+    print(best_clf.best_params_)
+    print()
+
+
 def hyperparameter_tuning():
     print('Hyperparameter tuning beginning. Run time will print after the completion of each tuning. \n')
 
@@ -229,11 +270,9 @@ def hyperparameter_tuning():
         os.makedirs(__tuning_results_folder)
 
     with parallel_backend('loky', n_jobs=-1):
-        if os.cpu_count() > 8:
-            for filename in sorted(os.listdir(__data_folder)):
-                tune(filename)
-        else:
-            Parallel()(delayed(tune)(filename) for filename in os.listdir(__data_folder))
+        for filename in sorted(os.listdir(__data_folder)):
+            # tune(filename)
+            tune_old(filename)
 
     print('Hyperparameter tuning completed in ' + str(round(time.time() - start_time, 2)) + 's. Files saved to: \''
           + str(__tuning_results_folder) + '\' \n')

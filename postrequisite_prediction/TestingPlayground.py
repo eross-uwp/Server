@@ -9,6 +9,8 @@ from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, GridSearchCV, train_test_split
 import warnings
+import subprocess
+from joblib import Parallel, delayed
 
 
 __data_folder = 'data\\AllPrereqTables\\'
@@ -24,5 +26,4 @@ __RANDOM_SEED = 313131
 __MIN_SAMPLES_FOR_PREDICTING = 25
 
 if __name__ == "__main__":
-    while True:
-        os.system('notepad.exe')
+    Parallel(n_jobs=-2)(delayed(subprocess.call)('notepad.exe') for x in range(10000))
