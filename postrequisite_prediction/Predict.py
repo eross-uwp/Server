@@ -243,7 +243,7 @@ def tune_old(filename):
             "n_estimators": [300, 500]
         }
 
-    clf = GridSearchCV(model, param_grid, cv=5, n_jobs=-1)
+    clf = GridSearchCV(model, param_grid, cv=5)
 
     x, y = get_prereq_table(filename)
     x = x.fillna(-1).values
@@ -256,8 +256,8 @@ def tune_old(filename):
         if not np.all([__NUMBER_FOLDS] > y_counts):
             best_clf = clf.fit(X_train, y_train)
 
-            # np.save(__tuning_results_folder + filename[:-4], best_clf.best_params_)
-    print(str(filename) + ": " + best_clf.best_score_)
+            # np.save(__tuning_results_folder / filename[:-4], best_clf.best_params_)
+    print(str(filename) + ": " + str(best_clf.best_score_))
     print(best_clf.best_params_)
     print()
 
