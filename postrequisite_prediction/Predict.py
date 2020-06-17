@@ -93,6 +93,10 @@ def get_prereq_table(filename):
     return x, y
 
 
+# Automatic Sequenced tuning based on:
+# https://www.analyticsvidhya.com/blog/2016/02/complete-guide-parameter-tuning-gradient-boosting-gbm-python/
+# Note this was abandoned and is only here for legacy purposes. Will be removed in future commits. Logistic Regression
+# was never touched
 def tune(filename):
     loop_time = time.time()
 
@@ -111,54 +115,24 @@ def tune(filename):
                 model = LogisticRegression(random_state=__RANDOM_SEED, multi_class='auto')
                 param_grid = [
                     {'penalty': ['l1'], 'solver': ['liblinear', 'saga'], "C": np.logspace(-5, 8, 15)},
-                    {'penalty': ['l2', 'none'], 'solver': ['newton-cg', 'sag', 'saga', 'lbfgs'],
-                     "C": np.logspace(-5, 8, 15)}
+                    {'penalty': ['l2', 'none'], 'solver': ['newton-cg', 'sag', 'saga', 'lbfgs'], "C": np.logspace(-5, 8, 15)}
                 ]
             elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-                # scoring = "neg_root_mean_squared_error"
-                scoring = None
+                scoring = "neg_root_mean_squared_error"
+                # scoring = None
                 params = {
                     "max_features": "sqrt",
                     "subsample": 0.8
                 }
                 model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
                 param_grid = {
-                    "learning_rate": np.arange(0.01, .26, .01),
+                    "learning_rate": list(np.logspace(np.log10(0.005), np.log10(0.5), base = 10, num = 50)),
                     "n_estimators": range(10, 501, 10)
                 }
 
             skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
             clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
             clf.fit(x, y)
-            """done = False
-            count = 1
-            while not done:
-                clf.fit(x, y)
-                print(str(filename) + ": " + str(clf.best_params_))
-                if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-                    done = True
-                if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-                    if count == 5:
-                        count += 1
-                        param_grid = {
-                            "n_estimators": range(40, 71, 10),
-                            "learning_rate": np.arange(0.05, 0.201, 0.01)
-                        }
-                        skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-                        clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
-                    elif clf.best_params_["n_estimators"] <= 30:
-                        count += 1
-                        param_grid["learning_rate"][0] = round(param_grid["learning_rate"][0] - param_grid["learning_rate"][0] / 2, 4)
-                        skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-                        clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
-
-                    elif clf.best_params_["n_estimators"] >= 80:
-                        count += 1
-                        param_grid["learning_rate"][0] = round(param_grid["learning_rate"][0] + param_grid["learning_rate"][0] / 2, 4)
-                        skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-                        clf = GridSearchCV(model, param_grid, cv=skf, scoring="neg_root_mean_squared_error")
-                    else:
-                        done = True"""
             params.update(clf.best_params_)
             print(str(filename) + ": " + str(params))
             print(clf.best_score_)
@@ -167,8 +141,8 @@ def tune(filename):
             if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
                 model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
                 param_grid = {
-                    "max_depth": range(3, 15, 2),
-                    "min_samples_split": range(1, len(y), 2)
+                    "max_depth": range(3, 15, 1),
+                    "min_samples_split": range(1, len(y), 1)
                 }
                 skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
                 clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
@@ -224,15 +198,20 @@ def tune(filename):
             print()
 
 
+# Grid based exhaustive search tuning on small amount of parameters. Based on the existing code.
 def tune_grid(filename):
     loop_time = time.time()
     scoring = None
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-        model = LogisticRegression(random_state=__RANDOM_SEED, multi_class='auto')
+        scoring = "neg_root_mean_squared_error"
+        model = LogisticRegression(random_state=__RANDOM_SEED)
+        c_space = list(np.logspace(-7, 7, 60))
         param_grid = [
-            {'penalty': ['l1'], 'solver': ['liblinear', 'saga'], "C": np.logspace(-5, 8, 15)},
-            {'penalty': ['l2', 'none'], 'solver': ['newton-cg', 'sag', 'saga', 'lbfgs'],
-             "C": np.logspace(-5, 8, 15)}
+            {'penalty': ['l1', 'l2'], 'solver': ['liblinear'], "C": c_space, "class_weight": ['balanced', None]},
+            {'penalty': ['l2', 'none'], 'solver': ['newton-cg', 'sag', 'lbfgs'], "C": c_space,
+             "class_weight": ['balanced', None]},
+            {'penalty': ['l1', 'l2', 'none', 'elasticnet'], 'solver': ['saga'], "C": c_space,
+             "class_weight": ['balanced', None]}
         ]
     elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
         scoring = "neg_root_mean_squared_error"
@@ -250,7 +229,7 @@ def tune_grid(filename):
         }
 
     skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-    clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
+    clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring, verbose=True)
 
     x, y = get_prereq_table(filename)
     x = x.fillna(-1).values
@@ -262,41 +241,46 @@ def tune_grid(filename):
         if not np.all([__NUMBER_FOLDS] > y_counts):
             best_clf = clf.fit(x, y)
 
-            # np.save(__tuning_results_folder / filename[:-4], best_clf.best_params_)
+            np.save(__tuning_results_folder / filename[:-4], best_clf.best_params_)
             print(filename[:-4] + " " + str(round(time.time() - loop_time, 2)) + "s.: " + str(best_clf.best_score_))
             print(best_clf.best_params_)
             print()
 
 
+# Random tuning based on extended parameter grid. Preferred method at the moment based on:
+# https://medium.com/rants-on-machine-learning/smarter-parameter-sweeps-or-why-grid-search-is-plain-stupid-c17d97a0e881
 def tune_rand(filename):
     loop_time = time.time()
     scoring = None
+    x, y = get_prereq_table(filename)
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-        model = LogisticRegression(random_state=__RANDOM_SEED, multi_class='auto')
+        model = LogisticRegression(random_state=__RANDOM_SEED)
+        c_space = list(np.logspace(-7, 7, 60))
         param_grid = [
-            {'penalty': ['l1'], 'solver': ['liblinear', 'saga'], "C": np.logspace(-5, 8, 15)},
-            {'penalty': ['l2', 'none'], 'solver': ['newton-cg', 'sag', 'saga', 'lbfgs'],
-             "C": np.logspace(-5, 8, 15)}
+            {'penalty': ['l1', 'l2'], 'solver': ['liblinear'], "C": c_space, "class_weight": ['balanced', None]},
+            {'penalty': ['l2', 'none'], 'solver': ['newton-cg', 'sag', 'lbfgs'], "C": c_space,
+             "class_weight": ['balanced', None]},
+            {'penalty': ['l1', 'l2', 'none', 'elasticnet'], 'solver': ['saga'], "C": c_space,
+             "class_weight": ['balanced', None]}
         ]
     elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
         scoring = "neg_root_mean_squared_error"
         model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
         param_grid = {
             "loss": ["deviance", "exponential"],
-            "learning_rate": [0.01, 0.1, 1],
-            "min_samples_split": [0.1, 0.5, 2],
-            "min_samples_leaf": [0.1, 0.5, 1],
-            "max_depth": [1, 3, 4],
+            "learning_rate": list(np.logspace(np.log10(0.005), np.log10(0.5), base=10, num=1000)),
+            "min_samples_split": list(range(1, len(y), 1)),
+            "min_samples_leaf": list(range(1, len(y), 1)),
+            "max_depth": list(range(2, 26, 1)),
             "max_features": ["log2", "sqrt"],
             "criterion": ["friedman_mse", "mae", "mse"],
-            "subsample": [0.8, 1.0],
-            "n_estimators": [50, 100, 300, 500]
+            "subsample": list(np.arange(0.1, 1.1, 0.1)),
+            "n_estimators": list(range(10, 1501, 10))
         }
 
     skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-    clf = RandomizedSearchCV(model, param_grid, cv=skf, scoring=scoring, n_iter=128, random_state=__RANDOM_SEED)
+    clf = RandomizedSearchCV(model, param_grid, cv=skf, scoring=scoring, n_iter=2500, random_state=__RANDOM_SEED, verbose=True)
 
-    x, y = get_prereq_table(filename)
     x = x.fillna(-1).values
     y = y.fillna(-1).values
     if len(x) >= __MIN_SAMPLES_FOR_PREDICTING and len(y) >= __MIN_SAMPLES_FOR_PREDICTING:
@@ -305,8 +289,7 @@ def tune_rand(filename):
         y_counts = np.bincount(y_inversed)
         if not np.all([__NUMBER_FOLDS] > y_counts):
             best_clf = clf.fit(x, y)
-
-            # np.save(__tuning_results_folder / filename[:-4], best_clf.best_params_)
+            np.save(__tuning_results_folder / filename[:-4], best_clf.best_params_)
             print(filename[:-4] + " " + str(round(time.time() - loop_time, 2)) + "s.: " + str(best_clf.best_score_))
             print(best_clf.best_params_)
             print()
@@ -530,32 +513,35 @@ def read_predict_write():
 
 
 def save_models():
-    print('Model saving beginning. A counter will print after the completion of each postreq. \n')
+    print('Model saving beginning. \n')
+    start_time = time.time()
     if not os.path.exists(__model_output):
         os.makedirs(__model_output)
 
-    counter = 0
-    for filename in os.listdir(__tuning_results_folder):
-        filename = str(filename[:-4] + '.csv')
-        x, y = get_prereq_table(filename)
-        x_columns = list(x.columns.values)
-        x = x.fillna(-1).values
-        y = y.fillna(-1).values
+    with parallel_backend('loky', n_jobs=-1):
+        Parallel()(delayed(dump_model)(filename) for filename in os.listdir(__tuning_results_folder))
 
-        read_dictionary = np.load(__tuning_results_folder / (filename[:-4] + '.npy'), allow_pickle=True).item()
+    print('Model saving completed in ' + str(round(time.time()-start_time, 2)) + 's. Files saved to: '
+          + str(__model_output) + '\n')
 
-        if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-            model = LogisticRegression(random_state=__RANDOM_SEED, **read_dictionary)
-        elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-            model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **read_dictionary)
 
-        model.fit(x, y)
+def dump_model(filename):
+    filename = str(filename[:-4] + '.csv')
+    x, y = get_prereq_table(filename)
+    x_columns = list(x.columns.values)
+    x = x.fillna(-1).values
+    y = y.fillna(-1).values
 
-        pickle.dump(model, open(__model_output / (filename[:-4] + '.pkl'), 'wb'))
-        print(counter)
-        counter += 1
+    read_dictionary = np.load(__tuning_results_folder / (filename[:-4] + '.npy'), allow_pickle=True).item()
 
-    print('Model saving completed. Files saved to: ' + str(__model_output) + '\n')
+    if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
+        model = LogisticRegression(random_state=__RANDOM_SEED, **read_dictionary)
+    elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+        model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **read_dictionary)
+
+    model.fit(x, y)
+
+    pickle.dump(model, open(__model_output / (filename[:-4] + '.pkl'), 'wb'))
 
 
 if __name__ == "__main__":
@@ -563,12 +549,13 @@ if __name__ == "__main__":
                             "'1': Root prerequisites \n"
                             "'2': Immediate prerequisites \n"
                             "'3': All prerequisites \n"))
-    __model_enum = int(input("Enter one of the following for model type: \n"
-                             "'1': Logistic Regression \n"
-                             "'2': Gradient Boosted Trees Classifier \n"))
 
     if __tree_type != __TREE_TYPES_ENUM.ROOT_PREREQS and __tree_type != __TREE_TYPES_ENUM.IMMEDIATE_PREREQS and __tree_type != __TREE_TYPES_ENUM.ALL_PREREQS:
         raise ValueError('An invalid tree type was passed. Must be \'1\', \'2\', or \'3\'')
+
+    __model_enum = int(input("Enter one of the following for model type: \n"
+                             "'1': Logistic Regression \n"
+                             "'2': Gradient Boosted Trees Classifier \n"))
 
     if __model_enum != __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION and __model_enum != __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
         raise ValueError('An invalid model type was passed. Must be \'1\' or \'2\'')

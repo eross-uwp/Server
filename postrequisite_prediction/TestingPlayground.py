@@ -26,4 +26,4 @@ __RANDOM_SEED = 313131
 __MIN_SAMPLES_FOR_PREDICTING = 25
 
 if __name__ == "__main__":
-    Parallel(n_jobs=-2)(delayed(subprocess.call)('notepad.exe') for x in range(10000))
+    print(np.logspace(-7, 7, 60))
