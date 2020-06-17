@@ -7,7 +7,7 @@ import sys
 
 import pandas as pd
 import numpy as np
-from pip._internal.utils.misc import enum
+import enum
 from sklearn import metrics
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression
@@ -38,8 +38,8 @@ __TEST_PREFIX = 'test_'
 __NUMBER_FOLDS = 5
 __RANDOM_SEED = 313131
 __MIN_SAMPLES_FOR_PREDICTING = 25
-__MODEL_TYPES_ENUM = enum(LOGISTIC_REGRESSION=1, GRADIENT_BOOSTED_TREES=2)
-__TREE_TYPES_ENUM = enum(ROOT_PREREQS=1, IMMEDIATE_PREREQS=2, ALL_PREREQS=3)
+__MODEL_TYPES_ENUM = enum.Enum('__MODEL_TYPES_ENUM', 'LOGISTIC_REGRESSION GRADIENT_BOOSTED_TREES')
+__TREE_TYPES_ENUM = enum.Enum('__TREE_TYPES_ENUM', 'ROOT_PREREQS IMMEDIATE_PREREQS ALL_PREREQS')
 
 np.random.seed(__RANDOM_SEED)
 
@@ -98,6 +98,8 @@ def get_prereq_table(filename):
 # Note this was abandoned and is only here for legacy purposes. Will be removed in future commits. Logistic Regression
 # was never touched
 def tune(filename):
+    if __model_enum != __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
+        raise NotImplementedError("This method has not been implemented for " + str(__model_enum.name))
     loop_time = time.time()
 
     x, y = get_prereq_table(filename)
@@ -109,27 +111,32 @@ def tune(filename):
         unique_y, y_inversed = np.unique(check_y, return_inverse=True)
         y_counts = np.bincount(y_inversed)
         if not np.all([__NUMBER_FOLDS] > y_counts):
-            # Round 1
-            if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-                params = {}
-                model = LogisticRegression(random_state=__RANDOM_SEED, multi_class='auto')
-                param_grid = [
-                    {'penalty': ['l1'], 'solver': ['liblinear', 'saga'], "C": np.logspace(-5, 8, 15)},
-                    {'penalty': ['l2', 'none'], 'solver': ['newton-cg', 'sag', 'saga', 'lbfgs'], "C": np.logspace(-5, 8, 15)}
-                ]
-            elif __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-                scoring = "neg_root_mean_squared_error"
-                # scoring = None
-                params = {
-                    "max_features": "sqrt",
-                    "subsample": 0.8
-                }
-                model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
-                param_grid = {
-                    "learning_rate": list(np.logspace(np.log10(0.005), np.log10(0.5), base = 10, num = 50)),
-                    "n_estimators": range(10, 501, 10)
-                }
+            # Round 1  2500 iterations
+            scoring = "neg_root_mean_squared_error"
+            params = {
+                "max_features": "sqrt",
+                "subsample": 0.8
+            }
+            model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
+            param_grid = {
+                "learning_rate": list(np.logspace(np.log10(0.005), np.log10(0.5), num=50)),
+                "n_estimators": list(np.unique(np.logspace(np.log10(10), np.log10(1500), num=50, dtype=int)))
+            }
 
+            skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+            clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring, verbose=True)
+            clf.fit(x, y)
+            params.update(clf.best_params_)
+            print(time.time()-loop_time)
+            print(str(filename) + ": " + str(params))
+            print(clf.best_score_)
+
+            # Round 2  12 * len(y) iterations
+            model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
+            param_grid = {
+                "max_depth": range(3, 15, 1),
+                "min_samples_split": range(1, len(y), 1)
+            }
             skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
             clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
             clf.fit(x, y)
@@ -137,59 +144,41 @@ def tune(filename):
             print(str(filename) + ": " + str(params))
             print(clf.best_score_)
 
-            # Round 2
-            if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-                model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
-                param_grid = {
-                    "max_depth": range(3, 15, 1),
-                    "min_samples_split": range(1, len(y), 1)
-                }
-                skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-                clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
-                clf.fit(x, y)
+            # Round 3  len(y) iterations
+            model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
+            param_grid = {
+                "min_samples_leaf": range(1, len(y), 1)
+            }
+            skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+            clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
+            clf.fit(x, y)
             params.update(clf.best_params_)
             print(str(filename) + ": " + str(params))
             print(clf.best_score_)
 
-            # Round 3
-            if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-                model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
-                param_grid = {
-                    "min_samples_leaf": range(1, len(y), 1)
-                }
-                skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-                clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
-                clf.fit(x, y)
+            # Round 4  2 * n_features iterations (around 10-16)
+            model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
+            param_grid = [
+                {"max_features": range(1, x.shape[1], 1)},
+                {"max_features": ['log2', 'sqrt']}
+                ]
+            skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+            clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
+            clf.fit(x, y)
             params.update(clf.best_params_)
             print(str(filename) + ": " + str(params))
             print(clf.best_score_)
 
-            # Round 4
-            if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-                model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
-                param_grid = {"max_features": ['log2', 'sqrt']}
-                '''[
-                    {"max_features": range(1, x.shape[1], 1)},
-                    {"max_features": ['log2', 'sqrt']}
-                    ]'''
-                skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-                clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
-                clf.fit(x, y)
-            params.update(clf.best_params_)
-            print(str(filename) + ": " + str(params))
-            print(clf.best_score_)
-
-            # Round 5
-            if __model_enum == __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
-                model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
-                param_grid = {
-                    "loss": ['deviance', 'exponential'],
-                    'subsample': np.arange(0.1, 1.1, 0.1),
-                    'criterion': ['friedman_mse', 'mse', 'mae']
-                }
-                skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-                clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
-                clf.fit(x, y)
+            # Round 5  60 iterations
+            model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **params)
+            param_grid = {
+                "loss": ['deviance', 'exponential'],
+                'subsample': np.arange(0.1, 1.1, 0.1),
+                'criterion': ['friedman_mse', 'mse', 'mae']
+            }
+            skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+            clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring)
+            clf.fit(x, y)
             params.update(clf.best_params_)
 
             np.save(__tuning_results_folder / filename[:-4], params)
@@ -267,15 +256,15 @@ def tune_rand(filename):
         scoring = "neg_root_mean_squared_error"
         model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
         param_grid = {
-            "loss": ["deviance", "exponential"],
-            "learning_rate": list(np.logspace(np.log10(0.005), np.log10(0.5), base=10, num=1000)),
-            "min_samples_split": list(range(1, len(y), 1)),
-            "min_samples_leaf": list(range(1, len(y), 1)),
-            "max_depth": list(range(2, 26, 1)),
-            "max_features": ["log2", "sqrt"],
-            "criterion": ["friedman_mse", "mae", "mse"],
-            "subsample": list(np.arange(0.1, 1.1, 0.1)),
-            "n_estimators": list(range(10, 1501, 10))
+            "loss": ["deviance", "exponential"],  # 2 iterations
+            "learning_rate": list(np.logspace(np.log10(0.005), np.log10(0.5), base=10, num=1000)),  # 1000 iterations
+            "min_samples_split": list(range(1, len(y), 1)),  # len(y) iterations
+            "min_samples_leaf": list(range(1, len(y), 1)),  # len(y) iterations
+            "max_depth": list(range(2, 26, 1)),  # 24 iterations
+            "max_features": ["log2", "sqrt"],  # 2 iterations
+            "criterion": ["friedman_mse", "mae", "mse"],  # 3 iterations
+            "subsample": list(np.arange(0.1, 1.1, 0.1)),  # 10 iterations
+            "n_estimators": list(range(10, 1501, 10))  # 149 iterations
         }
 
     skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
@@ -304,8 +293,8 @@ def hyperparameter_tuning():
 
     with parallel_backend('loky', n_jobs=-1):
         for filename in sorted(os.listdir(__data_folder)):
-            # tune(filename)
-            tune_grid(filename)
+            tune(filename)
+            # tune_grid(filename)
             # tune_rand(filename)
 
     print('Hyperparameter tuning completed in ' + str(round(time.time() - start_time, 2)) + 's. Files saved to: \''
@@ -545,17 +534,17 @@ def dump_model(filename):
 
 
 if __name__ == "__main__":
-    __tree_type = int(input("Enter one of the following for prereq type: \n"
+    __tree_type = __TREE_TYPES_ENUM(int(input("Enter one of the following for prereq type: \n"
                             "'1': Root prerequisites \n"
                             "'2': Immediate prerequisites \n"
-                            "'3': All prerequisites \n"))
+                            "'3': All prerequisites \n")))
 
     if __tree_type != __TREE_TYPES_ENUM.ROOT_PREREQS and __tree_type != __TREE_TYPES_ENUM.IMMEDIATE_PREREQS and __tree_type != __TREE_TYPES_ENUM.ALL_PREREQS:
         raise ValueError('An invalid tree type was passed. Must be \'1\', \'2\', or \'3\'')
 
-    __model_enum = int(input("Enter one of the following for model type: \n"
+    __model_enum = __MODEL_TYPES_ENUM(int(input("Enter one of the following for model type: \n"
                              "'1': Logistic Regression \n"
-                             "'2': Gradient Boosted Trees Classifier \n"))
+                             "'2': Gradient Boosted Trees Classifier \n")))
 
     if __model_enum != __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION and __model_enum != __MODEL_TYPES_ENUM.GRADIENT_BOOSTED_TREES:
         raise ValueError('An invalid model type was passed. Must be \'1\' or \'2\'')
