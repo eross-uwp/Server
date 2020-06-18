@@ -7,7 +7,7 @@ import numpy
 
 from pomegranate import *
 
-from bayesian_network.Practice.CSVDataReader import getData
+from Practice.CSVDataReader import getData
 
 # Returns a Discrete Distribution by formatting input course data
 def getFormattedDiscDist(courseData):

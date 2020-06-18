@@ -7,8 +7,8 @@ import numpy
 
 from pomegranate import *
 
-from bayesian_network.Practice.DiscreteDistributionCreator import createDiscDistList
-from bayesian_network.Practice.CSVDataReader import getCourseEvent
+from Practice.DiscreteDistributionCreator import createDiscDistList
+from Practice.CSVDataReader import getCourseEvent
 
 numpy.random.seed(0)
 numpy.set_printoptions(suppress=True)
@@ -54,7 +54,9 @@ courseDiscDistList, courseDiscDistStateList = createDiscDistList()
 
 # List of probability events loaded from csv for course6 using fake event probabilities
 course6_events = getCourseEvent()
-
+print('Course6 Events for conditional probability table:\n')
+print(type(course6_events))
+print(course6_events)
 # Course6 is dependent on course the 5 loaded in courses in courseDiscDistList - shortened version has 2 courses
 course6 = ConditionalProbabilityTable(course6_events, courseDiscDistList)
 
