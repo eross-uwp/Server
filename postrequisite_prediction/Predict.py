@@ -570,7 +570,7 @@ if __name__ == "__main__":
                                 "'4': Run All Predictions \n"
                                 "'5': Training batch \n"))
 
-    if tune_or_predict != 1 and tune_or_predict != 2 and tune_or_predict != 3 and tune_or_predict != 4:
+    if tune_or_predict != 1 and tune_or_predict != 2 and tune_or_predict != 3 and tune_or_predict != 4 and tune_or_predict != 5:
         raise ValueError('An invalid process type was passed. Must be \'1\', \'2\',\'3\', or \'4\'')
 
     if tune_or_predict == 4:
@@ -581,7 +581,7 @@ if __name__ == "__main__":
                 __data_folder, __folds_folder, __results_folder, __tuning_results_folder, __model_output = set_paths()
                 print(str(__tree_type) + ":" + str(__model_enum))
                 read_predict_write()
-    elif tune_or_predict ==5:
+    elif tune_or_predict == 5:
         __model_enum = __MODEL_TYPES_ENUM.NU_SVR
         for tree_type in __TREE_TYPES_ENUM:
             __data_folder, __folds_folder, __results_folder, __tuning_results_folder, __model_output = set_paths()
