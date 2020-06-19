@@ -19,6 +19,7 @@ import time
 from pathlib import Path
 from joblib import Parallel, delayed, parallel_backend
 import pickle
+from scipy.stats import loguniform
 from sklearn.utils import column_or_1d
 
 if not sys.warnoptions:
@@ -250,7 +251,7 @@ def tune_rand(filename):
         model = RandomForestRegressor(random_state=__RANDOM_SEED)
         num_trials = 1000
         param_grid = {
-            "n_estimators": np.loguniform(np.log10(10), np.log10(1500), dtype=int),
+            "n_estimators": np.logspace(np.log10(10), np.log10(1500), 100, dtype=int),
             "criterion": ["friedman_mse", "mae", "mse"],
             "min_samples_split": list(range(1, len(y), 1)),
             "min_samples_leaf": list(range(1, len(y), 1)),
@@ -260,15 +261,15 @@ def tune_rand(filename):
         num_trials = 2000
         model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
         param_grid = {
-            "loss": ["deviance", "exponential"],  # 2 iterations
-            "learning_rate": np.loguniform(np.log10(0.005), np.log10(0.5)),
-            "min_samples_split": list(range(1, len(y), 1)),  # len(y) iterations
-            "min_samples_leaf": list(range(1, len(y), 1)),  # len(y) iterations
-            "max_depth": list(range(2, 26, 1)),  # 24 iterations
-            "max_features": ["log2", "sqrt"],  # 2 iterations
-            "criterion": ["friedman_mse", "mae", "mse"],  # 3 iterations
-            "subsample": list(np.arange(0.1, 1.1, 0.1)),  # 10 iterations
-            "n_estimators": np.loguniform(np.log10(10), np.log10(1500), dtype=int)  # 149 iterations
+            "loss": ["deviance", "exponential"],
+            "learning_rate": np.logspace(np.log10(0.005), np.log10(0.5), 100),
+            "min_samples_split": list(range(1, len(y), 1)),
+            "min_samples_leaf": list(range(1, len(y), 1)),
+            "max_depth": list(range(2, 26, 1)),
+            "max_features": ["log2", "sqrt"],
+            "criterion": ["friedman_mse", "mae", "mse"],
+            "subsample": list(np.arange(0.1, 1.1, 0.1)),
+            "n_estimators": np.logspace(np.log10(10), np.log10(1500), 100, dtype=int)
         }
     else:
         raise NotImplementedError("This method has not been implemented for " + str(__model_enum.name))
