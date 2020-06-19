@@ -4,14 +4,14 @@ import numpy as np
 import random
 from sklearn import metrics
 
-PREREQ_PROCESS_TYPE = 'All'
+PREREQ_PROCESS_TYPE = 'ALL'
 MODEL_PREFIX = 'ModZeroR_'
 STRATIFIED_DATA_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqFolds\\'
 TABLES_FILE_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqTables\\'
-RESULTS_FOLDER = '..\\results\\' + PREREQ_PROCESS_TYPE + 'PrereqModZeroR\\'
+RESULTS_FOLDER = '..\\results\\' + PREREQ_PROCESS_TYPE + 'Prereq_ModZeroR_Results\\'
 random.seed = 313131
 population = [0, 1]
-possible_grades = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+possible_grades = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 
 # Grabs the training and testing data the given course name and fold number.
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
             try:
                 train, test = get_training_testing(postreq_name, number_for_fold)
-                if set == 1:
+                if number_for_fold == 1:
                     test_total = test
                 else:
                     test_total = pd.concat([test_total, test], axis=0, ignore_index=True)
@@ -78,10 +78,14 @@ if __name__ == "__main__":
 
                 # Increment each grade for each entry
                 for each_grade in y_train:
-                    grades_distribution[each_grade] = grades_distribution[each_grade] + 1
+                    grades_distribution[each_grade] += 1
 
                 # Find the grade with the most entries.
                 prediction = max(grades_distribution, key=grades_distribution.get)
+
+                print(postreq_name + " " + str(number_for_fold) + " " + str(grades_distribution))
+                print(prediction)
+                print()
 
                 # Create an array with the shape of y_test, but prediction in all of its values.
                 for_concat = np.full_like(y_test, prediction)

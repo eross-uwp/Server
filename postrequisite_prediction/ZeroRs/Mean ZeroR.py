@@ -3,11 +3,12 @@ import pandas as pd
 import numpy as np
 import random
 from sklearn import metrics
+from pathlib import Path
 
-PREREQ_PROCESS_TYPE = 'All'
+PREREQ_PROCESS_TYPE = 'ALL'
 MODEL_PREFIX = "MeanZeroR_"
 STRATIFIED_DATA_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqFolds\\'
-RESULTS_FOLDER = '..\\results\\' + PREREQ_PROCESS_TYPE + 'PrereqMeanZeroR\\'
+RESULTS_FOLDER = '..\\results\\' + PREREQ_PROCESS_TYPE + 'Prereq_MeanZeroR_Results\\'
 TABLES_FILE_PATH = '..\\data\\' + PREREQ_PROCESS_TYPE + 'PrereqTables\\'
 random.seed = 313131
 population = [0, 1]
@@ -73,7 +74,7 @@ if __name__ == "__main__":
 
             try:
                 train, test = get_training_testing(postreq_name, number_for_fold)
-                if set == 1:
+                if number_for_fold == 1:
                     test_total = test
                 else:
                     test_total = pd.concat([test_total, test], axis=0, ignore_index=True)
