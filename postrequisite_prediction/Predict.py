@@ -189,11 +189,11 @@ def tune_grid(filename):
         ]
     elif __model_enum == __MODEL_TYPES_ENUM.NU_SVR:
         model = NuSVR()
-        c_space = list(np.logspace(-5, 5, 20))
+        c_space = list(np.logspace(-5, 5, 15))
         nu_space = np.arange(0.1, 1.1, 0.1)
         param_grid = [
             {'nu': nu_space, 'C': c_space, 'kernel': ['linear', 'rbf', 'sigmoid'], 'gamma': ['scale', 'auto']},
-            {'nu': nu_space, 'C': c_space, 'kernel': ['poly'], 'degree': range(2, 7, 1), 'gamma': ['scale', 'auto']}
+            {'nu': nu_space, 'C': c_space, 'kernel': ['poly'], 'degree': range(2, 6, 1), 'gamma': ['scale', 'auto']}
         ]
     elif __model_enum == __MODEL_TYPES_ENUM.GBT_CLASSIFIER:
         model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
@@ -567,7 +567,8 @@ if __name__ == "__main__":
                                 "'1': Tune hyperparameters \n"
                                 "'2': Run predictions \n"
                                 "'3': Save models \n"
-                                "'4': Run All Predictions \n"))
+                                "'4': Run All Predictions \n"
+                                "'5': Training batch \n"))
 
     if tune_or_predict != 1 and tune_or_predict != 2 and tune_or_predict != 3 and tune_or_predict != 4:
         raise ValueError('An invalid process type was passed. Must be \'1\', \'2\',\'3\', or \'4\'')
@@ -580,6 +581,11 @@ if __name__ == "__main__":
                 __data_folder, __folds_folder, __results_folder, __tuning_results_folder, __model_output = set_paths()
                 print(str(__tree_type) + ":" + str(__model_enum))
                 read_predict_write()
+    elif tune_or_predict ==5:
+        __model_enum = __MODEL_TYPES_ENUM.NU_SVR
+        for tree_type in __TREE_TYPES_ENUM:
+            __data_folder, __folds_folder, __results_folder, __tuning_results_folder, __model_output = set_paths()
+            hyperparameter_tuning()
     else:
         __tree_type = int(input("Enter one of the following for prereq type: \n '1': Root prerequisites \n"
                                 " '2': Immediate prerequisites \n '3': All prerequisites \n"))
