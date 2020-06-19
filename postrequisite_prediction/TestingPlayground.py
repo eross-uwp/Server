@@ -32,7 +32,7 @@ __data_folder = Path('data/AllPrereqTables/')
 __folds_folder = Path('data/Testing/')
 __model_enum = 0
 __tree_type = 0
-__tuning_results_folder = Path('TuningResults/All/GBT/')
+__tuning_results_folder = Path('TuningResults/ALL/GBT_CLASSIFIER/')
 
 __TRAIN_PREFIX = 'train_'
 __TEST_PREFIX = 'test_'
@@ -114,4 +114,9 @@ def model_selection_string():
 
 
 if __name__ == "__main__":
-    print(__MODEL_TYPES_ENUM(1))
+    for filename in os.listdir(__data_folder):
+        if os.path.exists(__tuning_results_folder / (filename[:-4] + '.npy')):
+            read_dictionary = np.load(__tuning_results_folder / (filename[:-4] + '.npy'), allow_pickle=True).item()
+            for key in read_dictionary:
+                read_dictionary[key] = [read_dictionary[key]]
+            print(read_dictionary)

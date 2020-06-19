@@ -95,7 +95,6 @@ def tune(filename):
     x = x.fillna(-1).values
     y = y.fillna(-1).values
     if len(x) >= __MIN_SAMPLES_FOR_PREDICTING and len(y) >= __MIN_SAMPLES_FOR_PREDICTING:
-
         check_y = column_or_1d(y)
         unique_y, y_inversed = np.unique(check_y, return_inverse=True)
         y_counts = np.bincount(y_inversed)
@@ -208,6 +207,8 @@ def tune_grid(filename):
             "subsample": [0.8],
             "n_estimators": [100]
         }
+    else:
+        raise NotImplementedError("This method has not been implemented for " + str(__model_enum.name))
 
     skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
     clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring, verbose=True)
@@ -234,12 +235,11 @@ def tune_grid(filename):
 # https://medium.com/rants-on-machine-learning/smarter-parameter-sweeps-or-why-grid-search-is-plain-stupid-c17d97a0e881
 def tune_rand(filename):
     loop_time = time.time()
-    scoring = metrics.make_scorer(rounding_rmse_scorer)
     x, y = get_prereq_table(filename)
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-        num_trials = 1000
+        num_trials = 2400
         model = LogisticRegression(random_state=__RANDOM_SEED)
-        c_space = list(np.logspace(-7, 7, 60))
+        c_space = list(np.logspace(-7, 7, 100))
         param_grid = [
             {'penalty': ['l1', 'l2'], 'solver': ['liblinear'], "C": c_space, "class_weight": ['balanced', None]},
             {'penalty': ['l2', 'none'], 'solver': ['newton-cg', 'sag', 'lbfgs'], "C": c_space,
@@ -249,7 +249,7 @@ def tune_rand(filename):
         ]
     elif __model_enum == __MODEL_TYPES_ENUM.RANDOM_FOREST_REGRESSOR:
         model = RandomForestRegressor(random_state=__RANDOM_SEED)
-        num_trials = 1000
+        num_trials = 1500
         param_grid = {
             "n_estimators": np.logspace(np.log10(10), np.log10(1500), 100, dtype=int),
             "criterion": ["friedman_mse", "mae", "mse"],
@@ -268,12 +268,34 @@ def tune_rand(filename):
             "max_depth": list(range(2, 26, 1)),
             "max_features": ["log2", "sqrt"],
             "criterion": ["friedman_mse", "mae", "mse"],
-            "subsample": list(np.arange(0.1, 1.1, 0.1)),
+            "subsample": list(np.arange(0.1, 1.1, 0.05)),
+            "n_estimators": np.logspace(np.log10(10), np.log10(1500), 100, dtype=int)
+        }
+    elif __model_enum == __MODEL_TYPES_ENUM.NU_SVR:
+        num_trials = 3000
+        model = NuSVR()
+        c_space = list(np.logspace(-5, 5, 25))
+        nu_space = np.arange(0.1, 1.1, 0.05)
+        param_grid = {'nu': nu_space, 'C': c_space, 'kernel': ['linear', 'rbf', 'sigmoid'], 'gamma': ['scale', 'auto']}
+
+    elif __model_enum == __MODEL_TYPES_ENUM.GBT_REGRESSOR:
+        num_trials = 2000
+        model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
+        param_grid = {
+            "loss": ['ls', 'lad', 'huber', 'quantile'],
+            "learning_rate": np.logspace(np.log10(0.005), np.log10(0.5), 100),
+            "min_samples_split": list(range(1, len(y), 1)),
+            "min_samples_leaf": list(range(1, len(y), 1)),
+            "max_depth": list(range(2, 26, 1)),
+            "max_features": ["log2", "sqrt"],
+            "criterion": ["friedman_mse", "mae", "mse"],
+            "subsample": list(np.arange(0.1, 1.1, 0.05)),
             "n_estimators": np.logspace(np.log10(10), np.log10(1500), 100, dtype=int)
         }
     else:
         raise NotImplementedError("This method has not been implemented for " + str(__model_enum.name))
 
+    scoring = metrics.make_scorer(rounding_rmse_scorer)
     skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
     clf = RandomizedSearchCV(model, param_grid, cv=skf, scoring=scoring, n_iter=num_trials, random_state=__RANDOM_SEED,
                              verbose=True)
@@ -286,7 +308,22 @@ def tune_rand(filename):
         y_counts = np.bincount(y_inversed)
         if not np.all([__NUMBER_FOLDS] > y_counts):
             best_clf = clf.fit(x, y)
-            # np.save(__tuning_results_folder / filename[:-4], best_clf.best_params_)
+
+            if os.path.exists(__tuning_results_folder / (filename[:-4] + '.npy')):
+                old_params = np.load(__tuning_results_folder / (filename[:-4] + '.npy'), allow_pickle=True).item()
+                for key in old_params:
+                    old_params[key] = [old_params[key]]
+                new_params = {}
+                for key in best_clf.best_params_:
+                    new_params[key] = [best_clf.best_params_[key]]
+                print('old ', old_params)
+                print('new ', new_params)
+                if old_params != new_params:
+                    param_grid = [new_params, old_params]
+                    clf2 = GridSearchCV(model, param_grid, cv=skf, scoring=scoring, verbose=True)
+                    best_clf = clf2.fit(x, y)
+
+            np.save(__tuning_results_folder / filename[:-4], best_clf.best_params_)
             print(filename[:-4] + " " + str(round(time.time() - loop_time, 2)) + "s.: " + str(best_clf.best_score_))
             print(best_clf.best_params_)
             print()
@@ -582,7 +619,7 @@ if __name__ == "__main__":
                                 "'2': Run predictions \n"
                                 "'3': Save models \n"
                                 "'4': Run All Predictions \n"
-                                "'5': Training batch \n"))
+                                "'5': Tuning batch \n"))
 
     if tune_or_predict != 1 and tune_or_predict != 2 and tune_or_predict != 3 and tune_or_predict != 4 and tune_or_predict != 5:
         raise ValueError('An invalid process type was passed. Must be \'1\', \'2\',\'3\', or \'4\'')
@@ -596,11 +633,14 @@ if __name__ == "__main__":
                 print(str(__tree_type.name) + ":" + str(__model_enum.name))
                 read_predict_write()
     elif tune_or_predict == 5:
-        __model_enum = __MODEL_TYPES_ENUM.RANDOM_FOREST_REGRESSOR
         for tree_type in __TREE_TYPES_ENUM:
-            __tree_type = tree_type
-            __data_folder, __folds_folder, __results_folder, __tuning_results_folder, __model_output = set_paths()
-            hyperparameter_tuning()
+            for model_type in __MODEL_TYPES_ENUM:
+                if not (model_type == __MODEL_TYPES_ENUM.MEAN_ZEROR or model_type == __MODEL_TYPES_ENUM.MOD_ZEROR):
+                    __model_enum = model_type
+                    __tree_type = tree_type
+                    __data_folder, __folds_folder, __results_folder, __tuning_results_folder, __model_output = set_paths()
+                    print(str(__tree_type.name) + ":" + str(__model_enum.name))
+                    hyperparameter_tuning()
     else:
         __tree_type = int(input("Enter one of the following for prereq type: \n '1': Root prerequisites \n"
                                 " '2': Immediate prerequisites \n '3': All prerequisites \n"))
