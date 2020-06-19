@@ -584,6 +584,7 @@ if __name__ == "__main__":
     elif tune_or_predict == 5:
         __model_enum = __MODEL_TYPES_ENUM.NU_SVR
         for tree_type in __TREE_TYPES_ENUM:
+            __tree_type = tree_type
             __data_folder, __folds_folder, __results_folder, __tuning_results_folder, __model_output = set_paths()
             hyperparameter_tuning()
     else:
