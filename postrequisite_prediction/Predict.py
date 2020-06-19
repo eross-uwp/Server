@@ -53,6 +53,8 @@ flatten = lambda l: [item for sublist in l for item in
 def round_school(x):
     if x < 0:
         return 0
+    if x > 10:
+        return 10
     else:
         i, f = divmod(x, 1)
         return int(i + ((f >= 0.5) if (x > 0) else (f > 0.5)))
@@ -234,6 +236,7 @@ def tune_rand(filename):
     scoring = metrics.make_scorer(rounding_rmse_scorer)
     x, y = get_prereq_table(filename)
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
+        num_trials = 1000
         model = LogisticRegression(random_state=__RANDOM_SEED)
         c_space = list(np.logspace(-7, 7, 60))
         param_grid = [
@@ -243,7 +246,18 @@ def tune_rand(filename):
             {'penalty': ['l1', 'l2', 'none', 'elasticnet'], 'solver': ['saga'], "C": c_space,
              "class_weight": ['balanced', None]}
         ]
+    elif __model_enum == __MODEL_TYPES_ENUM.RANDOM_FOREST_REGRESSOR:
+        model = RandomForestRegressor(random_state=__RANDOM_SEED)
+        num_trials = 1000
+        param_grid = {
+            "n_estimators": np.loguniform(np.log10(10), np.log10(1500), dtype=int),
+            "criterion": ["friedman_mse", "mae", "mse"],
+            "min_samples_split": list(range(1, len(y), 1)),
+            "min_samples_leaf": list(range(1, len(y), 1)),
+            "max_features": ["auto", "sqrt", "log2"]
+        }
     elif __model_enum == __MODEL_TYPES_ENUM.GBT_CLASSIFIER:
+        num_trials = 2000
         model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
         param_grid = {
             "loss": ["deviance", "exponential"],  # 2 iterations
@@ -256,9 +270,11 @@ def tune_rand(filename):
             "subsample": list(np.arange(0.1, 1.1, 0.1)),  # 10 iterations
             "n_estimators": np.loguniform(np.log10(10), np.log10(1500), dtype=int)  # 149 iterations
         }
+    else:
+        raise NotImplementedError("This method has not been implemented for " + str(__model_enum.name))
 
     skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-    clf = RandomizedSearchCV(model, param_grid, cv=skf, scoring=scoring, n_iter=2500, random_state=__RANDOM_SEED,
+    clf = RandomizedSearchCV(model, param_grid, cv=skf, scoring=scoring, n_iter=num_trials, random_state=__RANDOM_SEED,
                              verbose=True)
 
     x = x.fillna(-1).values
@@ -285,8 +301,8 @@ def hyperparameter_tuning():
     with parallel_backend('loky', n_jobs=-1):
         for filename in sorted(os.listdir(__data_folder)):
             # tune(filename)
-            tune_grid(filename)
-            # tune_rand(filename)
+            # tune_grid(filename)
+            tune_rand(filename)
 
     print('Hyperparameter tuning completed in ' + str(round(time.time() - start_time, 2)) + 's. Files saved to: \''
           + str(__tuning_results_folder) + '\' \n')
@@ -323,7 +339,7 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
     else:
         read_dictionary = np.load(__tuning_results_folder / (postreq_name + '.npy'), allow_pickle=True).item()
 
-    print(postreq_name + " Parameter Dictionary: " + str(read_dictionary))
+    print(__model_enum.name + " " + postreq_name + " Parameter Dictionary: " + str(read_dictionary))
 
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
         if read_dictionary is None:
@@ -576,10 +592,10 @@ if __name__ == "__main__":
                 __model_enum = model_type
                 __tree_type = tree_type
                 __data_folder, __folds_folder, __results_folder, __tuning_results_folder, __model_output = set_paths()
-                print(str(__tree_type) + ":" + str(__model_enum))
+                print(str(__tree_type.name) + ":" + str(__model_enum.name))
                 read_predict_write()
     elif tune_or_predict == 5:
-        __model_enum = __MODEL_TYPES_ENUM.NU_SVR
+        __model_enum = __MODEL_TYPES_ENUM.RANDOM_FOREST_REGRESSOR
         for tree_type in __TREE_TYPES_ENUM:
             __tree_type = tree_type
             __data_folder, __folds_folder, __results_folder, __tuning_results_folder, __model_output = set_paths()
