@@ -4,7 +4,7 @@ __Author__: Nick Tiede
 __Purpose__:
 """
 from pomegranate import *
-import seaborn;
+import seaborn
 from Summer_2020.csv_read_write import *
 from Summer_2020.disc_dist_creator import create_disc_dist_state_list
 from Summer_2020.con_prob_table_creator import create_con_prob_table
@@ -13,7 +13,7 @@ seaborn.set_style('whitegrid') # Used by pomegranate
 
 DATA_FILE = 'data\\oops2data.csv'
 
-# Standard: 11, whole letter grade: 6, binary: 2
+# Standard: 11, whole letter grade: 5, binary: 2
 NUM_GRADES = 11
 
 # Initializes the model
