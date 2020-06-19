@@ -189,12 +189,9 @@ def tune_grid(filename):
         ]
     elif __model_enum == __MODEL_TYPES_ENUM.NU_SVR:
         model = NuSVR()
-        c_space = list(np.logspace(-5, 5, 15))
-        nu_space = np.arange(0.1, 1.1, 0.1)
-        param_grid = [
-            {'nu': nu_space, 'C': c_space, 'kernel': ['linear', 'rbf', 'sigmoid'], 'gamma': ['scale', 'auto']},
-            {'nu': nu_space, 'C': c_space, 'kernel': ['poly'], 'degree': range(2, 6, 1), 'gamma': ['scale', 'auto']}
-        ]
+        c_space = list(np.logspace(-3, 3, 20))
+        nu_space = np.arange(0.1, 1.1, 0.05)
+        param_grid = {'nu': nu_space, 'C': c_space, 'kernel': ['linear', 'rbf', 'sigmoid'], 'gamma': ['scale', 'auto']}
     elif __model_enum == __MODEL_TYPES_ENUM.GBT_CLASSIFIER:
         model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
         param_grid = {
@@ -224,9 +221,9 @@ def tune_grid(filename):
 
             if os.path.exists(__tuning_results_folder / (filename[:-4] + ".npy")):
                 print("file exists")
-            # np.save(__tuning_results_folder / filename[:-4], best_clf.best_params_)
+            np.save(__tuning_results_folder / filename[:-4], best_clf.best_params_)
             print(filename[:-4] + " " + str(round(time.time() - loop_time, 2)) + "s.: " + str(best_clf.best_score_))
-            print(best_clf.get_params())
+            print(best_clf.best_params_)
             print()
 
 
