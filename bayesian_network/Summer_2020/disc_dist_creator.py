@@ -8,6 +8,7 @@ import pandas as pd
 import numpy as np
 from pomegranate.base import State
 from pomegranate.distributions.DiscreteDistribution import DiscreteDistribution
+from timeit import default_timer as timer
 
 
 # Returns a of list of generated states (nodes) for each prereq
@@ -23,6 +24,8 @@ def create_disc_dist_state_list(course_names, num_prereqs, num_grades):
 
 # Returns a of list of real data states (nodes) for each prereq
 def create_real_state_list(df_course_data, num_prereqs, num_grades):
+    start_time = timer()  # Gives total time in this function
+
     state_list = []
     df_structure = create_disc_dist_structure(num_grades)
 
@@ -32,9 +35,12 @@ def create_real_state_list(df_course_data, num_prereqs, num_grades):
         df_prereq = pd.DataFrame({df_course_data.columns[i]: df_course_data.iloc[:, i]})
         df_prereq_grade_count = create_single_count_table(df_prereq, df_structure)
         prereq_disc_dist = DiscreteDistribution(conv_to_dict(create_single_prob_table(df_prereq_grade_count)))
-        state_list.append(State(df_course_data.columns[i], prereq_disc_dist))
+        state_list.append(State(prereq_disc_dist, df_course_data.columns[i]))
 
+    end_time = timer()
+    print('Create prereq states total time: ' + str(end_time - start_time) + ' sec \n')
     return state_list
+
 
 # Returns a pomegranate discrete distribution with a generated dictionary based on number of grades
 def create_disc_dist(num_grades):
@@ -76,7 +82,6 @@ def create_single_count_table(dataframe, df_structure):
 
     # Converts NaN values in the counts to their appropriate value of 0
     df_structured_counts['count'] = df_structured_counts['count'].fillna('0')
-    print(df_structured_counts)
 
     return df_structured_counts
 
@@ -93,3 +98,6 @@ def create_single_prob_table(df_count_table):
     return df_prob_table
 
 
+# Converts a discrete distribution DataFrame to a dictionary to be used when creating a pomegranate DiscreteDistribution
+def conv_to_dict(df_disc_dist):
+    return dict(df_disc_dist.values.tolist())

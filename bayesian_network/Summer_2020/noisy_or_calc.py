@@ -15,31 +15,35 @@ from timeit import default_timer as timer
 # Takes in a pandas dataframe of course data assuming that the target course is in the last column
 # and returns a dataframe of a conditional probability table using noisy-OR
 def get_probabilities(dataframe, num_grades):
+    start_time = timer()  # Gives total time in this function
+
     num_prereqs = len(dataframe.columns) - 1
 
     # This step might take some time if num_grades is large, scales as 2^(num_grades * 2)
     start_binary_table = timer()
     df_binary_table = create_binary_table(num_grades)
     end_binary_table = timer()
-    print('Create binary table time: ' + str(end_binary_table - start_binary_table) + ' sec \n')
+
 
     # Creates a list of each prereq to target course grade count table
-    start_count_tables = timer()
     grade_count_tables = []
     for i in range(0, num_prereqs):
         grade_count_tables.append(create_count_table(dataframe.iloc[:, [i, -1]], df_binary_table))
-    end_count_tables = timer()
-    print('Create count tables total time: ' + str(end_binary_table - start_binary_table) + ' sec \n')
 
     # Turns the count tables into conditional probability table DataFrames
     probability_tables = []
     for item in grade_count_tables:
         probability_tables.append(create_probability_table(item, num_grades))
 
-    return
-    # Make list of probability dataframes
+    # Combines all of the probabilities into one DataFrame
+    df_combined = probability_tables[0][0:range(0, num_grades*2)]
+    for prob_table in probability_tables:
+        pd.concat([df_combined])
 
-    # Make new dataframe with only probability columns
+    end_time = timer()
+    print('Create binary table time: ' + str(end_binary_table - start_binary_table) + ' sec')
+    print('Create conditional probabilities total time: ' + str(end_time - start_time) + ' sec \n')
+    return
 
 
 # Creates a truth table structures as the following example based on the number of grade options:
@@ -90,19 +94,16 @@ def create_count_table(dataframe, df_structure):
     df_grade_converted = df_grade_converted.astype(str)
 
     # Merges the grade count data into the full truth table
-    start = timer()
     df_counts = df_structure.merge(df_grade_converted, on=headers, how='left')
-    end = timer()
-    print('Merge grade counts table with truth table time: ' + str(end - start) + ' sec \n')
 
     # Converts NaN values in the counts to their appropriate value of 0
     df_counts['count'] = df_counts['count'].fillna('0')
-    print(df_counts)
 
     return df_counts
 
 
 # Turns a grade count table into a conditional probability table for each prereq to target, returns a DataFrame
+# The probabilities are calculated as P(-A|B) = 1-P(A|B) for Noisy-OR
 def create_probability_table(df_count_table, num_grades):
     df_prob_table = df_count_table
     df_prob_table[['count']] = df_prob_table[['count']].astype(float)
@@ -112,5 +113,8 @@ def create_probability_table(df_count_table, num_grades):
         if count_sum != 0:
             df_prob_table.loc[df_prob_table[str(prereq_grade)] == '1', 'count'] *= 1/count_sum
 
+    df_prob_table.loc[:, 'count'] -= 1
+    df_prob_table.loc[:, 'count'] *= -1
     df_prob_table.rename(columns={'count': 'probability'}, inplace=True)
+
     return df_prob_table
