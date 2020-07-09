@@ -28,7 +28,7 @@ def create_target_cpt(dataframe, num_grades):
     final_cpt_structure['probability'] = float(0)
 
     # Creates a DataFrame with the averages of each combination of auxiliary grades
-    df_averages = create_avg_table(create_cartesian_table(num_grades, num_prereqs))
+    df_averages = create_avg_table(create_cartesian_table(num_grades, num_prereqs), num_prereqs)
 
     # Creates a list of each prereq to target course grade count table
     grade_count_table_list = []
@@ -54,7 +54,7 @@ def create_target_cpt(dataframe, num_grades):
     # given the prereq column grade
     combined_aux_cpt = create_combined_cpt(aux_cpt_list)
 
-    target_cpt = create_target_cpt(final_cpt_structure, combined_aux_cpt)
+    target_cpt = create_noisy_avg_cpt(final_cpt_structure, combined_aux_cpt, df_averages, num_prereqs, num_grades)
 
     end_time = timer()
     print('Create CPTs total time: ' + str(end_time - start_time) + ' sec \n')
@@ -100,7 +100,7 @@ def create_count_table(dataframe, df_structure, num_grades):
 
 # Turns a grade count table into a conditional probability table for each prereq to target, returns a DataFrame
 def create_aux_cpt(df_count_table, num_grades):
-    df_prob_table = df_count_table
+    df_prob_table = df_count_table.copy()
     df_prob_table[['count']] = df_prob_table[['count']].astype(float)
 
     for prereq_grade in range(0, num_grades):
@@ -119,12 +119,19 @@ def create_aux_cpt(df_count_table, num_grades):
 
 # Creates a DataFrame similar to the final CPT structure with a column of averages of grades instead of probabilities
 # This gives a slight preference towards higher grades due to rounding.
-def create_avg_table(df_cpt_structure):
+def create_avg_table(df_cpt_structure, num_prereqs):
     df_averages = df_cpt_structure.astype(float)
+
+    headers = []
+    for i in range(0, num_prereqs):
+        headers.append('aux' + str(i))
+
+    df_averages.columns = headers
+
     df_averages['average'] = df_averages.mean(axis=1)
     df_averages['average'] = df_averages['average'].round()
 
-    return df_averages.astype(str)
+    return df_averages.astype(int).astype(str)
 
 
 # Takes in a list of auxiliary node CPTs and merges them into a format useful for our noisy-avg algorithm
@@ -139,6 +146,44 @@ def create_combined_cpt(aux_cpt_list):
 
 
 # Creates the final normalized noisy-avg cpt for the target course
-def create_noisy_avg_cpt(cpt_structure, aux_probabilities):
+def create_noisy_avg_cpt(cpt_structure, aux_probabilities, df_averages, num_prereqs, num_grades):
+    noisy_avg_cpt = cpt_structure.copy()
+    noisy_avg_cpt[['probability']] = noisy_avg_cpt[['probability']].astype(float)
 
-    return
+    # ADD EXTRA FOR LOOP HERE TO NORMALIZE-----------------------------------------------------------------------------------
+
+    for row_index in range(0, len(noisy_avg_cpt.index)):
+        noisy_avg_cpt.iat[row_index, -1] = calculate_target_prob(list(noisy_avg_cpt.iloc[row_index, 0:num_prereqs]),
+                                                                 str(noisy_avg_cpt.iloc[row_index]['target']),
+                                                                 aux_probabilities, df_averages, num_prereqs)
+        print(noisy_avg_cpt.loc[[row_index]])
+
+    return noisy_avg_cpt
+
+
+# Calculates an individual probability for one cpt event using our noisy-avg method
+def calculate_target_prob(prereq_grade_list, target_grade, aux_probabilities, df_averages, num_prereqs):
+    target_avg_table = search_avg(df_averages, target_grade)
+    target_avg_table['probability'] = float(0)
+    target_avg_table.reset_index(drop=True, inplace=True)
+
+    for row_index in range(0, len(target_avg_table.index)):
+        target_avg_table.iat[row_index, -1] = calculate_aux_combination(prereq_grade_list, aux_probabilities,
+                                                                        list(target_avg_table.iloc[row_index, 0:num_prereqs]))
+
+    return target_avg_table['probability'].sum()
+
+
+# Searches through a DataFrame of auxiliary value averages and returns a DataFrame of the rows that match the input
+def search_avg(df_averages, target_grade):
+    return df_averages.loc[df_averages['average'] == str(target_grade)].copy()
+
+
+# Returns the multiplication of the probabilities associated with an input grade list
+def calculate_aux_combination(prereq_grade_list, aux_probs, aux_grade_list):
+    prob_mult = 1
+    for i in range(0, len(prereq_grade_list)):
+        prob_mult *= float(aux_probs.loc[(aux_probs.iloc[:, 0] == prereq_grade_list[i]) &
+                                     (aux_probs.iloc[:, 1] == aux_grade_list[i])]['prob' + str(i)])
+
+    return prob_mult
