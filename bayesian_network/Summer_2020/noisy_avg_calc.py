@@ -22,24 +22,42 @@ def create_target_cpt(dataframe, num_grades):
     # Creates the auxiliary node conditional probability table structure without the probability column
     aux_cpt_structure = create_cartesian_table(num_grades, 2)
 
-    # Creates the target node conditional probability table structure without the probability column
+    # Creates the target node conditional probability table structure
     final_cpt_structure = create_cartesian_table(num_grades, num_prereqs+1)
+    final_cpt_structure.columns = [*final_cpt_structure.columns[:-1], 'target']
+    final_cpt_structure['probability'] = float(0)
 
     # Creates a DataFrame with the averages of each combination of auxiliary grades
-    df_averages = find_averages(final_cpt_structure)
+    df_averages = create_avg_table(create_cartesian_table(num_grades, num_prereqs))
 
     # Creates a list of each prereq to target course grade count table
-    grade_count_tables = []
+    grade_count_table_list = []
     for i in range(0, num_prereqs):
-        grade_count_tables.append(create_count_table(dataframe.iloc[:, [i, -1]], aux_cpt_structure, num_grades))
+        temp_count_table = create_count_table(dataframe.iloc[:, [i, -1]], aux_cpt_structure, num_grades)
+        temp_count_table.columns = ['prereq' + str(i), 'target', 'count']
+        grade_count_table_list.append(temp_count_table)
 
-    # Turns the count tables into conditional probability table DataFrames
-    probability_tables = []
-    for item in grade_count_tables:
-        probability_tables.append(create_probability_table(item, num_grades))
+    # Turns the count tables into auxiliary node conditional probability table DataFrames
+    aux_cpt_list = []
+    for i, item in enumerate(grade_count_table_list):
+        temp_aux_cpt = create_aux_cpt(item, num_grades)
+        temp_aux_cpt.columns = ['prereq' + str(i), 'target', 'prob' + str(i)]
+        aux_cpt_list.append(temp_aux_cpt)
+
+    # Combines the aux CPTs into one DataFrame with the following structure
+    # prereq target prob0 prob1 ... probn
+    #    0      0     0.1   0.1       0.2
+    #    0      1     0.2   0.1       0.3
+    #   ...    ...    ...   ...       ...
+    #    10     10    0.4   0.3       0.5
+    # where the probability columns are the probability of getting the target column grade
+    # given the prereq column grade
+    combined_aux_cpt = create_combined_cpt(aux_cpt_list)
+
+    target_cpt = create_target_cpt(final_cpt_structure, combined_aux_cpt)
 
     end_time = timer()
-    print('Create conditional probabilities total time: ' + str(end_time - start_time) + ' sec \n')
+    print('Create CPTs total time: ' + str(end_time - start_time) + ' sec \n')
     return
 
 
@@ -81,14 +99,18 @@ def create_count_table(dataframe, df_structure, num_grades):
 
 
 # Turns a grade count table into a conditional probability table for each prereq to target, returns a DataFrame
-def create_probability_table(df_count_table, num_grades):
+def create_aux_cpt(df_count_table, num_grades):
     df_prob_table = df_count_table
     df_prob_table[['count']] = df_prob_table[['count']].astype(float)
 
     for prereq_grade in range(0, num_grades):
-        count_sum = df_prob_table[df_prob_table['0'] == str(prereq_grade)]['count'].sum()
+        count_sum = df_prob_table[df_prob_table.iloc[:, 0] == str(prereq_grade)]['count'].sum()
         if count_sum != 0:
-            df_prob_table.loc[df_prob_table['0'] == str(prereq_grade), 'count'] *= 1/count_sum
+            df_prob_table.loc[df_prob_table.iloc[:, 0] == str(prereq_grade), 'count'] *= 1/count_sum
+
+    # Adds some 'fuzz' to the probabilities so none are zero
+    # This technically makes each grade probabilities not sum to 1, but this will be normalized later
+    df_prob_table.iloc[:, -1] += 0.00001
 
     df_prob_table.rename(columns={'count': 'probability'}, inplace=True)
 
@@ -97,9 +119,26 @@ def create_probability_table(df_count_table, num_grades):
 
 # Creates a DataFrame similar to the final CPT structure with a column of averages of grades instead of probabilities
 # This gives a slight preference towards higher grades due to rounding.
-def find_averages(df_cpt_structure):
+def create_avg_table(df_cpt_structure):
     df_averages = df_cpt_structure.astype(float)
-    df_averages['Average'] = df_averages.mean(axis=1)
-    df_averages['Average'] = df_averages['Average'].round()
+    df_averages['average'] = df_averages.mean(axis=1)
+    df_averages['average'] = df_averages['average'].round()
 
     return df_averages.astype(str)
+
+
+# Takes in a list of auxiliary node CPTs and merges them into a format useful for our noisy-avg algorithm
+def create_combined_cpt(aux_cpt_list):
+    combined_cpt = aux_cpt_list[0].filter(['prereq0', 'target'], axis=1)
+    combined_cpt.columns = ['prereq', 'target']
+
+    for i, item in enumerate(aux_cpt_list):
+        combined_cpt['prob' + str(i)] = item.iloc[:,-1]
+
+    return combined_cpt
+
+
+# Creates the final normalized noisy-avg cpt for the target course
+def create_noisy_avg_cpt(cpt_structure, aux_probabilities):
+
+    return

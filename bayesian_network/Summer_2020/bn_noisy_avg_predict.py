@@ -13,7 +13,7 @@ seaborn.set_style('whitegrid') # Used by pomegranate
 
 DATA_FILE = 'data\\oops2data.csv'
 
-# Standard: 11, whole letter grade: 5, binary: 2
+# Standard: 11, Whole letter grade: 5, Binary: 2
 NUM_GRADES = 11
 
 # Initializes the model
