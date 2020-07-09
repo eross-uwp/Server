@@ -8,6 +8,7 @@ __Purpose__: To use our Noisy-Avg Bayesian Network methods to create conditional
              Network model structure for prediction using pomegranate predict methods.
 """
 import pandas as pd
+from joblib import Parallel, delayed
 from Summer_2020.cartesian_table_creator import create_cartesian_table
 from timeit import default_timer as timer
 
@@ -140,23 +141,27 @@ def create_combined_cpt(aux_cpt_list):
     combined_cpt.columns = ['prereq', 'target']
 
     for i, item in enumerate(aux_cpt_list):
-        combined_cpt['prob' + str(i)] = item.iloc[:,-1]
+        combined_cpt['prob' + str(i)] = item.iloc[:, -1]
 
     return combined_cpt
 
+# test
+def create_event_prob(row_index, noisy_avg_cpt, aux_probabilities, df_averages, num_prereqs):
+    return calculate_target_prob(list(noisy_avg_cpt.iloc[row_index, 0:num_prereqs]),
+                                 str(noisy_avg_cpt.iloc[row_index]['target']),
+                                 aux_probabilities, df_averages, num_prereqs)
 
 # Creates the final normalized noisy-avg cpt for the target course
 def create_noisy_avg_cpt(cpt_structure, aux_probabilities, df_averages, num_prereqs, num_grades):
     noisy_avg_cpt = cpt_structure.copy()
     noisy_avg_cpt[['probability']] = noisy_avg_cpt[['probability']].astype(float)
 
-    # ADD EXTRA FOR LOOP HERE TO NORMALIZE-----------------------------------------------------------------------------------
+    prob_value_list = Parallel(n_jobs=-1, verbose=True)(delayed(create_event_prob)(i, noisy_avg_cpt, aux_probabilities, df_averages, num_prereqs) for i in range(0, len(noisy_avg_cpt.index)))
 
-    for row_index in range(0, len(noisy_avg_cpt.index)):
-        noisy_avg_cpt.iat[row_index, -1] = calculate_target_prob(list(noisy_avg_cpt.iloc[row_index, 0:num_prereqs]),
-                                                                 str(noisy_avg_cpt.iloc[row_index]['target']),
-                                                                 aux_probabilities, df_averages, num_prereqs)
-        print(noisy_avg_cpt.loc[[row_index]])
+    for row_index in range(len(prob_value_list)):
+        noisy_avg_cpt.iat[row_index, -1] = prob_value_list[row_index]
+
+    # Normalize here , just use num_grades and sums based on row index-------------------------------------------------------------------------------------------------------------
 
     return noisy_avg_cpt
 
@@ -169,7 +174,8 @@ def calculate_target_prob(prereq_grade_list, target_grade, aux_probabilities, df
 
     for row_index in range(0, len(target_avg_table.index)):
         target_avg_table.iat[row_index, -1] = calculate_aux_combination(prereq_grade_list, aux_probabilities,
-                                                                        list(target_avg_table.iloc[row_index, 0:num_prereqs]))
+                                                                        list(target_avg_table.iloc[row_index,
+                                                                             0:num_prereqs]))
 
     return target_avg_table['probability'].sum()
 
