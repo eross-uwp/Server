@@ -12,17 +12,12 @@ from Summer_2020.con_prob_table_creator import create_con_prob_table
 
 
 # Creates an entire standard Bayesian network and returns the model to be predicted from
-def create_std_bn(data_file, num_grades=11):
+def create_std_bn(df_data, num_grades=11):
     seaborn.set_style('whitegrid')  # Used by pomegranate for some reason
 
     # Initializes the model
     model = BayesianNetwork()
     print("Standard Bayesian Network initialized \n")
-
-    # Reads in the data as a pandas DataFrame
-    df_data = read_data_csv(data_file)
-    # print(df_data)
-    print("Reading data complete \n")
 
     # Gets the number of prereqs for the course
     num_prereqs = len(df_data.columns) - 1

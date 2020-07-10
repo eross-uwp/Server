@@ -14,17 +14,12 @@ from Summer_2020.noisy_avg_calc import create_target_cpt
 
 
 # Creates an entire noisy-avg Bayesian network and returns the model to be predicted from
-def create_navg_bn(data_file, num_grades=11, df_cpt=None):
+def create_navg_bn(df_data, num_grades=11, df_cpt=None):
     seaborn.set_style('whitegrid')  # Used by pomegranate
 
     # Initializes the model
     model = BayesianNetwork()
     print("Noisy-Avg Bayesian Network initialized \n")
-
-    # Reads in the data as a pandas DataFrame
-    df_data = read_data_csv(data_file)
-    # print(df_data)
-    print("Reading data complete \n")
 
     # Gets the number of prereqs for the course
     num_prereqs = len(df_data.columns) - 1

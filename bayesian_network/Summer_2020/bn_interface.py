@@ -20,13 +20,13 @@ def create_navg_cpt(df_data, num_grades=11):
 # Creates and returns a bayesian network model to be predicted from
 # Current valid model types are 'noisyavg' and 'standard'
 # num_grades options - Standard: 11, whole letter grade: 5, binary: 2
-def create_bayesian_network(data_file, num_grades=11, model_type='noisyavg', df_cpt=None):
+def create_bayesian_network(df_data, num_grades=11, model_type='noisyavg', df_cpt=None):
     if model_type == 'noisyavg':
-        return create_navg_bn(data_file, num_grades=num_grades, df_cpt=df_cpt)
+        return create_navg_bn(df_data, num_grades=num_grades, df_cpt=df_cpt)
     elif model_type == 'standard':
-        return create_std_bn(data_file, num_grades=num_grades)
+        return create_std_bn(df_data, num_grades=num_grades)
     else:
-        print('Bayesian network type not valid: Use model_type= \'standard\' or \'noisyavg\'')
+        print('Bayesian network type not valid: Use model_type= standard or noisyavg as strings')
     return
 
 
@@ -45,7 +45,7 @@ DATA_FILE = 'data\\oops2data.csv'
 
 temp_df_data = read_data_csv(DATA_FILE)
 temp_cpt = create_navg_cpt(temp_df_data)
-model = create_bayesian_network(DATA_FILE, df_cpt=temp_cpt)
+model = create_bayesian_network(temp_df_data, df_cpt=temp_cpt)
 
 # 0  1  2  3  4  5  6  7  8  9  10
 # F  D  D+ C- C  C+ B- B  B+ A- A
