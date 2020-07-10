@@ -37,7 +37,6 @@ print("Created discrete distributions and discrete states \n")
 # Creates the state (node) for the course that is meant to be predicted
 target_course_state = \
     State(create_con_prob_table(num_prereqs, NUM_GRADES, disc_dist_states_list), df_data.columns[num_prereqs])
-# print(target_course_state)
 print("Created target course state \n")
 
 # Adds all the course states (nodes) to the model
@@ -56,9 +55,43 @@ model.bake()
 print(model.structure)
 print("Bayesian Network structure finalized \n")
 
-# Fitting using real OOPS2 grades and prereq grades
-print(df_data.values.tolist())
-model.fit(df_data.values.tolist())
-print("Data fit complete \n")
+# Converts the data to a usable format for pomegranate then trains the model with the data
+df_data_float = df_data.astype(float)
+df_data_float.replace({float('nan'): np.nan}, regex=True)
+model = BayesianNetwork.from_structure(df_data, structure=model.structure)
 
-print(model.structure)
+# 0  1  2  3  4  5  6  7  8  9  10
+# F  D  D+ C- C  C+ B- B  B+ A- A
+print(model.predict([['7', '7', '7', None]]))
+print("")
+print(model.predict_proba([['7', '7', '7', None]]))
+print("\n\n")
+
+print(model.predict([['10', '9', '8', None]]))
+print("")
+print(model.predict_proba([['10', '9', '8', None]]))
+print("\n\n")
+
+print(model.predict([['7', '6', '8', None]]))
+print("")
+print(model.predict_proba([['7', '6', '8', None]]))
+print("\n\n")
+
+print(model.predict([['8', '5', '3', None]]))
+print("")
+print(model.predict_proba([['8', '5', '3', None]]))
+
+print(model.predict([['5', '3', '0', None]]))
+print("")
+print(model.predict_proba([['5', '3', '0', None]]))
+print("\n\n")
+
+print(model.predict([['10', '10', '10', None]]))
+print("")
+print(model.predict_proba([['10', '10', '10', None]]))
+print("\n\n")
+
+print(model.predict([['0', '0', '0', None]]))
+print("")
+print(model.predict_proba([['0', '0', '0', None]]))
+print("\n\n")
