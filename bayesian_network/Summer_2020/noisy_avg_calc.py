@@ -6,15 +6,18 @@ __Purpose__: To use our Noisy-Avg Bayesian Network methods to create conditional
              the fitting functions in pomegranate. These tables are meant to be converted to pomegranate
              ConditionalProbabilityTables along with given data DiscreteDistributions to create the Bayesian
              Network model structure for prediction using pomegranate predict methods.
+
+             The Noisy-Avg method is described in this document:
+             https://drive.google.com/file/d/1_w_XXjXCFvSzC1LVGFulMcqmTaicVfwB/view?usp=sharing
 """
-import pandas as pd
+
 from joblib import Parallel, delayed
 from Summer_2020.cartesian_table_creator import create_cartesian_table
 from timeit import default_timer as timer
 
 
-# Takes in a pandas dataframe of course data assuming that the target course is in the last column
-# and returns a dataframe of a conditional probability table using our noisy-avg
+# Takes in a pandas DataFrame of course data assuming that the target course is in the last column
+# and returns a DataFrame of a conditional probability table using our noisy-avg
 def create_target_cpt(dataframe, num_grades):
     start_time = timer()  # Gives total time in this function
 
@@ -58,8 +61,8 @@ def create_target_cpt(dataframe, num_grades):
     target_cpt = create_noisy_avg_cpt(final_cpt_structure, combined_aux_cpt, df_averages, num_prereqs, num_grades)
 
     end_time = timer()
-    print('Create CPTs total time: ' + str(end_time - start_time) + ' sec \n')
-    return
+    print('Create target CPT total time: ' + str(end_time - start_time) + ' sec \n')
+    return target_cpt
 
 
 # Returns a DataFrame with counts of prereq to target course grade instances in a CPT like structure
@@ -79,7 +82,8 @@ def create_count_table(dataframe, df_structure, num_grades):
 
     # Condenses the rows of the filtered grade dataframe so duplicates are only listed once and a new
     # column is added for the counts of each instance of data
-    df_grades_filtered = df_grades_filtered.groupby(df_grades_filtered.columns.tolist()).size().reset_index(name='count')
+    df_grades_filtered = df_grades_filtered.groupby(df_grades_filtered
+                                                    .columns.tolist()).size().reset_index(name='count')
 
     # Gives identical header names to both DataFrames to make merging easier
     headers = list(map(str, range(0, len(df_structure.columns))))
@@ -145,25 +149,32 @@ def create_combined_cpt(aux_cpt_list):
 
     return combined_cpt
 
-# test
+
+# Sub function of create_noisy_avg_cpt for parallelization
 def create_event_prob(row_index, noisy_avg_cpt, aux_probabilities, df_averages, num_prereqs):
     return calculate_target_prob(list(noisy_avg_cpt.iloc[row_index, 0:num_prereqs]),
                                  str(noisy_avg_cpt.iloc[row_index]['target']),
                                  aux_probabilities, df_averages, num_prereqs)
+
 
 # Creates the final normalized noisy-avg cpt for the target course
 def create_noisy_avg_cpt(cpt_structure, aux_probabilities, df_averages, num_prereqs, num_grades):
     noisy_avg_cpt = cpt_structure.copy()
     noisy_avg_cpt[['probability']] = noisy_avg_cpt[['probability']].astype(float)
 
-    prob_value_list = Parallel(n_jobs=-1, verbose=True)(delayed(create_event_prob)(i, noisy_avg_cpt, aux_probabilities, df_averages, num_prereqs) for i in range(0, len(noisy_avg_cpt.index)))
+    prob_value_list = Parallel(n_jobs=-1, verbose=True)(delayed(create_event_prob)(i,
+                                                                                   noisy_avg_cpt,
+                                                                                   aux_probabilities,
+                                                                                   df_averages,
+                                                                                   num_prereqs)
+                                                        for i in range(0, len(noisy_avg_cpt.index)))
 
     for row_index in range(len(prob_value_list)):
         noisy_avg_cpt.iat[row_index, -1] = prob_value_list[row_index]
 
-    # Normalize here , just use num_grades and sums based on row index-------------------------------------------------------------------------------------------------------------
+    norm_noisy_avg_cpt = normalize_cpt(noisy_avg_cpt,num_prereqs, num_grades)
 
-    return noisy_avg_cpt
+    return norm_noisy_avg_cpt
 
 
 # Calculates an individual probability for one cpt event using our noisy-avg method
@@ -193,3 +204,20 @@ def calculate_aux_combination(prereq_grade_list, aux_probs, aux_grade_list):
                                      (aux_probs.iloc[:, 1] == aux_grade_list[i])]['prob' + str(i)])
 
     return prob_mult
+
+
+# Normalizes the probabilities in a CPT based on the number of grades
+# The input CPT must be ordered like the cartesian product of the grades
+# This requirement speeds up the process significantly
+def normalize_cpt(noisy_avg_cpt, num_prereqs, num_grades):
+    # This is not a deep copy for memory reasons. Add .copy() at the end to be able to compare to original.
+    norm_noisy_avg_cpt = noisy_avg_cpt.copy()
+
+    for i in range(num_grades ** num_prereqs):
+        row_i_min = int(i*num_grades)
+        row_i_max = int((i*num_grades) + num_grades)
+        prob_sum = norm_noisy_avg_cpt.iloc[row_i_min:row_i_max, -1].sum()
+        norm_modifier = 1/prob_sum
+        norm_noisy_avg_cpt.iloc[row_i_min:row_i_max, -1] *= norm_modifier
+
+    return norm_noisy_avg_cpt
