@@ -61,7 +61,9 @@ def create_target_cpt(dataframe, num_grades):
     target_cpt = create_noisy_avg_cpt(final_cpt_structure, combined_aux_cpt, df_averages, num_prereqs, num_grades)
 
     end_time = timer()
-    print('Create target CPT total time: ' + str(end_time - start_time) + ' sec \n')
+    final_time_sec = end_time - start_time
+    print('Create target CPT total time: ' + str(final_time_sec) + ' sec \n')
+    print('That is ' + final_time_sec/60 + 'minutes or ' + (final_time_sec/60)/60 + 'hours  \n')
     return target_cpt
 
 
@@ -161,6 +163,8 @@ def create_event_prob(row_index, noisy_avg_cpt, aux_probabilities, df_averages, 
 def create_noisy_avg_cpt(cpt_structure, aux_probabilities, df_averages, num_prereqs, num_grades):
     noisy_avg_cpt = cpt_structure.copy()
     noisy_avg_cpt[['probability']] = noisy_avg_cpt[['probability']].astype(float)
+
+    print('Total tasks to complete: ' + str(len(noisy_avg_cpt.index)))
 
     prob_value_list = Parallel(n_jobs=-1, verbose=True)(delayed(create_event_prob)(i,
                                                                                    noisy_avg_cpt,
