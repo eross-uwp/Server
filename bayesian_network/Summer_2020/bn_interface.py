@@ -6,6 +6,7 @@ __Purpose__: An interface to our noisy-avg Bayesian network and the standard Bay
              in the training set.
 """
 import copy
+import pandas as pd
 from Summer_2020.bn_noisy_avg_predict import create_navg_bn
 from Summer_2020.bn_predict import create_std_bn
 from Summer_2020.csv_read_write import read_data_csv
@@ -19,7 +20,8 @@ def create_navg_cpt(df_data, num_grades=11):
 
 # Creates and returns a bayesian network model to be predicted from
 # Current valid model types are 'noisyavg' and 'standard'
-# num_grades options - Standard: 11, whole letter grade: 5, binary: 2
+# num_grades options - Standard: 11, whole letter grade: 5, binary: 2 (others also work)
+# df_cpt should be used with loaded in CPT DataFrame
 def create_bayesian_network(df_data, num_grades=11, model_type='noisyavg', df_cpt=None):
     if model_type == 'noisyavg':
         return create_navg_bn(df_data, num_grades=num_grades, df_cpt=df_cpt)
@@ -39,16 +41,14 @@ def bn_predict(bn_model, prereq_grade_list):
     return str(bn_model.predict([grade_list])[-1][-1])
 
 
-"""
-# Test code
-DATA_FILE = 'data\\oops2data.csv'
+# Wrapper function for pandas .to_csv()
+# Saves Dataframe CPT as a CSV at a specified file location
+def save_cpt_as_csv(dataframe, file_loc):
+    dataframe.to_csv(file_loc, index=False)
+    return
 
-temp_df_data = read_data_csv(DATA_FILE)
-temp_cpt = create_navg_cpt(temp_df_data)
-model = create_bayesian_network(temp_df_data, df_cpt=temp_cpt)
 
-# 0  1  2  3  4  5  6  7  8  9  10
-# F  D  D+ C- C  C+ B- B  B+ A- A
-print(bn_predict(model, ['7', '7', '7']))
-print("\n\n")
-"""
+# Wrapper function for pandas .read_csv()
+# Loads CSV CPT from file location to DataFrame
+def load_cpt_from_csv(file_loc):
+    return pd.read_csv(file_loc)

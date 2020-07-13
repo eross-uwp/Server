@@ -63,7 +63,7 @@ def create_target_cpt(dataframe, num_grades):
     end_time = timer()
     final_time_sec = end_time - start_time
     print('Create target CPT total time: ' + str(final_time_sec) + ' sec \n')
-    print('That is ' + final_time_sec/60 + 'minutes or ' + (final_time_sec/60)/60 + 'hours  \n')
+    print('That is ' + str(final_time_sec/60) + 'minutes or ' + str((final_time_sec/60)/60) + 'hours  \n')
     return target_cpt
 
 
