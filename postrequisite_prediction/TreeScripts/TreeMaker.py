@@ -61,7 +61,7 @@ class TreeMaker:
             if item_1[0] == '{':
                 nodes[0].set_grade(item_1.split('#')[1][:-1])
                 nodes[0].set_name(item_1[item_1.find('{') + 1: item_1.find(
-                    str('#') + nodes[0].get_state() + str('}'))])
+                    str('#') + nodes[0].get_grade() + str('}'))])
                 self.__create_trees(nodes[0], self.__find_items(nodes[0].get_name()))
             # if item 1 is an operator, set name for node 1 to the incrementing virtual_node_name, call create_trees
             # with node 1 as the postreq and item 1 as the prereqs list
@@ -77,7 +77,7 @@ class TreeMaker:
             if item_2[0] == '{':
                 nodes[1].set_grade(item_2.split('#')[1][:-1])
                 nodes[1].set_name(item_2[item_2.find('{') + 1: item_2.find(
-                    str('#') + nodes[1].get_state() + str('}'))])
+                    str('#') + nodes[1].get_grade() + str('}'))])
                 self.__create_trees(nodes[1], self.__find_items(nodes[1].get_name()))
                 return postreq
 

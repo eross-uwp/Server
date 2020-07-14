@@ -1,5 +1,5 @@
 """
-___authors___: Austin FitzGerald
+___authors___: Austin FitzGerald, Chris Kott
 """
 
 import os
@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 import enum
 from sklearn import metrics
-from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegressor, RandomForestRegressor, ExtraTreesClassifier
+from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegressor, RandomForestRegressor
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, GridSearchCV, RandomizedSearchCV
 from sklearn.dummy import DummyRegressor, DummyClassifier
@@ -38,7 +38,7 @@ __tree_type = 0
 __TRAIN_PREFIX = 'train_'
 __TEST_PREFIX = 'test_'
 __NUMBER_FOLDS = 5
-__RANDOM_SEED = 313131
+__RANDOM_SEED = np.int64(313131)
 __MIN_SAMPLES_FOR_PREDICTING = 25
 __MODEL_TYPES_ENUM = enum.IntEnum('__MODEL_TYPES_ENUM', 'LOGISTIC_REGRESSION GBT_CLASSIFIER NU_SVR GBT_REGRESSOR '
                                                         'RANDOM_FOREST_REGRESSOR MOD_ZEROR MEAN_ZEROR')
@@ -77,9 +77,12 @@ def set_paths():
 def get_prereq_table(filename):
     file = pd.read_csv(__data_folder / filename)
     y = file.iloc[:, 1]
+    ids = file['student_id']
     x = file.drop([file.columns[1], file.columns[0]], axis=1)  # drop the postreq grade and student_id columns
-    x = x.drop(x.columns[len(x.columns) - 1], axis=1)  # drop the term diff column
-    return x, y
+    # x = x.drop(x.columns[len(x.columns) - 1], axis=1)  # drop the term diff column
+    x = x.drop([x.columns[len(x.columns) - 1], x.columns[len(x.columns) - 2], x.columns[len(x.columns) - 3],
+                x.columns[len(x.columns) - 4]], axis=1)  # remove all but prereqs.
+    return x, y, ids
 
 
 # Automatic Sequenced tuning based on:
@@ -91,7 +94,7 @@ def tune(filename):
         raise NotImplementedError("This method has not been implemented for " + str(__model_enum.name))
     loop_time = time.time()
 
-    x, y = get_prereq_table(filename)
+    x, y, _ = get_prereq_table(filename)
     x = x.fillna(-1).values
     y = y.fillna(-1).values
     if len(x) >= __MIN_SAMPLES_FOR_PREDICTING and len(y) >= __MIN_SAMPLES_FOR_PREDICTING:
@@ -213,7 +216,7 @@ def tune_grid(filename):
     skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
     clf = GridSearchCV(model, param_grid, cv=skf, scoring=scoring, verbose=True)
 
-    x, y = get_prereq_table(filename)
+    x, y, _ = get_prereq_table(filename)
     x = x.fillna(-1).values
     y = y.fillna(-1).values
     if len(x) >= __MIN_SAMPLES_FOR_PREDICTING and len(y) >= __MIN_SAMPLES_FOR_PREDICTING:
@@ -235,10 +238,11 @@ def tune_grid(filename):
 # https://medium.com/rants-on-machine-learning/smarter-parameter-sweeps-or-why-grid-search-is-plain-stupid-c17d97a0e881
 def tune_rand(filename):
     loop_time = time.time()
-    x, y = get_prereq_table(filename)
+    x, y, _ = get_prereq_table(filename)
+    rng = np.random.RandomState(__RANDOM_SEED)
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
         num_trials = 2400
-        model = LogisticRegression(random_state=__RANDOM_SEED)
+        model = LogisticRegression(random_state=rng)
         c_space = list(np.logspace(-7, 7, 100))
         param_grid = [
             {'penalty': ['l1', 'l2'], 'solver': ['liblinear'], "C": c_space, "class_weight": ['balanced', None]},
@@ -248,10 +252,10 @@ def tune_rand(filename):
              "class_weight": ['balanced', None]}
         ]
     elif __model_enum == __MODEL_TYPES_ENUM.RANDOM_FOREST_REGRESSOR:
-        model = RandomForestRegressor(random_state=__RANDOM_SEED)
+        model = RandomForestRegressor(random_state=rng)
         num_trials = 1500
         param_grid = {
-            "n_estimators": np.logspace(np.log10(10), np.log10(1500), 100, dtype=int),
+            "n_estimators": np.logspace(np.log10(10), np.log10(1500), 100, dtype='int64'),
             "criterion": ["friedman_mse", "mae", "mse"],
             "min_samples_split": list(range(1, len(y), 1)),
             "min_samples_leaf": list(range(1, len(y), 1)),
@@ -259,7 +263,7 @@ def tune_rand(filename):
         }
     elif __model_enum == __MODEL_TYPES_ENUM.GBT_CLASSIFIER:
         num_trials = 2000
-        model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
+        model = GradientBoostingClassifier(random_state=rng)
         param_grid = {
             "loss": ["deviance", "exponential"],
             "learning_rate": np.logspace(np.log10(0.005), np.log10(0.5), 100),
@@ -269,18 +273,17 @@ def tune_rand(filename):
             "max_features": ["log2", "sqrt"],
             "criterion": ["friedman_mse", "mae", "mse"],
             "subsample": list(np.arange(0.1, 1.1, 0.05)),
-            "n_estimators": np.logspace(np.log10(10), np.log10(1500), 100, dtype=int)
+            "n_estimators": np.logspace(np.log10(10), np.log10(1500), 100, dtype='int64')
         }
     elif __model_enum == __MODEL_TYPES_ENUM.NU_SVR:
-        num_trials = 3000
+        num_trials = 2500
         model = NuSVR()
-        c_space = list(np.logspace(-5, 5, 25))
+        c_space = list(np.logspace(-3, 3, 25))
         nu_space = np.arange(0.1, 1.1, 0.05)
-        param_grid = {'nu': nu_space, 'C': c_space, 'kernel': ['linear', 'rbf', 'sigmoid'], 'gamma': ['scale', 'auto']}
-
+        param_grid = [{'nu': nu_space, 'C': c_space, 'kernel': ['linear', 'rbf'], 'gamma': ['scale', 'auto']}]
     elif __model_enum == __MODEL_TYPES_ENUM.GBT_REGRESSOR:
         num_trials = 2000
-        model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
+        model = GradientBoostingRegressor(random_state=rng)
         param_grid = {
             "loss": ['ls', 'lad', 'huber', 'quantile'],
             "learning_rate": np.logspace(np.log10(0.005), np.log10(0.5), 100),
@@ -290,14 +293,14 @@ def tune_rand(filename):
             "max_features": ["log2", "sqrt"],
             "criterion": ["friedman_mse", "mae", "mse"],
             "subsample": list(np.arange(0.1, 1.1, 0.05)),
-            "n_estimators": np.logspace(np.log10(10), np.log10(1500), 100, dtype=int)
+            "n_estimators": np.logspace(np.log10(10), np.log10(1500), 100, dtype='int64')
         }
     else:
         raise NotImplementedError("This method has not been implemented for " + str(__model_enum.name))
 
     scoring = metrics.make_scorer(rounding_rmse_scorer)
-    skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-    clf = RandomizedSearchCV(model, param_grid, cv=skf, scoring=scoring, n_iter=num_trials, random_state=__RANDOM_SEED,
+    skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=rng)
+    clf = RandomizedSearchCV(model, param_grid, cv=skf, scoring=scoring, n_iter=num_trials, random_state=rng,
                              verbose=True)
 
     x = x.fillna(-1).values
@@ -309,7 +312,7 @@ def tune_rand(filename):
         if not np.all([__NUMBER_FOLDS] > y_counts):
             best_clf = clf.fit(x, y)
 
-            if os.path.exists(__tuning_results_folder / (filename[:-4] + '.npy')):
+            if os.path.exists(__tuning_results_folder / (filename[:-4] + '.npy')) and False:
                 old_params = np.load(__tuning_results_folder / (filename[:-4] + '.npy'), allow_pickle=True).item()
                 for key in old_params:
                     old_params[key] = [old_params[key]]
@@ -340,7 +343,9 @@ def hyperparameter_tuning():
         for filename in sorted(os.listdir(__data_folder)):
             # tune(filename)
             # tune_grid(filename)
-            tune_rand(filename)
+            if filename == 'Programming in COBOL.csv':
+                print(filename)
+                tune_rand(filename)
 
     print('Hyperparameter tuning completed in ' + str(round(time.time() - start_time, 2)) + 's. Files saved to: \''
           + str(__tuning_results_folder) + '\' \n')
@@ -371,6 +376,17 @@ def reverse_convert_grade(int_grade):
         return 'F'
 
 
+def reverse_convert_struggle(int_struggle):
+    if int_struggle == 1:
+        return 'E'
+    elif int_struggle == 2:
+        return 'S'
+    elif int_struggle == 3:
+        return 'G'
+    else:
+        return '?'
+
+
 def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
     if not os.path.exists(__tuning_results_folder / (postreq_name + '.npy')):
         read_dictionary = None
@@ -397,7 +413,10 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
     elif __model_enum == __MODEL_TYPES_ENUM.GBT_REGRESSOR:
         model = GradientBoostingRegressor(random_state=__RANDOM_SEED)
     elif __model_enum == __MODEL_TYPES_ENUM.RANDOM_FOREST_REGRESSOR:
-        model = RandomForestRegressor(random_state=__RANDOM_SEED)
+        if read_dictionary is None:
+            model = RandomForestRegressor(random_state=__RANDOM_SEED)
+        else:
+            model = RandomForestRegressor(**read_dictionary, random_state=__RANDOM_SEED)
     elif __model_enum == __MODEL_TYPES_ENUM.MOD_ZEROR:
         model = DummyClassifier('most_frequent')
     elif __model_enum == __MODEL_TYPES_ENUM.MEAN_ZEROR:
@@ -443,9 +462,7 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
                       pd.DataFrame(x_test[4])], ignore_index=True)
 
     x_df.columns = x_columns
-    x_df['struggle'] = x_df['struggle'].replace(3, 'G')
-    x_df['struggle'] = x_df['struggle'].replace(2, 'S')
-    x_df['struggle'] = x_df['struggle'].replace(1, 'E')
+    # x_df['struggle'] = x_df['struggle'].apply(reverse_convert_struggle)
 
     y_df = pd.concat([pd.DataFrame(y_test[0]),
                       pd.DataFrame(y_test[1]),
@@ -454,22 +471,10 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
                       pd.DataFrame(y_test[4])], ignore_index=True)
 
     y_df.columns = [postreq_name]
-    y_df[postreq_name] = y_df[postreq_name].replace(0, 'F')
-    y_df[postreq_name] = y_df[postreq_name].replace(1, 'D')
-    y_df[postreq_name] = y_df[postreq_name].replace(2, 'D+')
-    y_df[postreq_name] = y_df[postreq_name].replace(3, 'C-')
-    y_df[postreq_name] = y_df[postreq_name].replace(4, 'C')
-    y_df[postreq_name] = y_df[postreq_name].replace(5, 'C+')
-    y_df[postreq_name] = y_df[postreq_name].replace(6, 'B-')
-    y_df[postreq_name] = y_df[postreq_name].replace(7, 'B')
-    y_df[postreq_name] = y_df[postreq_name].replace(8, 'B+')
-    y_df[postreq_name] = y_df[postreq_name].replace(9, 'A-')
-    y_df[postreq_name] = y_df[postreq_name].replace(10, 'A')
+    y_df[postreq_name] = y_df[postreq_name].apply(reverse_convert_grade)
 
-    converted_y_preds = []
-    for yp in y_preds:
-        converted_y_preds.append(reverse_convert_grade(yp))
-    y_predict_df = pd.DataFrame(converted_y_preds, columns=['predicted score'])
+    y_predict_df = pd.DataFrame(y_preds, columns=['predicted score'])
+    y_predict_df['predicted score'] = y_predict_df['predicted score'].apply(reverse_convert_grade)
 
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION or __model_enum == __MODEL_TYPES_ENUM.GBT_CLASSIFIER:
         y_grades_df = pd.DataFrame(
@@ -490,8 +495,9 @@ def stratify_and_split(filename):
     x_tests = []
     y_trains = []
     y_tests = []
+    id_tests = []
 
-    x, y = get_prereq_table(filename)
+    x, y, ids = get_prereq_table(filename)
     x = x.fillna(-1)
     y = y.fillna(-1)
     x_columns = list(x.columns.values)
@@ -505,6 +511,7 @@ def stratify_and_split(filename):
             x_train, x_test = x[train_index], x[test_index]
             y_train, y_test = y[train_index], y[test_index]
 
+            id_tests.extend(ids[test_index])
             x_trains.append(x_train)
             x_tests.append(x_test)
             y_trains.append(y_train)
@@ -525,7 +532,7 @@ def stratify_and_split(filename):
                                 index=False)
             loop_count += 1
 
-    return x_trains, x_tests, y_trains, y_tests, x_columns, len(x)
+    return x_trains, x_tests, y_trains, y_tests, x_columns, len(x), id_tests
 
 
 def read_predict_write():
@@ -537,19 +544,21 @@ def read_predict_write():
 
     big_predicted = []
     big_actual = []
+    big_ids = []
 
     results_each_postreq = [[], [], [], [], []]
 
     counter = 0
     for filename in sorted(os.listdir(__data_folder)):
         filename = str(filename[:-4] + '.csv')
-        x_train, x_test, y_train, y_test, x_columns, n_samples = stratify_and_split(filename)
+        x_train, x_test, y_train, y_test, x_columns, n_samples, ids = stratify_and_split(filename)
         if n_samples > __MIN_SAMPLES_FOR_PREDICTING:
             predicted, actual, rr, acc, nrmse, model = predict(filename[:-4], x_train, x_test, y_train, y_test,
                                                                x_columns)
 
             big_predicted += list(predicted)
             big_actual += list(actual)
+            big_ids += list(ids)
             results_each_postreq[0].append(filename[:-4])
             results_each_postreq[1].append(rr)
             results_each_postreq[2].append(acc)
@@ -558,9 +567,10 @@ def read_predict_write():
             print(counter)
             counter += 1
 
+    studentIds = pd.DataFrame(big_ids, columns=['student_id'])
     predictions = pd.DataFrame(big_predicted, columns=['predicted'])
     actuals = pd.DataFrame(big_actual, columns=['actual'])
-    all_results = pd.concat([predictions, actuals], axis=1)
+    all_results = pd.concat([studentIds, predictions, actuals], axis=1)
     all_results.to_csv(__results_folder / ('ALL_COURSES_PREDICTIONS_' + __tree_type.name + "_" + __model_enum.name
                                            + '.csv'), index=False)
 
@@ -588,17 +598,38 @@ def save_models():
 
 def dump_model(filename):
     filename = str(filename[:-4] + '.csv')
-    x, y = get_prereq_table(filename)
+    x, y, _ = get_prereq_table(filename)
     x_columns = list(x.columns.values)
     x = x.fillna(-1).values
     y = y.fillna(-1).values
 
-    read_dictionary = np.load(__tuning_results_folder / (filename[:-4] + '.npy'), allow_pickle=True).item()
+    if not os.path.exists(__tuning_results_folder / (filename[:-4] + '.npy')):
+        read_dictionary = None
+    else:
+        read_dictionary = np.load(__tuning_results_folder / (filename[:-4] + '.npy'), allow_pickle=True).item()
 
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
-        model = LogisticRegression(random_state=__RANDOM_SEED, **read_dictionary)
+        if read_dictionary is None:
+            model = LogisticRegression(random_state=__RANDOM_SEED)
+        else:
+            model = LogisticRegression(random_state=__RANDOM_SEED, **read_dictionary)
     elif __model_enum == __MODEL_TYPES_ENUM.GBT_CLASSIFIER:
-        model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **read_dictionary)
+        if read_dictionary is None:
+            model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
+        else:
+            model = GradientBoostingClassifier(random_state=__RANDOM_SEED, **read_dictionary)
+    elif __model_enum == __MODEL_TYPES_ENUM.NU_SVR:
+        if read_dictionary is None:
+            model = NuSVR()
+        else:
+            model = NuSVR(**read_dictionary)
+    elif __model_enum == __MODEL_TYPES_ENUM.GBT_REGRESSOR:
+        model = GradientBoostingRegressor(random_state=__RANDOM_SEED)
+    elif __model_enum == __MODEL_TYPES_ENUM.RANDOM_FOREST_REGRESSOR:
+        if read_dictionary is None:
+            model = RandomForestRegressor(random_state=__RANDOM_SEED)
+        else:
+            model = RandomForestRegressor(**read_dictionary, random_state=__RANDOM_SEED)
 
     model.fit(x, y)
 
