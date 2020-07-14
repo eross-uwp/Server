@@ -13,11 +13,10 @@ SAD_DATA_FILE = 'data\\SAD.csv'
 SDI_DATA_FILE = 'data\\SDI.csv'
 SAVE_LOC = 'cpt\\'
 
-generate_navg_cpt(AIS_DATA_FILE, SAVE_LOC)
-generate_navg_cpt(COBOL_DATA_FILE, SAVE_LOC)
-generate_navg_cpt(SAD_DATA_FILE, SAVE_LOC)
-generate_navg_cpt(SDI_DATA_FILE, SAVE_LOC)
-
+# generate_navg_cpt(AIS_DATA_FILE, SAVE_LOC)
+# generate_navg_cpt(COBOL_DATA_FILE, SAVE_LOC)
+# generate_navg_cpt(SAD_DATA_FILE, SAVE_LOC)
+# generate_navg_cpt(SDI_DATA_FILE, SAVE_LOC)
 
 """
 # Test code
@@ -45,5 +44,4 @@ print('Given 8,5 Predicted: ' + bn_predict(model, ['8', '5']))
 print('Given 2,4 Predicted: ' + bn_predict(model, ['2', '4']))
 print('Given 0,0 Predicted: ' + bn_predict(model, ['0', '0']))
 print('Noisy-Avg Bayesian Network Test Complete')
-
 """

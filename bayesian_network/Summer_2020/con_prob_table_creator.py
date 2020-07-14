@@ -30,7 +30,15 @@ def get_disc_dist_list(states):
 
 # Creates a standard Bayesian network cpt manually
 def create_cpt(df_data, num_grades, num_prereqs):
-    df_grades = df_data.copy()
+    df_grades = df_data.copy().astype(str)
+
+    # Sets nan values to the most common grade
+    for j in range(0, len(df_data.columns)):
+        mode_grade = df_data.iloc[:, j].mode()
+        for i in range(0, len(df_data.index)):
+            if df_data.iloc[i, j] == 'nan':
+                df_data.iat[i, j] = mode_grade
+
     df_structure = create_cartesian_table(num_grades, num_prereqs+1)
 
     # Condenses the rows of the filtered grade dataframe so duplicates are only listed once and a new
