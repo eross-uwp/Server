@@ -9,7 +9,7 @@ prerequisites they are not added to the csv.
 
 import pandas as pd
 
-from TreeScripts.TreeMaker import TreeMaker
+from postrequisite_prediction.TreeScripts.TreeMaker import TreeMaker
 
 __COMBINED_COURSE_STRUCTURE_FILEPATH = '..\\Data\\combined_course_structure.csv'
 __STUDENT_GRADE_LIST_WITH_TERMS_FILEPATH = 'data\\student_grade_list_with_terms.csv'

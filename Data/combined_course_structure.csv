@@ -39,6 +39,7 @@ Organizational Behavior,"AND({Introduction to Agribusiness#},{Leadership and Man
 Precalculus,SINGLE({Intermediate Algebra#b-})
 Principles and Applications of Project Management,SINGLE({Engineering Management#})
 Programming Language Structures,SINGLE({Object-Oriented Programming and Data Structures II#c-})
+Programming in COBOL,SINGLE({Programming in C++#})
 Quality Engineering,SINGLE({Statistical Methods with Applications#})
 Quality Management,"AND({Introduction to Agribusiness#},{Leadership and Management#})"
 Real-Time Embedded Systems Programming,"AND(AND({Object-Oriented Programming and Data Structures II#c-},{Object Oriented Analysis and Design#c-}),OR({Introduction to Microprocessors#c-},{Computer Architecture/Operating Systems#c-}))"
