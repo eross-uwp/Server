@@ -213,7 +213,7 @@ def calculate_aux_combination(prereq_grade_list, aux_probs, aux_grade_list):
 # This requirement speeds up the process significantly
 def normalize_cpt(noisy_avg_cpt, num_prereqs, num_grades):
     # This is not a deep copy for memory reasons. Add .copy() at the end to be able to compare to original.
-    norm_noisy_avg_cpt = noisy_avg_cpt.copy()
+    norm_noisy_avg_cpt = noisy_avg_cpt
 
     for i in range(num_grades ** num_prereqs):
         row_i_min = int(i*num_grades)

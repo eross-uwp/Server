@@ -9,8 +9,8 @@ import copy
 import math
 import pandas as pd
 from timeit import default_timer as timer
-from Summer_2020.bn_noisy_avg_predict import create_navg_bn
-from Summer_2020.bn_predict import create_std_bn
+from Summer_2020.bn_noisy_avg_model import create_navg_bn
+from Summer_2020.bn_std_model import create_std_bn
 from Summer_2020.noisy_avg_calc import create_target_cpt
 
 

@@ -18,6 +18,7 @@ generate_navg_cpt(COBOL_DATA_FILE, SAVE_LOC)
 generate_navg_cpt(SAD_DATA_FILE, SAVE_LOC)
 generate_navg_cpt(SDI_DATA_FILE, SAVE_LOC)
 
+
 """
 # Test code
 
@@ -25,6 +26,16 @@ generate_navg_cpt(SDI_DATA_FILE, SAVE_LOC)
 # F  D  D+ C- C  C+ B- B  B+ A- A
 
 generate_navg_cpt(SAD_DATA_FILE, SAVE_LOC)
+
+df_data = load_data_csv(SAD_DATA_FILE)
+model = create_bayesian_network(df_data, model_type='standard')
+print('Given 7,7 Predicted: ' + bn_predict(model, ['7', '7']))
+print('Given 10,10 Predicted: ' + bn_predict(model, ['10', '10']))
+print('Given 8,5 Predicted: ' + bn_predict(model, ['8', '5']))
+print('Given 2,4 Predicted: ' + bn_predict(model, ['2', '4']))
+print('Given 0,0 Predicted: ' + bn_predict(model, ['0', '0']))
+print('Standard Bayesian Network Test Complete')
+
 df_data = load_data_csv(SAD_DATA_FILE)
 df_cpt = load_cpt_from_csv('cpt\\Systems Analysis and Design CPT')
 model = create_bayesian_network(df_data, df_cpt=df_cpt)
@@ -33,5 +44,6 @@ print('Given 10,10 Predicted: ' + bn_predict(model, ['10', '10']))
 print('Given 8,5 Predicted: ' + bn_predict(model, ['8', '5']))
 print('Given 2,4 Predicted: ' + bn_predict(model, ['2', '4']))
 print('Given 0,0 Predicted: ' + bn_predict(model, ['0', '0']))
-print('Done')
+print('Noisy-Avg Bayesian Network Test Complete')
+
 """
