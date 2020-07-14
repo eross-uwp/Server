@@ -1,0 +1,14 @@
+Test 1: (Data Communications and Computer Networks)
+Training courses: Programming in C++, OOPS I, Introduction to Software Engineering, Data Communications and Computer Networks
+Testing courses: Programming in C++, OOPS I, Introduction to Software Engineering
+Course being predicted: Data Communications and Computer Networks
+
+Test 2: (Database Design and Implementation)
+Training courses: Programming in C++, OOPS I, Introduction to Software Engineering, Data Communications and Computer Networks, Database Design and Implementation
+Testing courses: Programming in C++, OOPS I, Introduction to Software Engineering, Data Communications and Computer Networks (from Test 1)
+Course being predicted: Database Design and Implementation
+
+Test 3: (Programming Language Structures)
+Training courses: Programming in C++, OOPS I, Introduction to Software Engineering, Data Communications and Computer Networks, Database Design and Implementation, PLS
+Testing courses: Programming in C++, OOPS I, Introduction to Software Engineering, Data Communications and Computer Networks (from Test 1), Database Design and Implementation (from Test 2)
+Course being predicted: PLS
