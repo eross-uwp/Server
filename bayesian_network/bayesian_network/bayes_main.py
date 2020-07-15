@@ -1,6 +1,7 @@
-from bayesian_network import BayesianNetwork
-from knowledge_base import KnowledgeBase
 from graph_builder import GraphBuilder
+from knowledge_base import KnowledgeBase
+
+from bayesian_network import BayesianNetwork
 
 if __name__ == "__main__":
     _data_file_path = '..\\ExcelFiles\\courses_and_grades.csv'

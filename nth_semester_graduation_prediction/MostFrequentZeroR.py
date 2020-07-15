@@ -4,12 +4,13 @@
 ___authors___: Zhiwei Yang
 """
 
-import pandas as pd
+import copy
+
 import numpy as np
-#import StratifyAndGenerateDatasets as sd
+import pandas as pd
+# import StratifyAndGenerateDatasets as sd
 from sklearn import metrics
 from sklearn.metrics import confusion_matrix, roc_auc_score, recall_score, precision_score, accuracy_score
-import copy
 
 GRAPH_FILE_PREFIX = 'graph_term_'
 STRATIFIED_DATA_PATH = 'data\\test_train\\'

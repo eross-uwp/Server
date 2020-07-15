@@ -1,7 +1,8 @@
 from unittest import TestCase
+
 from acyclic_graph import AcyclicGraph
-from node import Node
 from edge import Edge
+from node import Node
 
 
 class TestAcyclicGraph(TestCase):

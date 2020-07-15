@@ -2,19 +2,19 @@
 ___authors___: Chris Kott
 """
 
+import enum
 import os
 import sys
-
-import pandas as pd
-import numpy as np
-import enum
-import warnings
 import time
-from sklearn.utils import resample
-from pathlib import Path
-from numpy.random import RandomState
-from joblib import Parallel, delayed
+import warnings
 from itertools import combinations
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+from joblib import Parallel, delayed
+from numpy.random import RandomState
+from sklearn.utils import resample
 
 if not sys.warnoptions:
     warnings.simplefilter("ignore")

@@ -1,12 +1,13 @@
 from unittest import TestCase
 
-from graph_builder import GraphBuilder
-from node import Node
-from edge import Edge
-from acyclic_graph import AcyclicGraph
-from bayesian_network import BayesianNetwork
-from knowledge_base import KnowledgeBase
 import pandas as pd
+from acyclic_graph import AcyclicGraph
+from edge import Edge
+from graph_builder import GraphBuilder
+from knowledge_base import KnowledgeBase
+from node import Node
+
+from bayesian_network import BayesianNetwork
 
 
 class TestBayesianNetwork(TestCase):

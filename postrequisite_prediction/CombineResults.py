@@ -1,9 +1,10 @@
+import enum
 import os
 import sys
-import pandas as pd
-import enum
 import warnings
 from pathlib import Path
+
+import pandas as pd
 
 if not sys.warnoptions:
     warnings.simplefilter("ignore")

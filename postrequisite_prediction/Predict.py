@@ -2,24 +2,24 @@
 ___authors___: Austin FitzGerald, Chris Kott
 """
 
-import os
-import sys
-
-import pandas as pd
-import numpy as np
 import enum
+import os
+import pickle
+import sys
+import time
+import warnings
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+from joblib import Parallel, delayed, parallel_backend
+from scipy.stats import loguniform
 from sklearn import metrics
+from sklearn.dummy import DummyRegressor, DummyClassifier
 from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegressor, RandomForestRegressor
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, GridSearchCV, RandomizedSearchCV
-from sklearn.dummy import DummyRegressor, DummyClassifier
 from sklearn.svm import NuSVR
-import warnings
-import time
-from pathlib import Path
-from joblib import Parallel, delayed, parallel_backend
-import pickle
-from scipy.stats import loguniform
 from sklearn.utils import column_or_1d
 
 if not sys.warnoptions:

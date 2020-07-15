@@ -7,9 +7,10 @@ __Purpose__: An interface to our noisy-avg Bayesian network and the standard Bay
 """
 import copy
 import math
-from timeit import default_timer as timer
 import os
 import sys
+from timeit import default_timer as timer
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
 import pandas as pd
 import pathlib
@@ -27,7 +28,7 @@ def generate_navg_cpt(data_loc, save_loc, num_grades=11, reverse=False, verbose=
 
     df_data = load_data_csv(data_loc, reverse)
     if verbose: print('Generating ' + df_data.columns[-1] + ' CPT')
-    file_name = df_data.columns[-1] + ' CPT'
+    file_name = df_data.columns[-1] + ' CPT.csv'
     df_cpt = create_navg_cpt(df_data, num_grades)
     if isinstance(save_loc, pathlib.Path):
         save_cpt_as_csv(df_cpt, save_loc / file_name)
@@ -73,6 +74,15 @@ def bn_predict(bn_model, prereq_grade_list):
     grade_list = copy.deepcopy(prereq_grade_list.copy())
     grade_list.append(None)
     return str(bn_model.predict([grade_list])[-1][-1])
+
+
+# Wrapper function for pomegranate predict method
+def bn_multi_predict(bn_model, prereq_grade_lists):
+    prediction_list = []
+    for prereqs in prereq_grade_lists:
+        print(prereqs)
+        prediction_list.append(bn_predict(bn_model, [str(i) for i in prereqs]))
+    return prediction_list
 
 
 # Wrapper function for pandas .to_csv()

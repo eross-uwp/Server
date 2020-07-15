@@ -1,7 +1,8 @@
 import os
-import pandas as pd
-import numpy as np
 import random
+
+import numpy as np
+import pandas as pd
 from sklearn import metrics
 
 PREREQ_PROCESS_TYPE = 'ALL'

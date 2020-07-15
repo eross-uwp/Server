@@ -10,7 +10,9 @@ expression. Items can either be classes or other logical expressions.
 """
 
 import random
+
 import pandas as pd
+
 from postrequisite_prediction.TreeScripts.Node import Node
 
 

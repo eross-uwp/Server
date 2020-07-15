@@ -1,9 +1,9 @@
-from pomegranate import *
 import seaborn;
+from pomegranate import *
 
+from bayesian_network.Practice.CSVDataReader import *
 from bayesian_network.Practice.OOPS2Practice.EventTableCreator import createEventTable
 from bayesian_network.Practice.OOPS2Practice.NodeCreator import *
-from bayesian_network.Practice.CSVDataReader import *
 
 seaborn.set_style('whitegrid')
 

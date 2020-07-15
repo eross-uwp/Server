@@ -3,12 +3,12 @@
 """
 ___authors___: Austin FitzGerald
 """
-from sklearn import metrics
-from matplotlib import pyplot as plt
-import pandas as pd
-import numpy as np
-from sklearn.neural_network import MLPRegressor
 import BaseDataSetGenerator as bD
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
+from sklearn import metrics
+from sklearn.neural_network import MLPRegressor
 
 RESULTS_FOLDER = 'MLPRegressionResults\\'
 RESULTS_TEXTFILE = 'MLPRegression_Results.txt'

@@ -1,11 +1,11 @@
 """
 __Author__: Nate Braukhoff
 """
-from knowledge_base import KnowledgeBase
+import copy
+import itertools as it
 
 import pandas as pd
-import itertools as it
-import copy
+from knowledge_base import KnowledgeBase
 
 
 # Todo: Need to implement how to get the probability when their is not enough data.

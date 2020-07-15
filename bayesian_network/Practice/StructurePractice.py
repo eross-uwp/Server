@@ -1,5 +1,7 @@
+import seaborn
+import time
 from pomegranate import BayesianNetwork
-import seaborn, time
+
 seaborn.set_style('whitegrid')
 import numpy
 

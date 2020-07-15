@@ -1,7 +1,7 @@
+import csv
 import os
 import sys
 
-import csv
 
 # Only reads data from a fake grade probabilities csv for now
 def getData(file):

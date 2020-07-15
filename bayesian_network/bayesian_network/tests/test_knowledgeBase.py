@@ -1,4 +1,5 @@
 from unittest import TestCase
+
 from knowledge_base import KnowledgeBase
 
 

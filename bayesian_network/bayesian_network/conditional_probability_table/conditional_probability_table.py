@@ -1,7 +1,8 @@
+import itertools
+
+import pandas as pd
 from conditional_probability_table_builder import CPTBuilder
 from node import Node
-import itertools
-import pandas as pd
 
 # Todo: Need to implement how to get the probability when their is not enough data.
 """

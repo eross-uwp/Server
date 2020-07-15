@@ -2,37 +2,41 @@
 ___authors___: Chris Kott
 """
 
-import os
-import sys
-
-import pandas as pd
-import numpy as np
 import enum
+import os
+import pickle
+import sys
+import time
+import warnings
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import random
+from joblib import Parallel, delayed, parallel_backend
+from scipy.stats import loguniform
 from sklearn import metrics
+from sklearn.dummy import DummyRegressor, DummyClassifier
 from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegressor, RandomForestRegressor
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, GridSearchCV, RandomizedSearchCV
-from sklearn.dummy import DummyRegressor, DummyClassifier
 from sklearn.svm import NuSVR
-import warnings
-import time
-from pathlib import Path
-from joblib import Parallel, delayed, parallel_backend
-import pickle
-from scipy.stats import loguniform
 from sklearn.utils import column_or_1d
+from bayesian_network.Summer_2020 import bn_interface
 
 if not sys.warnoptions:
     warnings.simplefilter("ignore")
     os.environ["PYTHONWARNINGS"] = "ignore"  # Also affect subprocesses
 
-prereq_type = "IMMEDIATE"
+prereq_type = "ROOT"
 __MODEL_TYPES_ENUM = enum.IntEnum('__MODEL_TYPES_ENUM', 'LOGISTIC_REGRESSION GBT_CLASSIFIER NU_SVR GBT_REGRESSOR '
-                                                        'RANDOM_FOREST_REGRESSOR MOD_ZEROR MEAN_ZEROR')
+                                                        'RANDOM_FOREST_REGRESSOR MOD_ZEROR MEAN_ZEROR BAYESIAN_NETWORK')
 __RANDOM_SEED = np.int64(313131)
+random.seed(__RANDOM_SEED)
 data_folder = Path('data/' + prereq_type + 'PrereqTables')
 tuning_path = Path('TuningResults_only_prereqs/' + prereq_type)
-experiment_name = 'CT-CIS'
+
+experiment_name = 'SE-CIS'
 experiment_folder = Path(experiment_name)
 testing_file = 'TESTING_STUDENTS.csv'
 training_file = 'TRAINING_STUDENTS.csv'
@@ -97,11 +101,16 @@ def get_prediction_data():
 
 
 def train_and_predict(model_type, course_name, training_dat, prediction_dat):
-    if model_type == __MODEL_TYPES_ENUM.MOD_ZEROR or model_type == __MODEL_TYPES_ENUM.MEAN_ZEROR:
-        if model_type == __MODEL_TYPES_ENUM.MOD_ZEROR:
-            model = DummyClassifier('most_frequent')
-        elif model_type == __MODEL_TYPES_ENUM.MEAN_ZEROR:
-            model = DummyRegressor('mean')
+    print(model_type.name, ":", course_name)
+    x, y = trim(training_dat, course_name)
+    if model_type == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK:
+        da = pd.concat([x, y], axis=1)
+        print(da)
+        model = bn_interface.create_bayesian_network(da)
+    elif model_type == __MODEL_TYPES_ENUM.MOD_ZEROR:
+        model = DummyClassifier('most_frequent')
+    elif model_type == __MODEL_TYPES_ENUM.MEAN_ZEROR:
+        model = DummyRegressor('mean')
     else:
         read_dictionary = np.load(tuning_path/model_type.name/(course_name + ".npy"), allow_pickle=True).item()
         if model_type == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
@@ -114,12 +123,17 @@ def train_and_predict(model_type, course_name, training_dat, prediction_dat):
             model = GradientBoostingRegressor(random_state=__RANDOM_SEED)
         elif model_type == __MODEL_TYPES_ENUM.RANDOM_FOREST_REGRESSOR:
             model = RandomForestRegressor(**read_dictionary, random_state=__RANDOM_SEED)
+        else:
+            raise NotImplementedError('Invalid Model Type')
 
-    x, y = trim(training_dat, course_name)
-    x = x.fillna(-1)
-    y = y.fillna(-1)
-    model.fit(x, y)
-    predicts = model.predict(prediction_dat.drop(columns='student_id'))
+    if model_type != __MODEL_TYPES_ENUM.BAYESIAN_NETWORK:
+        x = x.fillna(-1)
+        y = y.fillna(-1)
+        model.fit(x, y)
+        predicts = model.predict(prediction_dat.drop(columns='student_id'))
+    else:
+        predicts = bn_interface.bn_multi_predict(model, prediction_dat.drop(columns='student_id').values)
+        predicts = [int(i) for i in predicts]
     return [round_school(num) for num in predicts]
 
 

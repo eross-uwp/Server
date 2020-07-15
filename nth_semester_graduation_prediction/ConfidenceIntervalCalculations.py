@@ -1,7 +1,7 @@
 import random
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 from sklearn import metrics
 
 __LOGISTIC_REGRESSION_PREDICTION_FOLDER = 'LogisticRegressionResults\\prediction output\\'

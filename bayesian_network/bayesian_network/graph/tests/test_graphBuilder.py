@@ -1,6 +1,7 @@
 from unittest import TestCase
-from graph_builder import GraphBuilder
+
 import pandas as pd
+from graph_builder import GraphBuilder
 
 
 class TestGraphBuilder(TestCase):

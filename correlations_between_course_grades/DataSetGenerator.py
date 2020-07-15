@@ -1,7 +1,8 @@
 # create pairs of all classes first.
 
-import pandas as pd
 import itertools
+
+import pandas as pd
 
 COURSE_LIST = pd.read_csv('..\\Data\\unique_courses.csv')['courses']
 COURSE_COMBINATIONS_FILEPATH = '..\\Data\\course_combinations.csv'

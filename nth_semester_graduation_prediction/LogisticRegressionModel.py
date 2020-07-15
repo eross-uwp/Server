@@ -3,13 +3,12 @@ ___authors___: Austin FitzGerald
  Using logistic regression to predict if a student will graduate or not
 """
 
+import StratifyAndGenerateDatasets as sD
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 from sklearn import metrics
 from sklearn.linear_model import LogisticRegression
-
-import StratifyAndGenerateDatasets as sD
 
 RESULTS_FOLDER = 'LogisticRegressionResults\\'
 GRAPH_FILE_PREFIX = 'graphs\\term_'

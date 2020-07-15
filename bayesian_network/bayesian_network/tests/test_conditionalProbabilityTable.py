@@ -1,6 +1,7 @@
 from unittest import TestCase
-from conditional_probability_table import ConditionalProbabilityTable
+
 import pandas as pd
+from conditional_probability_table import ConditionalProbabilityTable
 
 
 class TestConditionalProbabilityTable(TestCase):

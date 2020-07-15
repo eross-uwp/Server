@@ -2,10 +2,9 @@
 ___authors___: Austin FitzGerald
 """
 
-from numpy.core.defchararray import upper
-
-from TreeScripts.TreeMaker import TreeMaker
 import pandas as pd
+from TreeScripts.TreeMaker import TreeMaker
+from numpy.core.defchararray import upper
 
 __COMBINED_STRUCTURE = '..\\Data\\combined_course_structure.csv'
 __COMBINED_STRUCTURE_DATAFRAME = pd.read_csv(__COMBINED_STRUCTURE)

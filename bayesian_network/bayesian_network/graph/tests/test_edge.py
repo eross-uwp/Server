@@ -1,4 +1,5 @@
 from unittest import TestCase
+
 from edge import Edge
 from node import Node
 

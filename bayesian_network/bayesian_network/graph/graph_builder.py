@@ -5,10 +5,11 @@ __Purpose__: Building an AcyclicGraph from a CSV file.
 """
 
 import random
+
 import pandas as pd
-from node import Node
-from edge import Edge
 from acyclic_graph import AcyclicGraph
+from edge import Edge
+from node import Node
 
 
 class GraphBuilder:

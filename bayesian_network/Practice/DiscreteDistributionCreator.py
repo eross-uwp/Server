@@ -2,7 +2,9 @@ import os
 import sys
 
 import matplotlib.pyplot as plt
-import seaborn; seaborn.set_style('whitegrid')
+import seaborn;
+
+seaborn.set_style('whitegrid')
 import numpy
 
 from pomegranate import *

@@ -3,9 +3,10 @@ __Author__: Nate Braukhoff and Evan Majerus
 
 __Purpose__:
 """
-import pandas as pd
-import numpy as np
 import itertools
+
+import numpy as np
+import pandas as pd
 
 
 class Node:

@@ -3,12 +3,12 @@
 """
 ___authors___: Evan Majerus & Austin FitzGerald
 """
+import BaseDataSetGenerator as bD
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
 from sklearn import metrics
 from sklearn.linear_model import LinearRegression
-from matplotlib import pyplot as plt
-import pandas as pd
-import numpy as np
-import BaseDataSetGenerator as bD
 
 RESULTS_FOLDER = 'LinearRegressionResults\\'
 RESULTS_TEXTFILE = 'LinearRegression_Results.txt'

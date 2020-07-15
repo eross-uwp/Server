@@ -3,9 +3,8 @@ ___authors___: Austin FitzGerald
 """
 
 import pandas as pd
-from pip._vendor.distlib.compat import raw_input
-
 from TreeScripts.TreeMaker import TreeMaker
+from pip._vendor.distlib.compat import raw_input
 
 __COURSE_CORRELATIONS_DF = pd.read_csv('..\\Data\\course_correlations_bonferroni.csv')
 __COMBINED_STRUCTURE = '..\\Data\\combined_course_structure.csv'

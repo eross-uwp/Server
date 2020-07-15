@@ -1,7 +1,8 @@
 from collections import Counter
-from scipy.stats import spearmanr
+
 import pandas as pd
 from matplotlib import pyplot as plt
+from scipy.stats import spearmanr
 
 COURSE_LIST = pd.read_csv('..\\Data\\unique_courses.csv')['courses']
 STUDENT_ID_LIST = pd.read_csv('..\\Data\\unique_student_ids.csv')['student_id']

@@ -1,5 +1,7 @@
+import seaborn;
 from pomegranate import *
-import seaborn; seaborn.set_style('whitegrid')
+
+seaborn.set_style('whitegrid')
 import numpy as np
 
 from bayesian_network.Practice.OOPS2Practice.NodeCreator import *

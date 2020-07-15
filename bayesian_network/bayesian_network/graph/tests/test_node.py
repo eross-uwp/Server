@@ -1,9 +1,10 @@
 import itertools
-from unittest import TestCase
-from node import Node
 from itertools import combinations
 from itertools import combinations_with_replacement
+from unittest import TestCase
+
 import pandas as pd
+from node import Node
 
 
 class TestNode(TestCase):

@@ -4,12 +4,12 @@
 ___authors___: Austin FitzGerald
 """
 
+import StratifyAndGenerateDatasets as sD
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot as plt
 from sklearn import metrics
 from sklearn.ensemble import GradientBoostingClassifier
-from matplotlib import pyplot as plt
-import pandas as pd
-import numpy as np
-import StratifyAndGenerateDatasets as sD
 
 RESULTS_FOLDER = 'GBTClassifierResults\\'
 GRAPH_FILE_PREFIX = 'graphs\\term_'

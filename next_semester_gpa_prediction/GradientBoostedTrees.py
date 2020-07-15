@@ -1,13 +1,12 @@
 """
 ___authors___: Nate Braukhoff and Zhiwei Yang and Austin FitzGerald
 """
+import BaseDataSetGenerator as bD
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 from sklearn import metrics
 from sklearn.ensemble import GradientBoostingRegressor
-
-import BaseDataSetGenerator as bD
 
 RESULTS_FOLDER = 'GBTRegressorResults\\'
 GRAPH_FILE_PREFIX = 'graphs\\graph_'

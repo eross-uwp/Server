@@ -5,10 +5,10 @@
 ___authors___: Austin FitzGerald
 """
 
-from sklearn.ensemble import GradientBoostingClassifier
-import pandas as pd
-import numpy as np
 import StratifyAndGenerateDatasets as sD
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import GridSearchCV, train_test_split
 
 GRADUATED_HEADER = 'graduated'
