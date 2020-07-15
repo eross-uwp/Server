@@ -4,7 +4,7 @@ __Author__: Nick Tiede
 __Purpose__: This is a place to test bn_interface functions
 """
 
-from Summer_2020.bn_interface import *
+from bayesian_network.Summer_2020.bn_interface import *
 
 # 0  1  2  3  4  5  6  7  8  9  10
 # F  D  D+ C- C  C+ B- B  B+ A- A

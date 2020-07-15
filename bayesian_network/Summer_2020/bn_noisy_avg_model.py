@@ -7,9 +7,9 @@ __Purpose__: To create our noisy-avg Bayesian network model to predict from base
 from pomegranate import *
 import seaborn
 
-from Summer_2020.con_prob_table_creator import get_disc_dist_list
-from Summer_2020.disc_dist_creator import create_real_state_list
-from Summer_2020.noisy_avg_calc import create_target_cpt
+from bayesian_network.Summer_2020.con_prob_table_creator import get_disc_dist_list
+from bayesian_network.Summer_2020.disc_dist_creator import create_real_state_list
+from bayesian_network.Summer_2020.noisy_avg_calc import create_target_cpt
 
 
 # Creates an entire noisy-avg Bayesian network and returns the model to be predicted from

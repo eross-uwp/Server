@@ -7,11 +7,13 @@ __Purpose__: An interface to our noisy-avg Bayesian network and the standard Bay
 """
 import copy
 import math
+import pathlib
 import pandas as pd
+import numpy as np
 from timeit import default_timer as timer
-from Summer_2020.bn_noisy_avg_model import create_navg_bn
-from Summer_2020.bn_std_model import create_std_bn
-from Summer_2020.noisy_avg_calc import create_target_cpt
+from bayesian_network.Summer_2020.bn_noisy_avg_model import create_navg_bn
+from bayesian_network.Summer_2020.bn_std_model import create_std_bn
+from bayesian_network.Summer_2020.noisy_avg_calc import create_target_cpt
 
 
 # Combines noisy-avg cpt loading, generating, and saving functions
@@ -24,7 +26,10 @@ def generate_navg_cpt(data_loc, save_loc, num_grades=11, reverse=False, verbose=
     if verbose: print('Generating ' + df_data.columns[-1] + ' CPT')
     file_name = df_data.columns[-1] + ' CPT'
     df_cpt = create_navg_cpt(df_data, num_grades)
-    save_cpt_as_csv(df_cpt, save_loc + file_name)
+    if isinstance(save_loc, pathlib.Path):
+        save_cpt_as_csv(df_cpt, save_loc / file_name)
+    else:
+        save_cpt_as_csv(df_cpt, save_loc + file_name)
 
     end_time = timer()
     final_time = end_time - start_time
@@ -83,10 +88,19 @@ def load_cpt_from_csv(file_loc):
     return df_cpt
 
 
-# Loads in data from csv
+# Loads in data from csv and formats it if there are nan values
 # reverse variable reverses order of columns if data has target course first
 def load_data_csv(file_loc, reverse=False):
+    df_data = pd.read_csv(file_loc)
+
+    for col in df_data.columns:
+        if df_data[col].dtype == np.float64:
+            df_data[col] = df_data[col].astype(pd.Int64Dtype()).astype(str)
+            df_data[col] = df_data[col].replace({'<NA>': 'nan'})
+
+    df_data = df_data.astype(str)
+
     if reverse:
-        return pd.read_csv(file_loc).iloc[:, ::-1]
+        return df_data.iloc[:, ::-1]
     else:
-        return pd.read_csv(file_loc)
+        return df_data

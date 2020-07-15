@@ -5,7 +5,7 @@ __Purpose__: Generate noisy-or CPTs and save them for later use in experiments. 
              experiment.
 """
 
-from Summer_2020.bn_interface import *
+from bayesian_network.Summer_2020.bn_interface import *
 
 AIS_DATA_FILE = 'data\\AIS.csv'
 COBOL_DATA_FILE = 'data\\COBOL.csv'

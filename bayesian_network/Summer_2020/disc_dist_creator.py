@@ -5,10 +5,8 @@ __Purpose__: To create a pomegranate state (node) list, whose probabilities will
              for each of the prereqs or to create a true state list from data that won't be overwritten
 """
 import pandas as pd
-import numpy as np
 from pomegranate.base import State
 from pomegranate.distributions.DiscreteDistribution import DiscreteDistribution
-from timeit import default_timer as timer
 
 
 # Returns a of list of generated states (nodes) for each prereq

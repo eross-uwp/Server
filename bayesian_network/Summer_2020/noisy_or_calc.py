@@ -8,7 +8,7 @@ __Purpose__: To use Noisy-OR Bayesian Network methods to create conditional prob
              Network model structure for prediction using pomegranate predict methods.
 """
 import pandas as pd
-from Summer_2020.cartesian_table_creator import create_cartesian_table
+from bayesian_network.Summer_2020.cartesian_table_creator import create_cartesian_table
 from timeit import default_timer as timer
 
 

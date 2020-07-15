@@ -6,7 +6,7 @@ __Purpose__: To create a pomegranate conditional probability table for the targe
 import pandas as pd
 from itertools import product
 from pomegranate import ConditionalProbabilityTable
-from Summer_2020.cartesian_table_creator import create_cartesian_table
+from bayesian_network.Summer_2020.cartesian_table_creator import create_cartesian_table
 
 
 # Takes in the number of prereqs and the number of grades

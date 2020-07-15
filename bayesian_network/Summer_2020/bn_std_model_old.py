@@ -10,9 +10,9 @@ __Purpose__: To create a standard Bayesian network model to predict from based o
 """
 from pomegranate import *
 import seaborn
-from Summer_2020.csv_read_write import *
-from Summer_2020.disc_dist_creator import create_disc_dist_state_list
-from Summer_2020.con_prob_table_creator import create_con_prob_table
+from bayesian_network.Summer_2020.csv_read_write import *
+from bayesian_network.Summer_2020.disc_dist_creator import create_disc_dist_state_list
+from bayesian_network.Summer_2020.con_prob_table_creator import create_con_prob_table
 
 
 # Creates an entire standard Bayesian network and returns the model to be predicted from
