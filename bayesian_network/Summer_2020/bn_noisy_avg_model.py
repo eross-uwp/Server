@@ -8,25 +8,25 @@ from pomegranate import *
 import seaborn
 
 from Summer_2020.con_prob_table_creator import get_disc_dist_list
-from Summer_2020.csv_read_write import *
 from Summer_2020.disc_dist_creator import create_real_state_list
 from Summer_2020.noisy_avg_calc import create_target_cpt
 
 
 # Creates an entire noisy-avg Bayesian network and returns the model to be predicted from
-def create_navg_bn(df_data, num_grades=11, df_cpt=None):
+def create_navg_bn(df_data, num_grades=11, df_cpt=None, verbose=False):
     seaborn.set_style('whitegrid')  # Used by pomegranate
 
     # Initializes the model
     model = BayesianNetwork()
-    print("Noisy-Avg Bayesian Network initialized \n")
+    if verbose: print("Noisy-Avg Bayesian Network initialized")
 
     # Gets the number of prereqs for the course
     num_prereqs = len(df_data.columns) - 1
-    print("Prereqs: " + str(num_prereqs) + "\n")
+    if verbose: print("Prereqs: " + str(num_prereqs))
 
-    # Gets list of states (nodes) of prereqs that each contain a discrete distribution\
+    # Gets list of states (nodes) of prereqs that each contain a discrete distribution
     prereq_state_list = create_real_state_list(df_data, num_prereqs, num_grades)
+    if verbose: print("Created prereq states")
 
     # Creates the target course CPT pandas DataFrame based on the noisy-avg method
     # or uses one already created
@@ -35,26 +35,26 @@ def create_navg_bn(df_data, num_grades=11, df_cpt=None):
     else:
         target_df_cpt = df_cpt
 
-    print("Bayesian Network trained \n")
+    if verbose: print("Bayesian Network trained")
 
     # Converts the target course CPT DataFrame to pomegranate objects
     target_pom_cpt = ConditionalProbabilityTable(target_df_cpt.values.tolist(), get_disc_dist_list(prereq_state_list))
     target_state = State(target_pom_cpt)
-    print("Created target course state \n")
+    if verbose: print("Created target course state")
 
     # Adds all the course states (nodes) to the model
     for state in prereq_state_list:
         model.add_state(state)
 
     model.add_state(target_state)
-    print("All course states added to the model \n")
+    if verbose: print("All course states added to the model")
 
     # Add edges pointing from the prereqs to the target course to create the structure of the Bayesian Network
     for state in prereq_state_list:
         model.add_edge(state, target_state)
-    print("All edges added to the model \n")
+    if verbose: print("All edges added to the model")
 
     model.bake()
-    print("Bayesian Network structure finalized: " + model.structure + "\n")
+    if verbose: print("Bayesian Network structure finalized: " + str(model.structure) + "\n")
 
     return model

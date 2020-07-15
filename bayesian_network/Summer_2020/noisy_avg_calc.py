@@ -11,17 +11,21 @@ __Purpose__: To use our Noisy-Avg Bayesian Network methods to create conditional
              https://drive.google.com/file/d/1_w_XXjXCFvSzC1LVGFulMcqmTaicVfwB/view?usp=sharing
 """
 
+import pandas as pd
 from joblib import Parallel, delayed
 from Summer_2020.cartesian_table_creator import create_cartesian_table
-from timeit import default_timer as timer
+from Summer_2020.con_prob_table_creator import create_cpt
 
 
 # Takes in a pandas DataFrame of course data assuming that the target course is in the last column
 # and returns a DataFrame of a conditional probability table using our noisy-avg
 def create_target_cpt(dataframe, num_grades):
-    start_time = timer()  # Gives total time in this function
-
     num_prereqs = len(dataframe.columns) - 1
+
+    # If a course only has one prereq, the noisy-avg behaves identical to a standard Bayesian network
+    # Using the standard BN function speeds up the process
+    if num_prereqs == 1:
+        return create_cpt(dataframe, num_grades, num_prereqs)
 
     # Creates the auxiliary node conditional probability table structure without the probability column
     aux_cpt_structure = create_cartesian_table(num_grades, 2)
@@ -33,6 +37,10 @@ def create_target_cpt(dataframe, num_grades):
 
     # Creates a DataFrame with the averages of each combination of auxiliary grades
     df_averages = create_avg_table(create_cartesian_table(num_grades, num_prereqs), num_prereqs)
+
+    # This removes a warning about changing a value of a copy of a DataFrame.
+    # This is done in the next code block in an acceptable use case for a temporary DataFrame.
+    pd.options.mode.chained_assignment = None
 
     # Creates a list of each prereq to target course grade count table
     grade_count_table_list = []
@@ -60,10 +68,6 @@ def create_target_cpt(dataframe, num_grades):
 
     target_cpt = create_noisy_avg_cpt(final_cpt_structure, combined_aux_cpt, df_averages, num_prereqs, num_grades)
 
-    end_time = timer()
-    final_time_sec = end_time - start_time
-    print('Create target CPT total time: ' + str(final_time_sec) + ' sec \n')
-    print('That is ' + str(final_time_sec/60) + 'minutes or ' + str((final_time_sec/60)/60) + 'hours  \n')
     return target_cpt
 
 
@@ -215,7 +219,7 @@ def calculate_aux_combination(prereq_grade_list, aux_probs, aux_grade_list):
 # This requirement speeds up the process significantly
 def normalize_cpt(noisy_avg_cpt, num_prereqs, num_grades):
     # This is not a deep copy for memory reasons. Add .copy() at the end to be able to compare to original.
-    norm_noisy_avg_cpt = noisy_avg_cpt.copy()
+    norm_noisy_avg_cpt = noisy_avg_cpt
 
     for i in range(num_grades ** num_prereqs):
         row_i_min = int(i*num_grades)

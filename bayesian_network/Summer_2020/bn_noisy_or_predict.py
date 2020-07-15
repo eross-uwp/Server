@@ -1,7 +1,8 @@
 """
 __Author__: Nick Tiede
 
-__Purpose__:
+__Purpose__: This was an attempt to get the noisy-or model to work with out data, but that's not possible due to
+             how noisy-or works. Noisy-avg should be used instead.
 """
 from pomegranate import *
 import seaborn

@@ -24,8 +24,6 @@ def create_disc_dist_state_list(course_names, num_prereqs, num_grades):
 
 # Returns a of list of real data states (nodes) for each prereq
 def create_real_state_list(df_course_data, num_prereqs, num_grades):
-    start_time = timer()  # Gives total time in this function
-
     state_list = []
     df_structure = create_disc_dist_structure(num_grades)
 
@@ -37,8 +35,6 @@ def create_real_state_list(df_course_data, num_prereqs, num_grades):
         prereq_disc_dist = DiscreteDistribution(conv_to_dict(create_single_prob_table(df_prereq_grade_count)))
         state_list.append(State(prereq_disc_dist, df_course_data.columns[i]))
 
-    end_time = timer()
-    print('Create prereq states total time: ' + str(end_time - start_time) + ' sec \n')
     return state_list
 
 
