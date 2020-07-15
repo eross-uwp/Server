@@ -14,12 +14,18 @@ __Purpose__: To use our Noisy-Avg Bayesian Network methods to create conditional
 import pandas as pd
 from joblib import Parallel, delayed
 from Summer_2020.cartesian_table_creator import create_cartesian_table
+from Summer_2020.con_prob_table_creator import create_cpt
 
 
 # Takes in a pandas DataFrame of course data assuming that the target course is in the last column
 # and returns a DataFrame of a conditional probability table using our noisy-avg
 def create_target_cpt(dataframe, num_grades):
     num_prereqs = len(dataframe.columns) - 1
+
+    # If a course only has one prereq, the noisy-avg behaves identical to a standard Bayesian network
+    # Using the standard BN function speeds up the process
+    if num_prereqs == 1:
+        return create_cpt(dataframe, num_grades, num_prereqs)
 
     # Creates the auxiliary node conditional probability table structure without the probability column
     aux_cpt_structure = create_cartesian_table(num_grades, 2)

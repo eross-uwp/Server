@@ -70,6 +70,11 @@ def create_cpt(df_data, num_grades, num_prereqs):
 
         if int(count_sum) == 0:
             df_counts.iloc[row_i_min:row_i_max, -1] = 1/num_grades
+            # Fixes the random predict problem by adding a small amount of probability to the most common grade
+            # While also keeping the sums added to 1
+            df_counts.iloc[row_i_min:row_i_max, -1] -= 0.00001
+            mode_grade = int(df_data.iloc[:, -2].mode())
+            df_counts.iat[row_i_min + mode_grade, -1] += 0.00001 * num_grades
         else:
             prob_modifier = 1/count_sum
             df_counts.iloc[row_i_min:row_i_max, -1] *= prob_modifier
