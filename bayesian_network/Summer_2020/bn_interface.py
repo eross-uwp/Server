@@ -7,11 +7,14 @@ __Purpose__: An interface to our noisy-avg Bayesian network and the standard Bay
 """
 import copy
 import math
-import pandas as pd
 from timeit import default_timer as timer
-from Summer_2020.bn_noisy_avg_model import create_navg_bn
-from Summer_2020.bn_std_model import create_std_bn
-from Summer_2020.noisy_avg_calc import create_target_cpt
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
+import pandas as pd
+from bayesian_network.Summer_2020.bn_noisy_avg_model import create_navg_bn
+from bayesian_network.Summer_2020.bn_std_model import create_std_bn
+from bayesian_network.Summer_2020.noisy_avg_calc import create_target_cpt
 
 
 # Combines noisy-avg cpt loading, generating, and saving functions

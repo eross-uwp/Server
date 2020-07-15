@@ -5,7 +5,6 @@ __Purpose__: Read and write from csv files formatted for the bayesian network an
 """
 
 import pandas as pd
-import numpy as np
 
 
 # Reads training or testing data from a csv and returns a pandas DataFrame

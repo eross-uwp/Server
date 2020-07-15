@@ -8,11 +8,14 @@ __Purpose__: To create a standard Bayesian network model to predict from based o
              then pomegranate assumes that C is not a possibility for that course and does not include it. This causes
              errors when trying to predict given some of these missing values.
 """
-from pomegranate import *
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
 import seaborn
-from Summer_2020.csv_read_write import *
-from Summer_2020.disc_dist_creator import create_disc_dist_state_list
-from Summer_2020.con_prob_table_creator import create_con_prob_table
+from bayesian_network.Summer_2020.con_prob_table_creator import create_con_prob_table
+from bayesian_network.Summer_2020.bayecsv_read_write import *
+from bayesian_network.Summer_2020.disc_dist_creator import create_disc_dist_state_list
+from pomegranate import *
 
 
 # Creates an entire standard Bayesian network and returns the model to be predicted from
