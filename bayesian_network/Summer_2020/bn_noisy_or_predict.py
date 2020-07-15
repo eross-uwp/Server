@@ -35,4 +35,4 @@ print("Prereqs: " + str(num_prereqs) + "\n")
 # Gets list of states (nodes) of prereqs that each contain a discrete distribution\
 prereq_state_list = create_real_state_list(df_data, num_prereqs, NUM_GRADES)
 
-get_probabilities(df_data, NUM_GRADES)
+# get_probabilities(df_data, NUM_GRADES)
