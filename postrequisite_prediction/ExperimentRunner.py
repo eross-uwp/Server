@@ -28,7 +28,7 @@ __RANDOM_SEED = np.int64(313131)
 random.seed(__RANDOM_SEED)
 data_folder = Path('data/' + prereq_type + 'PrereqTables')
 tuning_path = Path('TuningResults_only_prereqs/' + prereq_type)
-
+experiment_list = ['CT-CIS', 'SE-CIS', 'SE-CT[30-59]', 'SE-CT[60-89]']
 experiment_name = 'SE-CIS'
 experiment_folder = Path(experiment_name)
 testing_file = 'TESTING_STUDENTS.csv'
@@ -54,7 +54,7 @@ def trim(file, course_name):
 
 def convert_grade(string_grade):
     if str(string_grade) == 'nan':
-        return -1
+        return np.NaN
     grade_conversions = {
         'A': 10,
         'A-': 9,
@@ -84,12 +84,13 @@ def get_prediction_data():
                 testData.columns = ['student_id', col]
                 current_data = current_data.drop(columns=col)
                 current_data = current_data.merge(testData, on='student_id', how='inner')
+            elif col == "Basic Algebra":
+                continue
             else:
                 missing_data = pd.read_csv(Path('data/studentGradesPerCourse.csv'))
                 current_data = current_data.drop(columns=col)
                 current_data = current_data.merge(missing_data[['student_id', col]], on='student_id', how='inner')
                 current_data[col] = current_data[col].apply(convert_grade)
-    print(current_data)
     return current_data
 
 
@@ -123,8 +124,11 @@ def train_and_predict(model_type, course_name, training_dat, prediction_dat):
         x = x.fillna(-1)
         y = y.fillna(-1)
         model.fit(x, y)
+        prediction_dat = prediction_dat.fillna(-1)
+        print(prediction_dat)
         predicts = model.predict(prediction_dat.drop(columns='student_id'))
     else:
+        print(prediction_dat)
         predicts = bn_interface.bn_multi_predict(model, prediction_dat.drop(columns='student_id').values)
         predicts = [int(i) for i in predicts]
     return [round_school(num) for num in predicts]
@@ -133,17 +137,21 @@ def train_and_predict(model_type, course_name, training_dat, prediction_dat):
 if __name__ == "__main__":
     pd.set_option('display.max_rows', None)
     pd.set_option('display.max_columns', None)
-    training_data = pd.read_csv(experiment_folder/training_file)
-    for model_types in __MODEL_TYPES_ENUM:
+    for experiment in experiment_list:
+        print(experiment)
+        experiment_name = experiment
+        experiment_folder = Path(experiment_name)
+        training_data = pd.read_csv(experiment_folder/training_file)
+        for model_types in __MODEL_TYPES_ENUM:
 
-        testing_students = pd.read_csv(experiment_folder/testing_file)
-        # print(training_data)
-        for course in training_data.columns:
-            print(course)
-            course_data = pd.read_csv(data_folder/(course + ".csv"))
-            data = course_data[course_data.student_id.isin(training_data[course])]
-            prediction_data = get_prediction_data()
-            predictions = train_and_predict(model_types, course, data, prediction_data)
-            print(predictions)
-            testing_students[course] = predictions
-        testing_students.to_csv(experiment_folder/(model_types.name + '_predictions.csv'), index=False)
+            testing_students = pd.read_csv(experiment_folder/testing_file)
+            # print(training_data)
+            for course in training_data.columns:
+                print(course)
+                course_data = pd.read_csv(data_folder/(course + ".csv"))
+                data = course_data[course_data.student_id.isin(training_data[course])]
+                prediction_data = get_prediction_data()
+                predictions = train_and_predict(model_types, course, data, prediction_data)
+                print(predictions)
+                testing_students[course] = predictions
+            testing_students.to_csv(experiment_folder/(model_types.name + '_predictions.csv'), index=False)

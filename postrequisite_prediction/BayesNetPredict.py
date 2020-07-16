@@ -27,7 +27,7 @@ if not sys.warnoptions:
     os.environ["PYTHONWARNINGS"] = "ignore"  # Also affect subprocesses
 
 __data_folder = Path('data/BayesNetTables')
-__folds_folder = Path('data/BayesNetFolds')
+__folds_folder = Path('data/ALLPrereqFolds')
 __results_folder = Path('results/BayesNet')
 __tuning_results_folder = Path('TuningResults/BayesNetCPTs')
 
@@ -39,5 +39,41 @@ __MIN_SAMPLES_FOR_PREDICTING = 25
 np.random.seed(__RANDOM_SEED)
 
 
+def get_prereq_table(filename):
+    file = pd.read_csv(__data_folder / filename)
+    y = file.iloc[:, 1]
+    ids = file['student_id']
+    x = file.drop([file.columns[1], file.columns[0]], axis=1)  # drop the postreq grade and student_id columns
+    # x = x.drop(x.columns[len(x.columns) - 1], axis=1)  # drop the term diff column
+    # x = x.drop([x.columns[len(x.columns) - 1], x.columns[len(x.columns) - 2], x.columns[len(x.columns) - 3],
+    #            x.columns[len(x.columns) - 4]], axis=1)  # remove all but prereqs.
+    return x, y, ids
 
 
+if __name__ == "__main__":
+    count = 0
+
+    for course in os.listdir(__data_folder):
+        print(course)
+        x_trains = []
+        x_tests = []
+        y_trains = []
+        y_tests = []
+        id_tests = []
+
+        x, y, ids = get_prereq_table(course)
+        x = x.fillna(-1)
+        y = y.fillna(-1)
+        x_columns = list(x.columns.values)
+        x = x.values
+        y = y.values
+        if len(x) >= __MIN_SAMPLES_FOR_PREDICTING and len(y) >= __MIN_SAMPLES_FOR_PREDICTING:
+            skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+            loop_count = 0
+            for train_index, test_index in skf.split(x, y):
+                x_train, x_test = x[train_index], x[test_index]
+                y_train, y_test = y[train_index], y[test_index]
+                print(x_train)
+                print()
+        count += 1
+    print(count)
