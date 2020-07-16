@@ -64,8 +64,8 @@ if __name__ == "__main__":
         id_tests = []
 
         x, y, ids = get_prereq_table(course)
-        x = x.fillna(-1)
-        y = y.fillna(-1)
+        # x = x.fillna(-1)
+        # y = y.fillna(-1)
         x_columns = list(x.columns.values)
         x = x.values
         y = y.values
@@ -75,7 +75,7 @@ if __name__ == "__main__":
             for train_index, test_index in skf.split(x, y):
                 x_train, x_test = x[train_index], x[test_index]
                 y_train, y_test = y[train_index], y[test_index]
-                da = pd.concat([pd.DataFrame(x_train), pd.DataFrame(y_train)], axis=1).astype(pd.Int64Dtype())\
+                da = pd.concat([pd.DataFrame(x_train, columns=x_columns), pd.DataFrame(y_train, columns=[course[:-4]])], axis=1).astype(pd.Int64Dtype())\
                     .astype(str).replace({'<NA>': 'nan'})
                 print(da)
                 if os.path.exists(__tuning_results_folder/(course[:-4] + "_CPT_" + str(loop_count) + ".csv")):
