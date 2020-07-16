@@ -7,9 +7,13 @@ __Purpose__: To use Noisy-OR Bayesian Network methods to create conditional prob
              ConditionalProbabilityTables along with given data DiscreteDistributions to create the Bayesian
              Network model structure for prediction using pomegranate predict methods.
 """
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
+from timeit import default_timer as timer
+
 import pandas as pd
 from bayesian_network.Summer_2020.cartesian_table_creator import create_cartesian_table
-from timeit import default_timer as timer
 
 
 # Takes in a pandas dataframe of course data assuming that the target course is in the last column

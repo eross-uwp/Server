@@ -1,0 +1,19 @@
+Test 1: (Programming in COBOL)
+Training courses: Programming in C++, OOPS I, Programming in COBOL
+Testing courses: Programming in C++, OOPS I
+Course being predicted: Programming in COBOL
+
+Test 2: (Systems Analysis and Design)
+Training courses: Programming in C++, OOPS I, Programming in COBOL, Systems Analysis and Design
+Testing courses: Programming in C++, OOPS I, Programming in COBOL (from Test 1)
+Course being predicted: Systems Analysis and Design
+
+Test 3: (Systems Development and Implementation)
+Training courses: Programming in C++, OOPS I, Programming in COBOL, Systems Analysis and Design, Systems Devlopment and Implementation
+Testing courses: Programming in C++, OOPS I, Programming in COBOL (from Test 1), Systems Analysis and Design (from Test 2)
+Course being predicted: Systems Development and Implementation
+
+Test 4: (Applications in Information Systems)
+Training courses: Programming in C++, OOPS I, Programming in COBOL, Systems Analysis and Design, Systems Devlopment and Implementation, Applications in Information Systems
+Testing courses: Programming in C++, OOPS I, Programming in COBOL (from Test 1), Systems Analysis and Design (from Test 2), Systems Development and Implementation (from Test 3)
+Course being predicted: Applications in Information Systems

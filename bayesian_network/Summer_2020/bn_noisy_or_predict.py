@@ -4,10 +4,13 @@ __Author__: Nick Tiede
 __Purpose__: This was an attempt to get the noisy-or model to work with out data, but that's not possible due to
              how noisy-or works. Noisy-avg should be used instead.
 """
-from pomegranate import *
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
 import seaborn
 from bayesian_network.Summer_2020.csv_read_write import *
-from bayesian_network.Summer_2020.disc_dist_creator import create_disc_dist_state_list, create_real_state_list
+from bayesian_network.Summer_2020.disc_dist_creator import create_real_state_list
+from pomegranate import *
 
 seaborn.set_style('whitegrid') # Used by pomegranate
 

@@ -249,7 +249,8 @@ if __name__ == "__main__":
         tree = prerequisite_tree_maker.process(row['postreq'])
         data_frame = postreqquisite_lrm.create_data_frame(tree, grades)
         data_frame.to_csv(__OUTPUT_CSV_FILEPATH
-                          + "".join([c for c in tree.get_name() if c.isalpha() or c.isdigit() or c == ' ']).rstrip()
+                          + "".join([c for c in tree.get_name() if c.isalpha() or c.isdigit() or c == ' ' or c == '-'])
+                          .rstrip()
                           + '.csv', index=False)
         count = count + 1
     print("Done!")

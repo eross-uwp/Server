@@ -4,10 +4,13 @@ __Author__: Nick Tiede
 __Purpose__: To create a standard Bayesian network model to predict from based on input data and the number of grades.
              bn_interface should be used to call this function.
 """
-from pomegranate import *
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
 import seaborn
-from bayesian_network.Summer_2020.disc_dist_creator import create_real_state_list
 from bayesian_network.Summer_2020.con_prob_table_creator import create_cpt, get_disc_dist_list
+from bayesian_network.Summer_2020.disc_dist_creator import create_real_state_list
+from pomegranate import *
 
 
 # Creates an entire standard Bayesian network and returns the model to be predicted from

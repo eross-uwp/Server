@@ -10,11 +10,13 @@ __Purpose__: To use our Noisy-Avg Bayesian Network methods to create conditional
              The Noisy-Avg method is described in this document:
              https://drive.google.com/file/d/1_w_XXjXCFvSzC1LVGFulMcqmTaicVfwB/view?usp=sharing
 """
-
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
 import pandas as pd
-from joblib import Parallel, delayed
 from bayesian_network.Summer_2020.cartesian_table_creator import create_cartesian_table
 from bayesian_network.Summer_2020.con_prob_table_creator import create_cpt
+from joblib import Parallel, delayed
 
 
 # Takes in a pandas DataFrame of course data assuming that the target course is in the last column

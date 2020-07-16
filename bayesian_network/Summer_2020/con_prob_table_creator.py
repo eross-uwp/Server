@@ -3,10 +3,11 @@ __Author__: Nick Tiede
 
 __Purpose__: To create a pomegranate conditional probability table for the target course
 """
-import pandas as pd
-from itertools import product
-from pomegranate import ConditionalProbabilityTable
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
 from bayesian_network.Summer_2020.cartesian_table_creator import create_cartesian_table
+from pomegranate import ConditionalProbabilityTable
 
 
 # Takes in the number of prereqs and the number of grades

@@ -3,8 +3,12 @@ __Author__: Nick Tiede
 
 __Purpose__: To create cartesian product tables for many uses
 """
-import pandas as pd
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
 from itertools import product
+
+import pandas as pd
 
 
 # Creates the cartesian product of ints given by the num_values, converts the list of tuples to a list of lists,
