@@ -70,15 +70,38 @@ def create_cpt(df_data, num_grades, num_prereqs):
 
         if int(count_sum) == 0:
             df_counts.iloc[row_i_min:row_i_max, -1] = 1/num_grades
-            # Fixes the random predict problem by adding a small amount of probability to the most common grade
-            # While also keeping the sums added to 1
+            # Fixes the random predict problem when there is no data for that grade by adding a small amount of
+            # probability to the most common grade, while also keeping the sums added to 1
             df_counts.iloc[row_i_min:row_i_max, -1] -= 0.00001
-            mode_grade = int(df_data.iloc[:, -2].mode())
+            mode_grade = int(df_data.iloc[:, -1].mode())
             df_counts.iat[row_i_min + mode_grade, -1] += 0.00001 * num_grades
         else:
             prob_modifier = 1/count_sum
             df_counts.iloc[row_i_min:row_i_max, -1] *= prob_modifier
 
-    df_counts.rename(columns={'count': 'probability'}, inplace=True)
+        df_counts.rename(columns={'count': 'probability'}, inplace=True)
+
+        # Checks for duplicate probabilities given the same prereq grades
+        identical_prob = df_counts.iloc[row_i_min:row_i_max, -1].duplicated().any()
+
+        df_data = df_data.astype(int)
+
+        # Fixes random predict when some probabilities are equal given the same prereq grades
+        if identical_prob:
+            ident_prob_list = list(df_counts.iloc[row_i_min:row_i_max, -1][df_counts.iloc[row_i_min:row_i_max, -1].duplicated() == True])
+            highest_prob = max(ident_prob_list)
+            if not highest_prob == 0 and highest_prob == max(df_counts.iloc[row_i_min:row_i_max, -1]):
+                avg_grade = int(df_data.iloc[:, -1].mean())
+                ident_prob_grades = []
+                for j in range(num_grades):
+                    if df_counts.iloc[row_i_min + j, -1] == highest_prob:
+                        ident_prob_grades.append(int(df_counts.iloc[row_i_min + j, -2]))
+
+                if ident_prob_grades:
+                    ident_prob_modifier = len(ident_prob_grades) * 0.00001
+                    closest_grade = min(ident_prob_grades, key=lambda x: abs(x - avg_grade))
+                    df_counts.iat[row_i_min + closest_grade, -1] += ident_prob_modifier
+                    for k in range(len(ident_prob_grades)):
+                        df_counts.iat[row_i_min + ident_prob_grades[k], -1] -= 0.00001
 
     return df_counts

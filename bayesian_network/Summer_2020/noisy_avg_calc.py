@@ -19,7 +19,7 @@ from bayesian_network.Summer_2020.con_prob_table_creator import create_cpt
 
 # Takes in a pandas DataFrame of course data assuming that the target course is in the last column
 # and returns a DataFrame of a conditional probability table using our noisy-avg
-def create_target_cpt(dataframe, num_grades):
+def create_target_cpt(dataframe, num_grades, check_dup=True):
     num_prereqs = len(dataframe.columns) - 1
 
     # If a course only has one prereq, the noisy-avg behaves identical to a standard Bayesian network
@@ -67,6 +67,9 @@ def create_target_cpt(dataframe, num_grades):
     combined_aux_cpt = create_combined_cpt(aux_cpt_list)
 
     target_cpt = create_noisy_avg_cpt(final_cpt_structure, combined_aux_cpt, df_averages, num_prereqs, num_grades)
+
+    if check_dup:
+        target_cpt = fix_prob_duplicates(target_cpt, dataframe, num_grades, num_prereqs)
 
     return target_cpt
 
@@ -229,3 +232,38 @@ def normalize_cpt(noisy_avg_cpt, num_prereqs, num_grades):
         norm_noisy_avg_cpt.iloc[row_i_min:row_i_max, -1] *= norm_modifier
 
     return norm_noisy_avg_cpt
+
+
+# Gives a slight preference towards predicting the grade closest to the average grade in the data set when
+# there are identical probabilities given the same prereqs
+# The chance of this happening with noisy-avg is incredibly low but still possible
+def fix_prob_duplicates(target_cpt, df_data, num_grades, num_prereqs):
+    for i in range(num_grades ** num_prereqs):
+        row_i_min = int(i*num_grades)
+        row_i_max = int((i*num_grades) + num_grades)
+
+    # Checks for duplicate probabilities given the same prereq grades
+    identical_prob = target_cpt.iloc[row_i_min:row_i_max, -1].duplicated().any()
+
+    df_data = df_data.astype(int)
+
+    # Fixes random predict when some probabilities are equal given the same prereq grades
+    if identical_prob:
+        ident_prob_list = list(
+            target_cpt.iloc[row_i_min:row_i_max, -1][target_cpt.iloc[row_i_min:row_i_max, -1].duplicated() == True])
+        highest_prob = max(ident_prob_list)
+        if not highest_prob == 0 and highest_prob == max(target_cpt.iloc[row_i_min:row_i_max, -1]):
+            avg_grade = int(df_data.iloc[:, -1].mean())
+            ident_prob_grades = []
+            for j in range(num_grades):
+                if target_cpt.iloc[row_i_min + j, -1] == highest_prob:
+                    ident_prob_grades.append(int(target_cpt.iloc[row_i_min + j, -2]))
+
+            if ident_prob_grades:
+                ident_prob_modifier = len(ident_prob_grades) * 0.00001
+                closest_grade = min(ident_prob_grades, key=lambda x: abs(x - avg_grade))
+                target_cpt.iat[row_i_min + closest_grade, -1] += ident_prob_modifier
+                for k in range(len(ident_prob_grades)):
+                    target_cpt.iat[row_i_min + ident_prob_grades[k], -1] -= 0.00001
+
+    return target_cpt

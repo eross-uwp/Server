@@ -1,9 +1,8 @@
 """
 __Author__: Nick Tiede
 
-__Purpose__: An interface to our noisy-avg Bayesian network and the standard Bayesian network. The standard Bayesian
-             network will break if it tries to predict when it hasn't seen any instances of one of the input grades
-             in the training set.
+__Purpose__: An interface to our noisy-avg Bayesian network and the standard Bayesian network.
+             generate_navg_cpt() should be used to create and save CPTS then create_bayesian_network() to get model
 """
 import copy
 import math
@@ -19,13 +18,13 @@ from bayesian_network.Summer_2020.noisy_avg_calc import create_target_cpt
 # Combines noisy-avg cpt loading, generating, and saving functions
 # Also makes the CPTs easily readable when saved
 # Takes in full data file path and the folder file path to save CPT
-def generate_navg_cpt(data_loc, save_loc, num_grades=11, reverse=False, verbose=True):
+def generate_navg_cpt(data_loc, save_loc, num_grades=11, reverse=False, verbose=True, check_dup=True):
     start_time = timer()
 
     df_data = load_data_csv(data_loc, reverse)
     if verbose: print('Generating ' + df_data.columns[-1] + ' CPT')
     file_name = df_data.columns[-1] + ' CPT'
-    df_cpt = create_navg_cpt(df_data, num_grades)
+    df_cpt = create_navg_cpt(df_data, num_grades=num_grades, check_dup=check_dup)
     if isinstance(save_loc, pathlib.Path):
         save_cpt_as_csv(df_cpt, save_loc / file_name)
     else:
@@ -41,10 +40,10 @@ def generate_navg_cpt(data_loc, save_loc, num_grades=11, reverse=False, verbose=
 
 
 # Returns a DataFrame of a noisy-avg CPT given a DataFrame of grade data
-def create_navg_cpt(df_data, num_grades=11):
+def create_navg_cpt(df_data, num_grades=11, check_dup=True):
     col_names = list(df_data.columns.values)
     col_names.append('probability')
-    df_cpt = create_target_cpt(df_data, num_grades)
+    df_cpt = create_target_cpt(df_data, num_grades, check_dup=check_dup)
     df_cpt.columns = col_names
     return df_cpt
 
