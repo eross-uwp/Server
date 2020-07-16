@@ -51,7 +51,8 @@ def get_prereq_table(filename):
 
 
 if __name__ == "__main__":
-    count = 0
+    if not os.path.exists(__tuning_results_folder):
+        os.makedirs(__tuning_results_folder)
 
     for course in os.listdir(__data_folder):
         print(course)
@@ -69,11 +70,18 @@ if __name__ == "__main__":
         y = y.values
         if len(x) >= __MIN_SAMPLES_FOR_PREDICTING and len(y) >= __MIN_SAMPLES_FOR_PREDICTING:
             skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
-            loop_count = 0
+            loop_count = 1
             for train_index, test_index in skf.split(x, y):
                 x_train, x_test = x[train_index], x[test_index]
                 y_train, y_test = y[train_index], y[test_index]
-                print(x_train)
+                da = pd.concat([pd.DataFrame(x_train), pd.DataFrame(y_train)], axis=1).astype(pd.Int64Dtype())\
+                    .astype(str).replace({'<NA>': 'nan'})
+                print(da)
+                if os.path.exists(__tuning_results_folder/(course[:-4] + "_CPT_" + str(loop_count) + ".csv")):
+                    df_cpt = pd.read_csv(__tuning_results_folder/(course[:-4] + "_CPT_" + str(loop_count) + ".csv"))
+                else:
+                    df_cpt = bn_interface.create_navg_cpt(da)
+                    df_cpt.to_csv(__tuning_results_folder/(course[:-4] + "_CPT_" + str(loop_count) + ".csv"))
+                model = bn_interface.create_bayesian_network(da, df_cpt=df_cpt)
                 print()
-        count += 1
-    print(count)
+                loop_count += 1

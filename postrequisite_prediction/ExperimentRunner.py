@@ -21,7 +21,7 @@ if not sys.warnoptions:
     warnings.simplefilter("ignore")
     os.environ["PYTHONWARNINGS"] = "ignore"  # Also affect subprocesses
 
-prereq_type = "ROOT"
+prereq_type = "IMMEDIATE"
 __MODEL_TYPES_ENUM = enum.IntEnum('__MODEL_TYPES_ENUM', 'LOGISTIC_REGRESSION GBT_CLASSIFIER NU_SVR GBT_REGRESSOR '
                                                         'RANDOM_FOREST_REGRESSOR MOD_ZEROR MEAN_ZEROR BAYESIAN_NETWORK')
 __RANDOM_SEED = np.int64(313131)
@@ -54,7 +54,7 @@ def trim(file, course_name):
 
 def convert_grade(string_grade):
     if str(string_grade) == 'nan':
-        return np.NaN
+        return string_grade
     grade_conversions = {
         'A': 10,
         'A-': 9,
@@ -85,9 +85,10 @@ def get_prediction_data():
                 current_data = current_data.drop(columns=col)
                 current_data = current_data.merge(testData, on='student_id', how='inner')
             elif col == "Basic Algebra":
+                current_data[col] = current_data[col].apply(convert_grade)
                 continue
             else:
-                missing_data = pd.read_csv(Path('data/studentGradesPerCourse.csv'))
+                missing_data = pd.read_csv(Path('data/studentGradesPerCourse.csv'), index_col=False)
                 current_data = current_data.drop(columns=col)
                 current_data = current_data.merge(missing_data[['student_id', col]], on='student_id', how='inner')
                 current_data[col] = current_data[col].apply(convert_grade)
@@ -98,8 +99,7 @@ def train_and_predict(model_type, course_name, training_dat, prediction_dat):
     print(model_type.name, ":", course_name)
     x, y = trim(training_dat, course_name)
     if model_type == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK:
-        da = pd.concat([x, y], axis=1)
-        print(da)
+        da = pd.concat([x, y], axis=1).astype(pd.Int64Dtype()).astype(str).replace({'<NA>': 'nan'})
         model = bn_interface.create_bayesian_network(da)
     elif model_type == __MODEL_TYPES_ENUM.MOD_ZEROR:
         model = DummyClassifier('most_frequent')
@@ -125,11 +125,10 @@ def train_and_predict(model_type, course_name, training_dat, prediction_dat):
         y = y.fillna(-1)
         model.fit(x, y)
         prediction_dat = prediction_dat.fillna(-1)
-        print(prediction_dat)
         predicts = model.predict(prediction_dat.drop(columns='student_id'))
     else:
-        print(prediction_dat)
-        predicts = bn_interface.bn_multi_predict(model, prediction_dat.drop(columns='student_id').values)
+        dat = prediction_dat.drop(columns='student_id').astype(pd.Int64Dtype()).astype(str).replace({'<NA>': 'nan'}).values
+        predicts = bn_interface.bn_multi_predict(model, dat)
         predicts = [int(i) for i in predicts]
     return [round_school(num) for num in predicts]
 
@@ -141,14 +140,13 @@ if __name__ == "__main__":
         print(experiment)
         experiment_name = experiment
         experiment_folder = Path(experiment_name)
-        training_data = pd.read_csv(experiment_folder/training_file)
+        training_data = pd.read_csv(experiment_folder/training_file, index_col=False)
         for model_types in __MODEL_TYPES_ENUM:
-
-            testing_students = pd.read_csv(experiment_folder/testing_file)
+            testing_students = pd.read_csv(experiment_folder/testing_file, index_col=False)
             # print(training_data)
             for course in training_data.columns:
                 print(course)
-                course_data = pd.read_csv(data_folder/(course + ".csv"))
+                course_data = pd.read_csv(data_folder/(course + ".csv"), index_col=False)
                 data = course_data[course_data.student_id.isin(training_data[course])]
                 prediction_data = get_prediction_data()
                 predictions = train_and_predict(model_types, course, data, prediction_data)

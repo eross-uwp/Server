@@ -247,15 +247,13 @@ def fix_prob_duplicates(target_cpt, df_data, num_grades, num_prereqs):
     # Checks for duplicate probabilities given the same prereq grades
     identical_prob = target_cpt.iloc[row_i_min:row_i_max, -1].duplicated().any()
 
-    df_data = df_data.astype(int)
-
     # Fixes random predict when some probabilities are equal given the same prereq grades
     if identical_prob:
         ident_prob_list = list(
             target_cpt.iloc[row_i_min:row_i_max, -1][target_cpt.iloc[row_i_min:row_i_max, -1].duplicated() == True])
         highest_prob = max(ident_prob_list)
         if not highest_prob == 0 and highest_prob == max(target_cpt.iloc[row_i_min:row_i_max, -1]):
-            avg_grade = int(df_data.iloc[:, -1].mean())
+            avg_grade = int(df_data.iloc[:, -1].astype(int).mean())
             ident_prob_grades = []
             for j in range(num_grades):
                 if target_cpt.iloc[row_i_min + j, -1] == highest_prob:

@@ -127,8 +127,12 @@ def dothing(i):
 
 
 if __name__ == "__main__":
-    nums = Parallel(n_jobs=-1)(delayed(dothing)(i) for i in range(50))
-    print(nums)
+    lis = [1]
+    print(lis[-1])
+    lis = [1,2,3,4]
+    print(lis[-1])
+    #nums = Parallel(n_jobs=-1)(delayed(dothing)(i) for i in range(50))
+    #print(nums)
 
     '''
     student_ids = []

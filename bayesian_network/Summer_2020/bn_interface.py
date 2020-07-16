@@ -72,6 +72,7 @@ def create_bayesian_network(df_data, num_grades=11, model_type='noisyavg', df_cp
 def bn_predict(bn_model, prereq_grade_list):
     grade_list = copy.deepcopy(prereq_grade_list.copy())
     grade_list.append(None)
+    prediction = bn_model.predict([grade_list])[-1][-1]
     return str(bn_model.predict([grade_list])[-1][-1])
 
 
@@ -79,7 +80,6 @@ def bn_predict(bn_model, prereq_grade_list):
 def bn_multi_predict(bn_model, prereq_grade_lists):
     prediction_list = []
     for prereqs in prereq_grade_lists:
-        print(prereqs)
         prediction_list.append(bn_predict(bn_model, [str(i) for i in prereqs]))
     return prediction_list
 

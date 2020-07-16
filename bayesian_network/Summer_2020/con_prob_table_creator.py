@@ -74,7 +74,7 @@ def create_cpt(df_data, num_grades, num_prereqs):
             # Fixes the random predict problem when there is no data for that grade by adding a small amount of
             # probability to the most common grade, while also keeping the sums added to 1
             df_counts.iloc[row_i_min:row_i_max, -1] -= 0.00001
-            mode_grade = int(df_data.iloc[:, -1].mode())
+            mode_grade = int(df_data.mode().values[0][-1])
             df_counts.iat[row_i_min + mode_grade, -1] += 0.00001 * num_grades
         else:
             prob_modifier = 1/count_sum
