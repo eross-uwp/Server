@@ -20,7 +20,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold, GridSearchCV, RandomizedSearchCV
 from sklearn.svm import NuSVR
 from sklearn.utils import column_or_1d
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from bayesian_network.Summer_2020 import bn_interface
 
 if not sys.warnoptions:
