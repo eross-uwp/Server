@@ -29,7 +29,7 @@ __model_output = Path()
 
 __RANDOM_SEED = 313131
 __MODEL_TYPES_ENUM = enum.IntEnum('__MODEL_TYPES_ENUM', 'LOGISTIC_REGRESSION GBT_CLASSIFIER NU_SVR GBT_REGRESSOR '
-                                                        'RANDOM_FOREST_REGRESSOR MOD_ZEROR MEAN_ZEROR')
+                                                        'RANDOM_FOREST_REGRESSOR MOD_ZEROR MEAN_ZEROR BAYESIAN_NETWORK')
 __TREE_TYPES_ENUM = enum.IntEnum('__TREE_TYPES_ENUM', 'ROOT IMMEDIATE ALL')
 
 __model_enumA = 0
@@ -67,6 +67,10 @@ def convert_grade(string_grade):
 def set_paths():
     results_folder1 = Path('results/' + __tree_type.name + 'Prereq_' + __model_enumA.name + '_Results/')
     results_folder2 = Path('results/' + __tree_type.name + 'Prereq_' + __model_enumB.name + '_Results/')
+    if __model_enumA == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK:
+        results_folder1 = Path('results/BayesNet')
+    elif __model_enumB == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK:
+        results_folder2 = Path('results/BayesNet')
     if not (os.path.exists(results_folder1) and os.path.exists(results_folder2)):
         raise FileNotFoundError("One or both of the file paths don't exist.")
     return results_folder1, results_folder2
@@ -74,10 +78,16 @@ def set_paths():
 
 def get_pval():
     __results_folder_A, __results_folder_B = set_paths()
-    results_A = pd.read_csv(__results_folder_A / ('ALL_COURSES_PREDICTIONS_' + __tree_type.name + "_"
-                                                  + __model_enumA.name + '.csv'))
-    results_B = pd.read_csv(__results_folder_B / ('ALL_COURSES_PREDICTIONS_' + __tree_type.name + "_"
-                                                  + __model_enumB.name + '.csv'))
+    if __model_enumA == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK:
+        results_A = pd.read_csv(__results_folder_A / 'ALL_COURSES_PREDICTIONS_BayesNet.csv')
+    else:
+        results_A = pd.read_csv(__results_folder_A / ('ALL_COURSES_PREDICTIONS_' + __tree_type.name + "_"
+                                                      + __model_enumA.name + '.csv'))
+    if __model_enumB == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK:
+        results_B = pd.read_csv(__results_folder_B / 'ALL_COURSES_PREDICTIONS_BayesNet.csv')
+    else:
+        results_B = pd.read_csv(__results_folder_B / ('ALL_COURSES_PREDICTIONS_' + __tree_type.name + "_"
+                                                      + __model_enumB.name + '.csv'))
     results_A['actual'] = results_A['actual'].apply(convert_grade)
     results_A['predicted'] = results_A['predicted'].apply(convert_grade)
     results_A['diff^2'] = (results_A['actual'] - results_A['predicted']) ** 2
@@ -116,11 +126,13 @@ if __name__ == "__main__":
         p_values = []
         print(tree_type.name)
         for val in combinations(list(map(int, __MODEL_TYPES_ENUM)), 2):
-            __tree_type = tree_type
-            __model_enumA = __MODEL_TYPES_ENUM(val[0])
-            __model_enumB = __MODEL_TYPES_ENUM(val[1])
-            p_val = get_pval()
-            p_values.append(p_val)
-            print(p_val)
+            if not ((val[0] == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK or val[1] == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK)
+                    and tree_type == __TREE_TYPES_ENUM.ROOT):
+                __tree_type = tree_type
+                __model_enumA = __MODEL_TYPES_ENUM(val[0])
+                __model_enumB = __MODEL_TYPES_ENUM(val[1])
+                p_val = get_pval()
+                p_values.append(p_val)
+                print(p_val)
         pd.DataFrame(p_values, columns=['better', 'worse', 'p_value'])\
             .to_csv(Path('results/') / (tree_type.name + '_PValues.csv'), index=False)

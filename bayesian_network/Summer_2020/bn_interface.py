@@ -72,7 +72,7 @@ def create_bayesian_network(df_data, num_grades=11, model_type='noisyavg', df_cp
 def bn_predict(bn_model, prereq_grade_list):
     grade_list = copy.deepcopy(prereq_grade_list.copy())
     grade_list.append(None)
-    prediction = bn_model.predict([grade_list])[-1][-1]
+    # prediction = bn_model.predict([grade_list])[-1][-1]
     return str(bn_model.predict([grade_list])[-1][-1])
 
 
@@ -94,7 +94,7 @@ def save_cpt_as_csv(dataframe, file_loc):
 # Wrapper function for pandas .read_csv()
 # Loads CSV CPT from file location to DataFrame
 def load_cpt_from_csv(file_loc):
-    df_cpt = pd.read_csv(file_loc)
+    df_cpt = pd.read_csv(file_loc, index_col=False)
     df_cpt = df_cpt.astype(str)
     df_cpt['probability'] = df_cpt['probability'].astype(float)
     return df_cpt

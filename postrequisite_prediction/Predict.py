@@ -312,7 +312,6 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
                       pd.DataFrame(x_test[2]),
                       pd.DataFrame(x_test[3]),
                       pd.DataFrame(x_test[4])], ignore_index=True)
-
     x_df.columns = x_columns
     # x_df['struggle'] = x_df['struggle'].apply(reverse_convert_struggle)
 
@@ -321,7 +320,6 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
                       pd.DataFrame(y_test[2]),
                       pd.DataFrame(y_test[3]),
                       pd.DataFrame(y_test[4])], ignore_index=True)
-
     y_df.columns = [postreq_name]
     y_df[postreq_name] = y_df[postreq_name].apply(reverse_convert_grade)
 
