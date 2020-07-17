@@ -79,10 +79,12 @@ if __name__ == "__main__":
                     .astype(str).replace({'<NA>': 'nan'})
                 print(da)
                 if os.path.exists(__tuning_results_folder/(course[:-4] + "_CPT_" + str(loop_count) + ".csv")):
-                    df_cpt = pd.read_csv(__tuning_results_folder/(course[:-4] + "_CPT_" + str(loop_count) + ".csv"))
+                    df_cpt = pd.read_csv(__tuning_results_folder/(course[:-4] + "_CPT_" + str(loop_count) + ".csv")
+                                         , index_col=False)
                 else:
                     df_cpt = bn_interface.create_navg_cpt(da)
-                    df_cpt.to_csv(__tuning_results_folder/(course[:-4] + "_CPT_" + str(loop_count) + ".csv"))
+                    df_cpt.to_csv(__tuning_results_folder/(course[:-4] + "_CPT_" + str(loop_count) + ".csv")
+                                  , index=False)
                 model = bn_interface.create_bayesian_network(da, df_cpt=df_cpt)
                 print()
                 loop_count += 1
