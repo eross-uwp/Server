@@ -21,16 +21,16 @@ if not sys.warnoptions:
     warnings.simplefilter("ignore")
     os.environ["PYTHONWARNINGS"] = "ignore"  # Also affect subprocesses
 
-prereq_type = "IMMEDIATE"
+prereq_type = "ALL"
 __MODEL_TYPES_ENUM = enum.IntEnum('__MODEL_TYPES_ENUM', 'LOGISTIC_REGRESSION GBT_CLASSIFIER NU_SVR GBT_REGRESSOR '
                                                         'RANDOM_FOREST_REGRESSOR MOD_ZEROR MEAN_ZEROR BAYESIAN_NETWORK')
 __RANDOM_SEED = np.int64(313131)
 random.seed(__RANDOM_SEED)
 data_folder = Path('data/' + prereq_type + 'PrereqTables')
-tuning_path = Path('TuningResults_only_prereqs/' + prereq_type)
-experiment_list = ['CT-CIS', 'SE-CIS', 'SE-CT[30-59]', 'SE-CT[60-89]']
+tuning_path = Path('TuningResults/' + prereq_type)
+experiment_list = ['CT-CIS', 'SE-CIS', 'SE-CT[30-59]', 'SE-CT[60-89]']  #
 experiment_name = 'SE-CIS'
-experiment_folder = Path(experiment_name)
+experiment_folder = Path('Experiments/' + experiment_name)
 testing_file = 'TESTING_STUDENTS.csv'
 training_file = 'TRAINING_STUDENTS.csv'
 
@@ -48,7 +48,10 @@ def round_school(x):
 
 def trim(file, course_name):
     y = file[course_name]
-    x = file.drop(columns=[course_name, 'student_id', 'cumulative_gpa', 'prev_term_gpa', 'struggle', 'term_difference'])
+    if model_types == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK:
+        x = file.drop(columns=[course_name, 'student_id'])
+    else:
+        x = file.drop(columns=[course_name, 'student_id', 'cumulative_gpa', 'prev_term_gpa', 'struggle', 'term_difference'])
     return x, y
 
 
@@ -74,7 +77,10 @@ def convert_grade(string_grade):
 def get_prediction_data():
     current_data = course_data[course_data.student_id.isin(testing_students[experiment_name])]
     current_data = current_data[0:0]
-    current_data = current_data.drop(columns=[course, 'cumulative_gpa', 'prev_term_gpa', 'struggle', 'term_difference'])
+    if model_types == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK:
+        current_data = current_data.drop(columns=[course])
+    else:
+        current_data = current_data.drop(columns=[course, 'cumulative_gpa', 'prev_term_gpa', 'struggle', 'term_difference'])
     for col in current_data.columns:
         if col == 'student_id':
             current_data[col] = testing_students[experiment_name]
@@ -139,14 +145,17 @@ if __name__ == "__main__":
     for experiment in experiment_list:
         print(experiment)
         experiment_name = experiment
-        experiment_folder = Path(experiment_name)
+        experiment_folder = Path('Experiments/' + experiment_name)
         training_data = pd.read_csv(experiment_folder/training_file, index_col=False)
         for model_types in __MODEL_TYPES_ENUM:
             testing_students = pd.read_csv(experiment_folder/testing_file, index_col=False)
             # print(training_data)
             for course in training_data.columns:
                 print(course)
-                course_data = pd.read_csv(data_folder/(course + ".csv"), index_col=False)
+                if model_types == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK:
+                    course_data = pd.read_csv(Path('data/BayesNetTables')/(course + ".csv"), index_col=False)
+                else:
+                    course_data = pd.read_csv(data_folder/(course + ".csv"), index_col=False)
                 data = course_data[course_data.student_id.isin(training_data[course])]
                 prediction_data = get_prediction_data()
                 predictions = train_and_predict(model_types, course, data, prediction_data)

@@ -17,7 +17,8 @@ __TREE_TYPES_ENUM = enum.IntEnum('__TREE_TYPES_ENUM', 'ROOT IMMEDIATE ALL')
 for tree_type in __TREE_TYPES_ENUM:
     dataframe = pd.DataFrame()
     for model_type in __MODEL_TYPES_ENUM:
-        if not (model_type == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK and tree_type == __TREE_TYPES_ENUM.ROOT):
+        if not (model_type == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK and (tree_type == __TREE_TYPES_ENUM.ROOT
+                                                                       or tree_type == __TREE_TYPES_ENUM.IMMEDIATE)):
             if model_type != __MODEL_TYPES_ENUM.BAYESIAN_NETWORK:
                 results_folder = Path('results/' + tree_type.name + 'Prereq_' + model_type.name + '_Results/')
                 file = pd.read_csv(results_folder / ('ALL_COURSES_PREDICTIONS_' + tree_type.name + "_" + model_type.name +

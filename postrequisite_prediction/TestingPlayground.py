@@ -45,7 +45,9 @@ __TEST_PREFIX = 'test_'
 __NUMBER_FOLDS = 5
 __RANDOM_SEED = 313131
 __MIN_SAMPLES_FOR_PREDICTING = 25
-__MODEL_TYPES_ENUM = enum.IntEnum('__MODEL_TYPES_ENUM', 'LOGISTIC_REGRESSION GBT_CLASSIFIER NU_SVR')
+__MODEL_TYPES_ENUM = enum.IntEnum('__MODEL_TYPES_ENUM', 'LOGISTIC_REGRESSION GBT_CLASSIFIER NU_SVR GBT_REGRESSOR '
+                                                        'RANDOM_FOREST_REGRESSOR')
+__TREE_TYPES_ENUM = enum.IntEnum('__TREE_TYPES_ENUM', 'ROOT IMMEDIATE ALL')
 
 
 # https://stackoverflow.com/a/43886290
@@ -127,12 +129,16 @@ def dothing(i):
 
 
 if __name__ == "__main__":
-    lis = [1]
-    print(lis[-1])
-    lis = [1,2,3,4]
-    print(lis[-1])
-    #nums = Parallel(n_jobs=-1)(delayed(dothing)(i) for i in range(50))
-    #print(nums)
+    for tree_type in __TREE_TYPES_ENUM:
+        for model_type in __MODEL_TYPES_ENUM:
+            tp1 = Path('TuningResults/') / tree_type.name / model_type.name
+            tp2 = Path('TuningResults_current') / tree_type.name / model_type.name
+            for course in sorted(os.listdir(tp1)):
+                tr1 = np.load(tp1 / course, allow_pickle=True).item()
+                tr2 = np.load(tp2 / course, allow_pickle=True).item()
+                if tr1 != tr2:
+                    print(tree_type.name, ":", model_type.name, ":", course)
+
 
     '''
     student_ids = []

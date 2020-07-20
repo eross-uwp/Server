@@ -386,52 +386,51 @@ def stratify_and_split(filename):
 
 
 def read_predict_write():
-    if not (__model_enum == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK and (__tree_type == __TREE_TYPES_ENUM.ALL or __tree_type == __TREE_TYPES_ENUM.IMMEDIATE)):
-        print('Training and testing beginning. A counter will print after the completion of each training set. \n')
-        if not os.path.exists(__folds_folder):
-            os.makedirs(__folds_folder)
-        if not os.path.exists(__results_folder):
-            os.makedirs(__results_folder)
+    print('Training and testing beginning. A counter will print after the completion of each training set. \n')
+    if not os.path.exists(__folds_folder):
+        os.makedirs(__folds_folder)
+    if not os.path.exists(__results_folder):
+        os.makedirs(__results_folder)
 
-        big_predicted = []
-        big_actual = []
-        big_ids = []
+    big_predicted = []
+    big_actual = []
+    big_ids = []
 
-        results_each_postreq = [[], [], [], [], []]
+    results_each_postreq = [[], [], [], [], []]
 
-        counter = 0
-        for filename in sorted(os.listdir(__data_folder)):
-            filename = str(filename[:-4] + '.csv')
-            x_train, x_test, y_train, y_test, x_columns, n_samples, ids = stratify_and_split(filename)
-            if n_samples > __MIN_SAMPLES_FOR_PREDICTING:
-                predicted, actual, rr, acc, nrmse, model = predict(filename[:-4], x_train, x_test, y_train, y_test,
-                                                                   x_columns)
+    counter = 0
+    for filename in sorted(os.listdir(__data_folder)):
+        filename = str(filename[:-4] + '.csv')
+        x_train, x_test, y_train, y_test, x_columns, n_samples, ids = stratify_and_split(filename)
+        if n_samples > __MIN_SAMPLES_FOR_PREDICTING:
+            predicted, actual, rr, acc, nrmse, model = predict(filename[:-4], x_train, x_test, y_train, y_test,
+                                                               x_columns)
 
-                big_predicted += list(predicted)
-                big_actual += list(actual)
-                big_ids += list(ids)
-                results_each_postreq[0].append(filename[:-4])
-                results_each_postreq[1].append(rr)
-                results_each_postreq[2].append(acc)
-                results_each_postreq[3].append(nrmse)
-                results_each_postreq[4].append(n_samples)
-                print(counter)
-                counter += 1
+            big_predicted += list(predicted)
+            big_actual += list(actual)
+            big_ids += list(ids)
+            results_each_postreq[0].append(filename[:-4])
+            results_each_postreq[1].append(rr)
+            results_each_postreq[2].append(acc)
+            results_each_postreq[3].append(nrmse)
+            results_each_postreq[4].append(n_samples)
+            print(counter)
+            counter += 1
 
-        studentIds = pd.DataFrame(big_ids, columns=['student_id'])
-        predictions = pd.DataFrame(big_predicted, columns=['predicted'])
-        actuals = pd.DataFrame(big_actual, columns=['actual'])
-        all_results = pd.concat([studentIds, predictions, actuals], axis=1)
-        all_results.to_csv(__results_folder / ('ALL_COURSES_PREDICTIONS_' + __tree_type.name + "_" + __model_enum.name
-                                               + '.csv'), index=False)
+    studentIds = pd.DataFrame(big_ids, columns=['student_id'])
+    predictions = pd.DataFrame(big_predicted, columns=['predicted'])
+    actuals = pd.DataFrame(big_actual, columns=['actual'])
+    all_results = pd.concat([studentIds, predictions, actuals], axis=1)
+    all_results.to_csv(__results_folder / ('ALL_COURSES_PREDICTIONS_' + __tree_type.name + "_" + __model_enum.name
+                                           + '.csv'), index=False)
 
-        all_stats = pd.DataFrame(
-            {'postreq': results_each_postreq[0], 'r^2': results_each_postreq[1], 'accuracy': results_each_postreq[2],
-             'nrmse': results_each_postreq[3], 'n': results_each_postreq[4]})
-        all_stats.to_csv(__results_folder / ('ALL_COURSES_STATS_' + __tree_type.name + "_" + __model_enum.name + '.csv'),
-                         index=False)
+    all_stats = pd.DataFrame(
+        {'postreq': results_each_postreq[0], 'r^2': results_each_postreq[1], 'accuracy': results_each_postreq[2],
+         'nrmse': results_each_postreq[3], 'n': results_each_postreq[4]})
+    all_stats.to_csv(__results_folder / ('ALL_COURSES_STATS_' + __tree_type.name + "_" + __model_enum.name + '.csv'),
+                     index=False)
 
-        print('Model training, testing, and evaluation completed. Files saved to: \'' + str(__results_folder) + '\' \n')
+    print('Model training, testing, and evaluation completed. Files saved to: \'' + str(__results_folder) + '\' \n')
 
 
 def save_models():

@@ -123,11 +123,12 @@ def get_pval():
 
 if __name__ == "__main__":
     for tree_type in __TREE_TYPES_ENUM:
+        # tree_type = __TREE_TYPES_ENUM.ALL
         p_values = []
         print(tree_type.name)
         for val in combinations(list(map(int, __MODEL_TYPES_ENUM)), 2):
             if not ((val[0] == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK or val[1] == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK)
-                    and tree_type == __TREE_TYPES_ENUM.ROOT):
+                    and ((tree_type == __TREE_TYPES_ENUM.ROOT) or (tree_type == __TREE_TYPES_ENUM.IMMEDIATE))):
                 __tree_type = tree_type
                 __model_enumA = __MODEL_TYPES_ENUM(val[0])
                 __model_enumB = __MODEL_TYPES_ENUM(val[1])
