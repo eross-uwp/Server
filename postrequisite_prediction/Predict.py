@@ -185,22 +185,20 @@ def tune_rand(filename):
 
 
 def hyperparameter_tuning():
-    if not (__model_enum == __MODEL_TYPES_ENUM.BAYESIAN_NETWORK and (
-            __tree_type == __TREE_TYPES_ENUM.ALL or __tree_type == __TREE_TYPES_ENUM.IMMEDIATE)):
-        print('Hyperparameter tuning beginning. Run time will print after the completion of each tuning. \n')
+    print('Hyperparameter tuning beginning. Run time will print after the completion of each tuning. \n')
 
-        start_time = time.time()
-        if not os.path.exists(__tuning_results_folder):
-            os.makedirs(__tuning_results_folder)
+    start_time = time.time()
+    if not os.path.exists(__tuning_results_folder):
+        os.makedirs(__tuning_results_folder)
 
-        with parallel_backend('loky', n_jobs=-1):
-            for filename in sorted(os.listdir(__data_folder)):
-                tune_rand(filename)
-                # tune(filename)
-                # tune_grid(filename)
+    with parallel_backend('loky', n_jobs=-1):
+        for filename in sorted(os.listdir(__data_folder)):
+            tune_rand(filename)
+            # tune(filename)
+            # tune_grid(filename)
 
-        print('Hyperparameter tuning completed in ' + str(round(time.time() - start_time, 2)) + 's. Files saved to: \''
-              + str(__tuning_results_folder) + '\' \n')
+    print('Hyperparameter tuning completed in ' + str(round(time.time() - start_time, 2)) + 's. Files saved to: \''
+          + str(__tuning_results_folder) + '\' \n')
 
 
 def reverse_convert_grade(int_grade):
