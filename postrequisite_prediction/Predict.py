@@ -163,7 +163,7 @@ def tune_rand(filename):
         if not np.all([__NUMBER_FOLDS] > y_counts):
             best_clf = clf.fit(x, y)
 
-            if os.path.exists(__tuning_results_folder / (filename[:-4] + '.npy')) and False:
+            if os.path.exists(__tuning_results_folder / (filename[:-4] + '.npy')):
                 old_params = np.load(__tuning_results_folder / (filename[:-4] + '.npy'), allow_pickle=True).item()
                 for key in old_params:
                     old_params[key] = [old_params[key]]
