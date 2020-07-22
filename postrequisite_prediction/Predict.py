@@ -90,10 +90,9 @@ def get_prereq_table(filename):
 def tune_rand(filename):
     loop_time = time.time()
     x, y, _ = get_prereq_table(filename)
-    rng = np.random.RandomState(__RANDOM_SEED)
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
         num_trials = 2400
-        model = LogisticRegression(random_state=rng)
+        model = LogisticRegression(random_state=__RANDOM_SEED)
         c_space = list(np.logspace(-7, 7, 100))
         param_grid = [
             {'penalty': ['l1', 'l2'], 'solver': ['liblinear'], "C": c_space, "class_weight": ['balanced', None]},
@@ -103,7 +102,7 @@ def tune_rand(filename):
              "class_weight": ['balanced', None]}
         ]
     elif __model_enum == __MODEL_TYPES_ENUM.RANDOM_FOREST_REGRESSOR:
-        model = RandomForestRegressor(random_state=rng)
+        model = RandomForestRegressor(random_state=__RANDOM_SEED)
         num_trials = 1500
         param_grid = {
             "n_estimators": np.logspace(np.log10(10), np.log10(1500), 100, dtype='int64'),
@@ -114,7 +113,7 @@ def tune_rand(filename):
         }
     elif __model_enum == __MODEL_TYPES_ENUM.GBT_CLASSIFIER:
         num_trials = 2000
-        model = GradientBoostingClassifier(random_state=rng)
+        model = GradientBoostingClassifier(random_state=__RANDOM_SEED)
         param_grid = {
             "loss": ["deviance", "exponential"],
             "learning_rate": np.logspace(np.log10(0.005), np.log10(0.5), 100),
@@ -134,7 +133,7 @@ def tune_rand(filename):
         param_grid = [{'nu': nu_space, 'C': c_space, 'kernel': ['linear', 'rbf'], 'gamma': ['scale', 'auto']}]
     elif __model_enum == __MODEL_TYPES_ENUM.GBT_REGRESSOR:
         num_trials = 2000
-        model = GradientBoostingRegressor(random_state=rng)
+        model = GradientBoostingRegressor(random_state=__RANDOM_SEED)
         param_grid = {
             "loss": ['ls', 'lad', 'huber', 'quantile'],
             "learning_rate": np.logspace(np.log10(0.005), np.log10(0.5), 100),
@@ -150,8 +149,8 @@ def tune_rand(filename):
         raise NotImplementedError("This method has not been implemented for " + str(__model_enum.name))
 
     scoring = metrics.make_scorer(rounding_rmse_scorer)
-    skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=rng)
-    clf = RandomizedSearchCV(model, param_grid, cv=skf, scoring=scoring, n_iter=num_trials, random_state=rng,
+    skf = StratifiedKFold(n_splits=__NUMBER_FOLDS, shuffle=True, random_state=__RANDOM_SEED)
+    clf = RandomizedSearchCV(model, param_grid, cv=skf, scoring=scoring, n_iter=num_trials, random_state=__RANDOM_SEED,
                              verbose=True)
 
     x = x.fillna(-1).values
@@ -241,7 +240,8 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
         read_dictionary = None
     else:
         read_dictionary = np.load(__tuning_results_folder / (postreq_name + '.npy'), allow_pickle=True).item()
-
+    print(__tuning_results_folder)
+    print(postreq_name)
     print(__model_enum.name + " " + postreq_name + " Parameter Dictionary: " + str(read_dictionary))
 
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
