@@ -240,8 +240,6 @@ def predict(postreq_name, x_train, x_test, y_train, y_test, x_columns):
         read_dictionary = None
     else:
         read_dictionary = np.load(__tuning_results_folder / (postreq_name + '.npy'), allow_pickle=True).item()
-    print(__tuning_results_folder)
-    print(postreq_name)
     print(__model_enum.name + " " + postreq_name + " Parameter Dictionary: " + str(read_dictionary))
 
     if __model_enum == __MODEL_TYPES_ENUM.LOGISTIC_REGRESSION:
