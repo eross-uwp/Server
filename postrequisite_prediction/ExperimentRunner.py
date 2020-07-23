@@ -15,6 +15,7 @@ from sklearn.dummy import DummyRegressor, DummyClassifier
 from sklearn.ensemble import GradientBoostingClassifier, GradientBoostingRegressor, RandomForestRegressor
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import NuSVR
+sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from bayesian_network.Summer_2020 import bn_interface
 
 if not sys.warnoptions:
