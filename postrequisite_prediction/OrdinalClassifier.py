@@ -4,8 +4,9 @@ import numpy as np
 
 class OrdinalClassifier:
 
-    def __init__(self, clf):
+    def __init__(self, clf, *args, **kwargs):
         self.clf = clf
+        self.clf.set_params(**kwargs)
         self.clfs = {}
 
     def fit(self, X, y):
@@ -24,14 +25,23 @@ class OrdinalClassifier:
         for i, y in enumerate(self.unique_class):
             if i == 0:
                 # V1 = 1 - Pr(y > V1)
-                predicted.append(1 - clfs_predict[y][:, 1])
+                predicted.append(1 - clfs_predict[i][:, 1])
             elif y in clfs_predict:
                 # Vi = Pr(y > Vi-1) - Pr(y > Vi)
-                predicted.append(clfs_predict[y - 1][:, 1] - clfs_predict[y][:, 1])
+                predicted.append(clfs_predict[i - 1][:, 1] - clfs_predict[i][:, 1])
             else:
                 # Vk = Pr(y > Vk-1)
-                predicted.append(clfs_predict[y - 1][:, 1])
+                predicted.append(clfs_predict[i - 1][:, 1])
         return np.vstack(predicted).T
 
     def predict(self, X):
         return np.argmax(self.predict_proba(X), axis=1)
+
+    def get_params(self, deep=True):
+        param_dict = self.clf.get_params(deep)
+        param_dict['clf'] = self.clf
+        return param_dict
+
+    def set_params(self, **params):
+        self.clf.set_params(**params)
+        return self

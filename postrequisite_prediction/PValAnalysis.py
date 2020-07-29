@@ -135,5 +135,4 @@ if __name__ == "__main__":
                 p_val = get_pval()
                 p_values.append(p_val)
                 print(p_val)
-        pd.DataFrame(p_values, columns=['better', 'worse', 'p_value'])\
-            .to_csv(Path('results/') / (tree_type.name + '_PValues.csv'), index=False)
+        pd.DataFrame(p_values, columns=['better', 'worse', 'p_value']).to_csv(Path('results/') / (tree_type.name + '_PValues.csv'), index=False)

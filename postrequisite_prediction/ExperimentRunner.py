@@ -29,7 +29,7 @@ __RANDOM_SEED = np.int64(313131)
 random.seed(__RANDOM_SEED)
 data_folder = Path('data/' + prereq_type + 'PrereqTables')
 tuning_path = Path('TuningResults/' + prereq_type)
-experiment_list = ['FullSE-SE-CIS', 'FullSE-SE-CT[30-59]', 'FullSE-SE-CT[60-89]']
+experiment_list = ['FullCIS-CIS-CT[30-59]', 'FullCIS-CIS-CT[60-89]', 'FullCIS-CIS-SE']
 experiment_name = ''
 experiment_folder = Path('Experiments/' + experiment_name)
 testing_file = 'TESTING_STUDENTS.csv'

@@ -117,7 +117,7 @@ Discrete Mathematics,Intermediate Software Engineering,Object Oriented Analysis 
 4.0,7.0,7.0,A-,B
 4.0,7.0,7.0,B,B
 5.0,4.0,6.0,B-,B
-6.0,6.0,7.0,A,B+
+6.0,6.0,7.0,A,B
 1.0,4.0,4.0,F,C+
 7.0,4.0,7.0,C,B
 4.0,8.0,7.0,B-,B+
@@ -135,7 +135,7 @@ Discrete Mathematics,Intermediate Software Engineering,Object Oriented Analysis 
 9.0,10.0,10.0,A,A
 10.0,9.0,9.0,A,A-
 7.0,9.0,7.0,A-,B+
-5.0,10.0,8.0,C,B+
+5.0,10.0,8.0,C,A-
 7.0,10.0,9.0,A,A-
 4.0,10.0,7.0,C+,B+
 0.0,4.0,2.0,B+,C+

@@ -1,0 +1,2 @@
+Training Courses: Programming in C++, OOPS I
+Testing Courses: Data Communications and Computer Networks, Database Design and Implementation, Programming Language Structures

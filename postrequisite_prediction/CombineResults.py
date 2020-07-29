@@ -27,6 +27,7 @@ for tree_type in __TREE_TYPES_ENUM:
                 results_folder = Path('results/BayesNet')
                 file = pd.read_csv(results_folder / 'ALL_COURSES_PREDICTIONS_BayesNet.csv')
             if model_type == 1:
+                dataframe['student_id'] = file['student_id']
                 dataframe['actual'] = file['actual']
             dataframe[model_type.name] = file['predicted']
     dataframe.to_csv(Path('results/')/(tree_type.name+'_Combined_Predictions.csv'), index=False)

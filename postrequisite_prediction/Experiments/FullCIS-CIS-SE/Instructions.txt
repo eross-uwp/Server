@@ -1,0 +1,5 @@
+Training Courses: Programming in C++, OOPS I
+Testing Courses: Introduction to Software Engineering, Intermediate Software Engineering, Software Maintenance, Software Engineering Project I, Software Engineering Project II
+** Make sure you use Software Engineering Project I/II, there's another similar class just called Software Project I/II, but that is
+in a BILSA major**
+
